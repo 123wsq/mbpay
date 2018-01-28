@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style type="text/css">
+.table-header {
+    background-color: #46A3FF;
+    color: #fff;
+    font-size: 12px;
+    line-height: 38px;
+    margin-bottom: 1px;
+    padding-left: 10px;
+}
+
+</style>
+<div class="rowt" style="padding-left: 1px !important;padding-right: 1px !important;padding-top: 1px !important;">
+	<div class="col-xs-12">
+		<div>
+			<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom: 0px !important">
+				<thead>
+					<tr>
+						<th class="center">
+							<label class="position-relative">
+								<input type="checkbox" class="ace" id="checkboxlbl1"/>
+								<span class="lbl"></span>
+							</label>
+						</th>
+						<th>账户编号</th>
+						<th>账户类型</th>
+						<th>货币类型</th>
+						<th> 总余额 </th>
+						<th>T0余额</th>
+						<th>T1余额</th>
+						<th>未审核T0余额</th>
+						<th>已审核T0余额</th>
+						<th>审核不通过T0余额</th>
+						<th>已结算账户</th>
+						<th>冻结金额</th>
+						<th>最后交易时间</th>
+						<!-- <th>是否冻结</th> -->
+					</tr>
+				</thead>
+
+				<tbody id="mybody1">
+				</tbody>
+			
+			</table>
+		</div>
+		
+	<div style="margin-top: 10px">
+	<!--
+				<span id="auth_btn">
+				<a class="btn btn-small btn-warning"
+					onclick="freeze();" auth="auth.do"> 冻结
+				</a>
+				<a class="btn btn-small btn-warning"
+					onclick="unfreeze();" auth="auth.do">解冻
+				</a>-->
+
+				</span>
+				<span  style="float: right"> <ul class="pagination pull-right no-margin" id="paging_bar_1"></ul> </span>
+			</div>
+		
+	</div>
+</div>
+<div class="form-actions align-right  form-button-box" style="margin-top: 10px">			
+	<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+		 关闭
+	</button>
+</div>
+<script type="text/javascript">
+	var pageSize=7;
+	var bodycp1=0;
+	$(document).ready(function() {
+		$("#checkboxlbl1").change(function(){  
+			var is_checked =$("#checkboxlbl1").is(":checked");
+			$("input[name='mybody1paging_bar_1']").each(function(){
+				this.checked=is_checked;
+			}); 
+		});
+		getjson("mpomng/custAccountManage/queryList.do",1,"mybody1","paging_bar_1");
+	});
+
+	function getjson(url,cp,body,bar){
+		var dialog=$("#dlg-custAccountView").Dialog();
+		 $.ajax({
+			 type:"post",
+			 dataType:"json",
+			 url:url,
+			 data: {pageSize:pageSize,currentPages:cp,custId:dialog.pageParam.custId},
+			 success : function(result) {
+					if (result.rspcod != 200) {
+						msg.alert("错误", result.rspmsg, 'error');
+					} else {
+						if(bodycp1!=0){
+							$("#"+body+" tr").remove();
+							$("#"+bar+" a").remove();
+						}
+						
+						var pagecount = Math.ceil(result.records/pageSize);
+						
+						var paging_bar='<li><a href="javascript:void(0)">共 '+result.records+' 条</a>';
+						
+						paging_bar+='<li class="prev '+(cp<=1?'disabled':'')+'"><a href="javascript:void(0)" onclick=\'getjson(\"'+url+'\",1,\"'+body+'\",\"'+bar+'\");\'>首页</a>';
+						for(var i=1;i<=pagecount;i++){
+							paging_bar+='<li class="'+(cp==i?'active':'')+'"><a href="javascript:void(0)" onclick=\'getjson(\"'+url+'\",'+i+',\"'+body+'\",\"'+bar+'\");\'>'+i+'</a>';
+						}
+						paging_bar+='<li class="next '+(cp==pagecount||pagecount==0?'disabled':'')+'"><a href="javascript:void(0)" onclick=\'getjson(\"'+url+'\",'+pagecount+',\"'+body+'\",\"'+bar+'\");\'>尾页</a>';
+						$("#"+bar).append(paging_bar);
+						
+						if(result.obj==null||result.obj=='null'){
+							return false;
+						}
+						$.each(jQuery.parseJSON(result.obj),function(index,obj){
+							var inputVal=obj.custId;
+							var tr ='<tr><td class="center"><label class="position-relative">'+	
+							'<input value="'+inputVal+'" type="checkbox" name="'+(body+bar)+'" class="ace"  /><span class="lbl"></span></label></td>'+
+							'<td>'+obj.account+'</td>'+
+							'<td>'+DICT.get("ACTYPE")[obj.acType]+'</td>'+
+							'<td>'+(DICT.get("CURRENCYCODE")[obj.ccy]||'')+'</td>'+
+							'<td>'+cent2Yuan(obj.acBal==null?0:obj.acBal)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT0==null?0:obj.acT0)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT1==null?0:obj.acT1)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT1UNA==null?0:obj.acT1UNA)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT1AP==null?0:obj.acT1AP)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT1AUNP==null?0:obj.acT1AUNP)+'</td>'+
+							'<td>'+cent2Yuan(obj.acT1Y==null?0:obj.acT1Y)+'</td>'+
+							'<td>'+cent2Yuan(obj.frozBalance==null?'0':obj.frozBalance)+'</td>'+
+							'<td>'+dateFormat(obj.lstTxDatetime==null?'':obj.lstTxDatetime)+'</td>'+
+							//'<td>正常</td>'+
+							//'<td><div class=\"hidden-sm hidden-xs btn-group\"><button onClick=\"editStatus(\''+obj.custId+'\',\''+(obj.accountStatus=='0'?'1':'0')+'\');\" class=\"btn btn-xs btn-warning\"  title=\"\"">'+
+							//(obj.accountStatus=='1'?'冻结':'解除')+'</button></div></td>DICT.get("ACSTATUS",obj.accountStatus)
+							'</tr>';
+							$("#"+body).append(tr);
+						});
+						bodycp1=cp;
+					}
+				},
+			 error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+		 });
+	}
+  
+	function editStatus(custId,status){
+		var agentOrgMer="";
+		if(custId.length<=0){
+			alertMsg.error('请选择需要冻结的账户');
+			return false;
+		}
+		
+		$.ajax({
+			 type:"post",
+			 dataType:"json",
+			 async:false,
+			 url:"mpomng/custAccountManage/editStatus.do",
+			 data: {"custId":custId,"status":status},
+			 success : function(result) {
+					if (result.rspcod != 200) {
+						msg.alert("错误", result.rspmsg, 'error');
+					} else {
+						getjson("mpomng/custAccountManage/queryList.do",1,"mybody2","paging_bar_2");
+					}
+				},
+			 error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+		});
+	}
+</script>

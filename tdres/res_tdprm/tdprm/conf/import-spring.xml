@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+	<!-- 模块spring配置文件导入 -->
+	<!-- prm web模块 -->
+	<import resource="classpath:tdprm/conf/spring.xml" />
+	<!-- tdbase 基础模块 -->
+	<import resource="classpath:tdbase/conf-tdbase/spring-tdbase.xml" />
+	<!-- mpbase 手机支付平台基础模块 -->
+	<import resource="classpath:mpbase/conf-mpbase/spring-mpbase.xml" />
+	<!-- tdauth 权限模块 -->
+	<import resource="classpath:tdauth/conf-tdauth/spring-tdauth.xml" />
+	<!-- tdcomm 通信模块 -->
+	<import resource="classpath:tdcomm/conf-tdcomm/spring-tdcomm.xml" />
+	<!--mpamng 代理商模块 -->
+	<import resource="classpath:mpamng/conf-mpamng/spring-mpamng.xml" />
+	<!--mpamng 商户模块 -->
+	<import resource="classpath:mpomng/conf-mpomng/spring-mpomng.xml" />
+
+</beans>

@@ -1,0 +1,107 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpcoopsub/supplierroute/edit.do" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<input type="hidden" id="rtrId" name="rtrId"/>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">供应商编号： </label>
+		<div class="col-sm-4">
+		<input id="supId" type="text" name="supId" placeholder="请输入供应商编号" readonly="readonly" class="col-xs-12 col-sm-12">					
+		</div>
+		
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易码： </label>
+		<div class="col-sm-4">
+			<input type="text" id="txncd" name="txncd" placeholder="请输入[交易码]" 
+				class="col-xs-12 col-sm-12"  />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">路由服务名： </label>
+		<div class="col-sm-4">
+			<input type="text" id="rtrsvr" name="rtrsvr" placeholder="请输入[路由服务名]" 
+				class="col-xs-12 col-sm-12"  />
+		</div>
+		
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">路由交易码： </label>
+		<div class="col-sm-4">
+           <input type="text" id="rtrcod" name="rtrcod" placeholder="请输入[路由交易码]" 
+				class="col-xs-12 col-sm-12"  />
+		</div>
+	</div>
+	<div class="form-group">
+	   <label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">路由状态： </label>
+			
+			<div class="col-sm-4">
+			<select 
+				rel="obj.RTRSTATUS"
+				location="local" 
+				name="status" 
+				id="status" 
+				data-placeholder="请选择状态" style="width: 212px;vertical-align:middle;">
+				<option value='' >--请选择--</option>
+			</select>						
+		</div>
+		</div>
+		
+		<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">路由描述： </label>
+		<div class="col-sm-4">
+           <input type="text" id="rtrdesc" name="rtrdesc" placeholder="请输入[路由描述]" 
+				class="col-xs-12 col-sm-12"  validate="true"/>
+		</div>
+	</div>
+	  </div>
+	<input type="hidden" id="editDate" name="editDate" />
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+$(document).ready(function() {
+	 /* var p = dialog.getById('dlg-supplierAdd');
+		//设置页面初始值
+		$("#editUserId").attr("value",p.dataParam.editUserId); */
+});
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+</script>

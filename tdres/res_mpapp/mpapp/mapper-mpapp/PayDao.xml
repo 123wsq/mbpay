@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.PayDao">
+	<resultMap type="java.util.Map" id="payMap">
+<result property="payordno"               column="PAYORDNO" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="paystatus"               column="PAYSTATUS" /> 
+		    <result property="payordtype"               column="PAYORDTYPE" /> 
+		    <result property="paytype"               column="PAYTYPE" /> 
+		    <result property="terNo"               column="TER_NO" /> 
+		    <result property="txamt"               column="TXAMT" /> 
+		    <result property="rate"               column="RATE" /> 
+		    <result property="rateType"               column="RATE_TYPE" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="netrecamt"               column="NETRECAMT" /> 
+		    <result property="payChannel"               column="PAY_CHANNEL" /> 
+		    <result property="payCardno"               column="PAY_CARDNO" /> 
+		    <result property="issnam"               column="ISSNAM" /> 
+		    <result property="crdnam"               column="CRDNAM" /> 
+		    <result property="paySignPic"               column="PAY_SIGN_PIC" /> 
+		    <result property="payDate"               column="PAY_DATE" /> 
+		    <result property="payTime"               column="PAY_TIME" /> 
+		    <result property="payordtime"               column="PAYORDTIME" /> 
+		    <result property="modifyTime"               column="MODIFY_TIME" /> 
+		    <result property="thirdOrdno"               column="THIRD_PARTY_ORD_NO" /> 
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="payAccMap">
+		    <result property="payordno"               column="PAYORDNO" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="paystatus"               column="PAYSTATUS" /> 
+		    <result property="payordtype"               column="PAYORDTYPE" /> 
+		    <result property="paytype"               column="PAYTYPE" /> 
+		    <result property="terNo"               column="TER_NO" /> 
+		    <result property="txamt"               column="TXAMT" /> 
+		    <result property="rate"               column="RATE" /> 
+		    <result property="rateType"               column="RATE_TYPE" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="netrecamt"               column="NETRECAMT" /> 
+		    <result property="payChannel"               column="PAY_CHANNEL" /> 
+		    <result property="payCardno"               column="PAY_CARDNO" /> 
+		    <result property="issnam"               column="ISSNAM" /> 
+		    <result property="crdnam"               column="CRDNAM" /> 
+		    <result property="paySignPic"               column="PAY_SIGN_PIC" /> 
+		    <result property="payDate"               column="PAY_DATE" /> 
+		    <result property="payTime"               column="PAY_TIME" /> 
+		    <result property="payordtime"               column="PAYORDTIME" /> 
+		    <result property="modifyTime"               column="MODIFY_TIME" /> 
+		    <result property="thirdOrdno"               column="THIRD_PARTY_ORD_NO" /> 
+		    <result property="acType"               column="AC_TYPE" /> 
+		    <result property="ccy"                 column="CCY" /> 
+		    <result property="acBal"               column="AC_BAL" /> 
+		    <result property="acT0"                 column="AC_T0" /> 
+		    <result property="acT1"                 column="AC_T1" />
+		    <result property="acT1UNA"              column="AC_T1_UNA" /> 
+		    <result property="acT1AP"               column="AC_T1_AP" />
+		    <result property="acT1AUNP"              column="AC_T1_AUNP" />    
+		    <result property="acT1Y"                 column="AC_T1_Y" />
+	</resultMap>
+	
+	<update id="updateESign" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PAY_INF
+		SET
+				PAY_SIGN_PIC =  #{paySignPic}
+				
+		WHERE
+				PAYORDNO =  #{payordno} 
+
+	</update>
+	
+	
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PAY_INF
+		<set>
+		         <if test="custId!= null and custId!= ''">
+						CUST_ID =  #{custId},
+				</if>
+		        <if test="paystatus!= null and paystatus!= ''">
+						PAYSTATUS =  #{paystatus},
+				</if>
+		        <if test="payordtype!= null and payordtype!= ''">
+						PAYORDTYPE =  #{payordtype},
+				</if>
+		        <if test="paytype!= null and paytype!= ''">
+						PAYTYPE =  #{paytype},
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						TER_NO =  #{terNo},
+				</if>
+		        <if test="txamt!= null and txamt!= ''">
+						TXAMT =  #{txamt},
+				</if>
+		        <if test="rate!= null and rate!= ''">
+						RATE =  #{rate},
+				</if>
+		        <if test="rateType!= null and rateType!= ''">
+						RATE_TYPE =  #{rateType},
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						FEE =  #{fee},
+				</if>
+		        <if test="netrecamt!= null and netrecamt!= ''">
+						NETRECAMT =  #{netrecamt},
+				</if>
+		        <if test="payChannel!= null and payChannel!= ''">
+						PAY_CHANNEL =  #{payChannel},
+				</if>
+		        <if test="payCardno!= null and payCardno!= ''">
+						PAY_CARDNO =  #{payCardno},
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						ISSNAM =  #{issnam},
+				</if>
+		        <if test="crdnam!= null and crdnam!= ''">
+						CRDNAM =  #{crdnam},
+				</if>
+		        <if test="paySignPic!= null and paySignPic!= ''">
+						PAY_SIGN_PIC =  #{paySignPic},
+				</if>
+		        <if test="payDate!= null and payDate!= ''">
+						PAY_DATE =  #{payDate},
+				</if>
+		        <if test="payTime!= null and payTime!= ''">
+						PAY_TIME =  #{payTime},
+				</if>
+		        <if test="payordtime!= null and payordtime!= ''">
+						PAYORDTIME =  #{payordtime},
+				</if>
+		        <if test="modifyTime!= null and modifyTime!= ''">
+						MODIFY_TIME =  #{modifyTime},
+				</if>
+				<if test="thirdOrdno!= null and thirdOrdno!= ''">
+						THIRD_PARTY_ORD_NO =  #{thirdOrdno},
+				</if>
+				<if test="bankcardid!=null and bankcardid!=''">
+						CARD_SIGN_PIC = #{bankcardid},
+				</if>
+				<if test="auditTime!=null and auditTime!=''">
+						AUDIT_TIME = #{auditTime},
+				</if>
+		</set>
+		<where>
+					 PAYORDNO =  #{payordno}
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="payMap">
+		SELECT 
+		          PAYORDNO, 
+		         CUST_ID, 
+		         PAYSTATUS, 
+		         PAYORDTYPE, 
+		         PAYTYPE, 
+		         TER_NO, 
+		         TXAMT, 
+		         RATE, 
+		         RATE_TYPE, 
+		         FEE, 
+		         NETRECAMT, 
+		         PAY_CHANNEL, 
+		         PAY_CARDNO, 
+		         ISSNAM, 
+		         CRDNAM, 
+		         PAY_SIGN_PIC, 
+		         PAY_DATE, 
+		         PAY_TIME, 
+		         PAYORDTIME, 
+		         MODIFY_TIME,
+		         THIRD_PARTY_ORD_NO
+		FROM 
+		        MPOMNG_PAY_INF
+		WHERE
+		  1 = 1
+		         <if test="payordno!= null and payordno!= ''">
+						AND PAYORDNO =  #{payordno}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="paystatus!= null and paystatus!= ''">
+						AND PAYSTATUS =  #{paystatus}
+				</if>
+		        <if test="payordtype!= null and payordtype!= ''">
+						AND PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype!= null and paytype!= ''">
+						AND PAYTYPE =  #{paytype}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="txamt!= null and txamt!= ''">
+						AND TXAMT =  #{txamt}
+				</if>
+		
+	</select>
+	
+	<select id="selectPayInfAcc" parameterType="java.util.Map" resultMap="payAccMap">
+		SELECT 
+		         PAYORDNO, 
+		         pay.CUST_ID, 
+		         PAYSTATUS, 
+		         PAYORDTYPE, 
+		         PAYTYPE, 
+		         TER_NO, 
+		         TXAMT, 
+		         RATE, 
+		         RATE_TYPE, 
+		         FEE, 
+		         NETRECAMT, 
+		         PAY_CHANNEL, 
+		         PAY_CARDNO, 
+		         ISSNAM, 
+		         CRDNAM, 
+		         PAY_SIGN_PIC, 
+		         PAY_DATE, 
+		         PAY_TIME, 
+		         PAYORDTIME, 
+		         pay.MODIFY_TIME,
+		         THIRD_PARTY_ORD_NO,
+		         AC_BAL,
+		         AC_T1_AP,
+		         AC_T1_Y,
+		         AC_T1,
+		         AC_T0,
+		         AC_T1_UNA,
+		         AC_TYPE
+		FROM 
+		        MPOMNG_PAY_INF pay
+		LEFT JOIN 
+		        MPOMNG_CUST_ACCOUNT_INF acc ON acc.CUST_ID=pay.CUST_ID AND acc.AC_TYPE=pay.PAYTYPE
+		WHERE
+		  1 = 1
+		         <if test="payordno!= null and payordno!= ''">
+						AND PAYORDNO =  #{payordno}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND pay.CUST_ID =  #{custId}
+				</if>
+		        <if test="paystatus!= null and paystatus!= ''">
+						AND PAYSTATUS =  #{paystatus}
+				</if>
+		        <if test="payordtype!= null and payordtype!= ''">
+						AND PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype!= null and paytype!= ''">
+						AND PAYTYPE =  #{paytype}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="txamt!= null and txamt!= ''">
+						AND TXAMT =  #{txamt}
+				</if>
+		
+	</select>
+
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+			INSERT INTO MPOMNG_PAY_INF  (
+		         PAYORDNO, 
+		         CUST_ID, 
+		         PAYSTATUS, 
+		         PAYORDTYPE, 
+		         PAYTYPE, 
+		         TER_NO, 
+		         TXAMT, 
+		         RATE, 
+		         RATE_TYPE, 
+		         FEE, 
+		         NETRECAMT, 
+		         PAY_CHANNEL, 
+		         PAY_CARDNO, 
+		         ISSNAM, 
+		         CRDNAM, 
+		         PAY_SIGN_PIC, 
+		         PAY_DATE, 
+		         PAY_TIME, 
+		         PAYORDTIME, 
+		         MODIFY_TIME,
+		         AUDIT_STATUS,
+		         CARD_SIGN_PIC
+				)
+		VALUES (
+		          #{payordno,jdbcType=VARCHAR}, 
+		          #{custId,jdbcType=VARCHAR}, 
+		          #{paystatus,jdbcType=VARCHAR}, 
+		          #{payordtype,jdbcType=VARCHAR}, 
+		          #{paytype,jdbcType=VARCHAR}, 
+		          #{termNo,jdbcType=VARCHAR}, 
+		          #{txamt,jdbcType=VARCHAR}, 
+		          #{rate,jdbcType=VARCHAR}, 
+		          #{rateType,jdbcType=VARCHAR}, 
+		          #{fee,jdbcType=VARCHAR},  
+		          #{netrecamt,jdbcType=VARCHAR}, 
+		          #{payChannel,jdbcType=VARCHAR}, 
+		          #{payCardno,jdbcType=VARCHAR}, 
+		          #{issnam,jdbcType=VARCHAR}, 
+		          #{crdnam,jdbcType=VARCHAR}, 
+		          #{paySignPic,jdbcType=VARCHAR}, 
+		          #{payDate,jdbcType=VARCHAR}, 
+		          #{payTime,jdbcType=VARCHAR}, 
+		          #{payordtime,jdbcType=VARCHAR}, 
+		          #{modifyTime,jdbcType=VARCHAR},
+		          #{auditStatus,jdbcType=VARCHAR},
+		          #{cardSignPic,jdbcType=VARCHAR}
+		      )
+	</insert>
+</mapper>

@@ -1,0 +1,92 @@
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpomng/merProfitRuleEdit/edit.do" id="_form">
+	<br/>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1">分润类型: </label>
+		<div class="col-sm-9">
+				<select 
+						rel="obj.PROFIT_TYPE"
+			 			location="local" 
+						name="profitType" 
+			 			id="edit_profitType" 
+			 			disabled="disabled"
+			 			data-placeholder="请选择分润类型" style="width: 100px;vertical-align:middle;">
+					<option value='' >--请选择--</option>
+			 	</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 商户等级: </label>
+		<div class="col-sm-9">
+			<select 
+			        rel="obj.options" valName="" textName=""
+					location="mprcs/selectoption/custLevel.do" 
+					name="custClass"
+					id="edit_custClass" 
+					disabled="disabled"
+					data-placeholder="请选择商户等级" style="width: 100px; vertical-align: middle;">
+					<option value=''>--请选择--</option>
+				</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 分润比（%）： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="ratePercent" name="ratePercent" placeholder="请输入[分润比]" 
+				class="col-xs-10 col-sm-7"  />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 封顶（元）： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="rateTop" name="rateTop" placeholder="请输入[封顶]"  init-format="cent2Yuan('{value}')"
+				class="col-xs-10 col-sm-7"  />
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+});
+
+
+function submitForm(obj){
+	$("#edit_profitType").removeAttr("disabled");
+	$("#edit_custClass").removeAttr("disabled");
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+
+
+</script>

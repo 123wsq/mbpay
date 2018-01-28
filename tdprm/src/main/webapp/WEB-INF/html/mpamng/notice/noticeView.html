@@ -1,0 +1,108 @@
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);" action="mpomng/notice/saveNotice.do" >
+ <br/>
+	<!-- #section:elements.form -->
+	<input type="hidden" name="id" />
+	<input type="hidden" name="noticeId" id="noticeId"/>
+	<div class="page-content">
+		<div class="col-sm-12 col-xs-12">
+			<div class="row message-container">
+				<div id="id-message-new-navbar" class="message-navbar clearfix">
+					<div class="message-bar">
+						<div class="message-toolbar">
+						</div>
+					</div>
+					<span id="title_content"  style="font-size: 15px;font-weight: bold;"></span>
+					<div>
+						<div class="messagebar-item-left">
+							<a href="#" class="btn-back-message-list" onclick="javascript:dialog.close(this);">
+								<i class="ace-icon fa fa-arrow-left bigger-110 middle blue"></i>
+								<b class="middle bigger-110">Back</b>
+							</a>
+						</div>
+						<div class="messagebar-item-right">
+							<i class="ace-icon fa fa-clock-o bigger-110 orange"></i>
+							<span id="title_time" class="grey"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="space-4"></div>
+				<i class="ace-icon fa fa-star orange2"></i>
+				&nbsp;&nbsp;
+				<img class="middle" alt="John's Avatar" src="ace_v1.3/assets/avatars/avatar.png" width="32" />
+				&nbsp;
+				<a id="content_noticeIssue" href="#" class="sender"></a>
+				&nbsp;&nbsp;
+				<i class="ace-icon fa fa-clock-o bigger-110 orange middle"></i>
+				&nbsp;
+				<span id="content_time" class="time grey"></span>
+				&nbsp;&nbsp;
+				<i class="ace-icon fa fa-desktop bigger-110 orange middle"></i>
+				&nbsp;
+				<span id="notice_plantForm" class="time grey"></span>
+			</div>
+			<div class="row">
+				<div class="hr hr-double"></div>
+				<div id="content_body"></div>
+				<div class="hr hr-double"></div>
+					<input type="hidden" id="attachmentId" name="attachmentId">
+					<div id="addFileDiv">
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px"></div>
+		
+	<input type="hidden" id="noticeTitle" name="noticeTitle"/>
+	<input type="hidden" id="noticeIssueDate" name="noticeIssueDate"/>
+	<input type="hidden" id="noticeIssue" name="noticeIssue"/>
+	<input type="hidden" id="noticePlatform" name="noticePlatform"/>
+	<input type="hidden" name="noticeBody" id="noticeBody"/>
+	
+</form>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+
+	var time = setInterval(function(){
+		if($("#noticeId",$("#dlg-NoticeView")).val()!=''){
+			$("#title_time").html($("#noticeIssueDate",$("#dlg-NoticeView")).val());
+			$("#content_time").html($("#noticeIssueDate",$("#dlg-NoticeView")).val());
+			$("#content_noticeIssue").html($("#noticeIssue",$("#dlg-NoticeView")).val());
+			$("#content_body").html($("#noticeBody",$("#dlg-NoticeView")).val());
+			$("#title_content").html($("#noticeTitle",$("#dlg-NoticeView")).val());
+			if($("#noticePlatform",$("#dlg-NoticeView")).val() == '1'){
+				$("#notice_plantForm").html("代理商");
+			}else{
+				$("#notice_plantForm").html("商户(手机APP)");
+			}
+			initFileDiv();
+			clearInterval(time);
+		}
+	},100);
+	
+	// 页面初始化时，添加已有的附件
+	function initFileDiv(){
+		 $.ajax({
+			 type:"post",
+			 dataType:"json",
+			 url:"mpamng/attachment/" + $("#attachmentId").val() + "/list.do",
+			 success : function(result) {
+				 $.each(result.rows,function(index,obj){
+					 var fileCont = index + 1;
+					 var btnObj = "";
+					 var fileObj  = '<div class="form-group" id="protoFileDiv">'+
+							'<div class="col-sm-3" style="margin-top:5px;">附件：'+
+							obj.fjName +'</div></div>';
+						$("#addFileDiv").append(fileObj);
+					});
+				},
+			 error : function(XMLHttpRequest, textStatus) {
+				}
+		 });
+	}
+</script>

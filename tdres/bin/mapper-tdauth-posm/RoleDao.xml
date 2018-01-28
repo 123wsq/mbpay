@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.tdauth.dao.RoleDao">
+
+	<resultMap type="RoleInf" id="RoleQueryByConMap">
+		<result property="sysId" column="SYS_ID" />
+		<result property="roleId" column="ROLE_ID" />
+		<result property="roleName" column="ROLE_NAM" />
+		<result property="roleDesc" column="ROLE_DESC" />
+		<result property="roleStatus" column="ROLE_STATE" />
+		<result property="orgId" column="ORG_ID" />
+		<result property="sysNam" column="SYS_NAM" />
+		
+	</resultMap>
+
+	<resultMap id="RoleResultMap" type="RoleInf" extends="RoleQueryByConMap">
+		<collection property="list" javaType="UserInf">
+			<id property="id" column="RUID" />
+			<id property="userId" column="USER_ID" />
+			<result property="orgId" column="ORG_ID" />
+			<result property="userName" column="USER_NAME" />
+			<result property="userRandom" column="USER_RANDOM" />
+			<result property="userStatus" column="USER_STATUS" />
+		</collection>
+	</resultMap>
+
+	<select id="selectRoleStateByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select COUNT(*) from AUTH_ROLE_INF T1
+		WHERE role_status ='0'
+		and EXISTS(
+		select 'X' from AUTH_USER_ROLE_REL_INF T2
+		WHERE T2.U_ID =#{uid}
+		AND T2.R_ID=T1. ROLE_ID)
+	</select>
+	<select id="selectRoleInfByUser" parameterType="java.lang.String" resultMap="RoleQueryByConMap">
+		SELECT
+		T2.ROLE_ID AS ROLE_ID,
+		T2.ROLE_NAM AS ROLE_NAM,
+		T2.ROLE_DESC AS ROLE_DESC,
+		T2.SYS_ID AS SYS_ID
+		FROM
+		PMROLEINF T2
+		WHERE
+		T2.ROLE_ID IN (
+		SELECT T1.ROLE_ID
+		FROM PMRURELE T1
+		WHERE T1.USER_ID = #{UID}
+		)
+
+	</select>
+	
+	<select id="selectRoleInfByUserId" parameterType="UserInf" resultMap="RoleQueryByConMap">
+		SELECT
+		T2.ROLE_ID AS ROLE_ID,
+		T2.ROLE_NAM AS ROLE_NAM,
+		T2.ROLE_DESC AS ROLE_DESC,
+		T2.SYS_ID AS SYS_ID
+		FROM
+		PMROLEINF T2
+		WHERE
+		T2.ROLE_ID IN (
+		SELECT t.ROLE_ID
+		FROM
+	PMRURELE  t
+    LEFT JOIN PMUSRINF u ON u.user_id = t.user_id
+     WHERE 	u.LOGIN_ID =#{userId} and u.AGENTID =#{agentId})
+
+	</select>
+	
+	<select id="countRole" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) num from PMROLEINF ro left join PMRURELE ru on ro.role_id=ru.role_id 
+		<where>
+			<if test="roleId !=null">
+				role_id = #{roleId}
+			</if>
+			<if test="roleName != null">
+				and ro.ROLE_NAM = #{roleName}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				and ru.AGENTID = #{agentId}
+			</if>
+			<if test="roleDesc != null and roleDesc !='' ">
+				and ROLE_DESC = #{roleDesc}
+			</if>
+			<if test="sysId != null and sysId !='' ">
+				and SYS_ID = #{sysId}
+			</if>
+		</where>
+	</select>
+	<select id="selectListPage" parameterType="java.util.HashMap" resultMap="RoleQueryByConMap" databaseId="oracle">
+		SELECT * FROM
+		(
+		select a.* ,ROWNUM as num from PMROLEINF a
+		<where>
+			<if test="roleName != null and roleName != '' ">
+				ROLE_NAM LIKE CONCAT(#{roleName},'%')
+			</if>
+			<if test="roleId != null and roleId != '' ">
+				and role_id LIKE CONCAT(#{roleId},'%')
+			</if>
+			<if test="roleStatus != null and roleStatus != '' ">
+				and role_state = ${roleStatus}
+			</if>
+			<if test="agentId != null and agentId != '' ">
+				and ROLE_FLAG = ${agentId}
+			</if>
+			<if test="sysId != null and sysId !='' ">
+				AND SYS_ID = #{sysId}
+			</if>
+		</where>
+		order by ROLE_ID DESC
+		)
+		WHERE NUM &lt;= #{end} AND NUM &gt;= #{start}
+	</select>
+	
+	<sql id="WHERE_SELECT_ROLE">
+		<if test="roleName != null and roleName != '' ">
+				and role_nam LIKE CONCAT('%',#{roleName},'%')
+			</if>
+			<if test="roleId != null and roleId != '' ">
+				and role_id LIKE CONCAT('%',#{roleId},'%')
+			</if>
+			<if test="roleStatus != null and roleStatus != '' ">
+				and role_status = ${roleStatus}
+			</if>
+			<if test="orgIds != null and orgIds != '' ">
+				and org_id IN (${orgIds})
+			</if>
+			<if test="flag != null and flag != '' ">
+				and role_id != '0001'
+			</if>
+			<if test="sysId != null and sysId !='' ">
+				AND SYS_ID = #{sysId}
+			</if>
+	</sql>
+	
+	<select id="selectListPage" parameterType="java.util.HashMap" resultMap="RoleQueryByConMap" databaseId="mysql">
+		SELECT * FROM(
+			SELECT a.*,b.SYS_NAM FROM
+		    AUTH_ROLE_INF a left join AUTH_SYS_INF b on  a.SYS_ID=b.SYS_ID 
+		     <where>
+			    <if test="agentId != null and agentId != '' ">
+					a.SYS_ID=#{sysId} and a.AGENT_ID=#{agentId} OR a.ROLE_ID='0002'
+				</if>
+		    </where>
+	    ) ROLE
+		where 1=1
+		<include refid="WHERE_SELECT_ROLE"/>
+		ORDER BY ROLE_ID DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="RoleInf" resultType="java.lang.Integer" databaseId="oracle">
+		SELECT COUNT(*) FROM PMROLEINF
+		<where>
+			<if test="roleName != null and roleName != '' ">
+				ROLE_NAM LIKE CONCAT(#{roleName},'%')
+			</if>
+			<if test="roleId != null and roleId != '' ">
+				and role_id LIKE CONCAT(#{roleId},'%')
+			</if>
+			<if test="roleStatus != null and roleStatus != '' ">
+				and role_state = ${roleStatus}
+			</if>
+			<if test="agentId != null and agentId != '' ">
+				and ROLE_FLAG = ${agentId}
+			</if>
+			<if test="sysId != null and sysId !='' ">
+				AND SYS_ID = #{sysId}
+			</if>
+		</where>
+	</select>
+	<select id="countEntity" parameterType="RoleInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT COUNT(*) FROM (
+			SELECT * FROM AUTH_ROLE_INF  WHERE SYS_ID = '0001' OR ROLE_ID='0002'
+		) ROLE
+		where 1=1
+		<include refid="WHERE_SELECT_ROLE"/>
+	</select>
+	<insert id="insertEntity" parameterType="com.tangdi.production.tdauth.bean.RoleInf">
+		INSERT INTO PMROLEINF  (ROLE_ID,SYS_ID,ROLE_NAM,ROLE_DESC,ROLE_STATE,ROLE_CRER,CRE_TIM,ROLE_FLAG)
+		VALUES (#{roleId,jdbcType=VARCHAR},'0002',#{roleName,jdbcType=VARCHAR},#{roleDesc,jdbcType=VARCHAR},'1','1','1',#{agentId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertRu" parameterType="com.tangdi.production.tdauth.bean.RoleInf">
+		INSERT INTO PMRURELE   (ROLE_ID,AGENTID,USER_ID)
+		VALUES (#{roleId,jdbcType=VARCHAR},#{agentId},'1')
+	</insert>
+	<insert id="insertRef" parameterType="java.util.HashMap">
+		insert into PMRMRELE (MENU_ID,SYS_ID,ROLE_ID)
+		SELECT MENU_ID,'0002',#{roleId} AS ROLE_ID FROM PMMENINF WHERE MENU_ID IN(${menuId})
+	</insert>
+	<delete id="deleteMenuRefByRole" parameterType="java.lang.String">
+		delete from PMRMRELE where role_id = #{roleId}
+	</delete>
+	<update id="updateEntity" parameterType="RoleInf">
+		UPDATE PMROLEINF
+		<set>
+			<if test="roleName != null">
+				ROLE_NAM = #{roleName},
+			</if>
+			<if test="roleDesc != null">
+				ROLE_DESC = #{roleDesc},
+			</if>
+			<if test="roleStatus != null">
+				ROLE_STATE = #{roleStatus},
+			</if>
+			<if test="sysId != null">
+				SYS_ID = #{sysId},
+			</if>
+		</set>
+		WHERE role_id = #{roleId}
+	</update>
+
+	<update id="deleteEntity" parameterType="RoleInf">
+		UPDATE AUTH_ROLE_INF
+		SET ROLE_STATUS = #{roleStatus}
+		WHERE role_id = #{roleId}
+	</update>
+
+	<update id="deleteEntityList" parameterType="java.util.Map">
+		UPDATE PMROLEINF
+		SET ROLE_STATE = #{status}
+		WHERE ROLE_ID IN
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<select id="queryEntityAll"   resultMap="RoleQueryByConMap">
+		select * from PMROLEINF where 1=1 and SYS_ID = #{sysId}
+		<if test="agentId != null and agentId !=''">
+				AND ROLE_FLAG = #{agentId}
+			</if>
+	</select>
+
+	<select id="queryEntityByCon" parameterType="java.util.Map" resultMap="RoleQueryByConMap">
+		SELECT * FROM AUTH_ROLE_INF
+		<where>
+			<if test="roleId != null">
+				AND ROLE_ID = #{roleId}
+			</if>
+			<if test="roleName != null">
+				AND ROLE_NAM = #{roleName}
+			</if>
+			<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+			</if>
+			<if test="roleStatus != null">
+				AND ROLE_STATUS = #{roleStatus}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectEntityById" parameterType="java.lang.String" resultMap="RoleResultMap">
+		SELECT 
+		T1.ROLE_ID,
+		T1.SYS_ID,
+		T1.ROLE_NAM,
+		T1.ROLE_DESC,
+		T1.ROLE_STATE,
+		T3.USER_ID AS RUID,
+		T3.LOGIN_ID,
+		T3.USER_NAM,
+		T3.RANDOM,
+		T3.USER_STATE
+		FROM PMROLEINF T1
+		LEFT JOIN PMRURELE T2 ON(T1.ROLE_ID=T2.ROLE_ID)
+		LEFT JOIN PMUSRINF T3 ON(T2.USER_ID=T3.USER_ID)
+		WHERE T1.ROLE_ID = #{roleId}
+
+	</select>
+
+
+</mapper>

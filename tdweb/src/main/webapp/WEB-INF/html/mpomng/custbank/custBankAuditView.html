@@ -1,0 +1,110 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<!-- <input type="hidden" id="agentId" name="agentId"/>
+	<input type="hidden" id="editUserId" name="editUserId"/>
+	<input type="hidden" id="approved" name="approved"/> -->
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right">
+						失败原因简要分类： </label>
+		<div class="col-sm-9">
+			 <select name="defeatReason" 
+			 	 id="defeatReason" 
+			 	 data-placeholder="请选择状态" width="200%">
+				<option value='' >--请选择--</option>
+				<option value='1' >图片有误</option>
+				<option value='2' >支行信息有误</option>
+				<option value='3' >其他</option>
+			 </select>
+		</div>
+	</div>
+		<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1">失败原因详细描述： </label>
+		<div class="col-sm-9">
+		<input id="defeatReasonDes" type="text" name="defeatReasonDes" validate="true"/>
+				<!-- <textarea rows="5" cols="47" placeholder="审核意见" id="auditFailReason" name="auditFailReason"  >
+				</textarea> -->
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-small btn_search" type="button"
+			onclick="bankAuditSubmit()" id="agreeBtn">保存</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				取消
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+function bankAuditSubmit(){
+	var defeatReason = $("#defeatReason").val()
+	if(defeatReason.length<=0){
+	 	TDTips($("#defeatReason"),"不能为空");
+	 	return false;
+	}
+	var defeatReasonDes=$("#defeatReasonDes").val();
+	if(defeatReasonDes.length<=0){
+			 	TDTips($("#defeatReasonDes"),"不能为空");
+			 	return false;
+	}
+	
+	var dialog=$("#dlg-custAudit").Dialog();
+	var custId=dialog.pageParam.custId;
+	var cardNo=dialog.pageParam.cardNo;
+	var oldCardNo=dialog.pageParam.oldCardNo;
+	var custStatus=dialog.pageParam.custStatus;
+	var updateDesc=dialog.pageParam.updateDesc;
+	var tmsg = "审核拒绝吗？";
+	
+	msg.confirm({
+		title : '确认',
+		position : 'center',
+		msg : tmsg,
+		call : function(ok) {
+			if (ok) {
+				$.ajax({
+					type : "post",
+					url : "mpomng/custBankInfTempManage/audit.do",
+					data : {
+						"custId" : custId,
+						"cardNo" : cardNo,
+						"oldCardNo" : oldCardNo,
+						"updateDesc" : updateDesc,
+						"status" : custStatus,
+						"defeatReason":defeatReason,
+						"defeatReasonDes":defeatReasonDes
+					},
+					dataType : 'json',
+					success : function(result) {
+						if (result.rspcod == 200) {
+							msg.alert("提示", result.rspmsg, 'correct');
+							$("#grid-table").trigger("reloadGrid");
+							dialog.closeById('dlg-custAudit');
+							dialog.closeById('dlg-custBankTmpEdit');
+						} else {
+							msg.alert("错误", result.rspmsg, 'error');
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status
+								+ ",错误描述：" + textStatus, 'error');
+					}
+				});
+			}
+		}
+	});
+}
+
+</script>

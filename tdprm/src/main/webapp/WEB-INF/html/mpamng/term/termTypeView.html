@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpamng/term/eidtTermCom.do" id="termCom_form">
+	<!-- #section:elements.form -->
+	<br/>
+	<!-- 用户  -->
+	<input type="hidden" name="id" />
+	<input type="hidden" name="termId" />
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right" > 刷卡器名称： </label>
+		<div class="col-sm-5">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="termTypeName" name="termTypeName" placeholder="" class="col-xs-12 col-sm-12" validate="true" maxlength="10" datatype ="word"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right"> 刷卡器类型： </label>
+		<div class="col-sm-5">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="termType" name="termType" placeholder="" class="col-xs-12 col-sm-12" validate="true" maxlength="2" datatype ="number"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+			
+		
+	</div>
+	<br/><br/>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+		<button class="btn btn-info" type="submit">保存</button>
+		&nbsp; 
+		<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-termComEdit');">关闭</button>
+	</div>
+	
+</form>
+<script type="text/javascript">
+function submitForm(obj){
+	return validateCallback(obj,editUserDone);
+}
+
+function editUserDone(result){
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		$("#grid-table").trigger("reloadGrid");
+		dialog.closeById('dlg-termComEdit');
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+
+</script>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpsms.dao.MessageDao">
+	<resultMap type="MessageInf" id="MessageMap">
+	        <id property="smsId" 					column="SMS_ID" />
+	        <result property="smsType"              column="SMS_TYPE"    /> 
+		    <result property="smsMoblie"            column="SMS_MOBLIE"  /> 
+		    <result property="smsBody"              column="SMS_BODY"    /> 
+		    <result property="smsStatus"            column="SMS_STATUS"  /> 
+		    <result property="smsDate"              column="SMS_DATE"    /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="MessageInf">
+		UPDATE 
+				MPSMS_MESSAGE_INF
+		<set>
+		<if test="smsType!= null and smsType!= ''">
+						SMS_TYPE =  #{smsType},
+				</if>
+		        <if test="smsMoblie!= null and smsMoblie!= ''">
+						SMS_MOBLIE =  #{smsMoblie},
+				</if>
+		        <if test="smsBody!= null and smsBody!= ''">
+						SMS_BODY =  #{smsBody},
+				</if>
+		        <if test="smsStatus!= null and smsStatus!= ''">
+						SMS_STATUS =  #{smsStatus},
+				</if>
+		        <if test="smsDate!= null and smsDate!= ''">
+						SMS_DATE =  #{smsDate},
+				</if>
+		</set>
+		
+		WHERE
+				SMS_ID = #{smsId}
+	</update>
+
+	<select id="selectEntity" parameterType="MessageInf" resultMap="MessageMap">
+		SELECT 
+		         SMS_ID, 
+		         SMS_TYPE,
+		         SMS_MOBLIE, 
+		         SMS_BODY, 
+		         SMS_STATUS, 
+		         SMS_DATE
+		FROM 
+		        MPSMS_MESSAGE_INF
+		<where>
+		         
+		        <if test="smsId!= null and smsId!= ''">
+						AND SMS_ID =  #{smsId}
+				</if>
+				<if test="smsType!= null and smsType!= ''">
+						SMS_TYPE =  #{smsType}
+				</if>
+		        <if test="smsMoblie!= null and smsMoblie!= ''">
+						AND SMS_MOBLIE =  #{smsMoblie}
+				</if>
+		        <if test="smsBody!= null and smsBody!= ''">
+						AND SMS_BODY =  #{smsBody}
+				</if>
+		        <if test="smsStatus!= null and smsStatus!= ''">
+						AND SMS_STATUS =  #{smsStatus}
+				</if>
+		        <if test="smsDate!= null and smsDate!= ''">
+						AND SMS_DATE =  #{smsDate}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="MessageInf" resultMap="MessageMap" databaseId="mysql">
+		SELECT 
+		         SMS_ID, 
+		         SMS_TYPE,
+		         SMS_MOBLIE, 
+		         SMS_BODY, 
+		         SMS_STATUS, 
+		         SMS_DATE
+		FROM 
+		       MPSMS_MESSAGE_INF
+		<where>
+		        <if test="smsId!= null and smsId!= ''">
+						AND SMS_ID =  #{smsId}
+				</if>
+				<if test="smsType!= null and smsType!= ''">
+						SMS_TYPE =  #{smsType}
+				</if>
+		        
+		        <if test="smsStatus!= null and smsStatus!= ''">
+						AND SMS_STATUS =  #{smsStatus}
+				</if>
+		        <if test="smsDate!= null and smsDate!= ''">
+						AND SMS_DATE =  #{smsDate}
+				</if>
+				<if test="smsMoblie!= null and smsMoblie!= ''">
+						AND SMS_MOBLIE LIKE concat(#{smsMoblie},'%')
+				</if>
+		        <if test="smsBody!= null and smsBody!= ''">
+						AND SMS_BODY LIKE concat(#{smsBody},'%')
+						
+				</if>
+		</where>
+		ORDER BY SMS_ID  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="MessageInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(SMS_ID)
+		FROM 
+				MPSMS_MESSAGE_INF
+		<where>
+		        <if test="smsId!= null and smsId!= ''">
+						AND SMS_ID =  #{smsId}
+				</if>
+				<if test="smsType!= null and smsType!= ''">
+						SMS_TYPE =  #{smsType}
+				</if>
+		        <if test="smsMoblie!= null and smsMoblie!= ''">
+						AND SMS_MOBLIE =  #{smsMoblie}
+				</if>
+		        <if test="smsBody!= null and smsBody!= ''">
+						AND SMS_BODY =  #{smsBody}
+				</if>
+		        <if test="smsStatus!= null and smsStatus!= ''">
+						AND SMS_STATUS =  #{smsStatus}
+				</if>
+		        <if test="smsDate!= null and smsDate!= ''">
+						AND SMS_DATE =  #{smsDate}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="MessageInf">
+		INSERT INTO MPSMS_MESSAGE_INF  (
+		         SMS_ID,
+		         SMS_TYPE, 
+		         SMS_MOBLIE, 
+		         SMS_BODY, 
+		         SMS_STATUS, 
+		         SMS_DATE
+				)
+		VALUES (
+		          #{smsId,jdbcType=VARCHAR}, 
+		           #{smsType,jdbcType=VARCHAR}, 
+		          #{smsMoblie,jdbcType=VARCHAR}, 
+		          #{smsBody,jdbcType=VARCHAR}, 
+		          #{smsStatus,jdbcType=VARCHAR}, 
+		          #{smsDate,jdbcType=VARCHAR}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="MessageInf">
+		DELETE FROM MPSMS_MESSAGE_INF
+		WHERE SMS_ID= #{smsId}
+			 
+	</delete>
+</mapper>

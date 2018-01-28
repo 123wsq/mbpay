@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.MerProfitRuleDao">
+	<resultMap type="MerProfitRuleInf" id="merProfitRuleMap">
+		    <result property="profitType"               column="PROFIT_TYPE" /> 
+		    <result property="custClass"               column="CUST_CLASS" /> 
+		    <result property="ratePercent"               column="RATE_PERCENT" /> 
+		    <result property="rateTop"               column="RATE_TOP" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="MerProfitRuleInf">
+		UPDATE 
+				MPOMNG_MER_PROFIT_RULE_INF
+		<set>
+		        <if test="ratePercent!= null and ratePercent!= ''">
+						RATE_PERCENT =  #{ratePercent},
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						RATE_TOP =  #{rateTop}
+				</if>
+		</set>
+		<where>
+			    <if test="profitType!= null and profitType!= ''">
+						AND PROFIT_TYPE =  #{profitType}
+				</if>
+		        <if test="custClass!= null and custClass!= ''">
+						AND CUST_CLASS =  #{custClass}
+				</if>
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="MerProfitRuleInf" resultMap="merProfitRuleMap">
+		SELECT 
+		         PROFIT_TYPE, 
+		         CUST_CLASS, 
+		         RATE_PERCENT, 
+		         RATE_TOP
+		FROM 
+		        MPOMNG_MER_PROFIT_RULE_INF
+		<where>
+		        <if test="profitType!= null and profitType!= ''">
+						AND PROFIT_TYPE =  #{profitType}
+				</if>
+		        <if test="custClass!= null and custClass!= ''">
+						AND CUST_CLASS =  #{custClass}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="MerProfitRuleInf" resultMap="merProfitRuleMap" databaseId="mysql">
+		SELECT 
+		         PROFIT_TYPE, 
+		         CUST_CLASS, 
+		         RATE_PERCENT, 
+		         RATE_TOP 
+		FROM 
+		       MPOMNG_MER_PROFIT_RULE_INF
+		<where>
+		        <if test="profitType!= null and profitType!= ''">
+						AND PROFIT_TYPE =  #{profitType}
+				</if>
+		        <if test="custClass!= null and custClass!= ''">
+						AND CUST_CLASS =  #{custClass}
+				</if>
+		        <if test="ratePercent!= null and ratePercent!= ''">
+						AND RATE_PERCENT =  #{ratePercent}
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						AND RATE_TOP =  #{rateTop}
+				</if>
+		</where>
+		ORDER BY  PROFIT_TYPE,CUST_CLASS DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="MerProfitRuleInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPOMNG_MER_PROFIT_RULE_INF
+		<where>
+		        <if test="profitType!= null and profitType!= ''">
+						AND PROFIT_TYPE =  #{profitType}
+				</if>
+		        <if test="custClass!= null and custClass!= ''">
+						AND CUST_CLASS =  #{custClass}
+				</if>
+		        <if test="ratePercent!= null and ratePercent!= ''">
+						AND RATE_PERCENT =  #{ratePercent}
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						AND RATE_TOP =  #{rateTop}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="MerProfitRuleInf">
+		INSERT INTO MPOMNG_MER_PROFIT_RULE_INF  (
+		         PROFIT_TYPE, 
+		         CUST_CLASS, 
+		         RATE_PERCENT, 
+		         RATE_TOP
+				)
+		VALUES (
+		          #{profitType}, 
+		          #{custClass}, 
+		          #{ratePercent}, 
+		          #{rateTop}
+		      )
+	</insert>
+	
+</mapper>

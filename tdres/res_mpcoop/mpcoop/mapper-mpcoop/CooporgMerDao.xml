@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpcoop.dao.CooporgMerDao">
+	<resultMap type="CooporgMerInf" id="cooporgMerMap">
+		    <result property="cooporgNo"               column="COOPORG_NO" /> 
+		    <result property="merNo"               column="MER_NO" /> 
+		    <result property="terNo"               column="TER_NO" /> 
+		    <result property="merName"               column="MER_NAME" /> 
+		    <result property="merKey"               column="MER_KEY" /> 
+		    <result property="checkValue"               column="CHECK_VALUE" /> 
+		    <result property="rateT0"               column="RATE_T0" /> 
+		    <result property="rateT1"               column="RATE_T1" /> 
+		    <result property="rateTop"               column="RATE_TOP" /> 
+		    <result property="merStatus"               column="MER_STATUS" /> 
+		    <result property="dtLimit"               column="DT_LIMIT" /> 
+		    <result property="mtLimit"               column="MT_LIMIT" /> 
+		    <result property="lowLimit"               column="LOW_LIMIT" /> 
+		    <result property="highLimit"               column="HIGH_LIMIT" /> 
+		    <result property="batchNo"               column="BATCH_NO" /> 
+		    <result property="signTime"               column="SIGN_TIME" /> 
+		    <result property="editDate"               column="EDIT_DATE" /> 
+		    <result property="editUserId"               column="EDIT_USER_ID" /> 
+		    <result property="signcount"               column="SIGNCOUNT" /> 
+		    <result property="rateType"               column="RATE_TYPE" /> 
+		    <result property="rateTypeTop"               column="RATE_TYPE_TOP" /> 
+		    <result property="mType"               column="M_TYPE" /> 
+		    <result property="mID"               column="M_ID" /> 
+		    <result property="provinceID"               column="PROVINCE_ID" /> 
+		    <result property="provinceName"               column="PROVINCE_NAME" />
+		      <result property="coopName"               column="COOPNAME" />
+	</resultMap>
+	
+	<select id="getFjpath" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT FJPATH FROM 	ATTACHMENT WHERE ID = #{uploadFileId}
+	</select>
+	
+	<select id="identifyEntity" parameterType="CooporgMerInf" resultType="java.lang.Integer">
+		SELECT count(TER_NO)
+		FROM MPCOOP_COOPORG_MER_INF
+		<where>
+			<if test="cooporgNo != null and cooporgNo != '' ">
+				COOPORG_NO =#{cooporgNo}
+			</if>
+			<if test="merNo != null and merNo != '' ">
+				AND MER_NO =#{merNo}
+			</if>
+			<if test="terNo != null and terNo != '' ">
+				AND TER_NO =#{terNo}
+			</if>
+			
+		</where>
+	</select>
+	<update id="updatesigEntity" parameterType="CooporgMerInf">
+	   UPDATE  MPCOOP_COOPORG_MER_INF
+	   <set>
+	        <if test="batchNo!= null and batchNo!= ''">
+						BATCH_NO =  #{batchNo},
+			</if>
+		    <if test="1==1">
+						SIGN_TIME =  date_format(now(),'%Y%m%d%H%i%s')
+			</if>
+			
+	   </set>
+	   <where>
+			   <if test="cooporgNo!= null and cooporgNo!= ''">
+						COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+					AND	MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+					AND	TER_NO =  #{terNo}
+				</if>
+		</where>
+    </update>
+	
+	<update id="updateEntity" parameterType="CooporgMerInf">
+		UPDATE 
+				MPCOOP_COOPORG_MER_INF
+		<set>
+		       
+		        <if test="merName!= null and merName!= ''">
+						MER_NAME =  #{merName},
+				</if>
+		        <if test="merKey!= null and merKey!= ''">
+						MER_KEY =  #{merKey},
+				</if>
+		        <if test="checkValue!= null and checkValue!= ''">
+						CHECK_VALUE =  #{checkValue},
+				</if>
+		        <if test="rateT0!= null and rateT0!= ''">
+						RATE_T0 =  #{rateT0},
+				</if>
+		        <if test="rateT1!= null and rateT1!= ''">
+						RATE_T1 =  #{rateT1},
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						RATE_TOP =  #{rateTop},
+				</if>
+		        <if test="merStatus!= null and merStatus!= ''">
+						MER_STATUS =  #{merStatus},
+				</if>
+		        <if test="dtLimit!= null and dtLimit!= ''">
+						DT_LIMIT =  #{dtLimit},
+				</if>
+		        <if test="mtLimit!= null and mtLimit!= ''">
+						MT_LIMIT =  #{mtLimit},
+				</if>
+		        <if test="lowLimit!= null and lowLimit!= ''">
+						LOW_LIMIT =  #{lowLimit},
+				</if>
+		        <if test="highLimit!= null and highLimit!= ''">
+						HIGH_LIMIT =  #{highLimit},
+				</if>
+		        <if test="batchNo!= null and batchNo!= ''">
+						BATCH_NO =  #{batchNo},
+				</if>
+		        <if test="signTime!= null and signTime!= ''">
+						SIGN_TIME =  #{signTime},
+				</if>
+		        <if test="1==1">
+						EDIT_DATE =  date_format(now(),'%Y%m%d%H%i%s'),
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						EDIT_USER_ID =  #{editUserId},
+				</if>
+		        <if test="signcount!= null and signcount!= ''">
+						SIGNCOUNT =  #{signcount},
+				</if>
+		       <if test="rateType!= null and rateType!= ''">
+						 RATE_TYPE =  #{rateType},
+				</if>
+				<if test="rateTypeTop!= null and rateTypeTop!= ''">
+						 RATE_TYPE_TOP =  #{rateTypeTop},
+				</if>
+				<if test="mType!= null and mType!= ''">
+						 M_TYPE =  #{mType},
+				</if>
+				<if test="mID!= null and mID!= ''">
+						 M_ID =  #{mID}
+				</if>
+		</set>
+		<where>
+			   <if test="cooporgNo!= null and cooporgNo!= ''">
+						COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+					AND	MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+					AND	TER_NO =  #{terNo}
+				</if>
+		</where>
+	</update>
+
+   
+	<select id="selectEntity" parameterType="CooporgMerInf" resultMap="cooporgMerMap">
+		SELECT 
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         MER_NAME, 
+		         MER_KEY, 
+		         CHECK_VALUE, 
+		         RATE_T0, 
+		         RATE_T1,
+		         RATE_TOP, 
+		         MER_STATUS,
+		         cast(cast(DT_LIMIT as decimal(10,0))/100 as decimal(10,0)) as DT_LIMIT,
+		         cast(cast(MT_LIMIT as decimal(10,0))/100 as decimal(10,0)) as MT_LIMIT,
+		         cast(cast(LOW_LIMIT as decimal(10,0))/100 as decimal(10,0)) as LOW_LIMIT, 
+		         cast(cast(HIGH_LIMIT as decimal(10,0))/100 as decimal(10,0)) as HIGH_LIMIT,  
+		         BATCH_NO,
+		         DATE_FORMAT(SIGN_TIME, '%Y-%m-%d %H:%i:%s') as SIGN_TIME,
+		         DATE_FORMAT(EDIT_DATE, '%Y-%m-%d %H:%i:%s') as EDIT_DATE, 
+		         EDIT_USER_ID, 
+		         SIGNCOUNT, 
+		         RATE_TYPE,
+		         RATE_TYPE_TOP,
+		         M_TYPE,
+		         M_ID
+		FROM 
+		        MPCOOP_COOPORG_MER_INF
+		<where>
+		         1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="merName!= null and merName!= ''">
+						AND MER_NAME =  #{merName}
+				</if>
+		        <if test="merKey!= null and merKey!= ''">
+						AND MER_KEY =  #{merKey}
+				</if>
+		        <if test="checkValue!= null and checkValue!= ''">
+						AND CHECK_VALUE =  #{checkValue}
+				</if>
+		        <if test="rateT0!= null and rateT0!= ''">
+						AND RATE_T0 =  #{rateT0}
+				</if>
+		        <if test="rateT1!= null and rateT1!= ''">
+						AND RATE_T1 =  #{rateT1}
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						AND RATE_TOP =  #{rateTop}
+				</if>
+		        <if test="merStatus!= null and merStatus!= ''">
+						AND MER_STATUS =  #{merStatus}
+				</if>
+		        <if test="dtLimit!= null and dtLimit!= ''">
+						AND DT_LIMIT =  #{dtLimit}
+				</if>
+		        <if test="mtLimit!= null and mtLimit!= ''">
+						AND MT_LIMIT =  #{mtLimit}
+				</if>
+		        <if test="lowLimit!= null and lowLimit!= ''">
+						AND LOW_LIMIT =  #{lowLimit}
+				</if>
+		        <if test="highLimit!= null and highLimit!= ''">
+						AND HIGH_LIMIT =  #{highLimit}
+				</if>
+		        <if test="batchNo!= null and batchNo!= ''">
+						AND BATCH_NO =  #{batchNo}
+				</if>
+		        <if test="signTime!= null and signTime!= ''">
+						AND SIGN_TIME =  #{signTime}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		        <if test="signcount!= null and signcount!= ''">
+						AND SIGNCOUNT =  #{signcount}
+				</if>
+				<if test="rateType!= null and rateType!= ''">
+						AND RATE_TYPE =  #{rateType}
+				</if>
+				<if test="rateTypeTop!= null and rateTypeTop!= ''">
+						AND RATE_TYPE_TOP =  #{rateTypeTop}
+				</if>
+		        <if test="mType!= null and mType!= ''">
+						AND M_TYPE =  #{mType}
+				</if>
+				<if test="mID!= null and mID!= ''">
+						AND M_ID =  #{mID}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="CooporgMerInf" resultMap="cooporgMerMap" databaseId="mysql">
+		SELECT 
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         MER_NAME, 
+		         MER_KEY, 
+		         CHECK_VALUE, 
+		         RATE_T0, 
+		         RATE_T1,
+		         RATE_TOP, 
+		         MER_STATUS,
+		         cast(cast(DT_LIMIT as decimal(10,0))/100 as decimal(10,0)) as DT_LIMIT,
+		         cast(cast(MT_LIMIT as decimal(10,0))/100 as decimal(10,0)) as MT_LIMIT,
+		         cast(cast(LOW_LIMIT as decimal(10,0))/100 as decimal(10,0)) as LOW_LIMIT, 
+		         cast(cast(HIGH_LIMIT as decimal(10,0))/100 as decimal(10,0)) as HIGH_LIMIT,  
+		         BATCH_NO, 
+		         SIGN_TIME, 
+		         EDIT_DATE, 
+		         EDIT_USER_ID, 
+		         SIGNCOUNT, 
+		         RATE_TYPE,
+		         cast(cast(RATE_TYPE_TOP as decimal(10,0))/100 as decimal(10,0)) as RATE_TYPE_TOP
+		FROM 
+		       MPCOOP_COOPORG_MER_INF
+		<where>
+		    1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO LIKE CONCAT('%',#{cooporgNo},'%')
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO LIKE CONCAT('%',#{merNo},'%') 
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO LIKE CONCAT('%',#{terNo},'%')  
+				</if>
+		        <if test="merName!= null and merName!= ''">
+						AND MER_NAME LIKE CONCAT('%',#{merName},'%') 
+				</if>
+		        <if test="merKey!= null and merKey!= ''">
+						AND MER_KEY =  #{merKey}
+				</if>
+		        <if test="checkValue!= null and checkValue!= ''">
+						AND CHECK_VALUE =  #{checkValue}
+				</if>
+		        <if test="rateT0!= null and rateT0!= ''">
+						AND RATE_T0 =  #{rateT0}
+				</if>
+		        <if test="rateT1!= null and rateT1!= ''">
+						AND RATE_T1 =  #{rateT1}
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						AND RATE_TOP =  #{rateTop}
+				</if>
+		        <if test="merStatus!= null and merStatus!= ''">
+						AND MER_STATUS =  #{merStatus}
+				</if>
+		        <if test="dtLimit!= null and dtLimit!= ''">
+						AND DT_LIMIT =  #{dtLimit}
+				</if>
+		        <if test="mtLimit!= null and mtLimit!= ''">
+						AND MT_LIMIT =  #{mtLimit}
+				</if>
+		        <if test="lowLimit!= null and lowLimit!= ''">
+						AND LOW_LIMIT =  #{lowLimit}
+				</if>
+		        <if test="highLimit!= null and highLimit!= ''">
+						AND HIGH_LIMIT =  #{highLimit}
+				</if>
+		        <if test="batchNo!= null and batchNo!= ''">
+						AND BATCH_NO =  #{batchNo}
+				</if>
+		        <if test="signTime!= null and signTime!= ''">
+						AND SIGN_TIME =  #{signTime}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		        <if test="signcount!= null and signcount!= ''">
+						AND SIGNCOUNT =  #{signcount}
+				</if>
+				<if test="rateType!= null and rateType!= ''">
+						AND RATE_TYPE =  #{rateType}
+				</if>
+				<if test="rateTypeTop!= null and rateTypeTop!= ''">
+						AND RATE_TYPE_TOP =  #{rateTypeTop}
+				</if>
+	        	<if test="startTime != null and startTime != ''">
+					AND EDIT_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND EDIT_DATE <= #{endTime} ]]>
+				</if>
+		</where>
+		ORDER BY COOPORG_NO DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CooporgMerInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPCOOP_COOPORG_MER_INF
+		<where>
+			 1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO LIKE CONCAT('%',#{cooporgNo},'%')
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO LIKE CONCAT('%',#{merNo},'%') 
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO LIKE CONCAT('%',#{terNo},'%')
+				</if>
+		        <if test="merName!= null and merName!= ''">
+						AND MER_NAME LIKE CONCAT('%',#{merName},'%')
+				</if>
+		        <if test="merKey!= null and merKey!= ''">
+						AND MER_KEY =  #{merKey}
+				</if>
+		        <if test="checkValue!= null and checkValue!= ''">
+						AND CHECK_VALUE =  #{checkValue}
+				</if>
+		        <if test="rateT0!= null and rateT0!= ''">
+						AND RATE_T0 =  #{rateT0}
+				</if>
+		        <if test="rateT1!= null and rateT1!= ''">
+						AND RATE_T1 =  #{rateT1}
+				</if>
+		        <if test="rateTop!= null and rateTop!= ''">
+						AND RATE_TOP =  #{rateTop}
+				</if>
+		        <if test="merStatus!= null and merStatus!= ''">
+						AND MER_STATUS =  #{merStatus}
+				</if>
+		        <if test="dtLimit!= null and dtLimit!= ''">
+						AND DT_LIMIT =  #{dtLimit}
+				</if>
+		        <if test="mtLimit!= null and mtLimit!= ''">
+						AND MT_LIMIT =  #{mtLimit}
+				</if>
+		        <if test="lowLimit!= null and lowLimit!= ''">
+						AND LOW_LIMIT =  #{lowLimit}
+				</if>
+		        <if test="highLimit!= null and highLimit!= ''">
+						AND HIGH_LIMIT =  #{highLimit}
+				</if>
+		        <if test="batchNo!= null and batchNo!= ''">
+						AND BATCH_NO =  #{batchNo}
+				</if>
+		        <if test="signTime!= null and signTime!= ''">
+						AND SIGN_TIME =  #{signTime}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		        <if test="signcount!= null and signcount!= ''">
+						AND SIGNCOUNT =  #{signcount}
+				</if>
+				<if test="rateType!= null and rateType!= ''">
+						AND RATE_TYPE =  #{rateType}
+				</if>
+				<if test="rateTypeTop!= null and rateTypeTop!= ''">
+						AND RATE_TYPE_TOP =  #{rateTypeTop}
+				</if>
+    			<if test="startTime != null and startTime != ''">
+					AND EDIT_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND EDIT_DATE <= #{endTime} ]]>
+				</if>
+		</where>
+	</select>
+	
+	<select id="validateMerNo" parameterType="CooporgMerInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPCOOP_COOPORG_MER_INF
+		<where>
+		        <if test="merNo!= null and merNo!= ''">
+					MER_NO =#{merNo}
+				</if>
+		</where>
+	</select>
+	
+	
+	<insert id="insertEntity" parameterType="CooporgMerInf">
+		INSERT INTO MPCOOP_COOPORG_MER_INF  (
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         MER_NAME, 
+		         MER_KEY, 
+		         CHECK_VALUE, 
+		         RATE_T0, 
+		         RATE_T1, 
+		         RATE_TOP, 
+		         MER_STATUS, 
+		         DT_LIMIT, 
+		         MT_LIMIT, 
+		         LOW_LIMIT, 
+		         HIGH_LIMIT, 
+		         BATCH_NO, 
+		         SIGN_TIME, 
+		         EDIT_DATE, 
+		         EDIT_USER_ID, 
+		         SIGNCOUNT,
+		         RATE_TYPE,
+		         RATE_TYPE_TOP,
+		         M_TYPE,
+		         M_ID,
+		         PROVINCE_ID
+				)
+		VALUES (
+		          #{cooporgNo,jdbcType=VARCHAR}, 
+		          #{merNo,jdbcType=VARCHAR}, 
+		          #{terNo,jdbcType=VARCHAR}, 
+		          #{merName,jdbcType=VARCHAR}, 
+		          #{merKey,jdbcType=VARCHAR}, 
+		          #{checkValue,jdbcType=VARCHAR}, 
+		          #{rateT0,jdbcType=VARCHAR}, 
+		          #{rateT1,jdbcType=VARCHAR},
+		          #{rateTop,jdbcType=VARCHAR},  
+		          #{merStatus,jdbcType=VARCHAR}, 
+		          #{dtLimit,jdbcType=VARCHAR},
+		          #{mtLimit,jdbcType=VARCHAR},
+		          #{lowLimit,jdbcType=VARCHAR}, 
+		          #{highLimit,jdbcType=VARCHAR}, 
+		          #{batchNo,jdbcType=VARCHAR}, 
+		          #{signTime,jdbcType=VARCHAR}, 
+		          date_format(now(),'%Y%m%d%H%i%s'), 
+		          #{editUserId,jdbcType=VARCHAR}, 
+		          #{signcount,jdbcType=VARCHAR} ,
+		          #{rateType,jdbcType=VARCHAR},
+		          #{rateTypeTop,jdbcType=VARCHAR},
+		          #{mType,jdbcType=VARCHAR},
+		          #{mID,jdbcType=VARCHAR},
+		          #{provinceID,jdbcType=VARCHAR}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="CooporgMerInf">
+		DELETE FROM MPCOOP_COOPORG_MER_INF
+		<where>
+			<if test="cooporgNo != null and cooporgNo != '' ">
+				COOPORG_NO =#{cooporgNo}
+			</if>
+			<if test="merNo != null and merNo != '' ">
+				AND MER_NO =#{merNo}
+			</if>
+			<if test="terNo != null and terNo != '' ">
+				AND TER_NO =#{terNo}
+			</if>
+			
+		</where>
+			 
+	</delete>
+
+
+	<select id="countCooporgList" parameterType="CooporgMerInf" resultType="java.lang.Integer">
+		SELECT
+				COUNT(1)
+			FROM
+				(
+					SELECT
+						t.COOPORG_NO
+					FROM
+						MPCOOP_COOPORG_MER_INF t
+					LEFT JOIN MPCOOP_COOPORG_INF m ON t.COOPORG_NO = m.COOPORG_NO
+					WHERE
+						m.COOP_TYPE = 0
+						<if test="cooporgNo != null and cooporgNo != '' ">
+							and t.COOPORG_NO LIKE CONCAT('%',#{cooporgNo},'%')
+						</if>
+						<if test="rateType != null and rateType != '' ">
+							and t.RATE_TYPE=#{rateType}
+						</if>
+						
+						AND NOT EXISTS (
+							SELECT
+								COOPORG_NO,
+								MER_NO
+							FROM
+								MPAMNG_AGENT_ORG_INF
+							WHERE
+								COOPORG_NO = t.COOPORG_NO
+							AND MER_NO = t.MER_NO
+							AND AGENT_ID = #{agentId}
+						)
+					GROUP BY
+						t.COOPORG_NO,
+						t.MER_NO,
+						t.RATE_TYPE,
+						t.RATE_TYPE_TOP
+				) t
+	</select>
+	<select id="selectCooporgList" parameterType="CooporgMerInf" resultMap="cooporgMerMap" >
+		SELECT
+				t.COOPORG_NO,
+				f.COOPNAME,
+				t.MER_NO,
+				t.MER_NAME,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP,
+				p.PROVINCE_NAME
+			FROM
+				MPCOOP_COOPORG_MER_INF t
+			LEFT JOIN MPCOOP_COOPORG_INF m ON t.COOPORG_NO = m.COOPORG_NO
+			LEFT JOIN PROVINCE p ON t.PROVINCE_ID=p.PROVINCE_ID
+			LEFT JOIN MPCOOP_COOPORG_INF f ON t.COOPORG_NO = f.COOPORG_NO
+			WHERE
+				m.COOP_TYPE = 0
+				<if test="cooporgNo != null and cooporgNo != '' ">
+					and t.COOPORG_NO like concat ('%',#{cooporgNo},'%')
+				</if>
+				<if test="rateType != null and rateType != '' ">
+					and t.RATE_TYPE=#{rateType}
+				</if>
+				
+				
+			AND NOT EXISTS (
+				SELECT
+					COOPORG_NO,
+					MER_NO
+				FROM
+					MPAMNG_AGENT_ORG_INF
+				WHERE
+					COOPORG_NO = t.COOPORG_NO
+				AND MER_NO = t.MER_NO
+				AND AGENT_ID = #{agentId}
+			)
+			GROUP BY
+				t.COOPORG_NO,
+				t.MER_NO,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP
+		ORDER BY t.COOPORG_NO  DESC LIMIT #{start},#{pageSize} 
+	</select>
+	
+	<select id="selectProvinceID" parameterType="java.lang.String"  resultMap="cooporgMerMap" >
+	SELECT PROVINCE_ID FROM PROVINCE WHERE PROVINCE_NAME LIKE CONCAT('%',#{PROVINCE_NAME},'%')
+	</select>
+    
+    <select id="selectCooporgNo" parameterType="java.lang.String"  resultMap="cooporgMerMap" >
+	SELECT COOPORG_NO FROM MPCOOP_COOPORG_INF WHERE COOPNAME LIKE CONCAT('%',#{COOPNAME},'%')
+	</select>
+	
+	<select id="selectRateType" parameterType="java.lang.String"  resultMap="cooporgMerMap" >
+	SELECT DICT_VALUE AS rateType FROM DICT WHERE DICT_NAME LIKE CONCAT ('%',#{DICT_NAME},'%')
+	</select>
+</mapper>

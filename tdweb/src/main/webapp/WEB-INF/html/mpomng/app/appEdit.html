@@ -1,0 +1,123 @@
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" id="_form">
+	<!-- #section:elements.form -->
+	<br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+		<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> ID 主键： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="appId" name="appId" placeholder="请输入[ID 主键]" 
+				class="col-xs-10 col-sm-7"  />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 名称： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="appName" name="appName" placeholder="请输入[APP 名称]" 
+				class="col-xs-10 col-sm-7"  maxlength="18" datatype="mobile"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 版本号： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="appVersion" name="appVersion" placeholder="请输入[APP 版本号]" 
+				class="col-xs-10 col-sm-7" maxlength="4" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 平台： </label>
+		<div class="col-sm-9">
+			<select 
+				 rel="obj.APP_PLATFORM"
+	 			 location="local" 
+				 name="appPlatform" 
+	 			id="appPlatform" 
+	 			data-placeholder="请选择状态" style="width: 130px;vertical-align:middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 是否自动更新 ： </label>
+		<div class="col-sm-9">
+			<select 
+				 rel="obj.APP_AUTO_UPDATE"
+	 			 location="local" 
+				 name="appAutoUpdate" 
+	 			id="appAutoUpdate" 
+	 			data-placeholder="请选择状态" style="width: 130px;vertical-align:middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 说明： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="appDesc" name="appDesc" placeholder="请输入[APP 说明]" 
+				class="col-xs-10 col-sm-7" maxlength="490" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP文件： </label>
+		<div class="col-sm-9">
+			<input type="hidden" id="appFileId" name="appFileId"/>
+			<input class="col-xs-10 col-sm-5" type="text" id="appFileName" name="appFileName" readonly="readonly"/>
+			<span class="">
+				<button class="btn btn-small btn-yellow" type="button" onclick="upload02('appFileId','appFileName')">
+					选择文件
+				</button>
+			</span>
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+});
+
+
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+
+
+</script>

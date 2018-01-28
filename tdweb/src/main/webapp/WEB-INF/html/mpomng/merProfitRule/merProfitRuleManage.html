@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="mpomng/merProfitRuleManage/queryList.do" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+					
+					    <div class="search_elm" style="width:180px">
+							<label class="label_search" for="userName">分润类型:</label>
+							<div class="search_input" >
+							    <select 
+									rel="obj.PROFIT_TYPE"
+						 			location="local" 
+									name="profitType" 
+						 			id="search_profitType" 
+						 			data-placeholder="请选择分润类型" style="width: 100px;vertical-align:middle;">
+								<option value='' >--请选择--</option>
+						 		</select>
+							 </div>
+						 </div>
+								
+						  <div class="search_elm" style="width:180px">
+								<label class="label_search" for="userName">商户等级:</label>
+								<div class="search_input" >
+								    <select 
+								        rel="obj.options" valName="" textName=""
+										location="mprcs/selectoption/custLevel.do" 
+										name="custClass"
+										id="search_custClass" 
+										data-placeholder="请选择商户等级" style="width: 100px; vertical-align: middle;">
+										<option value=''>--请选择--</option>
+									</select>
+								 </div>
+							 </div>	
+							 	
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >
+								搜索
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+			
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+					<a auth="mpomng/merProfitRuleManage/addView.do" class="btn btn-small btn-add" onclick="addMerProfitRule();">新增</a>
+					<a auth="mpomng/merProfitRuleManage/editView.do" class="btn btn-small btn-update" onclick="editMerProfitRule();">修改</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+
+				url : "mpomng/merProfitRuleManage/queryList.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ 
+				              	'分润类型 ',
+								'商户等级',
+								'商户等级2',
+								'分润比',
+								'封顶'
+				           ],
+				colModel : [      
+							     {name : 'profitType',        index : 'profitType',        width : '30%' ,ditcKey:'PROFIT_TYPE', formatter : gridFormatByDict}, 
+							     {name : 'custClass',        index : 'custClass',        width : '30%' ,formatter:custTypeFormat},
+							     {name : 'custClass2',        index : 'custClass2',     hidden:true,    width : '30%' },
+							     {name : 'ratePercent',        index : 'ratePercent',        width : '30%' ,formatter:ratePercentFormat}, 
+							     {name : 'rateTop',        index : 'rateTop',        width : '30%' ,formatter : centYuan}
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			
+			//定义表格列中金额转换  分转元
+			function centYuan(cellvalue, options, rowObject) {
+				return cent2Yuan(cellvalue);
+			};
+			
+			//给表格列中分润比加百分号
+			function ratePercentFormat(cellvalue, options, rowObject){
+				var ratePercent=cellvalue;
+				return ratePercent=ratePercent+"%";
+			}
+		});
+		
+		function custTypeFormat(cellvalue, options, rowObject){
+			rowObject.custClass2=cellvalue;
+			var url="mprcs/selectoption/custLevel.do";
+			select2textData(url,"levelName");
+			return SELECT2TEXT.get(cellvalue,"levelName");
+		}
+		
+		//新增
+		function addMerProfitRule() {
+			openDialog({
+				dialogId : 'dlg-merProfitRuleAdd',
+				title : '新增分润规则',
+				pageUrl : 'mpomng/merProfitRuleManage/addView.do',
+				width : '50%',
+			    height:'70%'
+			});
+		}
+		//编辑
+		function editMerProfitRule() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			var profitType=$('#grid-table').jqGrid('getRowData',rows[0]).profitType;
+			profitType = DICT.getKey('PROFIT_TYPE',profitType);
+			var custClass=$('#grid-table').jqGrid('getRowData',rows[0]).custClass2;
+			openDialog({
+				dialogId : 'dlg-merProfitRuleEdit',
+				title : '修改分润规则',
+				pageUrl : 'mpomng/merProfitRuleManage/editView.do',
+				dataUrl : 'mpomng/merProfitRuleManage/queryById.do',
+				width :'600px',
+				height:'400px',
+				dataParam : {
+					profitType : profitType,
+					custClass : custClass
+				},
+				dataName : 'obj,map' //表单数据存储对象名称
+
+			});
+		}
+	</script>

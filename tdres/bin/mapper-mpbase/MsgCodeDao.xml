@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.MsgCodeDao">
+
+	<resultMap type="MsgCodeInf" id="MsgCodeMap">
+		<result property="msgId"        column="MSG_ID"      />
+		<result property="msgContent"   column="MSG_CONTENT" />
+		<result property="msgFlag"      column="MSG_FLAG"    />
+	</resultMap>
+	
+	
+	<select id="selectAll"  resultMap="MsgCodeMap">
+		SELECT
+			MSG_ID,
+			MSG_CONTENT,
+			MSG_FLAG
+		FROM
+			MSGCODE
+	</select>
+	
+	<update id="updateModifyFlag" parameterType="java.util.HashMap">
+		UPDATE MSGCODE SET MSG_FLAG = #{msgFlag}
+		WHERE MSG_ID IN (${msgId})
+	</update>
+	
+	<select id="selectList" parameterType="MsgCodeInf" resultMap="MsgCodeMap" databaseId="mysql">
+		SELECT 
+		    MSG_ID,
+			MSG_CONTENT,
+			MSG_FLAG
+		FROM 
+		     MSGCODE
+		<where>
+		        <if test="msgFlag!= null and msgFlag!= ''">
+						AND MSG_FLAG =  #{msgFlag}
+				</if>
+				<if test="msgId!= null and msgId!= ''">
+						AND MSG_ID LIKE concat ('%',#{msgId},'%')
+				</if>
+		        <if test="msgContent!= null and msgContent!= ''">
+						AND MSG_CONTENT LIKE concat ('%',#{msgContent},'%') 
+				</if>
+		</where>
+		ORDER BY MSG_ID DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="MsgCodeInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT 
+				COUNT(MSG_ID)
+		FROM 
+				 MSGCODE
+		<where>
+		        <if test="msgId!= null and msgId!= ''">
+						AND MSG_ID LIKE concat ('%',#{msgId},'%')
+				</if>
+		        <if test="msgContent!= null and msgContent!= ''">
+						AND MSG_CONTENT LIKE concat ('%',#{msgContent},'%') 
+				</if>
+		        <if test="msgFlag!= null and msgFlag!= ''">
+						AND MSG_FLAG =  #{msgFlag}
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectEntity" parameterType="MsgCodeInf" resultMap="MsgCodeMap" databaseId="mysql">
+		SELECT 
+		    MSG_ID,
+			MSG_CONTENT,
+			MSG_FLAG
+		FROM 
+		       MSGCODE
+		<where>
+		        <if test="msgFlag!= null and msgFlag!= ''">
+						AND MSG_FLAG =  #{msgFlag}
+				</if>
+				 <if test="msgId!= null and msgId!= ''">
+						AND MSG_ID = #{msgId}
+				</if>
+		       
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="MsgCodeInf">
+		INSERT INTO MSGCODE  (
+		         MSG_ID,
+			     MSG_CONTENT,
+			     MSG_FLAG
+				)
+		VALUES (
+		          #{msgId}, 
+		          #{msgContent}, 
+		          #{msgFlag} 
+		      )
+	</insert>
+	
+	<update id="updateEntity" parameterType="MsgCodeInf">
+		UPDATE 
+				MSGCODE
+		<set> 
+		        <if test="msgContent!= null and msgContent!= ''">
+						MSG_CONTENT =  #{msgContent},
+				</if>
+		        <if test="msgFlag!= null and msgFlag!= ''">
+						MSG_FLAG =  #{msgFlag}
+				</if>
+		</set>
+		WHERE
+				MSG_ID =  #{msgId}
+	</update>
+</mapper>

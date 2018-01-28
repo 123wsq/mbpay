@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.tangdi.production.mpaychl.dao.MessageSendDao">
+
+	<select id="selectAccount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+			COUNT(*)
+		FROM MPOMNG_PAY_INF PAY
+			LEFT JOIN MPOMNG_PRD_INF PRD ON PRD.PAYORDNO = PAY.PAYORDNO
+			
+		<where>
+			PAY.AUDIT_STATUS='0'
+			AND PRD.ORDSTATUS='01'
+			<if test="date != null and date!=''">
+			AND PAY_DATE = #{date}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectAuditor" resultType="java.lang.String">
+		SELECT
+			USR_MOBILE
+		FROM
+			MPBATCH_AUDITOR_INF
+		WHERE
+			TYPE='01'	
+	</select>
+	
+	<select id="selectCustAuditor" resultType="java.lang.String">
+		SELECT
+			USR_MOBILE
+		FROM
+			MPBATCH_AUDITOR_INF
+		WHERE
+			TYPE='02'
+	</select>
+	
+	<select id="selectBankCard" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+			FROM 
+			MPOMNG_CUST_BANK_INF_TEMP
+			WHERE
+			CARD_STATE ='1'
+	</select>
+</mapper>

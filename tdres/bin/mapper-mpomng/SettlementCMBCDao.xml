@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.SettlementCMBCDao">
+	<!-- 业务报表结果集 -->
+	<resultMap type="SettlementTemplate" id="SettlementCMBCReportMap">
+		<result property="casType" column="CAS_TYPE"/>
+		<result property="casDate" column="CAS_DATE"/>
+		<result property="custId" column="CUST_ID"/>
+		<result property="terNo" column="TER_NO"/>
+		<result property="custName" column="CUST_NAME"/>
+		<result property="cardNo"    column="CARD_NO"/>
+		<result property="issnam"    column="ISSNAM"/>
+		<result property="txnCardNo" column="CARD_NO"/>
+		<result property="tsrefNo" column="TSREFNO"/>
+		<result property="tautCod" column="TAUTCOD"/>
+		<result property="tlogNo" column="TLOGNO"/>
+		<result property="txAmt"  column="TXAMT"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="casOrdNo" column="CAS_ORD_NO"/>
+		<result property="subBranch" column="BANK_SUB_BRANCH"/>
+	</resultMap>
+	
+	<resultMap type="SettleCountInf_CMBC" id="SettleCountCMBCMap">
+		<result property="custName"      column="CUST_NAME"/>
+		<result property="custId"      column="CUST_ID"/>
+		<result property="t0" column="T0"/>
+		<result property="t1"   column="T1"/>
+		<result property="netrecamt"   column="NETRECAMT"/>
+		<result property="provinceName"    column="PROVINCE_NAME"/>
+		<result property="cityName"          column="CITY_NAME"/>
+		<result property="cnapsCode"          column="CNAPS_CODE"/>
+		<result property="issnam"          column="ISSNAM"/>
+		<result property="subBranch"          column="SUB_BRANCH"/>
+		<result property="cardName"          column="CARD_NAME"/>
+		<result property="cardNo"          column="CARD_NO"/>
+		<result property="agentName"          column="AGENT_NAME"/>
+		<result property="agentId"          column="AGENT_ID"/>	
+		<result property="sucDate"          column="SUC_DATE"/>		
+		<result property="acBankCode"       column="BANK_CODE_JHF"/>
+		<result property="acHankName"       column="HANK_NAME"/>
+		<result property="provinceID"       column="PROVINCE_ID"/>
+		<result property="cityID"       column="CITY_ID"/>
+		<result property="acType"    column="AC_TYPE"/>
+	</resultMap>
+	
+	
+	<sql id="WHERE_CasPrd">
+		<if test="casOrdNo != null and casOrdNo != ''">
+			AND M4.CAS_ORD_NO LIKE CONCAT(#{casOrdNo},'%')
+		</if>
+		<if test="custId != null and custId != ''">
+			AND M4.CUST_ID LIKE CONCAT(#{custId},'%')
+		</if>
+		<if test="custName != null and custName != ''">
+			AND M2.CUST_NAME LIKE CONCAT(#{custName},'%')
+		</if>
+		<if test="cardNo != null and cardNo != ''">
+			AND M4.CARD_NO LIKE CONCAT(#{cardNo},'%')
+		</if>
+		<if test="ordStatus != null and ordStatus != ''">
+			AND M4.ORDSTATUS = #{ordStatus}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			AND M4.CAS_DATE >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND M4.CAS_DATE <= #{endTime} ]]>
+		</if>
+	</sql>
+	<select id="selectReport" parameterType="SettlementTemplate" resultMap="SettlementCMBCReportMap">
+		SELECT
+		
+				M4.CAS_TYPE ,
+				M4.CAS_DATE,
+				M4.CUST_ID,
+				M5.TER_NO ,
+				M2.CUST_NAME ,
+				M4.CARD_NO,
+				M4.ISSNAM,
+				M1.TSREFNO,
+				M1.TAUTCOD,
+				M1.TLOGNO,
+				M3.BANK_SUB_BRANCH,
+				M4.TXAMT,
+				M4.FEE+M4.SERVICE_FEE AS FEE,
+				M4.TXAMT-M4.FEE-M4.SERVICE_FEE AS NETRECAMT,
+	           M4.CAS_ORD_NO,
+	           M5.ISSNAM
+				
+		FROM 
+		MPOMNG_CAS_INF M4
+		LEFT JOIN MPOMNG_MOBILE_MER_INF M2 ON M2.CUST_ID = M4.CUST_ID
+		LEFT JOIN MPOMNG_CUST_BANK_INF M3 ON M4.CUST_ID = M3.CUST_ID
+		LEFT JOIN MPOMNG_PAY_INF M5 ON M5.CUST_ID = M4.CUST_ID
+		LEFT JOIN MPOMNG_PAYMENT_JOURNAL_INF M1 ON M1.PAYORDNO = M5.PAYORDNO
+		<where>
+			<include refid="WHERE_CasPrd"/>
+		</where>
+		GROUP BY M4.CAS_DATE
+	</select>
+	
+	<select id="selectSettleCount" parameterType="Map" resultMap="SettleCountCMBCMap">
+		SELECT
+				T1.CUST_NAME ,
+				T1.CUST_ID,
+				IFNULL(T1.AC_TYPE, '02') AS AC_TYPE,
+				SUM(T1.T0_AMT) AS T0,
+				SUM(T1.T1_AMT) AS T1,
+				SUM(T1.NETRECAMT) AS NETRECAMT,
+				P.PROVINCE_NAME,
+				C.CITY_NAME,
+				T2.CNAPS_CODE,
+				T2.ISSNAM,
+				T2.SUB_BRANCH,
+        		T1.CUST_NAME AS CARD_NAME,
+        		T2.CARD_NO,
+        		AGENT.AGENT_ID,
+        		AGENT.AGENT_NAME,
+        		T1.SUC_DATE,
+        		JHF.BANK_CODE_JHF,
+        		JHF.HANK_NAME,
+        		T2.PROVINCE_ID,
+        		T2.CITY_ID
+		FROM 
+				MPOMNG_CAS_INF T1 
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACREF ON ACREF.CUST_ID = T1.CUST_ID
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+				LEFT OUTER JOIN MPOMNG_CUST_BANK_INF T2 ON(T1.CUST_ID=T2.CUST_ID AND T1.CARD_NO=T2.CARD_NO)
+				LEFT OUTER JOIN PROVINCE P ON(P.PROVINCE_ID=T2.PROVINCE_ID)
+				LEFT OUTER JOIN CITY C ON(C.CITY_ID=T2.CITY_ID)
+				LEFT OUTER JOIN CNAPS_JHF_BANK_CODE JHF ON(JHF.BANK_CODE_CNAPS=T2.CNAPS_CODE)
+		WHERE
+		        ORDSTATUS in ('01','08') AND
+		        CAS_AUDIT = '02' 
+				<if test="casOrdNoList != null and casOrdNoList.size() > 0">
+					AND T1.CAS_ORD_NO IN 
+					<foreach item="casOrdNo" collection="casOrdNoList" open="(" separator="," close=")">  
+	                	#{casOrdNo}  
+	                </foreach>  
+				</if>
+				<if test="custId != null and custId != ''">
+					AND T1.CUST_ID LIKE CONCAT(#{custId},'%')
+				</if>
+				<if test="custName != null and custName != ''">
+					AND T1.CUST_NAME LIKE CONCAT(#{custName},'%')
+				</if>
+				<if test="cardNo != null and cardNo != ''">
+					AND T1.CARD_NO LIKE CONCAT(#{cardNo},'%')
+				</if>
+				<if test="startTime != null and startTime != ''">
+					AND T1.CAS_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND T1.CAS_DATE <= #{endTime} ]]>
+				</if>
+				<if test="acType != null and acType !='' and acType=='2' ">
+					AND (T1.AC_TYPE IS NULL OR T1.AC_TYPE = 02)
+				
+				</if>
+				<if test="acType != null and acType !='' and acType!='2'">
+					AND T1.AC_TYPE = #{acType}
+				
+				</if>
+				<!-- 		        CAS_DATE LIKE CONCAT(#{casDate},'%') -->
+				<!--  CAS_DATE >= #{casDate}-->
+    GROUP BY 
+         		 CUST_ID
+    FOR UPDATE
+	</select>
+	
+	<select id="selectT0T1Count" parameterType="Map" resultMap="SettleCountCMBCMap">
+		SELECT
+				T1.CUST_NAME ,
+				T1.CUST_ID,
+				IFNULL(T1.AC_TYPE, '02') AS AC_TYPE,
+				SUM(T1.T0_AMT) AS T0,
+				SUM(T1.T1_AMT) AS T1,
+				SUM(T1.NETRECAMT) AS NETRECAMT,
+				P.PROVINCE_NAME,
+				C.CITY_NAME,
+				T2.CNAPS_CODE,
+				T2.ISSNAM,
+				T2.SUB_BRANCH,
+        		T1.CUST_NAME AS CARD_NAME,
+        		T2.CARD_NO,
+        		AGENT.AGENT_ID,
+        		AGENT.AGENT_NAME,
+        		T1.SUC_DATE,
+        		JHF.BANK_CODE_JHF,
+        		JHF.HANK_NAME,
+        		T2.PROVINCE_ID,
+        		T2.CITY_ID
+		FROM 
+				MPOMNG_CAS_INF T1 
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACREF ON ACREF.CUST_ID = T1.CUST_ID
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+				LEFT OUTER JOIN MPOMNG_CUST_BANK_INF T2 ON(T1.CUST_ID=T2.CUST_ID AND T1.CARD_NO=T2.CARD_NO)
+				LEFT OUTER JOIN PROVINCE P ON(P.PROVINCE_ID=T2.PROVINCE_ID)
+				LEFT OUTER JOIN CITY C ON(C.CITY_ID=T2.CITY_ID)
+				LEFT OUTER JOIN CNAPS_JHF_BANK_CODE JHF ON(JHF.BANK_CODE_CNAPS=T2.CNAPS_CODE)
+		WHERE
+		        ORDSTATUS in ('01','08') AND
+		        CAS_AUDIT = '02'  AND
+		        T1.CAS_TYPE = #{casType}
+		        <if test="casOrdNoList != null and casOrdNoList.size() > 0">
+					AND T1.CAS_ORD_NO IN 
+					<foreach item="casOrdNo" collection="casOrdNoList" open="(" separator="," close=")">  
+	                	#{casOrdNo}  
+	                </foreach>  
+				</if>
+				<if test="custId != null and custId != ''">
+					AND T1.CUST_ID LIKE CONCAT(#{custId},'%')
+				</if>
+				<if test="custName != null and custName != ''">
+					AND T1.CUST_NAME LIKE CONCAT(#{custName},'%')
+				</if>
+				<if test="cardNo != null and cardNo != ''">
+					AND T1.CARD_NO LIKE CONCAT(#{cardNo},'%')
+				</if>
+				<if test="startTime != null and startTime != ''">
+					AND T1.CAS_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND T1.CAS_DATE <= #{endTime} ]]>
+				</if>
+				<if test="acType != null and acType !='' and acType=='2' ">
+					AND (T1.AC_TYPE IS NULL OR T1.AC_TYPE = 02)
+				
+				</if>
+				<if test="acType != null and acType !='' and acType!='2'">
+					AND T1.AC_TYPE = #{acType}
+				
+				</if>
+				
+				<!-- 		        CAS_DATE >= #{casDate} AND -->
+    GROUP BY 
+         		 CUST_ID
+    FOR UPDATE
+	</select>
+	
+	
+	
+	<update id="modifyOrderStatus" parameterType="SettlementTemplate">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS = '06' WHERE CAS_ORD_NO in (${casOrdNo})
+
+	</update>
+	
+	<update id="modifyByCasOrdNo" parameterType="SettlementTemplate">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS = '07' WHERE CAS_ORD_NO in (${casOrdNo})
+	</update>
+	
+	<update id="modifyBySettle" parameterType="SettlementTemplate">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS = '07' WHERE ORDSTATUS = '01' AND CAS_AUDIT = '02' AND CAS_DATE >= #{casDate}
+	</update>
+	
+	<update id="updateStatusToProcessing" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		SET
+				ORDSTATUS = '07',
+				SUC_DATE = #{sucDate}
+		WHERE
+			    CUST_ID = #{custId} AND
+				ORDSTATUS in ('01','08') AND
+		        CAS_AUDIT = '02' 
+				<if test="startTime != null and startTime != ''">
+					AND CAS_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND CAS_DATE <= #{endTime} ]]>
+				</if>
+				<!-- 		        CAS_DATE >= #{casDate} -->
+	</update>
+	
+	<update id="updateStatusToProcessingByOrdNo" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		SET
+				ORDSTATUS = '07',
+				SUC_DATE = #{sucDate}
+		WHERE
+			    CAS_ORD_NO = #{casOrdNo} AND
+				ORDSTATUS in ('01','08') AND
+		        CAS_AUDIT = '02' 
+	</update>
+	
+	<select id="selectCasPrd" parameterType="Map" resultMap="SettleCountCMBCMap">
+		SELECT
+				T1.CUST_NAME ,
+				T1.CUST_ID,
+				SUM(T1.T0_AMT) AS T0,
+				SUM(T1.T1_AMT) AS T1,
+				SUM(T1.NETRECAMT) AS NETRECAMT,
+				P.PROVINCE_NAME,
+				C.CITY_NAME,
+				T2.CNAPS_CODE,
+				T2.SUB_BRANCH,
+        		T1.CUST_NAME AS CARD_NAME,
+        		T2.CARD_NO,
+        		T1.SUC_DATE
+		FROM 
+				MPOMNG_CAS_INF T1 
+				LEFT OUTER JOIN MPOMNG_CUST_BANK_INF T2 ON(T1.CUST_ID=T2.CUST_ID AND T1.CARD_NO=T2.CARD_NO)
+				LEFT OUTER JOIN PROVINCE P ON(P.PROVINCE_ID=T2.PROVINCE_ID)
+				LEFT OUTER JOIN CITY C ON(C.CITY_ID=T2.CITY_ID)
+		<where>
+				<if test="casStatus != null and casStatus != ''">
+					AND T1.ORDSTATUS = #{casStatus}
+				</if>
+				<if test="casOrdNo != null and casOrdNo != ''">
+					AND T1.CAS_ORD_NO = #{casOrdNo}
+				</if>
+				<if test="custId != null and custId != ''">
+					AND T1.CUST_ID = #{custId}
+				</if>
+				<if test="custName != null and custName != ''">
+					AND T1.CUST_NAME = #{custName}
+				</if>
+				<if test="cardNo != null and cardNo != ''">
+					AND T1.CARD_NO = #{cardNo}
+				</if>
+				<if test="casType != null and casType != ''">
+					AND T1.CAS_TYPE = #{casType}
+				</if>
+				<if test="startTime != null and startTime != ''">
+					AND T1.CAS_DATE >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND T1.CAS_DATE <=#{endTime}]]>
+				</if>
+		</where>
+		GROUP BY CUST_ID
+	</select>
+	
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.tdauth.dao.UserRoleRelDao">
+
+
+
+	<insert id="insertRel" parameterType="UserRoleRel">
+		INSERT INTO PMRURELE (USER_ID, ROLE_ID,AGENTID)
+		VALUES (#{userId}, #{roleId},#{agentId})
+	</insert>
+	
+	<insert id="insertRelList" parameterType="java.util.List">
+		INSERT INTO PMRURELE (USER_ID,ROLE_ID)	
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			SELECT #{item.userId}, #{item.roleId} 
+		    FROM DUAL				           
+		</foreach>
+	</insert>
+	
+	<delete id="deleteRel" parameterType="UserRoleRel">
+		DELETE FROM AUTH_USER_ROLE_REL_INF
+		WHERE U_ID = #{userId} AND R_ID = #{roleId}
+	</delete>
+	
+	<delete id="deleteUsersRels">
+		DELETE FROM PMRURELE
+		WHERE USER_ID IN (${ids})
+	</delete>
+	
+	<delete id="deleteRolesRels">
+		DELETE FROM AUTH_USER_ROLE_REL_INF
+		WHERE R_ID IN (${ids})
+	</delete>
+	
+</mapper>

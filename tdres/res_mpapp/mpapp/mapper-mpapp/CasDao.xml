@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CasInfDao">
+	<resultMap type="java.util.Map" id="casMap">
+		     <result property="casOrdNo"             column="CAS_ORD_NO" /> 
+		    <result property="casType"               column="CAS_TYPE" 	 /> 
+		    <result property="casDate"               column="CAS_DATE" 	 /> 
+		    <result property="modifyDate"            column="MODIFY_DATE" /> 
+		    <result property="sucDate"               column="SUC_DATE"  /> 
+		    <result property="ordstatus"             column="ORDSTATUS" /> 
+		    <result property="txccy"               	 column="TXCCY" 	/> 
+		    <result property="custId"                column="CUST_ID" 	/> 
+		    <result property="custName"              column="CUST_NAME" /> 
+		    <result property="txamt"               	 column="TXAMT" 	/> 
+		    <result property="rate"               	 column="RATE"	 	/> 
+		    <result property="fee"               	 column="FEE" 		/> 
+		    <result property="serviceFee"            column="SERVICE_FEE" /> 
+		    <result property="netrecamt"             column="NETRECAMT"  /> 
+		    <result property="issno"               	 column="ISSNO" 	 /> 
+		    <result property="issnam"                column="ISSNAM" 	 /> 
+		    <result property="cardNo"                column="CARD_NO" 	 /> 
+		    <result property="provinceId"            column="PROVINCE_ID" /> 
+		    <result property="casDesc"               column="CAS_DESC" 	  /> 
+		    <result property="casAudit"              column="CAS_AUDIT"   /> 
+		    <result property="auditDesc"             column="AUDIT_DESC"  /> 
+		    <result property="casRel"                column="CAS_REL" 	  /> 
+		    <result property="filed1"                column="FILED1" 	  /> 
+		    <result property="filed2"                column="FILED2" 	  />
+		    <result property="filed3"                column="FILED3" 	  /> 
+		    <result property="t0Amt"                 column="T0_AMT" 	  /> 
+		    <result property="t1Amt"                 column="T1_AMT" 	  /> 
+	</resultMap>
+	<resultMap type="java.util.Map" id="casT0Map">
+		    <result property="totalTxnAmt"   column="TOTAL_TXN_AMT" /> 
+		    <result property="totalTxnNum"   column="TOTAL_TXN_NUM" />
+		    <result property="agentId"   column="AGENT_ID" />  
+	</resultMap>
+	
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		<set>
+		        <if test="casOrdNo!= null and casOrdNo!= ''">
+						CAS_ORD_NO =  #{casOrdNo}
+				</if>
+		        <if test="casType!= null and casType!= ''">
+						CAS_TYPE =  #{casType}
+				</if>
+		        <if test="casDate!= null and casDate!= ''">
+						CAS_DATE =  #{casDate}
+				</if>
+		        <if test="modifyDate!= null and modifyDate!= ''">
+						MODIFY_DATE =  #{modifyDate}
+				</if>
+		        <if test="sucDate!= null and sucDate!= ''">
+						SUC_DATE =  #{sucDate}
+				</if>
+		        <if test="ordstatus!= null and ordstatus!= ''">
+						ORDSTATUS =  #{ordstatus}
+				</if>
+		        <if test="txccy!= null and txccy!= ''">
+						TXCCY =  #{txccy}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						CUST_ID =  #{custId}
+				</if>
+		        <if test="custName!= null and custName!= ''">
+						CUST_NAME =  #{custName}
+				</if>
+		        <if test="txamt!= null and txamt!= ''">
+						TXAMT =  #{txamt}
+				</if>
+		        <if test="rate!= null and rate!= ''">
+						RATE =  #{rate}
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						FEE =  #{fee}
+				</if>
+		        <if test="netrecamt!= null and netrecamt!= ''">
+						NETRECAMT =  #{netrecamt}
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						ISSNO =  #{issno}
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						ISSNAM =  #{issnam}
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						CARD_NO =  #{cardNo}
+				</if>
+		        <if test="provinceId!= null and provinceId!= ''">
+						PROVINCE_ID =  #{provinceId}
+				</if>
+		        <if test="casDesc!= null and casDesc!= ''">
+						CAS_DESC =  #{casDesc}
+				</if>
+		        <if test="casAudit!= null and casAudit!= ''">
+						CAS_AUDIT =  #{casAudit}
+				</if>
+		        <if test="auditDesc!= null and auditDesc!= ''">
+						AUDIT_DESC =  #{auditDesc}
+				</if>
+		        <if test="casRel!= null and casRel!= ''">
+						CAS_REL =  #{casRel}
+				</if>
+		        <if test="filed1!= null and filed1!= ''">
+						FILED1 =  #{filed1}
+				</if>
+		        <if test="filed2!= null and filed2!= ''">
+						FILED2 =  #{filed2}
+				</if>
+		        <if test="filed3!= null and filed3!= ''">
+						FILED3 =  #{filed3}
+				</if>
+				  <if test="t0Amt!= null and t0Amt!= ''">
+						T0_AMT =  #{t0Amt}
+				</if>
+		        <if test="t1Amt!= null and t1Amt!= ''">
+						T1_AMT =  #{t1Amt}
+				</if>
+		</set>
+		<where>
+			
+		</where>
+	</update>
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CAS_INF  (
+		         CAS_ORD_NO, 
+		         CAS_TYPE, 
+		         AC_TYPE,
+		         CAS_DATE, 
+		         MODIFY_DATE, 
+		         SUC_DATE, 
+		         ORDSTATUS, 
+		         TXCCY, 
+		         CUST_ID, 
+		         CUST_NAME, 
+		         TXAMT, 
+		         RATE, 
+		         FEE, 
+		         SERVICE_FEE,
+		         NETRECAMT, 
+		         ISSNO, 
+		         ISSNAM, 
+		         CARD_NO, 
+		         PROVINCE_ID, 
+		         CAS_DESC, 
+		         CAS_AUDIT, 
+		         AUDIT_DESC, 
+		         CAS_REL, 
+		         FILED1, 
+		         FILED2, 
+		         FILED3,
+		          T0_AMT, 
+		         T1_AMT
+				)
+		VALUES (
+		          #{casOrdNo,jdbcType=VARCHAR}, 
+		          #{casType,jdbcType=VARCHAR}, 
+		          #{acType,jdbcType=VARCHAR}, 
+		          #{casDate,jdbcType=VARCHAR}, 
+		          #{modifyDate,jdbcType=VARCHAR}, 
+		          #{sucDate,jdbcType=VARCHAR}, 
+		          #{ordstatus,jdbcType=VARCHAR}, 
+		          #{txccy,jdbcType=VARCHAR}, 
+		          #{custId,jdbcType=VARCHAR}, 
+		          #{custName,jdbcType=VARCHAR}, 
+		          #{txamt,jdbcType=VARCHAR}, 
+		          #{rate,jdbcType=VARCHAR}, 
+		          #{fee,jdbcType=VARCHAR}, 
+		           #{serviceFee,jdbcType=VARCHAR}, 
+		          #{netrecamt,jdbcType=VARCHAR}, 
+		          #{issno,jdbcType=VARCHAR}, 
+		          #{issnam,jdbcType=VARCHAR}, 
+		          #{cardNo,jdbcType=VARCHAR}, 
+		          #{provinceId,jdbcType=VARCHAR}, 
+		          #{casDesc,jdbcType=VARCHAR}, 
+		          #{casAudit,jdbcType=VARCHAR}, 
+		          #{auditDesc,jdbcType=VARCHAR}, 
+		          #{casRel,jdbcType=VARCHAR}, 
+		          #{filed1,jdbcType=VARCHAR}, 
+		          #{filed2,jdbcType=VARCHAR}, 
+		          #{filed3,jdbcType=VARCHAR},
+		          #{t0Amt,jdbcType=VARCHAR},
+		          #{t1Amt,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="selectSumAmt" resultType="java.lang.Integer">
+		SELECT SUM(TXAMT) FROM MPOMNG_CAS_INF WHERE CUST_ID=#{custId} AND CAS_DATE LIKE CONCAT(#{casDate},'%')
+	</select>
+	
+	<select id="sumT0Amt" parameterType="Map" resultMap="casT0Map">
+		SELECT
+			SUM(T0_AMT)    AS TOTAL_TXN_AMT,
+			COUNT(T0_AMT)  AS TOTAL_TXN_NUM
+		FROM 
+			MPOMNG_CAS_INF
+		WHERE
+			(CAS_AUDIT='00' OR CAS_AUDIT='02') AND 
+			CUST_ID = #{custId} AND
+			CAS_DATE LIKE CONCAT(#{casDate},'%')
+	</select>
+	
+	<update id="modifyCasPrdBystauts" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		<set>
+			<if test="auditDesc != null and auditDesc != ''">
+				 AUDIT_DESC = #{auditDesc},
+			</if>  
+			<if test="casAudit != null and casAudit != ''">
+				 CAS_AUDIT = #{casAudit},
+			</if>  
+			<if test="sucDate != null and sucDate != ''">
+				 SUC_DATE = #{sucDate},
+			</if>  
+			<if test="filed3 != null and filed3 != ''">
+				 FILED3 = #{filed3},
+			</if>  
+			<if test="ordStatus != null and ordStatus != ''">
+				 ORDSTATUS = #{ordStatus}
+			</if> 
+		</set>
+		WHERE 
+				CAS_ORD_NO = #{casOrdNo}
+		
+	</update>
+	
+	<delete id="deleteConPay"  parameterType="Map">
+	    DELETE FROM MPOMNG_CONPAY_INF  WHERE  CAS_ORD_NO = #{casOrdNo}
+	</delete>
+	
+	<insert id="insertConPay" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CONPAY_INF  (
+		         CAS_ORD_NO, 
+		         TSEQ_NO, 
+		         PAY_TIME, 
+		         PAY_AMT, 
+		         CARD_NO, 
+		         PAY_STATUS, 
+		         AGENT_ID, 
+		         FIRST_AGENT_ID, 
+		         RATE_TYPE,
+		         COOPORG_NO
+				)
+		VALUES (
+		          #{casOrdNo,jdbcType=VARCHAR}, 
+		          #{tseqNo,jdbcType=VARCHAR}, 
+		          #{payTime,jdbcType=VARCHAR}, 
+		          #{payAmt,jdbcType=VARCHAR}, 
+		          #{cardNo,jdbcType=VARCHAR}, 
+		          #{payStatus,jdbcType=VARCHAR}, 
+		          #{agentId,jdbcType=VARCHAR}, 
+		          #{firstAgentId,jdbcType=VARCHAR}, 
+		          #{rateType,jdbcType=VARCHAR},
+		          #{cooporgNo,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="sumAgentT0Amt" parameterType="Map" resultMap="casT0Map">
+		SELECT
+			SUM(T0_AMT)    AS TOTAL_TXN_AMT,
+			COUNT(T0_AMT)  AS TOTAL_TXN_NUM,
+			AGENT.AGENT_ID
+		FROM
+			MPOMNG_CAS_INF CAS
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF AGE ON AGE.CUST_ID = CAS.CUST_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AGE.AGE_ID
+		WHERE
+			(CAS_AUDIT='00' OR CAS_AUDIT='02') AND 
+			AGENT.AGENT_ID = (SELECT AGE_ID FROM MPOMNG_AGE_CUST_REF_INF REF WHERE REF.CUST_ID = #{custId} limit 1)  AND
+			CAS_DATE LIKE CONCAT(#{casDate},'%')
+	</select>
+</mapper>

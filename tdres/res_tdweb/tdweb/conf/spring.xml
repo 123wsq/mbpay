@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- aop支持 -->
+	<aop:aspectj-autoproxy />
+	
+    <!-- 引入jdbc配置文件 -->
+    <context:property-placeholder location="classpath:tdweb/conf/jdbc.properties"/>
+	<!-- 引入log4j配置文件 -->
+	<context:property-placeholder location="classpath:tdweb/conf/log4j.properties"/>
+	
+	<!-- 远程调用 -->
+	<bean id="remoteService" class="com.tangdi.production.tdcomm.rpc.hessian.HessinClientBean">
+		<property name="timeout" value="60"></property>
+		<property name="url" value="http://172.20.100.10:8098/mpcctp/hessian/hessianService"></property> 
+	</bean>
+
+    <!-- spring监控配置 -->
+	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+  	</bean>
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+	    scope="prototype">
+	    <property name="patterns">
+	        <list>
+	            <value>com.mycompany.service.*</value>
+	            <value>com.mycompany.dao.*</value>
+	        </list>
+	    </property>
+	     <property name="interceptorNames">
+       		 <list>
+        		    <value>druid-stat-interceptor</value>
+        	</list>
+   		 </property>
+	    
+	</bean>
+
+</beans>

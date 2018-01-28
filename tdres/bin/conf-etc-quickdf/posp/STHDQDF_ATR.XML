@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!--POSP秒付 -->
+	<bean id="STHDQDF" class="com.tangdi.production.tdcomm.engine.TcpOutChannel" init-method="start" destroy-method="stop">
+		<property name="name" value="STHDQDF"></property><!-- 渠道名 -->
+		
+		<property name="interceptor"><!-- 拦截器 -->
+			<bean class="com.tangdi.production.mpaychl.utils.HXTcpXmlConnector">
+				<property name="host" value="172.20.100.10" ></property><!-- 第三方系统IP --> 
+				<property name="port" value="60008"></property><!-- 第三方端口 -->
+				<property name="timeOut" value="60"></property><!-- 连接超时时间 -->
+			</bean>
+		</property>
+		
+		<property name="outprocess"><!-- 接出流程 默认先调用这个process 然后走connector 再走 afterprocess -->
+			<bean class="com.tangdi.production.mpaychl.trans.process.TcpPOSPQuickDFOutProcess">
+				<property name="pack"><!-- 组包 -->
+					<bean class="com.tangdi.production.mpaychl.utils.PackXmlImpl">
+						<property name="ITF" value="mpaychl/conf-etc-quickdf/posp/STHDQDF_ITF.XML"></property>
+						<property name="charset" value="GBK"></property>
+					</bean>
+				</property>
+				<property name="encoding" value="ISO-8859-1"/>
+			</bean>
+		</property>
+		
+		<property name="afterprocess">
+			<bean class="com.tangdi.production.tdcomm.channel.TcpCommOutAfterProcess">
+				<property name="unpack"><!-- 解包 -->
+					<bean class="com.tangdi.production.tdcomm.itf.Unpackimpl">
+						<property name="ITF" value="mpaychl/conf-etc-quickdf/posp/STHDQDF_ITF.XML"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

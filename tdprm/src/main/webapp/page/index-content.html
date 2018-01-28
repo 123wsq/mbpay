@@ -1,0 +1,267 @@
+<meta charset="utf-8" />
+<script src="js/echarts/echarts-all.js"></script>
+<script type="text/javascript">
+	var custRegChartData = loadReportData("mpomng/report/001.do");
+	custRegChartOption = {
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+				mark : {
+					show : false
+				},
+				dataView : {
+					show : false,
+					readOnly : false
+				},
+				magicType : {
+					show : false,
+					type : [ 'bar' ]
+				},
+				restore : {
+					show : true
+				},
+				saveAsImage : {
+					show : true
+				}
+			}
+		},
+		calculable : true,
+		xAxis : [ {
+			type : 'category',
+			data : custRegChartData.monthList
+		} ],
+		yAxis : [ {
+			type : 'value'
+		} ],
+		series : [ {
+			name : '商户量',
+			type : 'bar',
+			data : custRegChartData.valueList
+		} ]
+	};
+
+	var custLiveChartData = loadReportData("mpomng/report/002.do");
+	custLiveChartOption = {
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+				mark : {
+					show : false
+				},
+				dataView : {
+					show : false,
+					readOnly : false
+				},
+				magicType : {
+					show : false,
+					type : [ 'bar' ]
+				},
+				restore : {
+					show : true
+				},
+				saveAsImage : {
+					show : true
+				}
+			}
+		},
+		calculable : true,
+		xAxis : [ {
+			type : 'category',
+			data : custLiveChartData.monthList
+		} ],
+		yAxis : [ {
+			type : 'value'
+		} ],
+		series : [ {
+			name : '活跃量',
+			type : 'bar',
+			data : custLiveChartData.valueList
+		} ]
+	};
+
+	var orderChartData = loadReportData("mpomng/report/003.do");
+	orderChartOption = {
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+				mark : {
+					show : false
+				},
+				dataView : {
+					show : false,
+					readOnly : false
+				},
+				magicType : {
+					show : true,
+					type : [ 'line', 'bar' ]
+				},
+				restore : {
+					show : true
+				},
+				saveAsImage : {
+					show : true
+				}
+			}
+		},
+		calculable : true,
+		legend : {
+			data : [ '交易额', '交易比数' ]
+		},
+		xAxis : [ {
+			type : 'category',
+			data : orderChartData.dayList
+		} ],
+		yAxis : [ {
+			type : 'value',
+			name : '交易额',
+			axisLabel : {
+				formatter : '{value} 万元'
+			}
+		}, {
+			type : 'value',
+			name : '交易比数',
+			axisLabel : {
+				formatter : '{value} 笔'
+			}
+		} ],
+		series : [ {
+			name : '交易额',
+			type : 'bar',
+			data : orderChartData.amtList
+		}, {
+			name : '交易比数',
+			type : 'line',
+			yAxisIndex : 1,
+			data : orderChartData.paycountList
+		} ]
+	};
+
+	var T0OrderChartData = loadReportData("mpomng/report/004.do");
+	T0OrderChartOption = {
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+				mark : {
+					show : false
+				},
+				dataView : {
+					show : false,
+					readOnly : false
+				},
+				magicType : {
+					show : true,
+					type : [ 'line', 'bar' ]
+				},
+				restore : {
+					show : true
+				},
+				saveAsImage : {
+					show : true
+				}
+			}
+		},
+		calculable : true,
+		legend : {
+			data : [ '提现额', '提现比数' ]
+		},
+		xAxis : [ {
+			type : 'category',
+			data : T0OrderChartData.dayList
+		} ],
+		yAxis : [ {
+			type : 'value',
+			name : '提现额',
+			axisLabel : {
+				formatter : '{value} 万元'
+			}
+		}, {
+			type : 'value',
+			name : '提现比数',
+			axisLabel : {
+				formatter : '{value} 笔'
+			}
+		} ],
+		series : [ {
+			name : '提现额',
+			type : 'bar',
+			data : T0OrderChartData.amtList
+		}, {
+			name : '提现比数',
+			type : 'line',
+			yAxisIndex : 1,
+			data : T0OrderChartData.paycountList
+		} ]
+	};
+
+	var custRegChart = echarts
+			.init(document.getElementById('canvasCustRegDiv'));
+	custRegChart.setOption(custRegChartOption);
+
+	var custLiveChart = echarts.init(document
+			.getElementById('canvasCustLiveDiv'));
+	custLiveChart.setOption(custLiveChartOption);
+
+	var orderChart = echarts.init(document.getElementById('canvasOrderDiv'));
+	orderChart.setOption(orderChartOption);
+
+	var orderChart = echarts.init(document.getElementById('canvasT0OrderDiv'));
+	orderChart.setOption(T0OrderChartOption);
+
+	//检测是否有紧急公告
+	var object = loadReportData("mpomng/report/000.do");
+	if (object != null) {
+		if (object.noticeBody != null) {
+			$(document).ready(function() {
+				openDialog({
+					dialogId : 'dlg-NoticeView',
+					title : '紧急公告',
+					pageUrl : 'mpomng/NewFile.do',
+					dataUrl : 'mpomng/report/000.do',
+					width : '30%',
+					height : '40%',
+					dataName : 'obj'
+				});
+			});
+		}
+	}
+</script>
+<h4 class="row header smaller lighter green">
+	<span class="col-sm-6"> <i class="ace-icon fa fa-calendar"></i>
+		商户注册量
+	</span> <span class="col-sm-6"> <i class="ace-icon fa fa-calendar"></i>
+		商户活跃度
+	</span>
+</h4>
+<div id='canvasCustRegDiv'
+	style="float: left; width: 50%; height: 350px"></div>
+
+<div id='canvasCustLiveDiv'
+	style="display: inline-block; width: 50%; height: 350px"></div>
+
+
+<h4 class="row header smaller lighter red">
+	<span class="col-sm-8"> <i class="ace-icon fa fa-bar-chart-o"></i>
+		交易额/交易比数 统计(近七天)
+	</span>
+</h4>
+<div id='canvasOrderDiv' style="float: left; width: 100%; height: 350px"></div>
+
+
+<h4 class="row header smaller lighter red">
+	<span class="col-sm-8"> <i class="ace-icon fa fa-bar-chart-o"></i>T0提现
+	</span>
+</h4>
+<div id='canvasT0OrderDiv'
+	style="float: left; width: 100%; height: 350px"></div>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.RcsOrgLimitDao">
+
+	<update id="updateRcsOrgLimit" parameterType="java.util.Map">
+		UPDATE MPRCS_ORG_TERM_LIMIT_INF
+			SET LIMIT_DAY_AMT = 0,
+			DAY=#{day}
+		<if test="month!= null and month!= ''">
+				,MONTH =  #{month},
+		 		LIMIT_MONTH_AMT =0
+		</if>
+	</update>
+	
+	<select id="selectRcsOrgLimit" parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT
+				DAY,
+				MONTH
+			FROM
+				MPRCS_ORG_TERM_LIMIT_INF LIMIT 1
+	</select>
+	
+</mapper>

@@ -1,0 +1,6 @@
+/**
+*树枝子集只有部分选中的样式
+*/
+.tree-selected-part{
+	 opacity: 0.5;
+}

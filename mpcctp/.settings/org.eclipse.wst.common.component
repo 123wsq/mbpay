@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="mpcctp">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources1"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_mpbase"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_mpaychl"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_tdcomm"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_tdbase"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_mpcctp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_mpapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_mprcs"/>
+        <dependent-module archiveName="mpapp-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpapp/mpapp">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mprcs-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mprcs/mprcs">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpbase-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpbase/mpbase">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpbean-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpbean/mpbean">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpaychl-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpaychl/mpaychl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/TDWEB/target/classes"/>
+        <property name="context-root" value="mpcctp"/>
+    </wb-module>
+</project-modules>

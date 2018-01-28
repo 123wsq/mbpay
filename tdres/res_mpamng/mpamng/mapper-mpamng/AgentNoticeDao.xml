@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentNoticeDao">
+	<resultMap type="NoticeInf" id="noticeMap">
+		    <result property="noticeId"                column="NOTICE_ID" /> 
+		    <result property="noticePlatform"          column="NOTICE_PLATFORM" /> 
+		    <result property="noticeTitle"             column="NOTICE_TITLE" /> 
+		    <result property="noticeBody"              column="NOTICE_BODY" /> 
+		    <result property="noticeIssue"             column="NOTICE_ISSUE" /> 
+		    <result property="noticeIssueDate"         column="NOTICE_ISSUE_DATE" /> 
+		    <result property="createUserId"            column="CREATE_USER_ID" /> 
+		    <result property="createDate"              column="CREATE_DATE" /> 
+		    <result property="attachmentId"            column="ATTACHMENT_ID" />
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="NoticeInf">
+		UPDATE 
+				MPOMNG_NOTICE_INF
+		<set>
+		       
+		        <if test="noticePlatform!= null and noticePlatform!= ''">
+						NOTICE_PLATFORM =  #{noticePlatform},
+				</if>
+		        <if test="noticeTitle!= null and noticeTitle!= ''">
+						NOTICE_TITLE =  #{noticeTitle},
+				</if>
+		        <if test="noticeBody!= null">
+						NOTICE_BODY =  #{noticeBody},
+				</if>
+		        <if test="noticeIssue!= null and noticeIssue!= ''">
+						NOTICE_ISSUE =  #{noticeIssue},
+				</if>
+		        <if test="noticeIssueDate!= null and noticeIssueDate!= ''">
+						NOTICE_ISSUE_DATE =  #{noticeIssueDate},
+				</if>
+		        <if test="createUserId!= null and createUserId!= ''">
+						CREATE_USER_ID =  #{createUserId},
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						CREATE_DATE =  #{createDate},
+				</if>
+		</set>
+		<where>
+			NOTICE_ID = #{noticeId}
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="NoticeInf" resultMap="noticeMap">
+		SELECT 
+		         NOTICE_ID, 
+		         NOTICE_PLATFORM, 
+		         NOTICE_TITLE, 
+		         NOTICE_BODY, 
+		         NOTICE_ISSUE, 
+		         DATE_FORMAT(NOTICE_ISSUE_DATE,'%Y-%m-%d %H:%i:%s')  as NOTICE_ISSUE_DATE, 
+		         CREATE_USER_ID, 
+		         DATE_FORMAT(CREATE_DATE,'%Y-%m-%d %H:%i:%s')  as CREATE_DATE,
+		         ATTACHMENT_ID
+		FROM 
+		        MPOMNG_NOTICE_INF
+		<where>
+		        <if test="noticeId!= null and noticeId!= ''">
+						AND NOTICE_ID =  #{noticeId}
+				</if>
+		        <if test="noticePlatform!= null and noticePlatform!= ''">
+						AND NOTICE_PLATFORM =  #{noticePlatform}
+				</if>
+		        <if test="noticeTitle!= null and noticeTitle!= ''">
+						AND NOTICE_TITLE =  #{noticeTitle}
+				</if>
+		        <if test="noticeBody!= null and noticeBody!= ''">
+						AND NOTICE_BODY =  #{noticeBody}
+				</if>
+		        <if test="noticeIssue!= null and noticeIssue!= ''">
+						AND NOTICE_ISSUE =  #{noticeIssue}
+				</if>
+		        <if test="noticeIssueDate!= null and noticeIssueDate!= ''">
+						AND NOTICE_ISSUE_DATE =  #{noticeIssueDate}
+				</if>
+		        <if test="createUserId!= null and createUserId!= ''">
+						AND CREATE_USER_ID =  #{createUserId}
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						AND CREATE_DATE =  #{createDate}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="NoticeInf" resultMap="noticeMap" databaseId="mysql">
+		SELECT 
+		         NOTICE_ID, 
+		         NOTICE_PLATFORM, 
+		         NOTICE_TITLE, 
+		         NOTICE_BODY, 
+		         NOTICE_ISSUE, 
+		         NOTICE_ISSUE_DATE, 
+		         CREATE_USER_ID, 
+		         CREATE_DATE
+		FROM 
+		       MPOMNG_NOTICE_INF
+		<where>
+		        <if test="noticeId!= null and noticeId!= ''">
+						AND NOTICE_ID =  #{noticeId}
+				</if>
+		        <if test="noticePlatform!= null and noticePlatform!= ''">
+						AND NOTICE_PLATFORM =  #{noticePlatform}
+				</if>
+		        <if test="noticeTitle!= null and noticeTitle!= ''">
+						AND NOTICE_TITLE like concat('%',#{noticeTitle},'%')
+				</if>
+		        <if test="noticeBody!= null and noticeBody!= ''">
+						AND NOTICE_BODY like concat('%',#{noticeBody},'%')
+				</if>
+		        <if test="noticeIssue!= null and noticeIssue!= ''">
+						AND NOTICE_ISSUE =  #{noticeIssue}
+				</if>
+		        <if test="noticeIssueDate!= null and noticeIssueDate!= ''">
+						AND NOTICE_ISSUE_DATE =  #{noticeIssueDate}
+				</if>
+		        <if test="createUserId!= null and createUserId!= ''">
+						AND CREATE_USER_ID =  #{createUserId}
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						AND CREATE_DATE =  #{createDate}
+				</if>
+		</where>
+		ORDER BY NOTICE_ID  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="NoticeInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				MPOMNG_NOTICE_INF
+		<where>
+		        <if test="noticeId!= null and noticeId!= ''">
+						AND NOTICE_ID =  #{noticeId}
+				</if>
+		        <if test="noticePlatform!= null and noticePlatform!= ''">
+						AND NOTICE_PLATFORM =  #{noticePlatform}
+				</if>
+		        <if test="noticeTitle!= null and noticeTitle!= ''">
+						AND NOTICE_TITLE =  #{noticeTitle}
+				</if>
+		        <if test="noticeBody!= null and noticeBody!= ''">
+						AND NOTICE_BODY =  #{noticeBody}
+				</if>
+		        <if test="noticeIssue!= null and noticeIssue!= ''">
+						AND NOTICE_ISSUE =  #{noticeIssue}
+				</if>
+		        <if test="noticeIssueDate!= null and noticeIssueDate!= ''">
+						AND NOTICE_ISSUE_DATE =  #{noticeIssueDate}
+				</if>
+		        <if test="createUserId!= null and createUserId!= ''">
+						AND CREATE_USER_ID =  #{createUserId}
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						AND CREATE_DATE =  #{createDate}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="NoticeInf">
+		INSERT INTO MPOMNG_NOTICE_INF  (
+		         NOTICE_ID, 
+		         NOTICE_PLATFORM, 
+		         NOTICE_TITLE, 
+		         NOTICE_BODY, 
+		         NOTICE_ISSUE, 
+		         NOTICE_ISSUE_DATE, 
+		         CREATE_USER_ID, 
+		         CREATE_DATE
+				)
+		VALUES (
+		          #{noticeId}, 
+		          #{noticePlatform}, 
+		          #{noticeTitle}, 
+		          #{noticeBody}, 
+		          #{noticeIssue}, 
+		          #{noticeIssueDate}, 
+		          #{createUserId}, 
+		          #{createDate} 
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="NoticeInf">
+		DELETE FROM MPOMNG_NOTICE_INF
+		WHERE NOTICE_ID = #{noticeId}
+			 
+	</delete>
+
+</mapper>

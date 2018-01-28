@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.MessageDao">
+	<resultMap type="java.util.Map" id="MessageTemplateMap">
+		    <result property="smsType"              column="MESSAGE_CODE" /> 
+		    <result property="smsContent"           column="MESSAGE_CONTENT" /> 
+	</resultMap>
+	
+
+	<insert id="insertSendMssage" parameterType="java.util.Map">
+		INSERT INTO MPSMS_MESSAGE_INF  (
+		         SMS_ID, 
+		         SMS_TYPE,
+		         SMS_MOBLIE, 
+		         SMS_BODY, 
+		         SMS_STATUS, 
+		         SMS_DATE
+				)
+		VALUES (
+		          #{smsId,jdbcType=VARCHAR}, 
+		          #{smsType,jdbcType=VARCHAR}, 
+		          #{smsMoblie,jdbcType=VARCHAR}, 
+		          #{smsBody,jdbcType=VARCHAR}, 
+		          #{smsStatus,jdbcType=VARCHAR}, 
+		          #{smsDate,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="selectTemplate" parameterType="java.util.Map" resultMap="MessageTemplateMap">
+		SELECT 
+		         MESSAGE_CODE, 
+		         MESSAGE_CONTENT
+		FROM 
+		        MPSMS_MESSAGE_TEMPLATE_INF
+		WHERE
+				MESSAGE_CODE =  #{smsType}
+	</select>
+	
+	<update id="updateMessage" parameterType="java.util.Map">
+		UPDATE 
+				MPSMS_MESSAGE_INF
+		SET
+				SMS_STATUS = #{smsStatus}
+		WHERE
+				SMS_ID = #{smsId}
+	</update>
+
+</mapper>

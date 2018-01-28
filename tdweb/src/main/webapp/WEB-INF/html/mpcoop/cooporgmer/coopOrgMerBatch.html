@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpcoop/cooporgmer/coopOrgMerAdd/batchAdd.do"" id="termCom_form">
+	<!-- #section:elements.form -->
+	<br/>
+	<!-- 用户  -->
+	<input type="hidden" id="editUserId" name="editUserId" />
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right"
+			for="form-field-1">选择文件： </label>
+			<div class="col-sm-9">
+			<span class="block input-icon input-icon" >
+				<input class="col-xs-10 col-sm-7" type="hidden" id="uploadFileId" name="uploadFileId" />
+				<input class="col-xs-10 col-sm-5" type="text"  id="uploadFileName" name="uploadFileName" readonly="readonly"/>
+			</span>
+				<span class="">
+					<button class="btn btn-small btn-yellow" type="button" onclick="upload02('uploadFileId','uploadFileName')">
+						选择文件
+					</button>
+				</span>
+			</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right" for="form-field-1">模板下载： </label>
+		<div class="col-sm-5">
+			<span id="auth_btn">
+				<button type="button" onclick="excelDownLod('file/download/report/excel/JgInformation.xls')">[点击下载excel样例]</button>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right" for="form-field-4">excel模板：</label>
+		<div class="col-sm-9">
+			<label>
+				<br/>
+				<div class="search_input" style="pEditing-top: 5px;">
+					<img alt="" src="img/jgexcel.jpg">
+				</div>
+				<br/>
+				<div><font color="red">注：①excel各列的顺序必须按模板的顺序填写，而内容可依实际内容而定，
+											(目前合作机构有“华势代付”、“华势消费”、“中联支付”，请注意填写);</font></div>
+			</label>
+		</div>
+	</div>
+	
+	<br/><br/>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+		<button class="btn btn-info" type="submit">导入</button>
+		&nbsp; 
+		<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-coopOrgMerBatch');">关闭</button>
+	</div>
+	
+</form>
+<script type="text/javascript">
+$(document).ready(function() {
+	 var p = dialog.getById('dlg-coopOrgMerBatch');
+	//设置页面初始值
+	$("#editUserId").attr("value",p.dataParam.editUserId);
+	$("#editUserName").attr("value",p.dataParam.editUserName);
+	
+});
+
+function submitForm(obj){
+	var uploadfile=$("#uploadFileName").val();
+	if (uploadfile == ''||uploadfile == null){
+		alertMsg.error('请选择文件');
+		return false;
+	}else{
+		var fileType = (uploadfile.substring(uploadfile.lastIndexOf(".") + 1, uploadfile.length)).toLowerCase();
+        var suppotFile = ["xls", "XLS", "xlsx", "XLSX"];
+        for (var i = 0; i < suppotFile.length; i++) {
+            if (suppotFile[i] == fileType) {
+            	return validateCallback(obj,editUserDone);
+                return true;
+            } else {
+            	alertMsg.error("文件格式不正确");
+                return false;
+            }
+        }
+	}
+}
+
+function excelDownLod(dpath){	
+	$.ajax({
+		type: "post",
+		url:"mpbase/fileDownloadManage/hasFile.do?filePath="+dpath,
+		dateType:'json',
+		async:false,
+		success:function(result){
+			if(result==true||result=='true'){
+				var a = $("<a href="+dpath+" ></a>").get(0);
+		        var e = document.createEvent('MouseEvents');
+		        e.initEvent( 'click', true, true );
+		        a.dispatchEvent(e);
+			}else{
+				msg.alert("错误", "文件不存在！", "error");
+			}
+		},
+		error: function() {
+			msg.alert('提示', "网络异常！",'error');
+        }
+		
+	});
+}
+
+function upload02(fid,fname){
+	openFileUpload({
+		fileUploadDone:function(reslut){
+			$("#"+fid).val(reslut.map.fid);
+			$("#"+fname).val(reslut.map.fname);
+		},
+		allowFile:EXT_FILE,
+		fileSize:1024
+	});
+}
+
+function editUserDone(result){
+	dialogAjaxDone(result);
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		$("#grid-table").trigger("reloadGrid");
+		dialog.closeById('dlg-coopOrgMerBatch');
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+</script>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.HolidayRuleDao">
+	<resultMap type="HolidayRuleInf" id="HolidayRuleMap">
+		    <result property="hoDate"               column="HO_DATE" /> 
+		    <result property="t0Status"               column="T0_STATUS" /> 
+		    <result property="t1Status"               column="T1_STATUS" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="HolidayRuleInf">
+		UPDATE 
+				MPOMNG_HOLIDAY_RULE_INF
+		<set>
+		        <if test="t0Status != null and t0Status != ''">
+						T0_STATUS =#{t0Status},
+				</if>
+		        <if test="t1Status != null and t1Status != ''">
+						T1_STATUS =  #{t1Status}
+				</if>
+		</set>
+		WHERE
+				HO_DATE = #{hoDate}
+	</update>
+
+	<select id="selectEntity" parameterType="HolidayRuleInf" resultMap="HolidayRuleMap">
+		SELECT 
+		         HO_DATE, 
+		         T0_STATUS, 
+		         T1_STATUS
+		        
+		         
+		FROM 
+		        MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		       <if test="hoDate != null and hoDate != ''">
+						HO_DATE =#{hoDate}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="HolidayRuleInf" resultMap="HolidayRuleMap" databaseId="mysql">
+		SELECT 
+		         HO_DATE, 
+		         T0_STATUS, 
+		         T1_STATUS
+		FROM 
+		       MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		        <if test="stime != null and stime != ''">
+						HO_DATE >= #{stime}
+				</if>
+				 <if test="etime != null and etime != ''">
+						<![CDATA[ AND HO_DATE <= #{etime} ]]>
+				</if>
+		         <if test="t0Status != null and t0Status != ''">
+						AND T0_STATUS =#{t0Status}
+				</if>
+		        <if test="t1Status != null and t1Status != ''">
+						AND T1_STATUS =  #{t1Status}
+				</if>
+		</where>
+		ORDER BY HO_DATE  DESC  LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="HolidayRuleInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(HO_DATE)
+		FROM 
+				MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		       <if test="stime != null and stime != ''">
+						HO_DATE >= #{stime}
+				</if>
+				 <if test="etime != null and etime != ''">
+						<![CDATA[ AND HO_DATE <= #{etime} ]]>
+				</if>
+		         <if test="t0Status != null and t0Status != ''">
+						AND T0_STATUS =#{t0Status}
+				</if>
+		        <if test="t1Status != null and t1Status != ''">
+						AND T1_STATUS =  #{t1Status}
+				</if>
+		        
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="HolidayRuleInf">
+		INSERT INTO MPOMNG_HOLIDAY_RULE_INF  (
+		         HO_DATE, 
+		         T0_STATUS, 
+		         T1_STATUS
+				)
+		VALUES (
+		          #{hoDate}, 
+		          #{t0Status}, 
+		          #{t1Status}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="HolidayRuleInf">
+		DELETE FROM MPOMNG_HOLIDAY_RULE_INF
+		WHERE HO_DATE=#{hoDate}
+			 
+	</delete>
+	
+	<select id="queryHolidayBydate" parameterType="HolidayRuleInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(HO_DATE)
+		FROM 
+				MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		       <if test="hoDate != null and hoDate != ''">
+						HO_DATE =#{hoDate}
+				</if>
+		        
+		</where>
+	</select>
+</mapper>

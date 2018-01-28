@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.AreaDao">
+	
+	<resultMap type="java.util.Map" id="cityMap">
+		<result property="provId" 	column="PROVINCE_ID"/>
+		<result property="cityId" 	column="CITY_ID"	/>
+		<result property="cityName" column="CITY_NAME"  />
+	</resultMap>
+
+	<resultMap type="java.util.Map" id="provinceMap">
+		<result property="provId" 	column="PROVINCE_ID"/>
+		<result property="provName" column="PROVINCE_NAME"/>
+		<association property="cityList" javaType="java.util.List" resultMap="cityMap"/>  
+	</resultMap>
+	
+	<select id="getProvince" parameterType="java.util.Map" resultMap="provinceMap">
+		SELECT
+			p.PROVINCE_ID,p.PROVINCE_NAME,c.CITY_ID,c.CITY_NAME
+		FROM
+			PROVINCE p
+		LEFT JOIN CITY c ON p.PROVINCE_ID = c.PROVINCE_ID
+		WHERE 1=1
+		<if test="provId != null and provId != ''">
+		 	AND p.PROVINCE_ID=#{provId}
+		</if>
+		<if test="cityId != null and cityId != ''">
+		 	AND c.cityId=#{cityId}
+		</if>
+		ORDER BY p.PROVINCE_ID,c.CITY_ID
+	</select>
+</mapper>

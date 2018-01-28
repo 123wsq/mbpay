@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.TerminalDao">
+
+	<resultMap type="TerminalInf" id="TerminalMap">
+		<id property="terminalId" 			 column="TERMINAL_ID" />
+		<result property="terminalSeq"       column="TERMINAL_SEQ" />
+		<result property="terminalNo"        column="TERMINAL_NO" />
+		<result property="agentId"    		 column="AGENT_ID" />
+		<result property="custId"     		 column="CUST_ID" />
+		<result property="agentName"   		 column="AGENT_NAME" />
+		<result property="custName"      	 column="CUST_NAME" />
+		<result property="terminalType"      column="TERMINAL_TYPE" />
+		<result property="terminalCom"       column="TERMINAL_COM" />
+		<result property="terminalStatus"    column="TERMINAL_STATUS" />
+		<result property="createUserId"      column="CREATE_USER_ID" />
+		<result property="createDate"        column="CREATE_DATE" />
+		<result property="editUserId"        column="EDIT_USER_ID" />
+		<result property="editDate"      	 column="EDIT_DATE" />
+		<result property="rateLivelihood" 	 column="RATE_LIVELIHOOD" />
+		<result property="rateGeneral" 		 column="RATE_GENERAL" />
+		<result property="rateGeneralTop" 	    column="RATE_GENERAL_TOP" />
+		<result property="rateGeneralMaximun"   column="RATE_GENERAL_MAXIMUN" />
+		<result property="rateEntertain" 	    column="RATE_ENTERTAIN" />
+		<result property="rateEntertainTop"     column="RATE_ENTERTAIN_TOP" />
+		<result property="rateEntertainMaximun" column="RATE_ENTERTAIN_MAXIMUN" />
+		<result property="rateTCas" column="RATE_TCAS" />
+		<result property="maxTCas" column="MAX_TCAS" />
+	</resultMap>
+	
+	<resultMap type="TerminalKeyInf" id="TerminalKeyInfMap">
+	    <id property="terminalId" 		 column="TERMINAL_ID" />
+	    <result property="terminalLMK" 	 column="TERMINAL_LMK" />
+	    <result property="terminalLMKCV" column="TERMINAL_LMK_CV" />
+	    <result property="terminalZMK" 	 column="TERMINAL_ZMK" />
+	    <result property="terminalZMKCV" column="TERMINAL_ZMK_CV" />
+	    <result property="terminalTTK" 	 column="TERMINAL_TTK" />
+	    <result property="terminalTTKCV" column="TERMINAL_TTK_CV" />
+	    <result property="terminalPIK" 	 column="TERMINAL_PIK" />
+	    <result property="terminalPIKCV" column="TERMINAL_PIK_CV" />
+	    <result property="terminalTDK" 	 column="TERMINAL_TDK" />
+	    <result property="terminalTDKCV" column="TERMINAL_TDK_CV" />
+	    <result property="terminalMAK" 	 column="TERMINAL_MAK" />
+	    <result property="terminalMAKCV" column="TERMINAL_MAK_CV" />
+	</resultMap>
+
+	<select id="getFjpath" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT FJPATH FROM 	ATTACHMENT WHERE ID = #{uploadFileId}
+	</select>
+	
+	<select id="selectTerminalNo" parameterType="TerminalInf" resultMap="TerminalMap">
+		SELECT 
+			TERMINAL_NO
+ 		FROM 
+	        MPAMNG_TERMINAL_INF TERM 
+	    WHERE TERMINAL_NO =#{terminalNo}
+	</select>
+
+	<insert id="insertEntity" parameterType="TerminalInf">
+		INSERT INTO MPAMNG_TERMINAL_INF (
+			TERMINAL_ID,
+			TERMINAL_SEQ,
+			TERMINAL_NO,
+			TERMINAL_TYPE,
+			TERMINAL_COM,
+			CREATE_USER_ID,
+			CREATE_DATE,
+			RATE_LIVELIHOOD,
+			RATE_GENERAL,
+			RATE_GENERAL_TOP,
+			RATE_GENERAL_MAXIMUN,
+			RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP,
+			RATE_ENTERTAIN_MAXIMUN
+		)
+		VALUES
+			(
+				#{terminalId,jdbcType=VARCHAR}, #{terminalSeq,jdbcType=VARCHAR},#{terminalNo,jdbcType=VARCHAR},
+				#{terminalType,jdbcType=VARCHAR},#{terminalCom,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},
+				#{createDate,jdbcType=VARCHAR},
+				#{rateLivelihood,jdbcType=VARCHAR}, 
+				#{rateGeneral,jdbcType=VARCHAR},#{rateGeneralTop,jdbcType=VARCHAR}, #{rateGeneralMaximun,jdbcType=VARCHAR},
+				#{rateEntertain,jdbcType=VARCHAR},#{rateEntertainTop,jdbcType=VARCHAR},#{rateEntertainMaximun,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateEntity" parameterType="TerminalInf">
+		UPDATE MPAMNG_TERMINAL_INF 
+		<set>
+				RATE_LIVELIHOOD = #{rateLivelihood},
+				RATE_GENERAL = #{rateGeneral},
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+				RATE_ENTERTAIN = #{rateEntertain},
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+				<if test="rateTCas != null and rateTCas != ''">
+					RATE_TCAS =#{rateTCas},
+				</if>
+				<if test="maxTCas != null and maxTCas != ''">
+					MAX_TCAS =#{maxTCas},
+				</if>
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun}
+		</set>
+		WHERE
+			TERMINAL_ID = #{terminalId}
+	</update>
+	
+
+	<insert id="insertTerminalKey" parameterType="TerminalKeyInf">
+		INSERT INTO MPAMNG_TERMINAL_KEY_INF (
+			TERMINAL_ID,
+			TERMINAL_LMK,
+			TERMINAL_LMK_CV,
+			TERMINAL_ZMK,
+			TERMINAL_ZMK_CV,
+			TERMINAL_TTK,
+			TERMINAL_TTK_CV,
+			TERMINAL_PIK,
+			TERMINAL_PIK_CV,
+			TERMINAL_TDK,
+			TERMINAL_TDK_CV,
+			TERMINAL_MAK,
+			TERMINAL_MAK_CV
+		)
+		VALUES
+			(
+				#{terminalId,jdbcType=VARCHAR},
+				#{terminalLMK,jdbcType=VARCHAR},
+				#{terminalLMKCV,jdbcType=VARCHAR},
+				#{terminalZMK,jdbcType=VARCHAR},
+				#{terminalZMKCV,jdbcType=VARCHAR},
+				#{terminalTTK,jdbcType=VARCHAR},
+				#{terminalTTKCV,jdbcType=VARCHAR},
+				#{terminalPIK,jdbcType=VARCHAR},
+				#{terminalPIKCV,jdbcType=VARCHAR},
+				#{terminalTDK,jdbcType=VARCHAR},
+				#{terminalTDKCV,jdbcType=VARCHAR},
+				#{terminalMAK,jdbcType=VARCHAR},
+				#{terminalMAKCV,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="unbindMer" parameterType="TerminalInf" >
+		UPDATE MPAMNG_TERMINAL_INF SET EDIT_USER_ID=#{editUserId},EDIT_DATE=#{editDate},TERMINAL_STATUS=1
+		WHERE TERMINAL_ID = #{terminalId}
+	</update>
+	
+	<update id="unbindAgent" parameterType="TerminalInf">
+		UPDATE MPAMNG_TERMINAL_INF SET TERMINAL_STATUS=#{terminalStatus},EDIT_USER_ID=#{editUserId},EDIT_DATE=#{editDate},
+		RATE_LIVELIHOOD=#{rateLivelihood},RATE_GENERAL=#{rateGeneral},RATE_GENERAL_TOP=#{rateGeneralTop},RATE_GENERAL_MAXIMUN=#{rateGeneralMaximun},
+		RATE_ENTERTAIN=#{rateEntertain},
+		RATE_ENTERTAIN_TOP=#{rateEntertainTop},RATE_ENTERTAIN_MAXIMUN=#{rateEntertainMaximun}
+		WHERE TERMINAL_ID = #{terminalId}
+	</update>
+	
+	<update id="termAllocate" parameterType="TerminalInf">
+		UPDATE MPAMNG_TERMINAL_INF SET TERMINAL_STATUS=1,EDIT_USER_ID=#{editUserId},EDIT_DATE=#{editDate},
+			RATE_LIVELIHOOD=#{rateLivelihood}, 
+			RATE_GENERAL=#{rateGeneral}, 
+			RATE_GENERAL_TOP=#{rateGeneralTop}, 
+			RATE_GENERAL_MAXIMUN=#{rateGeneralMaximun},
+			RATE_ENTERTAIN=#{rateEntertain}, 
+			RATE_ENTERTAIN_TOP=#{rateEntertainTop} ,
+			RATE_ENTERTAIN_MAXIMUN=#{rateEntertainMaximun},
+			RATE_TCAS=#{rateTCas},
+			MAX_TCAS=#{maxTCas}
+		WHERE TERMINAL_ID = #{terminalId}
+	</update>
+	
+	<select id="findTermAllocate" parameterType="TerminalInf" resultMap="TerminalMap">
+		SELECT
+			TERM.TERMINAL_ID,
+			TERM.TERMINAL_SEQ,
+			TERM.TERMINAL_NO,
+			AGENT.AGENT_ID,
+			AGENT.AGENT_NAME,
+			MER.CUST_ID,
+			MER.CUST_NAME,
+			TERM.TERMINAL_TYPE,
+			TERM.TERMINAL_COM,
+			TERM.TERMINAL_STATUS,
+			TERM.CREATE_USER_ID,
+			TERM.CREATE_DATE,
+			TERM.EDIT_USER_ID,
+			TERM.EDIT_DATE
+		FROM
+	        MPAMNG_TERMINAL_INF TERM
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID  = TERM.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID 
+		WHERE
+			TERM.TERMINAL_NO = #{terminalNo} AND TERM.TERMINAL_TYPE=#{terminalType} AND TERM.TERMINAL_STATUS !='2'
+	</select>
+	
+<!-- 	<select id="findTermAllocateList" parameterType="TerminalInf" resultMap="TerminalMap"> -->
+<!-- 		SELECT -->
+<!-- 			term.TERMINAL_ID, -->
+<!-- 			term.TERMINAL_SEQ, -->
+<!-- 			term.TERMINAL_NO, -->
+<!-- 			agent.AGENT_ID, -->
+<!-- 			agent.AGENT_NAME, -->
+<!-- 			mer.CUST_ID, -->
+<!-- 			mer.CUST_NAME, -->
+<!-- 			term.TERMINAL_TYPE, -->
+<!-- 			term.TERMINAL_COM, -->
+<!-- 			term.TERMINAL_STATUS, -->
+<!-- 			term.CREATE_USER_ID, -->
+<!-- 			term.CREATE_DATE, -->
+<!-- 			term.EDIT_USER_ID, -->
+<!-- 			term.EDIT_DATE -->
+<!-- 		FROM -->
+<!-- 		  	MPAMNG_TERMINAL_INF term -->
+<!-- 			LEFT JOIN MPOMNG_AGE_CUST_REF_INF ref ON ref.TERMINAL_ID  = term.TERMINAL_ID -->
+<!-- 			LEFT JOIN MPAMNG_AGENT_INF agent ON ref.AGE_ID = agent.AGENT_ID -->
+<!-- 			LEFT JOIN MPOMNG_MOBILE_MER_INF mer ON mer.CUST_ID = ref.CUST_ID  -->
+<!-- 		WHERE -->
+<!-- 			term.TERMINAL_ID >= #{terminalId} AND term.TERMINAL_TYPE=#{terminalType} AND term.TERMINAL_STATUS !=2 limit  #{pageSize} -->
+<!-- 	</select> -->
+	
+	
+	
+	<select id="findTermAllocateList" parameterType="TerminalInf" resultMap="TerminalMap">
+			SELECT * FROM 
+			   (
+				SELECT 
+				TERM.TERMINAL_ID,
+				TERM.TERMINAL_SEQ,
+				TERM.TERMINAL_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME,
+				TERM.TERMINAL_TYPE,
+				TERM.TERMINAL_COM,
+				TERM.TERMINAL_STATUS
+			 FROM
+			    MPAMNG_TERMINAL_INF TERM 
+			 LEFT JOIN  MPOMNG_AGE_CUST_REF_INF REF  ON TERM.TERMINAL_ID=REF.TERMINAL_ID 
+			 LEFT JOIN  MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			WHERE
+			  	  TERM.TERMINAL_STATUS='0'
+			AND   TERM.TERMINAL_TYPE=#{terminalType}
+		OR ( TERM.TERMINAL_STATUS='1' AND
+			REF.AGE_ID IN (
+				SELECT AGENT_ID FROM MPAMNG_AGENT_INF 
+					WHERE  AGENT_CODE 
+					  LIKE CONCAT(
+						(
+						SELECT SUBSTR(AGENT_CODE,1,4) 
+						FROM
+						 	 MPAMNG_AGENT_INF WHERE
+						   	 AGENT_ID=#{agentId}),'%') 
+					AND   AGENT_ID!=#{agentId})
+			 )
+		) A
+		WHERE A.TERMINAL_ID >= #{terminalId} LIMIT #{pageSize}
+	</select>
+	
+
+	<select id="selectEntity" parameterType="TerminalInf" resultMap="TerminalMap">
+		SELECT 
+			TERM.TERMINAL_ID,
+			TERM.TERMINAL_SEQ,
+			TERM.TERMINAL_NO,
+			AGENT.AGENT_ID,
+			AGENT.AGENT_NAME,
+			MER.CUST_ID,
+			MER.CUST_NAME,
+			TERM.TERMINAL_TYPE,
+			TERM.TERMINAL_COM,
+			TERM.TERMINAL_STATUS,
+			TERM.CREATE_USER_ID,
+			TERM.CREATE_DATE,
+			TERM.EDIT_USER_ID,
+			TERM.EDIT_DATE,
+			TERM.RATE_LIVELIHOOD, 
+			TERM.RATE_GENERAL, 
+			TERM.RATE_GENERAL_TOP, 
+			TERM.RATE_GENERAL_MAXIMUN,
+			TERM.RATE_ENTERTAIN, 
+			TERM.RATE_ENTERTAIN_TOP,
+			TERM. RATE_ENTERTAIN_MAXIMUN,
+			TERM.RATE_TCAS,
+			TERM.MAX_TCAS
+ 		FROM 
+	        MPAMNG_TERMINAL_INF TERM
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID  = TERM.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID
+		<where>
+			<if test="terminalId != null and terminalId != ''">
+				AND TERM.TERMINAL_ID =#{terminalId}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				AND AGENT.AGENT_ID =#{agentId}
+			</if>
+		</where>
+	</select>
+
+	<select id="countEntity" parameterType="TerminalInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT count(1) FROM
+				MPAMNG_TERMINAL_INF TERM
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER 
+				  ON TERM.CUST_ID = MER.CUST_ID
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF 
+				  ON REF.TERMINAL_ID = TERM.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT 
+				  ON REF.AGE_ID = AGENT.AGENT_ID
+		<where>
+			<if test="terminalType != null and terminalType != ''">
+				AND TERM.TERMINAL_TYPE =#{terminalType}
+			</if>
+			<if test="terminalCom != null and terminalCom != ''">
+				AND TERM.TERMINAL_COM =#{terminalCom}
+			</if>
+			<if test="terminalStatus != null and terminalStatus != ''">
+				AND TERM.TERMINAL_STATUS =#{terminalStatus}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				AND REF.AGE_ID IN (
+				SELECT AGENT_ID FROM MPAMNG_AGENT_INF 
+					WHERE  AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%') 
+				)			
+			</if>
+			<if test="terminalSeq != null and terminalSeq != ''">
+				 TERM.TERMINAL_SEQ LIKE CONCAT('%',#{terminalSeq},'%')
+			</if>
+			<if test="terminalNo != null and terminalNo != ''">
+				AND TERM.TERMINAL_NO LIKE CONCAT('%',#{terminalNo},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+			</if>
+			<if test="custId != null and custId != ''">
+				AND MER.CUST_Id =#{custId}
+			</if>
+			<if test="custName != null and custName != ''">
+				AND MER.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+			</if>
+	
+		</where>
+	</select>
+	<select id="selectList" parameterType="TerminalInf" resultMap="TerminalMap" databaseId="mysql"> 
+		SELECT
+				TERM.TERMINAL_ID,
+				TERM.TERMINAL_SEQ,
+				TERM.TERMINAL_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME,
+				MER.CUST_ID,
+				MER.CUST_NAME,
+				TERM.TERMINAL_TYPE,
+				TERM.TERMINAL_COM,
+				TERM.TERMINAL_STATUS,
+				TERM.CREATE_USER_ID,
+				TERM.CREATE_DATE,
+				TERM.EDIT_USER_ID,
+				TERM.EDIT_DATE,
+				TERM.RATE_LIVELIHOOD, 
+				TERM.RATE_GENERAL, 
+				TERM.RATE_GENERAL_TOP, 
+				TERM.RATE_GENERAL_MAXIMUN,
+				TERM.RATE_ENTERTAIN, 
+				TERM.RATE_ENTERTAIN_TOP,
+				TERM.RATE_ENTERTAIN_MAXIMUN
+			FROM
+				MPAMNG_TERMINAL_INF TERM
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID = TERM.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID
+		<where>
+			<if test="terminalType != null and terminalType != ''">
+				AND TERM.TERMINAL_TYPE =#{terminalType}
+			</if>
+			<if test="terminalCom != null and terminalCom != ''">
+				AND TERM.TERMINAL_COM =#{terminalCom}
+			</if>
+			<if test="terminalStatus != null and terminalStatus != ''">
+				AND TERM.TERMINAL_STATUS =#{terminalStatus}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				AND REF.AGE_ID IN (
+				SELECT AGENT_ID FROM MPAMNG_AGENT_INF 
+					WHERE  AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%') 
+				)			
+			</if>
+			<if test="terminalSeq != null and terminalSeq != ''">
+				 TERM.TERMINAL_SEQ LIKE CONCAT('%',#{terminalSeq},'%')
+			</if>
+			<if test="terminalNo != null and terminalNo != ''">
+				AND TERM.TERMINAL_NO LIKE CONCAT('%',#{terminalNo},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+			</if>
+			<if test="custId != null and custId != ''">
+				AND MER.CUST_Id =#{custId}
+			</if>
+			<if test="custName != null and custName != ''">
+				AND MER.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+			</if>
+		
+		</where>
+		ORDER BY TERM.CREATE_DATE DESC  LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="queryTermAllocateNum" parameterType="TerminalInf" resultType="java.lang.Integer">
+			SELECT
+				count(1)
+			FROM
+				MPAMNG_TERMINAL_INF A
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF B ON B.TERMINAL_ID = A.TERMINAL_ID
+			WHERE
+			A.TERMINAL_STATUS != '2'
+			<if test="terminalType != null and terminalType != ''">
+				AND A.TERMINAL_TYPE=#{terminalType}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				AND B.AGE_ID =#{agentId}
+			</if>
+	</select>
+	
+	
+	<select id="getTermFeeCount" parameterType="TerminalInf" resultType="java.lang.Integer" databaseId="mysql">
+			SELECT count(1)
+			FROM
+				MPAMNG_TERMINAL_INF TERM
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON TERM.CUST_ID = MER.CUST_ID
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID = TERM.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID 
+		<where>
+			<if test="agentId != null and agentId != ''">
+				 AGENT.AGENT_ID =#{agentId}
+			</if>
+			<if test="terminalStatus != null and terminalStatus != ''">
+				AND TERM.TERMINAL_STATUS =#{terminalStatus}
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+			</if>
+			<if test="terminalSeq != null and terminalSeq != ''">
+				AND TERMINAL_SEQ LIKE CONCAT('%',#{terminalSeq},'%')
+			</if>
+			<if test="terminalNo != null and terminalNo != ''">
+				AND TERMINAL_NO LIKE CONCAT('%',#{terminalNo},'%')
+			</if>
+		
+		</where>
+		ORDER BY TERM.TERMINAL_ID ASC
+	</select>
+	<select id="getTermFeeListPage" parameterType="TerminalInf" resultMap="TerminalMap" databaseId="mysql">
+		SELECT 
+				TERM.TERMINAL_ID,
+				TERM.TERMINAL_SEQ,
+				TERM.TERMINAL_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME,
+				MER.RATE_TCAS,
+				MER.CUST_ID,
+				MER.CUST_NAME,
+				TERM.TERMINAL_TYPE,
+				TERM.TERMINAL_COM,
+				TERM.TERMINAL_STATUS,
+				TERM.CREATE_USER_ID,
+				TERM.CREATE_DATE,
+				TERM.EDIT_USER_ID,
+				TERM.EDIT_DATE,
+				TERM.RATE_LIVELIHOOD, 
+				TERM.RATE_GENERAL, 
+				TERM.RATE_GENERAL_TOP, 
+				TERM.RATE_GENERAL_MAXIMUN,
+				TERM.RATE_ENTERTAIN, 
+				TERM.RATE_ENTERTAIN_TOP,
+				TERM.RATE_ENTERTAIN_MAXIMUN
+			FROM
+				MPAMNG_TERMINAL_INF TERM
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACR ON ACR.TERMINAL_ID = TERM.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON ACR.AGE_ID = AGENT.AGENT_ID
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON TERM.CUST_ID = MER.CUST_ID
+			<where>
+				<if test="agentId != null and agentId != ''">
+					 AGENT.AGENT_ID =#{agentId}
+				</if>
+				<if test="terminalStatus != null and terminalStatus != ''">
+					AND TERM.TERMINAL_STATUS =#{terminalStatus}
+				</if>
+				<if test="agentName != null and agentName != ''">
+					AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+				</if>
+				<if test="terminalSeq != null and terminalSeq != ''">
+					AND TERMINAL_SEQ LIKE CONCAT('%',#{terminalSeq},'%')
+				</if>
+				<if test="terminalNo != null and terminalNo != ''">
+					AND TERMINAL_NO LIKE CONCAT('%',#{terminalNo},'%')
+				</if>
+				
+			</where>
+		ORDER BY TERM.TERMINAL_ID ASC LIMIT #{start},#{pageSize}
+	</select>
+	
+	
+	<update id="termFeeBind" parameterType="TerminalInf">
+		UPDATE MPAMNG_TERMINAL_INF SET  
+		  WHERE TERMINAL_ID = #{terminalId}
+	</update>
+	
+	<select id="findTermFeeBind" parameterType="TerminalInf" resultMap="TerminalMap">
+		SELECT
+				TERM.TERMINAL_ID,
+				TERM.TERMINAL_SEQ,
+				TERM.TERMINAL_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME,
+				MER.CUST_ID,
+				MER.CUST_NAME,
+				TERM.TERMINAL_TYPE,
+				TERM.TERMINAL_COM,
+				TERM.TERMINAL_STATUS,
+				TERM.CREATE_USER_ID,
+				TERM.CREATE_DATE,
+				TERM.EDIT_USER_ID,
+				TERM.EDIT_DATE,
+				TERM.RATE_LIVELIHOOD, 
+				TERM.RATE_GENERAL, 
+				TERM.RATE_GENERAL_TOP, 
+				TERM.RATE_GENERAL_MAXIMUN,
+				TERM.RATE_ENTERTAIN, 
+				TERM.RATE_ENTERTAIN_TOP,
+				TERM.RATE_ENTERTAIN_MAXIMUN
+		FROM
+		        MPAMNG_TERMINAL_INF TERM
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID  = TERM.TERMINAL_ID
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+				LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID 
+		WHERE
+			TERM.TERMINAL_NO = #{terminalNo} 
+			<if test="terminalType != null and terminalType != ''">
+				AND TERM.TERMINAL_TYPE =#{terminalType}
+			</if>
+	</select>
+	
+	<select id="findTermFeeBindList" parameterType="TerminalInf" resultMap="TerminalMap" databaseId="mysql">
+		SELECT
+				TERM.TERMINAL_ID,
+				TERM.TERMINAL_SEQ,
+				TERM.TERMINAL_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME,
+				MER.CUST_ID,
+				MER.CUST_NAME,
+				TERM.TERMINAL_TYPE,
+				TERM.TERMINAL_COM,
+				TERM.TERMINAL_STATUS,
+				TERM.CREATE_USER_ID,
+				TERM.CREATE_DATE,
+				TERM.EDIT_USER_ID,
+				TERM.EDIT_DATE,
+				TERM.RATE_LIVELIHOOD, 
+				TERM.RATE_GENERAL, 
+				TERM.RATE_GENERAL_TOP, 
+				TERM.RATE_GENERAL_MAXIMUN,
+				TERM.RATE_ENTERTAIN, 
+				TERM.RATE_ENTERTAIN_TOP,
+				TERM.RATE_ENTERTAIN_MAXIMUN
+		FROM
+		        MPAMNG_TERMINAL_INF TERM
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID  = TERM.TERMINAL_ID
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+				LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID 
+		WHERE
+			TERM.TERMINAL_ID >= #{terminalId} 
+			<if test="terminalType != null and terminalType != ''">
+				AND TERM.TERMINAL_TYPE =#{terminalType}
+			</if>
+			LIMIT  #{pageSize}
+	</select>
+	
+	<update id="deleteTermFee" parameterType="TerminalInf">
+		UPDATE 
+			MPAMNG_TERMINAL_INF
+		 SET  
+			RATE_LIVELIHOOD='', 
+			RATE_GENERAL='', 
+			RATE_GENERAL_TOP='', 
+			RATE_GENERAL_MAXIMUN='',
+			RATE_ENTERTAIN='', 
+			RATE_ENTERTAIN_TOP='' ,
+			RATE_ENTERTAIN_MAXIMUN=''
+		WHERE TERMINAL_ID = #{terminalId}
+	</update>
+	
+	<select id="getEffectivePayCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(1) FROM MPOMNG_PAY_INF
+		WHERE
+			TER_NO =  #{terminalNo,jdbcType=VARCHAR} 
+			AND PAY_DATE = DATE_FORMAT(NOW(),'%Y%m%d') 
+			AND PAYSTATUS = '01'
+	</select>
+	
+	<update id="modifyCustFee" parameterType="TerminalInf">
+		UPDATE MPOMNG_MOBILE_MER_INF 
+		<set>
+			RATE_TCAS =#{rateTCas},
+			MAX_TCAS =#{maxTCas}
+		</set>
+		WHERE
+			CUST_ID = #{custId}
+	</update>
+</mapper>

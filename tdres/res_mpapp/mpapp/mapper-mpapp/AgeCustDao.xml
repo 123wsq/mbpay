@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.AgeCustDao">
+
+
+<resultMap type="java.util.Map" id="resultMap">
+	<result property="custId" column="CUST_ID"/>
+	<result property="ageId" column="AGE_ID"/>
+	<result property="terminalId" column="TERMINAL_ID"/>
+
+</resultMap>
+
+
+	<insert id="insertAgeCustInfo" parameterType="java.util.Map">
+	
+		INSERT INTO MPOMNG_AGE_CUST_REF_INF 
+		(
+			CUST_ID,
+			AGE_ID,
+			TERMINAL_ID
+		)
+		VALUES
+		(
+			#{custId},
+		 	#{ageId},
+			#{terminalId}
+		 )
+	</insert>
+	<select id="selectEntry" parameterType="java.util.Map" resultMap="resultMap">
+		SELECT 
+			*
+		FROM 
+			MPOMNG_AGE_CUST_REF_INF
+		<where>
+			<if test="custId != null and custId != ''">
+				AND CUST_ID=#{custId}
+			</if>
+			<if test="ageId != null and ageId != ''">
+				AND AGE_ID=#{ageId}
+			</if>
+			<if test="terminalId != null and terminalId != ''">
+				AND TERMINAL_ID=#{terminalId}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateAgeCustInfo" parameterType="java.util.Map">
+		UPDATE MPOMNG_AGE_CUST_REF_INF
+		<set>
+				CUST_ID=#{custId},
+		</set>
+		<where>
+			TERMINAL_ID = (SELECT TERMINAL_ID FROM MPAMNG_TERMINAL_INF WHERE TERMINAL_NO = #{terminalNo})
+		</where>
+	</update>
+	
+	<delete id="deleteAgeCustInfo" parameterType="java.util.Map">
+		DELETE FROM MPOMNG_AGE_CUST_REF_INF WHERE TERMINAL_ID = #{terminalId}
+	</delete>
+	
+	<delete id="deleteAgeCustInfoDefault" parameterType="java.util.Map">
+		DELETE FROM MPOMNG_AGE_CUST_REF_INF WHERE TERMINAL_ID = #{terminalNo} AND  CUST_ID = #{custId}
+	</delete>
+</mapper>

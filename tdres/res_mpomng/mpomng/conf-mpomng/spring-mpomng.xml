@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+      
+    <!-- 扫描service（service层注入） -->
+	<context:component-scan base-package="com.tangdi.production.mpomng.service"/>
+	<!-- 扫描trans（trans层注入） -->
+    <context:component-scan base-package="com.tangdi.production.mpomng.trans"/>  
+      
+	<bean id="mpomngConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:mpomng/conf-mpomng/mpomng.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 同步线程处理
+	<bean id="hessianService" class="com.tangdi.production.tdcomm.rpc.hessian.ComTranImpl" /> -->
+	<!-- 异步线程处理 -->
+	<bean id="asynService" class="com.tangdi.production.tdcomm.rpc.AsyService.AsynService" />
+
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 命名空间 -->
+    <typeAliases>
+    	<typeAlias alias="OrgInf"               type="com.tangdi.production.tdauth.bean.OrgInf"/>
+    	<typeAlias alias="UserInf"              type="com.tangdi.production.tdauth.bean.UserInf"/>
+    	<typeAlias alias="RoleInf"              type="com.tangdi.production.tdauth.bean.RoleInf"/>
+    	<typeAlias alias="MenuInf"              type="com.tangdi.production.tdauth.bean.MenuInf"/>
+    	<typeAlias alias="UserRoleRel"          type="com.tangdi.production.tdauth.bean.UserRoleRelInf"/>
+    	<typeAlias alias="OrgRoleRel"           type="com.tangdi.production.tdauth.bean.OrgRoleRelInf"/>
+    	<typeAlias alias="AuditLogInf"          type="com.tangdi.production.tdauth.bean.AuditLogInf"/>
+    	<typeAlias alias="RoleMenuButtonRelInf" type="com.tangdi.production.tdauth.bean.RoleMenuButtonRelInf"/>
+    	<typeAlias alias="SysInf"               type="com.tangdi.production.tdauth.bean.SysInf" />
+    </typeAliases>
+</configuration>

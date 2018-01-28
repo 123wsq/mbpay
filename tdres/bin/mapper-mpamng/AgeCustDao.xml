@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgeCustDao">
+	
+	<select id="selectAgeCustEntity" parameterType="java.util.Map" resultType="java.util.Map">
+		select CUST_ID custId,AGE_ID agentId,TERMINAL_ID terminalId  from MPOMNG_AGE_CUST_REF_INF where TERMINAL_ID = #{terminalId}
+	</select>
+	
+	<insert id="insertAgeCustInfo" parameterType="map">
+		INSERT INTO MPOMNG_AGE_CUST_REF_INF 
+		(
+			CUST_ID,
+			AGE_ID,
+			TERMINAL_ID
+		)
+		VALUES
+		(
+			#{custId},
+		 	#{ageId},
+			#{terminalId}
+		 )
+	</insert>
+	
+	<update id="updateAgeCustInfo" parameterType="map">
+		UPDATE MPOMNG_AGE_CUST_REF_INF
+		SET CUST_ID=''
+		WHERE TERMINAL_ID=#{terminalId};
+	</update>
+	
+	<delete id="deleteAgeCustInfo" parameterType="map">
+		DELETE FROM MPOMNG_AGE_CUST_REF_INF WHERE TERMINAL_ID = #{terminalId}
+	</delete>
+	
+	<select id="getTerminalCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(CUST_ID) FROM MPOMNG_AGE_CUST_REF_INF 
+		WHERE TERMINAL_ID = #{terminalId}
+	</select>
+	
+	<update id="updateAgent" parameterType="map">
+		UPDATE MPOMNG_AGE_CUST_REF_INF
+		SET AGE_ID = #{ageId}
+		WHERE TERMINAL_ID = #{terminalId}
+	</update>
+</mapper>

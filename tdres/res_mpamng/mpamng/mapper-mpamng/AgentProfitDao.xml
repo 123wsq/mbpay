@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentProfitDao">
+	<resultMap type="AgentProfitInf" id="AgentProfitMap">
+		<id property="agentId" column="AGENT_ID" />
+		<result property="rates"     column="RATES" />
+		<result property="beginNum"     column="BEGIN_NUM" />
+		<result property="endNum"    column="END_NUM" />
+		<result property="showNum"      column="SHOW_NUM" />
+		<result property="status" column="STATUS" />
+		<result property="remark"   column="REMARK" />
+		<result property="rateType"   column="RATE_TYPE" />
+	</resultMap>
+	
+	<insert id="insertEntity" parameterType="AgentProfitInf">
+		INSERT INTO MPAMNG_AGENT_PROFIT_INF
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="agentId != null">
+				AGENT_ID,
+			</if>
+			<if test="rates != null">
+				RATES,
+			</if>
+			<if test="beginNum != null">
+				BEGIN_NUM,
+			</if>
+			<if test="endNum != null">
+				END_NUM,
+			</if>
+			<if test="showNum != null">
+				SHOW_NUM,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="rateType != null">
+				RATE_TYPE,
+			</if>			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="agentId != null">
+				#{agentId,jdbcType=VARCHAR},
+			</if>
+			<if test="rates != null">
+				#{rates,jdbcType=VARCHAR},
+			</if>
+			<if test="beginNum != null">
+				#{beginNum,jdbcType=VARCHAR},
+			</if>
+			<if test="endNum != null">
+				#{endNum,jdbcType=VARCHAR},
+			</if>
+			<if test="showNum != null">
+				#{showNum,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="rateType != null">
+				#{rateType,jdbcType=CHAR},
+			</if>			
+		</trim>
+	</insert>
+
+	<update id="updateEntity" parameterType="AgentProfitInf">
+		UPDATE MPAMNG_AGENT_PROFIT_INF
+		<set>
+			<if test="agentId != null and agentId != ''">
+				AGENT_ID = #{agentId},
+			</if>
+			<if test="rates != null and rates != ''">
+				RATES = #{rates},
+			</if>
+			<if test="beginNum != null and beginNum != ''">
+				BEGIN_NUM = #{beginNum},
+			</if>
+			<if test="endNum != null and endNum != ''">
+				END_NUM = #{endNum},
+			</if>
+			<if test="showNum != null and showNum != ''">
+				SHOW_NUM = #{showNum},
+			</if>
+			<if test="status != null and status != ''">
+				STATUS = #{status},
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK = #{remark},
+			</if>		
+		</set>
+		<where>
+			AGENT_ID = #{agentId} AND SHOW_NUM = #{showNum} AND RATE_TYPE = #{rateType}
+		</where>
+	</update>
+
+	<delete id="deleteEntity" parameterType="AgentProfitInf">
+		DELETE FROM MPAMNG_AGENT_PROFIT_INF
+		<where>
+			AGENT_ID = #{agentId}
+		</where>
+	</delete>
+
+	
+	<select id="selectEntity" parameterType="AgentProfitInf" resultMap="AgentProfitMap">
+		SELECT * FORM MPAMNG_AGENT_PROFIT_INF
+		<where>
+			AGENT_ID = #{agentId} AND RATE_TYPE = #{rateType}
+		</where>
+	</select>
+	<select id="selectGrade" parameterType="AgentProfitInf" resultMap="AgentProfitMap">
+		SELECT * FROM MPAMNG_AGENT_PROFIT_INF
+		<where>
+			AGENT_ID = #{agentId} AND RATE_TYPE = #{rateType}
+		</where>
+		   ORDER BY SHOW_NUM ASC
+	</select>
+</mapper>

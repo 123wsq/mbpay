@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CustAccountDao">
+	<resultMap type="java.util.Map"  id="custAccountMap">
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="account"               column="ACCOUNT" /> 
+		    <result property="acType"               column="AC_TYPE" /> 
+		    <result property="ccy"               column="CCY" /> 
+		    <result property="acBal"               column="AC_BAL" /> 
+		    <result property="acT0"               column="AC_T0" /> 
+		    <result property="acT1"               column="AC_T1" />
+		    <result property="acT1UNA"              column="AC_T1_UNA" /> 
+		    <result property="acT1AP"              column="AC_T1_AP" />
+		    <result property="acT1AUNP"              column="AC_T1_AUNP" />    
+		    <result property="acT1Y"               column="AC_T1_Y" /> 
+		    <result property="frozBalance"               column="FROZ_BALANCE" /> 
+		    <result property="lstTxDatetime"               column="LST_TX_DATETIME" />
+	</resultMap>
+	
+
+	<update id="updateEntityAmt"  parameterType="java.util.Map">
+	  UPDATE 
+	          MPOMNG_CUST_ACCOUNT_INF
+	  SET 
+	          AC_T1=AC_T1+#{payAtm},
+	          AC_BAL=AC_T0+AC_T1+AC_T1_Y 
+	  WHERE 
+	  		  CUST_ID=  #{custId}	          
+	</update>
+
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_CUST_ACCOUNT_INF
+		SET
+				AC_BAL =  #{acBal},
+				AC_T0 =  #{acT0},
+				AC_T1 =  #{acT1},
+			 	AC_T1_Y =  #{acT1Y},
+			 	AC_T1_AP = #{acT1AP},
+			 	AC_T1_UNA = #{acT1UNA},
+		        LST_TX_DATETIME =  #{accountLstTxDatetime}
+		WHERE
+			CUST_ID=#{custId}
+			AND AC_TYPE = #{acType}
+	</update>
+	
+	<update id="updateEntitySync" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_CUST_ACCOUNT_INF
+		SET
+				AC_BAL =  #{acBal},
+				AC_T0 =  #{acT0},
+				AC_T1 =  #{acT1},
+			 	AC_T1_Y =  #{acT1Y},
+			 	AC_T1_AP = #{acT1AP},
+			 	AC_T1_UNA = #{acT1UNA},
+		        LST_TX_DATETIME =  #{accountLstTxDatetime}
+		WHERE
+			CUST_ID=#{custId}
+			AND AC_TYPE = #{acType}
+			AND AC_BAL = #{oacBal}
+			AND AC_T0 = #{oacT0}
+			AND AC_T1 = #{oacT1}
+			AND AC_T1_Y = #{oacT1Y}
+			AND AC_T1_AP = #{oacT1AP}
+			AND AC_T1_UNA = #{oacT1UNA}
+	</update>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="custAccountMap">
+		SELECT 
+		         CUST_ID, 
+		         ACCOUNT, 
+		         AC_TYPE, 
+		         CCY, 
+		         AC_BAL, 
+		         AC_T0, 
+		         AC_T1,
+		         AC_T1_UNA,
+		         AC_T1_AP,
+		         AC_T1_AUNP, 
+		         AC_T1_Y, 
+		         FROZ_BALANCE, 
+		         LST_TX_DATETIME
+		FROM 
+		        MPOMNG_CUST_ACCOUNT_INF
+		WHERE
+				CUST_ID =  #{custId}
+				AND AC_TYPE = #{acType}
+	</select>
+	<!-- 金额小于0的不可以提现 -->
+	<select id="selectEntityForUpdate" parameterType="java.util.Map" resultMap="custAccountMap">
+		SELECT 
+		         CUST_ID, 
+		         ACCOUNT, 
+		         AC_TYPE, 
+		         CCY, 
+		         AC_BAL, 
+		         AC_T0, 
+		         AC_T1, 
+		         AC_T1_Y,
+		         AC_T1_UNA,
+		         AC_T1_AP,
+		         AC_T1_AUNP, 
+		         FROZ_BALANCE, 
+		         LST_TX_DATETIME
+		FROM 
+		        MPOMNG_CUST_ACCOUNT_INF
+		WHERE
+				CUST_ID =  #{custId}
+				AND AC_TYPE = #{acType}
+		FOR UPDATE
+	</select>
+	 
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CUST_ACCOUNT_INF  (
+		         CUST_ID, 
+		         ACCOUNT, 
+		         AC_TYPE, 
+		         CCY, 
+		         AC_BAL, 
+		         AC_T0, 
+		         AC_T1, 
+		         AC_T1_Y, 
+		         FROZ_BALANCE, 
+		         LST_TX_DATETIME
+				)
+		VALUES (
+		          #{custId}, 
+		          #{account}, 
+		          #{acType}, 
+		          #{ccy}, 
+		          #{acBal}, 
+		          #{acT0}, 
+		          #{acT1}, 
+		          #{acT1Y}, 
+		          #{frozBalance}, 
+		          #{lstTxDatetime}
+		      )
+	</insert>
+
+
+</mapper>

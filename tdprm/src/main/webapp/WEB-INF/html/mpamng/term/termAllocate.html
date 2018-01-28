@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<div class="page-header">
+	<h1>
+		终端下拨
+	</h1>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<!-- PAGE CONTENT BEGINS -->
+		<form class="form-horizontal" role="form" id="termAllocateForm">
+			<input type="hidden" id="agentRateLivelihood"/>
+			<input type="hidden" id="agentRateGeneral"/>
+			<input type="hidden" id="agentRateGeneralTop"/>
+			<input type="hidden" id="agentRateGeneralMaximun"/>
+			<input type="hidden" id="agentRateEntertain"/>
+			<input type="hidden" id="agentRateEntertainTop"/>
+			<input type="hidden" id="agentRateEntertainMaximun"/>
+			<input type="hidden" id="agentRateTCas"/>
+			<input type="hidden" id="agentMaxTCas"/>
+			<input type="hidden" id="agentId"/>
+			<!-- #section:elements.form -->
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right" for="form-field-1">代理商名称</label>
+				<div class="col-sm-9">
+					<input type="text" id="agentName" placeholder="" class="col-xs-10 col-sm-5" onclick="queryAgent_laborAdd();" readonly="readonly"/>
+				</div>
+			</div>
+			
+			<div class="form-group"> 
+				<label class="col-sm-2 control-label no-pEditing-right" for="form-field-1">终端类型</label>
+				<div class="col-sm-9">
+					<label>
+						<div class="search_input" style="pEditing-top: 5px;">
+							<select 
+							 rel="obj.options"
+							 location="mpamng/selectoption/termType.do" 
+							 name="terminalType" 
+							 id="terminalType" 
+							 data-placeholder="请选择状态" style="width: 200px;vertical-align:middle;">
+								<option value='' >----请选择----</option>
+							 </select>
+						</div>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-pEditing-right" for="form-field-1">终端绑定模式</label>
+				<div class="col-xs-1">
+					<label>
+						<input id="termBind" class="ace ace-switch" type="checkbox" value="0" />
+						<span class="lbl" data-lbl="逐个 &nbsp; &nbsp; &nbsp; 范围"></span>
+					</label>
+				</div>
+				<div class="col-xs-5">
+					<span class="help-inline col-xs-12 col-sm-7">
+						<span class="middle" style='color:red'>注：逐个适用少量   范围适用大量</span>
+					</span>
+				</div>
+			</div>
+			
+			<div id="one_">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">绑定终端数量</label>
+					<div class="col-sm-9">
+						<input readonly="" type="text" class="col-xs-10 col-sm-2" id="termAllocateNumRead" />
+						&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a  class="btn btn-small btn-add" onclick="addLine();">新增</a> 
+						<a  class="btn btn-small btn-delete" onclick="deleteLine();">删除</a>
+						&nbsp;
+						<input id="termckall"  type="checkbox" class="ace" /><span class="lbl">全选</span>
+					</div>
+					<div class="hr hr-24"></div>
+				</div>
+				
+			</div>
+			
+			
+			<div id="all_" style="display:none ">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right" for="form-field-1">绑定终端数量</label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="termAllocateNum" placeholder="" class="col-xs-12 col-sm-12"  datatype ="number"  maxlength="4"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 终端物理号</label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="termAllocateStart" name="termAllocateStart" placeholder="" class="col-xs-12 col-sm-12"  datatype ="word"  maxlength="18"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						T0提现(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateTCas" name="rateTCas" placeholder="T0提现(0.6%)" 
+								class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" maxlength="4" />
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						T0提现单笔收费： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="maxTCas" name="maxTCas" placeholder="T0提现单笔收费(单位元)" 
+							class="col-xs-12 col-sm-12 feecheck" datatype="money" maxlength="8" value="0"/>
+						</span>
+					</div>
+				</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					民生类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateLivelihood" name="rateLivelihood" placeholder="民生类(0.38%)"
+							class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" readonly/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					一般类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateGeneral" name="rateGeneral" placeholder="一般类(0.78%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" readonly/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					餐娱类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateEntertain" name="rateEntertain" placeholder="餐娱类(1.25%)"
+							class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" readonly/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					批发类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateGeneralTop" name="rateGeneralTop" placeholder="批发类(0.78%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" readonly/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+				<label class="col-sm-2 control-label no-padding-right">
+					批发类封顶(元)： </label>
+				<div class="col-sm-3">
+					<input type="text" id="rateGeneralMaximun" name="rateGeneralMaximun" placeholder="批发类封顶(0.78%，单位元)" 
+						class="col-xs-12 col-sm-12 feecheck" value="" datatype="money" maxlength="12" readonly/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					房产类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateEntertainTop" name="rateEntertainTop" placeholder="房产类封顶(1.25%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" readonly/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+				<label class="col-sm-2 control-label no-padding-right">
+					房产类封顶(元)： </label>
+				<div class="col-sm-3">
+					<input type="text" id="rateEntertainMaximun" name="rateEntertainMaximun" placeholder="房产类封顶(1.25%，单位元)" 
+						class="col-xs-12 col-sm-12 feecheck" value="" datatype="money" maxlength="12" readonly/>
+				</div>
+			</div>
+
+				<div class="col-md-offset-3 col-md-9">
+					<button auth="mpamng/term/termAllocate.do" class="btn btn-info" type="button" onclick="termAllocate()">
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						下拨
+					</button>
+					&nbsp; &nbsp; &nbsp;
+					<button class="btn" type="button"  onclick="closetermAllocate()">
+						<i class="ace-icon fa fa-undo bigger-110"></i>
+						取消
+					</button>
+				</div>
+		</div>
+		</form>
+		<!-- PAGE CONTENT ENDS -->
+	</div><!-- /.col -->
+</div><!-- /.row -->
+
+<script type="text/javascript">
+		var termAllocateNum=0;
+		$(function(){
+			$("#termBind").change(function() {
+				if($("#one_").is(":visible")){
+					$("#one_").hide();
+					$("#all_").show();
+					$("#termAllocateNumRead").val('');
+					$("div[name='addlinediv']").remove();
+					$("#all_").show();
+					$("#termAllocateNum").attr("validate",true);
+					$("#termAllocateStart").attr("validate",true);
+				}else{
+					$("#one_").show();
+					$("#all_").hide();
+					$("#termAllocateNum").val('');
+					$("#termAllocateStart").val('');
+					$("#termAllocateNum").removeAttr("validate");
+					$("#termAllocateStart").removeAttr("validate");
+				}
+			});
+			
+			$("#termckall").change(function(){  
+				var is_checked =$("#termckall").is(":checked");
+				$("input[name='addlineck']").each(function(){
+					this.checked=is_checked;
+				}); 
+			});
+			
+			$("#termAllocateNum").blur(function(){
+				if(isNaN($("#termAllocateNum").val())){
+					alertMsg.error('请输入正确的终端数量');
+					return false;
+				}
+				var terminalType=$("#terminalType option:selected").val();
+				if(terminalType==''){
+					alertMsg.error('请选择终端类型');
+					return false;
+				}
+				$.ajax({
+					type : "post",
+					url : "mpamng/term/queryTermAllocateNum.do",
+					data:{terminalType:terminalType},
+					dataType : 'json',
+					async:true,
+					success : function(result) {
+						if (result.rspcod != 200) {
+							msg.alert("错误", result.rspmsg, 'error');
+						} else {
+							termAllocateNum=result.obj;
+							if($("#termAllocateNum").val()>termAllocateNum){
+								alertMsg.error("所选终端类型库存不足");
+							}
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+					}
+				});
+			});
+		}); 
+		
+		function feeCheck($id){
+			var thisName = $id.attr('name');
+			var thisValue = $id.val();
+			//比较 民生类
+			if(thisName=='rateLivelihood'){
+				if($("#agentRateLivelihood").val()>thisValue){
+					TDTips($id,"民生类费率不能小于代理商费率！");
+					return false;
+				}
+			}
+			
+			//比较 一般类
+			if(thisName=='rateGeneral'){
+				if($("#agentRateGeneral").val()>thisValue){
+					TDTips($id,"一般类费率不能小于代理商费率！");
+					return false;
+				}
+			}
+
+			//批发类
+			if(thisName=='rateGeneralTop'){
+				if($("#agentRateGeneralTop").val()>thisValue){
+					TDTips($id,"批发类费率不能小于代理商费率！");
+					return false;
+				}
+			}
+			
+			//批发类费率
+			if(thisName=='rateGeneralMaximun'){
+				if($("#agentRateGeneralMaximun").val()>thisValue){
+					TDTips($id,"批发类费率封顶不能小于代理商费率！");
+					return false;
+				}
+			}
+			
+			//比较 餐娱类
+			if(thisName=='rateEntertain'){
+				if($("#agentRateEntertain").val()>thisValue){
+					TDTips($id,"餐娱类费率不能小于代理商费率！");
+					return false;
+				}
+			}
+			
+			//房产类
+			if(thisName=='rateEntertainTop'){
+				if($("#agentRateEntertainTop").val()>thisValue){
+					TDTips($id,"房产类费率不能小于代理商费率！");
+					return false;
+				}
+			}
+			
+			//房产类
+			if(thisName=='rateEntertainMaximun'){
+				if($("#agentRateEntertainMaximun").val()>thisValue){
+					TDTips($id,"房产类费率封顶不能小于代理商费率！");
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		//获取可选代理商列表
+		function queryAgent_laborAdd() {
+			openDialog({
+				dialogId : 'dlg-agentList',
+				title : '代理商信息',
+				pageUrl : 'mpamng/term/agentListView.do',
+				width : '70%',
+				height:'85%'
+			});
+		}
+		
+		function addLine(){
+			var checked =$("#termckall").is(":checked");
+			var line="<div class='form-group' name='addlinediv'>"+
+				"<label class='col-sm-2 control-label no-padding-right' for='form-field-1'> 终端物理号：</label>"+
+				"<div class='col-sm-3'>"+'<span class="block input-icon input-icon" >'+
+					"<input type='text' name='terminalNo' placeholder='' class='col-xs-12 col-sm-10' validate='true' datatype='word' maxlength='18'/>"+'<i class="ace-icon fa fa-star-o"></i></span>'+
+					"&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input name='addlineck' type='checkbox' class='ace' "+(checked==true?'checked':'')+"/><span class='lbl'></span></label>"+
+				"</div>"+
+				"</div>";
+// 			$("#one_ > div").append(line);
+			$("#one_").append(line);
+			$("#termAllocateNumRead").val(parseInt($("#termAllocateNumRead").val()==''?0:$("#termAllocateNumRead").val())+1);
+		}
+		
+		function deleteLine(){
+			$("input[name='addlineck']").each(function(){
+				if($(this).is(":checked")){
+					$(this).parent().parent().parent().remove();
+					$("#termAllocateNumRead").val($("#termAllocateNumRead").val()-1);
+				}
+			}); 
+		}
+		
+		//下拨
+		function termAllocate() {
+			var allocateType=0;//单个下拨
+			var agentName=$("#agentName").val();
+			if(agentName==''){
+				alertMsg.error('请选择需要下拨的代理商');
+				return false;
+			}
+			if(isNaN($("#termAllocateNum").val()) || parseInt($("#termAllocateNum").val())=='0'){
+				alertMsg.error('请输入正确的终端数量');
+				return false;
+			}
+			
+			var terminalType=$("#terminalType option:selected").val();
+			if(terminalType==''){
+				alertMsg.error('请选择终端类型');
+				return false;
+			}
+			
+			var terminalNo='';
+			
+			if($("#one_").is(":visible")){
+				$("input[name='terminalNo']").each(function(){
+					terminalNo=terminalNo+$(this).val()+",";
+				}); 
+			}
+			terminalNo=terminalNo.substring(0,terminalNo.length-1);
+			var $form = $('#termAllocateForm');
+			var bool = TDValidateForm($form);
+			if(!bool){
+				return false;
+			}
+			var termAllocateStart='';
+			if($("#all_").is(":visible")){
+				termAllocateStart=$("#termAllocateStart").val();
+				allocateType=1;
+			}
+			if(allocateType==0){
+				if(terminalNo.length<=0){
+					alertMsg.error('请输入需要下拨的终端物理号');
+					return false;
+				}
+			}
+			if(allocateType==1){
+				if($("#termAllocateNum").val()==''){
+					alertMsg.error("请输入需要绑定数量");
+					return false;
+				}
+				if($("#termAllocateNum").val()>termAllocateNum){
+					alertMsg.error("所选终端类型库存不足");
+					return false;
+				}
+			}
+			//验证费率 
+			var bool = true;
+			/** heguo delete 20160407
+			$("input[class~='feecheck']").each(function(){
+				bool = feeCheck( $(this));
+				if(!bool){
+					return false;
+				}
+			});
+			if(!bool){
+				return false;
+			}*/
+			
+			if(!checkAgentFeeInfo()){
+				alertMsg.error("终端费率设置需要比代理商大");
+				return false;
+			}
+			
+			terminalNo=allocateType == 0 ? terminalNo : termAllocateStart;
+			$.ajax({
+				type : "post",
+				url : "mpamng/term/termAllocate.do",
+				data:{
+					allocateType:allocateType,
+					terminalType:terminalType,
+					terminalNo:terminalNo,
+				    termAllocateNum:$("#termAllocateNum").val(),
+				    agentId:$("#agentId").val(),
+				    agentName:$("#agentName").val(),
+				    rateLivelihood:$("#rateLivelihood").val(),
+				    rateGeneral:$("#rateGeneral").val(),
+				    rateGeneralTop:	$("#rateGeneralTop").val(),
+				    rateGeneralMaximun:$("#rateGeneralMaximun").val(),
+				    rateEntertain:$("#rateEntertain").val(),
+				    rateEntertainTop:$("#rateEntertainTop").val(),
+				    rateEntertainMaximun:$("#rateEntertainMaximun").val(),
+				    rateTCas:$('#rateTCas').val(),
+				    maxTCas:$('#maxTCas').val()
+				},
+				dataType : 'json',
+				async:true,
+				success : function(result) {
+					if (result.rspcod != 200) {
+						msg.alert("错误", result.rspmsg, 'error');
+					} else {
+						msg.alert("提示", result.rspmsg, 'correct');
+						location.href=$.getBaseHerf()+"auth/mainPanel.do#mpamng/term/termListView.do";
+				        return false;
+					}
+				},
+				error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+							+ textStatus, 'error');
+				}
+			});
+		}
+		function closetermAllocate(){
+			msg.confirm({title:'确认',position:'center',msg:'您确定要取消下拨终端吗？',call:function(ok){
+				if(ok){
+					location.href=$.getBaseHerf()+"auth/mainPanel.do#mpamng/term/termListView.do";
+			        return false;
+					//location.href='auth/mainPanel.do#mpamng/term/termListView.do';
+				}
+			}});
+		}
+		
+		//校验上级代理商费率参数
+		function checkAgentFeeInfo(){
+			
+			//获取代理商的费率以校验
+			var p_rateTCas = $('#agentRateTCas').val();//T0
+			var p_maxTCas =  $('#agentMaxTCas').val();//T0单笔
+			var p_rateLivelihood =  $('#agentRateLivelihood').val();//民生类
+			var p_rateGeneral =  $('#agentRateGeneral').val();//一般类
+			var p_rateEntertain =  $('#agentRateEntertain').val();//餐娱类
+			var p_rateGeneralTop =  $('#agentRateGeneralTop').val();//批发类
+			var p_rateGeneralMaximun =  $('#agentRateGeneralMaximun').val();//批发类封顶
+			var p_rateEntertainTop =  $('#agentRateEntertainTop').val();//房产类
+			var p_rateEntertainMaximun =  $('#agentRateEntertainMaximun').val();//房产类封顶
+			
+			//获取终端的费率以校验
+			var rateTCas = $('#rateTCas').val();//T0
+			var maxTCas =  $('#maxTCas').val();//T0单笔
+			var rateLivelihood =  $('#rateLivelihood').val();//民生类
+			var rateGeneral =  $('#rateGeneral').val();//一般类
+			var rateEntertain =  $('#rateEntertain').val();//餐娱类
+			var rateGeneralTop =  $('#rateGeneralTop').val();//批发类
+			var rateGeneralMaximun =  $('#rateGeneralMaximun').val();//批发类封顶
+			var rateEntertainTop =  $('#rateEntertainTop').val();//房产类
+			var rateEntertainMaximun =  $('#rateEntertainMaximun').val();//房产类封顶
+			
+			//校验T0单笔
+			if(p_maxTCas > maxTCas ){
+				return false;
+			}
+			
+			
+			
+			//校验T0单笔
+			if(p_rateGeneralMaximun > rateGeneralMaximun || p_rateEntertainMaximun > rateEntertainMaximun){
+				return false;
+			}
+			
+			var terFee = 0;//终端费率总和
+			var agtFee = 0;//代理商费率总和
+			if(p_rateTCas && p_rateTCas != ''){
+				agtFee = agtFee + parseFloat(p_rateTCas);
+			}
+			if(p_rateLivelihood && p_rateLivelihood != ''){
+				agtFee = agtFee + parseFloat(p_rateLivelihood);
+			}
+			if(p_rateGeneral&& p_rateGeneral != ''){
+				agtFee = agtFee + parseFloat(p_rateGeneral);
+			}
+			if(p_rateEntertain&& p_rateEntertain != ''){
+				agtFee = agtFee + parseFloat(p_rateEntertain);
+			}
+			if(p_rateGeneralTop && p_rateGeneralTop != ''){
+				agtFee = agtFee + parseFloat(p_rateGeneralTop);
+			}
+			if(p_rateEntertainTop && p_rateEntertainTop != ''){
+				agtFee = agtFee + parseFloat(p_rateEntertainTop);
+			}
+			
+			if(rateTCas && rateTCas != ''){
+				terFee = terFee + parseFloat(rateTCas);
+			}
+			if(rateLivelihood && rateLivelihood != ''){
+				terFee = terFee + parseFloat(rateLivelihood);
+			}
+			if(rateGeneral && rateGeneral != ''){
+				terFee = terFee + parseFloat(rateGeneral);
+			}
+			if(rateEntertain && rateEntertain != ''){
+				terFee = terFee + parseFloat(rateEntertain);
+			}
+			if(rateGeneralTop && rateGeneralTop != ''){
+				terFee = terFee + parseFloat(rateGeneralTop);
+			}
+			if(rateEntertainTop && rateEntertainTop != ''){
+				terFee = terFee + parseFloat(rateEntertainTop);
+			}
+			
+			if(agtFee.toFixed(2)-terFee.toFixed(2)>0){
+				return false;
+			}
+			
+			return true;
+			
+		}
+		
+</script>

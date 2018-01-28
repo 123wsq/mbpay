@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpaychl.dao.AnotherPayDao">
+	
+	<insert id="insertAnotherPay" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_ANOTHERPAY_JOURNAL_INF  (
+		         PAYMENT_ID,
+		         PAYORDNO,
+		         TMERCID, 
+		         TTERMID, 
+		         TXN_DATE, 
+		         TXN_TIME,
+		         TLOGNO, 
+		         TXN_ACTNO, 
+		         TXN_AMT,
+		         TXN_STATUS
+				)
+		VALUES (
+		          #{paymentId,jdbcType=VARCHAR}, 
+		          #{payOrdNo,jdbcType=VARCHAR},
+		          #{tmercid,jdbcType=VARCHAR}, 
+		          #{ttermid,jdbcType=VARCHAR}, 
+		          #{txndate,jdbcType=VARCHAR}, 
+		          #{txnTime,jdbcType=VARCHAR}, 
+		          #{tlogno,jdbcType=VARCHAR}, 
+		          #{txnactno,jdbcType=VARCHAR}, 
+		          #{txnamt,jdbcType=VARCHAR}, 
+		          #{txnstatus,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<update id="updateAnotherPay" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_ANOTHERPAY_JOURNAL_INF
+		<set>
+		        <if test="txnstatus!= null and txnstatus!= ''">
+						TXN_STATUS =  #{txnstatus}
+				</if>
+		</set>
+         WHERE  TLOGNO =  #{tlogno}
+           AND  TXN_STATUS = '03'
+           <if test="payOrdNo!= null and payOrdNo!= ''">
+					AND	PAYORDNO =  #{payOrdNo}
+			</if>
+	</update>
+	
+	<update id="updatePrdInf" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PAYMENT_JOURNAL_INF
+		<set>
+		        <if test="TMercId!= null and TMercId!= ''">
+						TMERCID =  #{TMercId},
+				</if>
+				<if test="TTermId!= null and TTermId!= ''">
+						TTERMID =  #{TTermId},
+				</if>
+				<if test="AcqCod!= null and AcqCod!= ''">
+						TAUTCOD =  #{AcqCod},
+				</if>
+				<if test="TSeqNo!= null and TSeqNo!= ''">
+						TLOGNO =  #{TSeqNo},
+				</if>
+				<if test="TxnRateType!= null and TxnRateType!= ''">
+						TXN_RATE_TYPE =  #{TxnRateType},
+				</if>
+				<if test="TxnRate!= null and TxnRate!= ''">
+						TXN_RATE =  #{TxnRate},
+				</if>
+				<if test="TxnFee!= null and TxnFee!= ''">
+						TXN_FEE =  #{TxnFee}
+				</if>
+		</set>
+         WHERE  PAYORDNO =  #{Payordno}
+	</update>
+	
+	<select id="pmctycodCitId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT DISTINCT CITYID FROM PMCTYCOD WHERE CITYNAM  LIKE CONCAT('%',#{address},'%') 
+	</select>
+</mapper>

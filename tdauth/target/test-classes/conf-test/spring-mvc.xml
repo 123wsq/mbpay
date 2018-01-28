@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    
+	<!-- 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter,是spring MVC为@Controllers分发请求所必须的。
+		提供：数据绑定支持，@NumberFormatannotation支持，@DateTimeFormat支持，@Valid支持，读写XML的支持（JAXB），读写JSON的支持（Jackson） -->
+	<mvc:annotation-driven />
+	
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">    
+        <property name="mediaTypes">    
+          <map>    
+            <entry key="html" value="text/html"/>    
+            <entry key="spring" value="text/html"/>  
+            <entry key="json" value="application/json"/>    
+          </map>    
+        </property>  
+        <property name="viewResolvers">    
+          <list>  
+            <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
+              <property name="prefix" value="/"/>  
+              <property name="suffix" value=".jsp"/>  
+            </bean>  
+          </list>  
+        </property>  
+        <property name="defaultViews">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>  
+            </list>  
+        </property>  
+    </bean>
+	
+	<!-- 对模型视图添加前后缀 -->
+	<!-- 如：return new ModelAndView("persons","persons",getPersonsBean());
+			第一个“persons”是视图文件的名称，对应于JSP文件persons.jsp（suffix="jsp"），
+			第二个“persons”就是Model，一个PersonBean的List。
+			页面在 WEB-INF/jsp/ 目录下（prefix="/WEB-INF/jsp/"） -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+	
+</beans>

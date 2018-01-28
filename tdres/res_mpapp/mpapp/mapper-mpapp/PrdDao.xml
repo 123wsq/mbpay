@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.PrdDao">
+	<resultMap type="java.util.Map" id="prdMap">
+		    <result property="prdordno"               column="PRDORDNO" /> 
+		    <result property="prdordtype"               column="PRDORDTYPE" /> 
+		    <result property="biztype"               column="BIZTYPE" /> 
+		    <result property="ordstatus"               column="ORDSTATUS" /> 
+		    <result property="ordamt"               column="ORDAMT" /> 
+		    <result property="payordno"               column="PAYORDNO" /> 
+		    <result property="price"               column="PRICE" /> 
+		    <result property="goodsName"               column="GOODS_NAME" /> 
+		    <result property="goodsNameShort"               column="GOODS_NAME_SHORT" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="prddate"               column="PRDDATE" /> 
+		    <result property="prdtime"               column="PRDTIME" /> 
+		    <result property="ordtime"               column="ORDTIME" /> 
+		    <result property="modifyTime"               column="MODIFY_TIME" /> 
+		    <result property="cardPhotoId"               column="CARDPHOTOID" /> 
+		    
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PRD_INF
+		<set>
+		        <if test="ordstatus!= null and ordstatus!= ''">
+						ORDSTATUS =  #{ordstatus},
+				</if>
+		        <if test="payordno!= null and payordno!= ''">
+						PAYORDNO =  #{payNo},
+				</if>
+		        <if test="modifyTime!= null and modifyTime!= ''">
+						MODIFY_TIME =  #{modifyTime},
+				</if>
+				<if test="bankcardid!= null and bankcardid!= ''">
+						CARDPHOTOID =  #{bankcardid},
+				</if>
+				<if test="cardnum!= null and cardnum!= ''">
+						CARDNUM =  #{cardnum},
+				</if>
+		</set>
+		<where>
+				PRDORDNO=#{prdordNo}
+		</where>
+	</update>
+	
+	<select id="check"  parameterType="java.util.Map" resultMap="prdMap">
+		SELECT 
+		         PRDORDNO, 
+		         PRDORDTYPE, 
+		         BIZTYPE, 
+		         ORDSTATUS, 
+		         ORDAMT, 
+		         PAYORDNO, 
+		         PRICE, 
+		         GOODS_NAME, 
+		         GOODS_NAME_SHORT, 
+		         CUST_ID, 
+		         PRDDATE, 
+		         PRDTIME, 
+		         ORDTIME, 
+		         MODIFY_TIME,
+		         CARDPHOTOID
+		FROM 
+		        MPOMNG_PRD_INF
+		        where PRDORDNO =  #{prdordNo} and CUST_ID=#{custId}
+	</select>
+
+
+	<select id="queryPrdInfByprdNo"  parameterType="java.util.Map" resultMap="prdMap">
+		SELECT 
+		         PRDORDNO, 
+		         PRDORDTYPE, 
+		         BIZTYPE, 
+		         ORDSTATUS, 
+		         ORDAMT, 
+		         PAYORDNO, 
+		         PRICE, 
+		         GOODS_NAME, 
+		         GOODS_NAME_SHORT, 
+		         CUST_ID, 
+		         PRDDATE, 
+		         PRDTIME, 
+		         ORDTIME, 
+		         MODIFY_TIME
+		FROM 
+		        MPOMNG_PRD_INF
+		        where PRDORDNO =  #{prdordNo}
+	</select>
+	
+
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_PRD_INF  (
+		         PRDORDNO, 
+		         PRDORDTYPE, 
+		         BIZTYPE, 
+			 	 CUST_ID, 
+		         ORDSTATUS, 
+		         ORDAMT, 
+		         GOODS_NAME, 
+		         GOODS_NAME_SHORT, 
+		         PRDDATE, 
+		         PRDTIME, 
+		         ORDTIME
+				)
+		VALUES (
+		          #{prdordNo,jdbcType=CHAR}, 
+		          #{prdordType,jdbcType=CHAR}, 
+		          #{bizType,jdbcType=CHAR}, 
+			 	  #{custId,jdbcType=CHAR},
+		          #{ordStatus,jdbcType=CHAR}, 
+		          #{ordAmt,jdbcType=CHAR}, 
+		          #{goodsName,jdbcType=CHAR}, 
+		          #{goodsNameShort,jdbcType=CHAR}, 
+		          #{prdDate,jdbcType=CHAR}, 
+		          #{prdTime,jdbcType=CHAR}, 
+		          #{ordTime,jdbcType=CHAR}
+		      )
+	</insert>
+
+
+</mapper>

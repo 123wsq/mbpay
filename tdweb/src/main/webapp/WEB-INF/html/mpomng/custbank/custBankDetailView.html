@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="css/page/role.css" />
+<!-- 核心功能组件 -->
+<script type="text/javascript" src="js/core/core-1.0.js" charset="utf-8"></script>
+<form id="custBankForm" class="form-horizontal required-validate"
+	role="form" onsubmit="return validateCallback(this,dialogAjaxDone)">
+	<input type="hidden" id="bankcardFront" name="bankcardFront" />
+	<input type="hidden" id="bankcardBack" name="bankcardBack" /> 
+	<input type="hidden" id="oldCardNo" name="oldCardNo" />
+	
+	<input type="hidden" id="idcardHandheld"   name="idcardHandheld" />
+	<input type="hidden" id="idcardFront"   name="idcardFront" />
+	<input type="hidden" id="idcardBack"   name="idcardBack" />
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"> 商户名称：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" id="custName" name="custName" placeholder=""
+				class="col-xs-12 col-sm-12" value="" readonly="readonly" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"> 商户编号：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" id="custId" name="custId" placeholder=""
+				class="col-xs-12 col-sm-12" value="" readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">证件类型： </label>
+		<div class="col-sm-3">
+			<select rel="obj.CERTTYPE" location="local" name="certificateType"
+				id="v_certificateType" data-placeholder="请选择证件类型"
+				style="width: 185px; vertical-align: middle;" readonly="readonly">
+			</select>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right">证件号码： </label>
+		<div class="col-sm-3">
+			<input type="text" id="certificateNo" name="certificateNo"
+				placeholder="" class="col-xs-12 col-sm-12" value=""
+				readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"> 银行卡类型：
+		</label>
+		<div class="col-sm-3">
+
+			<select rel="obj.UNIONFIT_DCFLAG" location="local" name="cardType"
+				id="cardType" data-placeholder="请选择"
+				style="width: 185px; vertical-align: middle;" readonly="readonly">
+			</select>
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"> 银行卡号：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" id="cardNo" name="cardNo" placeholder=""
+				class="col-xs-12 col-sm-12" value="" readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"> 手机号码：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" id="usrMobile" name="usrMobile" placeholder=""
+				class="col-xs-12 col-sm-12" value="" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"> 省市地址：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" id="address" name="address" placeholder=""
+				class="col-xs-12 col-sm-12" value="" readonly="readonly" />
+		</div>
+		<input type="hidden" name="cityId" id="cityId" /> <input
+			type="hidden" name="provinceId" id="provinceId" />
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			支行名称校验状态： </label>
+		<div class="col-sm-3">
+			<input type="text" id="bankSubBranchState" name="bankSubBranchState"
+				placeholder="" class="col-xs-12 col-sm-12" dict="BANKSUBBRANCHSTATE"
+				readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right">
+			商户认证状态： </label>
+		<div class="col-sm-3">
+			<input type="text" id="custStatus" name="custStatus" placeholder=""
+				class="col-xs-12 col-sm-12" dict="CUSTSTATUS" readonly="readonly" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"> 支行名称：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" style="width: 535px; height: 50px;" id="bankSubBranch"
+				name="subBranch"  readonly="readonly"></input>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			银行卡正面照片： </label>
+		<div class="col-sm-2">
+			<span class=""> <a id="front_a" href="" class="lightbox"><img
+					id="front_img" alt="" src="" width="200%"> 查看原图</a>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			银行卡背面照片： </label>
+		<div class="col-sm-2">
+			<span class=""> <a id="back_a" href="" class="lightbox"><img
+					id="back_img" alt="" src="" width="200%"> 查看原图</a>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			手持身份证照片： </label>
+		<div class="col-sm-2">
+			<span class=""> <a id="hand_a" href="" class="lightbox"> <img
+					id="hand_img" alt="" src="" width="200%"> 查看原图
+			</a>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			身份证正面照片： </label>
+		<div class="col-sm-2">
+			<span class=""> <a id="hfront_a" href="" class="lightbox"><img
+					id="hfront_img" alt="" src="" width="200%"> 查看原图</a>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right">
+			身份证背面照片： </label>
+		<div class="col-sm-2">
+			<span class=""> <a id="hback_a" href="" class="lightbox"><img
+					id="hback_img" alt="" src="" width="200%"> 查看原图</a>
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group" id="auditFailReasonDiv">
+		<label class="col-sm-2 control-label no-padding-right"> 审批意见：
+		</label>
+		<div class="col-sm-3">
+			<input type="text" style="width: 535px; height: 50px;" id="updateDesc"
+				name="updateDesc"  readonly="readonly"></input>
+		</div>
+	</div>
+
+	<div class="form-actions align-right  form-button-box"
+		style="margin-top: 10px; display: none;" id="formBtnBoxDiv">
+		<button class="btn" type="button" onclick="javascript:dialog.close(this);">关闭</button>
+	</div>
+</form>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//图片预览空间加载
+		$(".lightbox").lightbox({
+			fitToScreen : true,
+			imageClickClose : false
+		});
+
+		setTimeout(setType, 600);
+		setTimeout(setPic, 600);
+	});
+
+	function setPic() {
+		document.getElementById("front_a").href = "mpbase/pic/view2.do?picid="+ $("#bankcardFront").val();
+		document.getElementById("back_a").href = "mpbase/pic/view2.do?picid="+ $("#bankcardBack").val();
+		document.getElementById("front_img").src = "mpbase/pic/view2.do?picid="+ $("#bankcardFront").val();
+		document.getElementById("back_img").src = "mpbase/pic/view2.do?picid="+ $("#bankcardBack").val();
+		
+		document.getElementById("hand_a").href ="mpbase/pic/view2.do?picid="+$("#idcardHandheld").val();
+		document.getElementById("hfront_a").href ="mpbase/pic/view2.do?picid="+$("#idcardFront").val();
+		document.getElementById("hback_a").href ="mpbase/pic/view2.do?picid="+$("#idcardBack").val();
+		document.getElementById("hand_img").src ="mpbase/pic/view2.do?picid="+$("#idcardHandheld").val();
+		document.getElementById("hfront_img").src ="mpbase/pic/view2.do?picid="+$("#idcardFront").val();
+		document.getElementById("hback_img").src ="mpbase/pic/view2.do?picid="+$("#idcardBack").val();
+	}
+
+	function setType() {
+		$("#formBtnBoxDiv").show();
+	}
+
+	function dialogAjaxDone(result) {
+		if (result.rspcod == 200) {
+			msg.alert("提示", result.rspmsg, 'correct');
+			if ($("#type").val() == 'edit' || $("#type").val() == 'audit') {
+				$("#grid-table").trigger("reloadGrid");
+				dialog.closeById('dlg-agentEdit');
+			} else {
+				location.href = $.getBaseHerf()
+						+ "auth/mainPanel.do#mpomng/custBankInfTempManage/audit.do";
+			}
+		} else {
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	}
+
+	function bankcardFrontTmpPicView() {
+		if ($('#bankcardFront').val() == '') {
+			alertMsg.alert("错误", "图片不存在，请先上传图片!", "error");
+			return false;
+		}
+		picview($('#bankcardFront').val());
+	}
+	function bankcardBackTmpPicView() {
+		if ($('#bankcardBack').val() == '') {
+			alertMsg.alert("错误", "图片不存在，请先上传图片!", "error");
+			return false;
+		}
+		picview($('#bankcardBack').val());
+	}
+	
+	function idcardHandheldPicView(){
+		if($('#idcardHandheld').val()==''){
+			alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+			return false;
+		}
+		picview($('#idcardHandheld').val());
+	}
+	function idcardFrontPicView(){
+		if($('#idcardFront').val()==''){
+			alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+			return false;
+		}
+		picview($('#idcardFront').val());
+	}
+	function idcardBackPicView(){
+		if($('#idcardBack').val()==''){
+			alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+			return false;
+		}
+		picview($('#idcardBack').val());
+	}
+</script>

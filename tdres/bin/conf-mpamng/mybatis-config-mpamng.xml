@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<typeAlias alias="TerminalCompanyInf" type="com.tangdi.production.mpamng.bean.TerminalCompanyInf"/>
+		<typeAlias alias="TerminalInf" type="com.tangdi.production.mpamng.bean.TerminalInf"/>
+		<typeAlias alias="TerminalKeyInf" type="com.tangdi.production.mpamng.bean.TerminalKeyInf"/>
+		<typeAlias alias="AgentInf" type="com.tangdi.production.mpamng.bean.AgentInf"/>
+		<typeAlias alias="AgentOrgInf" type="com.tangdi.production.mpamng.bean.AgentOrgInf"/>
+		<typeAlias alias="CityInf" type="com.tangdi.production.mpamng.bean.CityInf"/>
+		<typeAlias alias="ProvinceInf" type="com.tangdi.production.mpamng.bean.ProvinceInf"/>
+		<typeAlias alias="NoticeInf"   type="com.tangdi.production.mpomng.bean.NoticeInf" />
+		<typeAlias alias="AgentProfitInf" type="com.tangdi.production.mpamng.bean.AgentProfitInf"/>
+		<typeAlias alias="AgentFeeInfo" type="com.tangdi.production.mpamng.bean.AgentFeeInfo"/>
+		<typeAlias alias="AgentProfitLogInf" type="com.tangdi.production.mpamng.bean.AgentProfitLogInf"/>
+		
+		<typeAlias alias="ProfitSharingTemlpate"       type="com.tangdi.production.mpamng.report.ProfitSharingTemlpate"/>
+	</typeAliases>
+</configuration>

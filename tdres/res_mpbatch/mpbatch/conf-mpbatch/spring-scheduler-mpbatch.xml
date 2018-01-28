@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 
+		跑批 流程 
+		1.T+0 未处理提现订单订单转到T+1未提
+		2.T+0&T+1 金额 转到 T+1未提
+		3.商户  清算
+	 -->
+	<!-- 1.   T+0 未处理提现订单订单转到T+1未提-->
+	<bean id="accountBalanceT0TaskBean" class="com.tangdi.production.mpbatch.schedule.AccountBalanceT0Task" />
+	<bean id="accountBalanceT0TaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="accountBalanceT0TaskBean" />
+		<property name="targetMethod" value="run"  />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="accountBalanceT0Task" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="accountBalanceT0TaskBeanDetail" />
+		<!-- 每天0点30分运行 -->
+		<property name="cronExpression" value="0 30 0 * * ?" />
+	</bean>
+	
+	<!-- 2.	T+0&T+1 金额 转到 T+1未提-->
+	<bean id="accountBalanceT1YTaskBean" class="com.tangdi.production.mpbatch.schedule.AccountBalanceT1YTask" />
+	<bean id="accountBalanceT1YTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="accountBalanceT1YTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="accountBalanceT1YTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="accountBalanceT1YTaskBeanDetail" />
+		<!-- 每天1点运行 -->
+		<property name="cronExpression" value="0 0 1 * * ?" />
+	</bean>
+	
+	<!-- 3.	商户  清算-->
+	<bean id="settleAccountsTaskBean" class="com.tangdi.production.mpbatch.schedule.SettleAccountsTask" />
+	<bean id="settleAccountsTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="settleAccountsTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="settleAccountsTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="settleAccountsTaskBeanDetail" />
+		<!-- 每天1点30运行 -->
+		<property name="cronExpression" value="0 30 1 * * ?" />
+	</bean>
+	
+	<!-- 4.	未处理订单转移-->
+	<bean id="prdTransferTaskBean" class="com.tangdi.production.mpbatch.schedule.PrdTransferTask" />
+	<bean id="prdTransferTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="prdTransferTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="prdTransferTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="prdTransferTaskBeanDetail" />
+		<!-- 每天1点30运行 -->
+		<property name="cronExpression" value="0 30 13 * * ?" />
+	</bean>
+	
+	<!-- 对账  -->
+	<bean id="unionPayCheckAccountTaskBean" class="com.tangdi.production.mpbatch.schedule.UnionPayCheckAccountTask" />
+	<bean id="unionPayCheckAccountTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="unionPayCheckAccountTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="unionPayCheckAccountTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="unionPayCheckAccountTaskBeanDetail" />
+		<!-- 每天8点运行 -->
+		<property name="cronExpression" value="0 0/15 8 * * ?"  />
+	</bean>
+	
+	<!-- 中联对账  -->
+	<bean id="zLPayCheckAccountTaskBean" class="com.tangdi.production.mpbatch.schedule.ZLPayCheckAccountTask" />
+	<bean id="zLPayCheckAccountTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="zLPayCheckAccountTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="zLPayCheckAccountTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="zLPayCheckAccountTaskBeanDetail" />
+		<!-- 每天9,10,11点30运行,手动复制对账邮件文件至指定ftp目录 -->
+		<property name="cronExpression" value="0 30 9,10,11 * * ?" />
+	</bean>
+	
+	<!--	代理商日分润  -->
+	<bean id="agentDayShareAmtTaskBean" class="com.tangdi.production.mpbatch.schedule.AgentDayShareAmtTask" />
+	<bean id="agentDayShareAmtTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="agentDayShareAmtTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="agentDayShareAmtTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="agentDayShareAmtTaskBeanDetail" />
+		<!-- 每日2点运行 -->
+		<property name="cronExpression" value="0 0 2 * * ?" />
+	</bean>
+	
+	<!--	代理商月分润  -->
+	<bean id="agentMonthShareAmtTaskBean" class="com.tangdi.production.mpbatch.schedule.AgentMonthShareAmtTask" />
+	<bean id="agentMonthShareAmtTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="agentMonthShareAmtTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="agentMonthShareAmtTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="agentMonthShareAmtTaskBeanDetail" />
+		<!-- 每月1日1点运行 -->
+		<property name="cronExpression" value="0 0 1 1 * ?" />
+	</bean>
+
+	<!-- 商户余额 清算 跑批 -->
+	<bean id="AccountMerSettleAT1TaskBean" class="com.tangdi.production.mpbatch.schedule.AccountMerSettleAT1Task" />
+	<bean id="AccountMerSettleAT1TasBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="AccountMerSettleAT1TaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 每日1点10分运行 -->
+	<bean id="AccountMerSettleAT1Task" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="AccountMerSettleAT1TasBeanDetail" />
+		<property name="cronExpression" value="0 10 1 * * ?" />
+	</bean>
+	
+	<!-- 修改 大商户限额表中的 日期 -->
+	<bean id="rcsOrgLimitTaskBean" class="com.tangdi.production.mpbatch.schedule.RcsOrgLimitTask" />
+	<bean id="rcsOrgLimitTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="rcsOrgLimitTaskBean" />
+		<property name="targetMethod" value="run"  />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="rcsOrgLimitTask" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="rcsOrgLimitTaskBeanDetail" />
+		<!-- 每天0点0分运行 -->
+		<property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	
+	<!-- 确认代付交易 -->
+	<bean id="conPayTaskBean" class="com.tangdi.production.mpbatch.schedule.ConPayTask" />
+	<bean id="conPayTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="conPayTaskBean" />
+		<property name="targetMethod" value="run"  />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="conPayTask" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="conPayTaskBeanDetail" />
+		<!-- 每15分运行一次 -->
+		<property name="cronExpression" value="0 0/10 * * * ?" />
+	</bean>
+	
+	<!-- 生成机构对账文件  -->
+	<bean id="genOrgSettleReportTaskBean" class="com.tangdi.production.mpbatch.schedule.GenOrgSettleReportTask" />
+	<bean id="genOrgSettleReportTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="genOrgSettleReportTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="genOrgSettleReportTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="genOrgSettleReportTaskBeanDetail" />
+		<!-- 每天5点00运行 -->
+		<property name="cronExpression" value="0 0 5 * * ?" />
+	</bean>
+	
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			<!-- 
+				<ref bean="accountBalanceT0Task" />
+				<ref bean="accountBalanceT1YTask" />
+				<ref bean="settleAccountsTask" />
+				
+				
+				<ref bean="prdTransferTask" /> 
+				<ref bean="AccountMerSettleAT1Task" />
+				<ref bean="conPayTask"/>
+				-->
+				<ref bean="conPayTask"/>
+				<ref bean="unionPayCheckAccountTask" />
+				<ref bean="rcsOrgLimitTask" />
+				<ref bean="accountBalanceT0Task" />
+				<ref bean="accountBalanceT1YTask" />
+				<ref bean="agentDayShareAmtTask"/>
+				<ref bean="agentMonthShareAmtTask"/>
+				<ref bean="AccountMerSettleAT1Task"/>
+				<ref bean="zLPayCheckAccountTask"/>
+				<ref bean="genOrgSettleReportTask"/>
+			</list>
+		</property>
+		<!-- quartz配置文件路径 -->
+		<property name="configLocation" value="classpath:mpbatch/conf-mpbatch/quartz.properties" />
+	</bean>
+
+</beans>

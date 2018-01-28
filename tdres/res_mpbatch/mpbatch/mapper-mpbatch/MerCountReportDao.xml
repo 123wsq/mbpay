@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.MerCountReportDao">
+	
+	<insert id="insert" parameterType="java.util.Map">
+		INSERT INTO REPORT_MERCOUNT_INF (
+			CNUM,
+			YEAR,
+			CMONTH
+			
+		) VALUES (
+		#{cnum},
+		#{year},
+		#{cmonth}
+		)
+	</insert>
+
+ <delete id="delete" parameterType="java.util.Map">
+		DELETE FROM REPORT_MERCOUNT_INF
+		WHERE CMONTH in (#{cmonth}) AND YEAR in(#{year})
+			 
+	</delete>
+		
+</mapper>

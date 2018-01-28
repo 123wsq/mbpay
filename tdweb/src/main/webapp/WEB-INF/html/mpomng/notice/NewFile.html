@@ -1,0 +1,44 @@
+<meta charset="utf-8" />
+<form class="form-horizontal" role="form"
+	onsubmit="return submitForm(this);" action="mpomng/notice/save.do">
+	<br />
+	<!-- #section:elements.form -->
+	<input type="hidden" name="noticeId" id="noticeId" />
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1" />
+		<div>
+			<span class="block input-icon input-icon-right"> <textarea
+					style="background: transparent; border: 0;" rows="6" cols="8"
+					type="text" id="noticeBody" name="noticeBody"
+					class="col-xs-10 col-sm-12" maxlength="50" datatype="word" disabled/>
+			</span>
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px;">
+		<input id="check_id" type="checkbox" value="checkbox" onclick="isaccepted();" />&nbsp;我知道了
+		<button id="btn-save" class="btn btn-info" type="submit" disabled>确定</button>
+	</div>
+</form>
+<script type="text/javascript">
+	function isaccepted() {
+		if (document.getElementById("check_id").checked == true) {
+			document.getElementById("btn-save").disabled = false;
+		} else {
+			document.getElementById("btn-save").disabled = true;
+		}
+	}
+
+	function submitForm(obj) {
+		return validateCallback(obj, function(result) {
+			if (result.rspcod == 200) {
+				msg.alert("提示", result.rspmsg, 'correct');
+				$("#grid-table").trigger("reloadGrid");
+				dialog.close(obj);
+			} else {
+				msg.alert("错误", result.rspmsg, 'error');
+			}
+		});
+	}
+</script>

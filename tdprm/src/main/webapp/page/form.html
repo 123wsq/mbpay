@@ -1,0 +1,28 @@
+<meta charset="utf-8" />
+<div id="addUser" class="dialog_main">
+	<form action="auth/userPwdEdit/edit.do" method="POST" onsubmit="return validateCallback(this,dialogAjaxDone);">
+		<div class="form-group">
+			<label class="control-label no-padding-right" > 用户ID </label>
+
+			<div class="">
+				<input id="" placeholder="用户ID" name="userId"  type="text">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label no-padding-right" > 原始密码 </label>
+
+			<div class="">
+				<input id="" placeholder="原始密码" name="userPwd" class="" type="password">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class=" control-label no-padding-right" > 新密码  </label>
+
+			<div class="">
+				<input id="" placeholder="新密码" name="userNewPwd" class="" type="password">
+			</div>
+		</div>
+		
+		<button class="btn" type="submit">提交</button>
+	</form>
+</div>

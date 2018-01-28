@@ -1,0 +1,131 @@
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" id="_form">
+		<!-- #section:elements.form -->
+	<br />
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<input type="hidden" name="limitId" id="limitId" />
+	
+	<div class="form-group" id="limit">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">代理商编号： </label>
+		<div class="col-sm-3">
+			<input type="text" id="add_limitAgentId" name="limitAgentId"  maxlength="20" validate="true" datatype="number"
+				placeholder="请输入[用户编号]" class="col-xs-10 col-sm-12" onblur="valiteCust(this)"/>
+
+		</div>
+	</div>
+	<div class="form-group" id="limitName">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">代理商名称： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="add_agentName" name="agentName"
+				placeholder="代理商名称为只读" class="col-xs-10 col-sm-12" readonly="readonly"/>
+
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 业务类型 ： </label>
+		<div class="col-sm-3">
+			<select rel="obj.LIMIT_BUS_TYPE" location="local" name="limitBusType"
+				id="limitBusType" data-placeholder="请选择业务类型  "
+				style="width: 200px; vertical-align: middle;" >
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 支付方式： </label>
+		<div class="col-sm-3">
+			<select rel="obj.LIMIT_PAY_WAY" location="local" name="limitPayWay"
+				id="limitPayWay" data-placeholder="请选择支付方式"
+				style="width: 200px; vertical-align: middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最小金额(元)： </label>
+		<div class="col-sm-3">
+			<input type="text" id="limitMinAmt" name="limitMinAmt"   maxlength="18"   datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[单笔最小金额]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最大金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMaxAmt" name="limitMaxAmt"   maxlength="18"   datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[单笔最大金额]" class="col-xs-10 col-sm-12" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 日交易次数： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitDayTimes" name="limitDayTimes"  maxlength="3"  datatype="number"
+				placeholder="请输入[日交易次数]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 日总金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitDayAmt" name="limitDayAmt"  maxlength="18"  datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[日总金额]" class="col-xs-10 col-sm-12" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 月交易次数： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMonthTimes" name="limitMonthTimes"  maxlength="3"  datatype="number" 
+				placeholder="请输入[月交易次数]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 月总金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMonthAmt" name="limitMonthAmt"  maxlength="18"  datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[月总金额]" class="col-xs-10 col-sm-12" />
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+</script>

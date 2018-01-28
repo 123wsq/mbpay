@@ -1,0 +1,218 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpomng/app/saveApp.do" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<input type="hidden" id="id" name="id">
+	<input type="hidden" id="appId" name="appId">
+	<input type="hidden" id="apf" name="appPlatform">
+	<input type="hidden" id="appFileName" name="appFileName">
+		
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP 名称： </label>
+		<div class="col-sm-3">
+		<span class="block input-icon input-icon-right" >
+			<input type="text" id="appName" name="appName" placeholder="请输入[APP 名称]" 
+				class="col-xs-12 col-sm-12"  maxlength="18"  datatype="word"/>
+				<i class="ace-icon fa fa-star-o"></i>
+		</span>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP 版本号： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+			<input type="text" id="appVersion" name="appVersion" placeholder="请输入[APP 版本号]" 
+				class="col-xs-12 col-sm-12"  maxlength="4" datatype="verion" />
+						<i class="ace-icon fa fa-star-o"></i>
+		</span>
+		</div>
+		
+	</div>
+	
+	 <div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP 平台： </label>
+		<div class="col-sm-3">
+			<select 
+				 rel="obj.APP_PLATFORM"
+	 			 location="local" 
+				 name="appPlatform" 
+	 			id="appPlatform" 
+	 			data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;" onchange="changeAppPlatform();">
+			</select>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 是否自动更新 ： </label>
+		<div class="col-sm-3">
+			<select 
+				 rel="obj.APP_AUTO_UPDATE"
+	 			 location="local" 
+				 name="appAutoUpdate" 
+	 			id="appAutoUpdate" 
+	 			data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP 说明： </label>
+		<div class="col-sm-9">
+			<textarea rows="5" id="appDesc"  name="appDesc" style="width: 100%;" placeholder="请输入[APP 说明]"  maxlength="445"></textarea>
+		</div>
+		
+	</div>
+	<div class="form-group" id="android" style="display: none;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP文件： </label>
+		<div class="col-sm-3">
+			<input type="hidden" id="appFileId" name="appFileId"/>
+			<input class="col-xs-10 col-sm-6"  type="text" id="appFileName_android" readonly="readonly"  />
+			<span class="">
+				<button class="btn btn-small btn-yellow" type="button" onclick="upload02('appFileId','appFileName_android')">
+					选择文件
+				</button>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group" id="ios" style="display: none;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP文件： </label>
+		<div class="col-sm-9">
+			<input type="text" id="appFileName_ios"  placeholder="请输入[APP地址]" 
+				class="col-xs-12 col-sm-12"  />
+		</div>
+	</div>
+	
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	var type = $("#dlg-app").Dialog().pageParam.type;
+	if(type == 'edit'){
+		var time = setInterval(function(){
+			if($("#apf").val()!=''){
+				clearInterval(time);
+				if($("#apf").val() == '2'){
+					//ios
+					showIOSDiv();
+					$("#appFileName_ios").val($("#appFileName").val());
+				}else{
+					// android
+					showAndroidDiv();
+					$("#appFileName_android").val($("#appFileName").val());
+				}
+			}
+		},100);
+	}else{
+		// 默认显示android文本框
+		showAndroidDiv();
+	}
+});
+
+function changeAppPlatform(){
+	if($("#appPlatform").val() == 2){
+		// ios
+		showIOSDiv();
+	}else{
+		// android
+		showAndroidDiv();
+	}
+}
+
+function showIOSDiv(){
+	$("#ios").show();
+	$("#appFileName_ios").attr("validate","true");
+	$("#appFileName_ios").attr("name","appFileName");
+	$("#android").hide();
+	$("#appFileName_android").removeAttr("name");
+	$("#appFileName_android").removeAttr("validate");
+}
+
+function showAndroidDiv(){
+	$("#android").show();
+	$("#appFileName_android").attr("validate","true");
+	
+	$("#appFileName_android").attr("name","appFileName");
+	$("#ios").hide();
+	$("#appFileName_ios").removeAttr("name");
+	$("#appFileName_ios").removeAttr("validate");
+}
+
+function submitForm(obj){
+	if($("#appName",$("#dlg-app")).val() == ''){
+		TDTips($("#appName",$("#dlg-app")),'APP名称不能为空');
+		return false;
+	}
+	if($("#appVersion",$("#dlg-app")).val() == ''){
+		TDTips($("#appVersion",$("#dlg-app")),'APP版本号不能为空');
+		return false;
+	}
+	if($("#apf").val() == '2' && $("#appFileName_ios").val == ''){
+		TDTips($("#appFileName_ios",$("#dlg-app")),'APP版本号不能为空');
+		
+	}else if($("#appFileName_android").val == ''){
+		TDTips($("#appFileName_android",$("#dlg-app")),'APP版本号不能为空');
+	}
+	
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else if(result.rspcod== 203){
+			msg.alert("警告", "APP版本过低！", "warn");
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+/**
+ * 图片预览
+ */
+function agentPicView(id){
+	if($('#'+id).val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#'+id).val());
+}
+
+/*
+ * 上传带回
+ */
+function upload02(fid,fname){
+	openFileUpload({
+		fileUploadDone:function(reslut){
+			$("#"+fid).val(reslut.map.fid);
+			$("#"+fname).val(reslut.map.fname);
+		},
+		allowFile:EXT_APK
+	});
+}
+</script>

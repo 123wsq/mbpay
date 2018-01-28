@@ -1,0 +1,210 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.tangdi.production</groupId>
+  <artifactId>mpcoop</artifactId>
+  <version>1.0-release</version>
+  <packaging>jar</packaging>
+
+  <url>http://www.tangdi.com.cn/</url>
+
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<spring.version>4.0.3.RELEASE</spring.version>
+	<mybatis.version>3.2.7</mybatis.version>
+	<slf4j.version>1.7.7</slf4j.version>
+	<log4j.version>1.2.17</log4j.version>
+  </properties>
+
+  <dependencies>
+  	<!-- springframe start -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-oxm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aop</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aop</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<!-- springframe end -->
+	
+	<!-- mybatis start -->
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis</artifactId>
+		<version>${mybatis.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-spring</artifactId>
+		<version>1.2.2</version>
+	</dependency>
+	<!-- mybatis end -->
+	
+	
+	<!--  jstl start-->
+	<dependency>  
+            <groupId>jstl</groupId>  
+            <artifactId>jstl</artifactId>  
+            <version>1.2</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>taglibs</groupId>  
+            <artifactId>standard</artifactId>  
+            <version>1.1.2</version>  
+        </dependency>
+	<!-- jstl end -->
+	
+	<!-- log start -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>${log4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<!-- log end -->
+	
+	<!-- data source start -->
+	<dependency>
+		<groupId>com.oracle</groupId>
+		<artifactId>ojdbc14</artifactId>
+		<version>10.2.0.2.0</version>
+	</dependency>
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>1.0.4</version>
+	</dependency>
+	<!-- data source end -->
+	
+	<!-- aspect support start -->
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>1.8.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.8.0</version>
+	</dependency>
+	<dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib-nodep</artifactId>
+		<version>3.1</version>
+	</dependency>
+	<!-- aspect support end -->
+	<dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>1.8.3</version>
+	</dependency>
+    <dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-core-asl</artifactId>
+		<version>1.9.13</version>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.9.13</version>
+	</dependency>
+	
+	<!--  jsp tag devp package -->
+<dependency>  
+    <groupId>javax.servlet.jsp</groupId>  
+    <artifactId>jsp-api</artifactId>  
+    <version>2.2.1-b03</version>  
+    <scope>provided</scope>  
+</dependency>  
+	
+	 <dependency> 
+   		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+	</dependency>
+	<!--  unit test start-->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.8.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.9.5</version>
+	</dependency>
+	<!--  unit test end-->
+	
+	<!-- 平台依赖模块 -->
+	<dependency>
+		<groupId>com.tangdi.production</groupId>
+		<artifactId>mpbase</artifactId>
+		<version>1.0-release</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.tangdi.production</groupId>
+		<artifactId>TDBASE</artifactId>
+		<version>2.0-release</version>
+	</dependency>
+    
+  </dependencies>
+  
+ 
+  <name>mpcoop</name>
+</project>
+
+

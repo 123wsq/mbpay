@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.BankCardBlacklistDao">
+				
+	<resultMap type="BankCardBlacklistInf" id="bankCardBlacklistMap">
+		    <result property="cardno"               column="CARDNO" /> 
+		    <result property="cardType"               column="CARD_TYPE" /> 
+		    <result property="issno"               column="ISSNO" /> 
+		    <result property="issnam"               column="ISSNAM" /> 
+		    <result property="idcardno"               column="IDCARDNO" /> 
+		    <result property="idcardName"               column="IDCARD_NAME" /> 
+		    <result property="createDate"               column="CREATE_DATE" /> 
+		    <result property="source"               column="SOURCE" /> 
+		    <result property="createDesc"               column="CREATE_DESC" /> 
+		    <result property="filed1"               column="FILED1" /> 
+		    <result property="filed2"               column="FILED2" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="BankCardBlacklistInf">
+		UPDATE 
+				MPRCS_BANK_CARD_BLACKLIST_INF
+		<set>
+		        <if test="cardType!= null and cardType!= ''">
+						CARD_TYPE =  #{cardType},
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						ISSNO =  #{issno},
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						ISSNAM =  #{issnam},
+				</if>
+		        <if test="idcardno!= null and idcardno!= ''">
+						IDCARDNO =  #{idcardno},
+				</if>
+		        <if test="idcardName!= null and idcardName!= ''">
+						IDCARD_NAME =  #{idcardName},
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						CREATE_DATE =  #{createDate},
+				</if>
+		        <if test="source!= null and source!= ''">
+						SOURCE =  #{source},
+				</if>
+		        <if test="createDesc!= null and createDesc!= ''">
+						CREATE_DESC =  #{createDesc},
+				</if>
+		        <if test="filed1!= null and filed1!= ''">
+						FILED1 =  #{filed1},
+				</if>
+		        <if test="filed2!= null and filed2!= ''">
+						FILED2 =  #{filed2}
+				</if>
+		</set>
+		<where>
+			<if test="cardno!= null and cardno!= ''">
+					CARDNO =  #{cardno}
+		    </if>
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="BankCardBlacklistInf" resultMap="bankCardBlacklistMap">
+		SELECT 
+		         CARDNO, 
+		         CARD_TYPE, 
+		         ISSNO, 
+		         ISSNAM, 
+		         IDCARDNO, 
+		         IDCARD_NAME, 
+		         CREATE_DATE, 
+		         SOURCE, 
+		         CREATE_DESC, 
+		         FILED1, 
+		         FILED2
+		FROM 
+		        MPRCS_BANK_CARD_BLACKLIST_INF
+		<where>
+		        <if test="cardno!= null and cardno!= ''">
+						 CARDNO =  #{cardno}
+				</if>
+		</where>
+	</select>
+
+	<select id="getListPage" parameterType="java.util.Map" resultMap="bankCardBlacklistMap" databaseId="mysql">
+		SELECT 
+		         CARDNO, 
+		         CARD_TYPE, 
+		         ISSNO, 
+		         ISSNAM, 
+		         IDCARDNO, 
+		         IDCARD_NAME, 
+		         CREATE_DATE, 
+		         SOURCE, 
+		         CREATE_DESC, 
+		         FILED1, 
+		         FILED2
+		FROM 
+		       MPRCS_BANK_CARD_BLACKLIST_INF
+		<where>
+		        <if test="cardno!= null and cardno!= ''">
+						AND CARDNO like concat ('%',#{cardno},'%')
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND CARD_TYPE =  #{cardType}
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						AND ISSNO like concat ('%',#{issno},'%')
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND ISSNAM like concat ('%',#{issnam},'%')
+				</if>
+		        <if test="idcardno!= null and idcardno!= ''">
+						AND IDCARDNO like concat ('%',#{idcardno},'%')
+				</if>
+		        <if test="idcardName!= null and idcardName!= ''">
+						AND IDCARD_NAME like concat ('%',#{idcardName},'%')
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						AND CREATE_DATE = #{create_date}
+				</if>
+				<if test="sdate!= null and sdate!= ''">
+						AND CREATE_DATE &gt;= #{sdate}
+				</if>
+				<if test="edate!= null and edate!= ''">
+						AND CREATE_DATE &lt;= #{edate}
+				</if>
+		        <if test="source!= null and source!= ''">
+						AND SOURCE like concat ('%',#{source},'%')
+				</if>
+		        <if test="createDesc!= null and createDesc!= ''">
+						AND CREATE_DESC like concat ('%',#{createDes},'%')
+				</if>
+		        <if test="filed1!= null and filed1!= ''">
+						AND FILED1 =  #{filed1}
+				</if>
+		        <if test="filed2!= null and filed2!= ''">
+						AND FILED2 =  #{filed2}
+				</if>
+		</where>
+		ORDER BY CARDNO DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="getCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPRCS_BANK_CARD_BLACKLIST_INF
+		<where>
+		         <if test="cardno!= null and cardno!= ''">
+						AND CARDNO like concat ('%',#{cardno},'%')
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND CARD_TYPE =  #{cardType}
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						AND ISSNO like concat ('%',#{issno},'%')
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND ISSNAM like concat ('%',#{issnam},'%')
+				</if>
+		        <if test="idcardno!= null and idcardno!= ''">
+						AND IDCARDNO like concat ('%',#{idcardno},'%')
+				</if>
+		        <if test="idcardName!= null and idcardName!= ''">
+						AND IDCARD_NAME like concat ('%',#{idcardName},'%')
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						AND CREATE_DATE = #{create_date}
+				</if>
+				<if test="sdate!= null and sdate!= ''">
+						AND CREATE_DATE &gt;= #{sdate}
+				</if>
+				<if test="edate!= null and edate!= ''">
+						AND CREATE_DATE &lt;= #{edate}
+				</if>
+		        <if test="source!= null and source!= ''">
+						AND SOURCE like concat ('%',#{source},'%')
+				</if>
+		        <if test="createDesc!= null and createDesc!= ''">
+						AND CREATE_DESC like concat ('%',#{createDes},'%')
+				</if>
+		        <if test="filed1!= null and filed1!= ''">
+						AND FILED1 =  #{filed1}
+				</if>
+		        <if test="filed2!= null and filed2!= ''">
+						AND FILED2 =  #{filed2}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="BankCardBlacklistInf">
+		INSERT INTO MPRCS_BANK_CARD_BLACKLIST_INF  (
+		         CARDNO, 
+		         CARD_TYPE, 
+		         ISSNO, 
+		         ISSNAM, 
+		         IDCARDNO, 
+		         IDCARD_NAME, 
+		         CREATE_DATE, 
+		         SOURCE, 
+		         CREATE_DESC, 
+		         FILED1, 
+		         FILED2
+				)
+		VALUES (
+		          #{cardno}, 
+		          #{cardType}, 
+		          #{issno}, 
+		          #{issnam}, 
+		          #{idcardno}, 
+		          #{idcardName}, 
+		          #{createDate}, 
+		          #{source}, 
+		          #{createDesc}, 
+		          #{filed1}, 
+		          #{filed2}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="BankCardBlacklistInf">
+		DELETE FROM MPRCS_BANK_CARD_BLACKLIST_INF
+		<where>
+			<if test="cardno != null and cardno != '' ">
+				CARDNO = (#{cardno})
+			</if>	
+		</where>
+	</delete>
+
+</mapper>

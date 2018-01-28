@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CustBankInfDao">
+	<resultMap type="java.util.Map" id="custBankInfMap">
+		    <result property="bankCardId"               column="BANK_CARD_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="custId"               column="CUST_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="issno"               column="ISSNO"  typeHandler="EmptyStringIfNull"/>
+		    <result property="issnam"               column="ISSNAM"  typeHandler="EmptyStringIfNull"/>
+		    <result property="provinceId"               column="PROVINCE_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cityId"               column="CITY_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cnapsCode"               column="CNAPS_CODE"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardType"               column="CARD_TYPE"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardState"               column="CARD_STATE"  typeHandler="EmptyStringIfNull"/>
+		    <result property="oldCardNo"               column="OLD_CARD_NO"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardNo"               column="CARD_NO"  typeHandler="EmptyStringIfNull"/>
+		    <result property="mobileNo"               column="MOBILE_NO"  typeHandler="EmptyStringIfNull"/>
+		    <result property="bindingTime"               column="BINDING_TIME"  typeHandler="EmptyStringIfNull"/>
+		    <result property="unbundlingTime"               column="UNBUNDLING_TIME"  typeHandler="EmptyStringIfNull"/>
+		    <result property="bankcardFront"               column="BANKCARD_FRONT"  typeHandler="EmptyStringIfNull"/>
+		    <result property="bankcardBack"               column="BANKCARD_BACK"  typeHandler="EmptyStringIfNull"/>
+		    <result property="updateDesc"               column="UPDATE_DESC"  typeHandler="EmptyStringIfNull"/>
+		    <result property="subBranch"               column="SUB_BRANCH"  typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="custBankListMap">
+		    <result property="issno"               column="ISSNO"  typeHandler="EmptyStringIfNull"/>
+		    <result property="issnam"               column="ISSNAM"  typeHandler="EmptyStringIfNull"/>
+		    <result property="provinceId"               column="PROVINCE_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cityId"               column="CITY_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardType"               column="CARD_TYPE"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardState"               column="CARD_STATE"  typeHandler="EmptyStringIfNull"/>
+		    <result property="cardNo"               column="CARD_NO"  typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	<resultMap type="java.util.Map" id="errorReasonMap">
+			<result property="defeatReason"               column="DEFEATREASON"  typeHandler="EmptyStringIfNull"/>
+		    <result property="defeatReasonDes"               column="DEFEATREASONDES"  typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	
+	<select id="selectList" parameterType="java.util.Map" resultMap="custBankListMap">
+		SELECT 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_NO
+		FROM 
+		        MPOMNG_CUST_BANK_INF 
+		<where>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId} 
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND CARD_NO =  #{cardNo} 
+				</if>
+		</where>
+	</select>
+	
+		<select id="selectTempList" parameterType="java.util.Map" resultMap="custBankListMap">
+		SELECT 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_NO
+		FROM 
+		        MPOMNG_CUST_BANK_INF_TEMP
+		<where>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId} 
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND CARD_NO =  #{cardNo} 
+				</if>
+		</where>
+	</select>
+	<select id="selectErrorReason" parameterType="java.lang.String" resultMap="errorReasonMap">
+		SELECT 
+		         DEFEATREASON,
+		         DEFEATREASONDES
+		FROM 
+		        MPOMNG_CUST_BANK_INF_TEMP 
+		WHERE
+				CUST_ID = #{custId}
+		ORDER BY
+		        BINDING_TIME DESC
+		LIMIT 1
+	</select>
+	
+	<select id="selectCardState" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		         CARD_STATE
+		FROM 
+		        MPOMNG_CUST_BANK_INF_TEMP 
+		WHERE
+				CUST_ID = #{custId}
+		ORDER BY
+		        BINDING_TIME DESC
+		LIMIT 1
+	</select>
+	
+	<select id="selecCertificateNo" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		         CERTIFICATE_NO
+		FROM 
+		        MPOMNG_MERIDENTIFY_INF
+		WHERE
+				CUST_ID = #{custId}
+	</select>	
+	
+	<select id="selectTempEntity" parameterType="java.util.Map" resultMap="custBankInfMap">
+		SELECT 
+		         BANK_CARD_ID, 
+		         CUST_ID, 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_STATE, 
+		         CARD_NO, 
+		         MOBILE_NO, 
+		         BINDING_TIME, 
+		         UNBUNDLING_TIME, 
+		         BANKCARD_FRONT, 
+		         BANKCARD_BACK,
+		         SUB_BRANCH
+		FROM 
+		        MPOMNG_CUST_BANK_INF_TEMP 
+		<where>
+		        <if test="bankCardId!= null and bankCardId!= ''">
+						AND BANK_CARD_ID =  #{bankCardId} 
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId} 
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						AND ISSNO =  #{issno} 
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND ISSNAM =  #{issnam} 
+				</if>
+		        <if test="provinceId!= null and provinceId!= ''">
+						AND PROVINCE_ID =  #{provinceId} 
+				</if>
+		        <if test="cityId!= null and cityId!= ''">
+						AND CITY_ID =  #{cityId} 
+				</if>
+		        <if test="cnapsCode!= null and cnapsCode!= ''">
+						AND CNAPS_CODE =  #{cnapsCode} 
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND CARD_TYPE =  #{cardType} 
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						AND CARD_STATE =  #{cardState} 
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND CARD_NO =  #{cardNo} 
+				</if>
+		        <if test="mobileNo!= null and mobileNo!= ''">
+						AND MOBILE_NO =  #{mobileNo} 
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 	COUNT(CUST_ID)
+		FROM 
+		        MPOMNG_CUST_BANK_INF 
+		WHERE
+			CUST_ID =  #{custId} 
+	</select>
+	
+	<select id="selectTempCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 	COUNT(CUST_ID)
+		FROM 
+		        MPOMNG_CUST_BANK_INF_TEMP 
+		WHERE
+				CUST_ID =  #{custId}
+	</select>
+	
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="custBankInfMap">
+		SELECT 
+		         BANK_CARD_ID, 
+		         CUST_ID, 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_STATE, 
+		         CARD_NO, 
+		         MOBILE_NO, 
+		         BINDING_TIME, 
+		         UNBUNDLING_TIME, 
+		         BANKCARD_FRONT, 
+		         BANKCARD_BACK,
+		         SUB_BRANCH
+		FROM 
+		        MPOMNG_CUST_BANK_INF 
+		<where>
+		        <if test="bankCardId!= null and bankCardId!= ''">
+						AND BANK_CARD_ID =  #{bankCardId} 
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId} 
+				</if>
+		        <if test="cnapsCode!= null and cnapsCode!= ''">
+						AND CNAPS_CODE =  #{cnapsCode} 
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND CARD_TYPE =  #{cardType} 
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						AND CARD_STATE =  #{cardState} 
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND CARD_NO =  #{cardNo} 
+				</if>
+		</where>
+	</select>
+
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CUST_BANK_INF_TEMP  (
+		         BANK_CARD_ID, 
+		         CUST_ID, 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_STATE, 
+		         OLD_CARD_NO, 
+		         CARD_NO, 
+		         MOBILE_NO, 
+		         BINDING_TIME, 
+		         UNBUNDLING_TIME, 
+		         BANKCARD_FRONT, 
+		         BANKCARD_BACK, 
+		         UPDATE_DESC,
+		         SUB_BRANCH
+				)
+		VALUES (
+		          #{bankCardId,jdbcType=VARCHAR}, 
+		          #{custId,jdbcType=VARCHAR}, 
+		          #{issno,jdbcType=VARCHAR}, 
+		          #{issnam,jdbcType=VARCHAR}, 
+		          #{provinceId,jdbcType=VARCHAR}, 
+		          #{cityId,jdbcType=VARCHAR}, 
+		          #{cnapsCode,jdbcType=VARCHAR}, 
+		          #{cardType,jdbcType=VARCHAR}, 
+		          #{cardState,jdbcType=VARCHAR}, 
+		          #{oldCardNo,jdbcType=VARCHAR}, 
+		          #{cardNo,jdbcType=VARCHAR}, 
+		          #{mobileNo,jdbcType=VARCHAR}, 
+		          #{bindingTime,jdbcType=VARCHAR}, 
+		          #{unbundlingTime,jdbcType=VARCHAR},  
+		          #{bankcardFront,jdbcType=VARCHAR}, 
+		          #{bankcardBack,jdbcType=VARCHAR}, 
+		          #{updateDesc,jdbcType=VARCHAR},
+		          #{subBranch,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<delete id="deleteTmpEntity" parameterType="map">
+		DELETE FROM MPOMNG_CUST_BANK_INF_TEMP WHERE CUST_ID = #{custId}
+	</delete>
+
+	<delete id="deleteEntity" parameterType="map">
+		DELETE FROM MPOMNG_CUST_BANK_INF WHERE CUST_ID = #{custId}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CustAccountHisDao">
+	<resultMap type="java.util.Map" id="custAccountHisMap">
+		    <result property="accountLogId"               column="ACCOUNT_LOG_ID" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="account"               column="ACCOUNT" /> 
+		    <result property="acType"               column="AC_TYPE" /> 
+		    <result property="ccy"               column="CCY" /> 
+		    <result property="oldAcBal"               column="OLD_AC_BAL" /> 
+		    <result property="oldAcT0"               column="OLD_AC_T0" /> 
+		    <result property="oldAcT1"               column="OLD_AC_T1" /> 
+		    <result property="oldAcT1Y"               column="OLD_AC_T1_Y" /> 
+		    <result property="acBal"               column="AC_BAL" /> 
+		    <result property="acT0"               column="AC_T0" /> 
+		    <result property="acT1"               column="AC_T1" /> 
+		    <result property="acT1Y"               column="AC_T1_Y" /> 
+		    <result property="frozBalance"               column="FROZ_BALANCE" /> 
+		    <result property="oldFrozBalance"               column="OLD_FROZ_BALANCE" /> 
+		    <result property="lstTxDatetime"               column="LST_TX_DATETIME" /> 
+		    <result property="changeType"               column="CHANGE_TYPE" /> 
+		    <result property="changeDesc"               column="CHANGE_DESC" /> 
+		    <result property="resField1"               column="RES_FIELD1" /> 
+		    <result property="resField2"               column="RES_FIELD2" /> 
+		    <result property="resField3"               column="RES_FIELD3" /> 
+	</resultMap>
+	
+	<update id="updateEntityAmt" parameterType="java.util.Map">
+	  update 
+	  MPOMNG_CUST_ACCOUNT_HIS_INF A,MPOMNG_CUST_ACCOUNT_INF B
+	  set A.AC_BAL=B.AC_BAL,
+	      A.AC_T0=B.AC_T0,
+	      A.AC_T1=B.AC_T1,
+	      A.AC_T1_Y=B.AC_T1_Y,
+	      A.FROZ_BALANCE=B.FROZ_BALANCE
+	   where A.ACCOUNT_LOG_ID=#{accountLogId} and B.CUST_ID=#{custId}	          
+	</update>
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_CUST_ACCOUNT_HIS_INF
+		<set>
+		        <if test="accountLogId!= null and accountLogId!= ''">
+						ACCOUNT_LOG_ID =  #{accountLogId},
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						CUST_ID =  #{custId},
+				</if>
+		        <if test="account!= null and account!= ''">
+						ACCOUNT =  #{account},
+				</if>
+		        <if test="acType!= null and acType!= ''">
+						AC_TYPE =  #{acType},
+				</if>
+		        <if test="ccy!= null and ccy!= ''">
+						CCY =  #{ccy},
+				</if>
+		        <if test="oldAcBal!= null and oldAcBal!= ''">
+						OLD_AC_BAL =  #{oldAcBal},
+				</if>
+		        <if test="oldAcT0!= null and oldAcT0!= ''">
+						OLD_AC_T0 =  #{oldAcT0},
+				</if>
+		        <if test="oldAcT1!= null and oldAcT1!= ''">
+						OLD_AC_T1 =  #{oldAcT1},
+				</if>
+		        <if test="oldAcT1Y!= null and oldAcT1Y!= ''">
+						OLD_AC_T1_Y =  #{oldAcT1Y},
+				</if>
+		        <if test="acBal!= null and acBal!= ''">
+						AC_BAL =  #{acBal},
+				</if>
+		        <if test="acT0!= null and acT0!= ''">
+						AC_T0 =  #{acT0},
+				</if>
+		        <if test="acT1!= null and acT1!= ''">
+						AC_T1 =  #{acT1},
+				</if>
+		        <if test="acT1Y!= null and acT1Y!= ''">
+						AC_T1_Y =  #{acT1Y},
+				</if>
+		        <if test="frozBalance!= null and frozBalance!= ''">
+						FROZ_BALANCE =  #{frozBalance},
+				</if>
+		        <if test="oldFrozBalance!= null and oldFrozBalance!= ''">
+						OLD_FROZ_BALANCE =  #{oldFrozBalance},
+				</if>
+		        <if test="lstTxDatetime!= null and lstTxDatetime!= ''">
+						LST_TX_DATETIME =  #{lstTxDatetime},
+				</if>
+		        <if test="changeType!= null and changeType!= ''">
+						CHANGE_TYPE =  #{changeType},
+				</if>
+		        <if test="changeDesc!= null and changeDesc!= ''">
+						CHANGE_DESC =  #{changeDesc},
+				</if>
+		        <if test="resField1!= null and resField1!= ''">
+						RES_FIELD1 =  #{resField1},
+				</if>
+		        <if test="resField2!= null and resField2!= ''">
+						RES_FIELD2 =  #{resField2},
+				</if>
+		        <if test="resField3!= null and resField3!= ''">
+						RES_FIELD3 =  #{resField3}
+				</if>
+		</set>
+		<where>
+			
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="custAccountHisMap">
+		SELECT 
+		         ACCOUNT_LOG_ID, 
+		         CUST_ID, 
+		         ACCOUNT, 
+		         AC_TYPE, 
+		         CCY, 
+		         OLD_AC_BAL, 
+		         OLD_AC_T0, 
+		         OLD_AC_T1, 
+		         OLD_AC_T1_Y, 
+		         AC_BAL, 
+		         AC_T0, 
+		         AC_T1, 
+		         AC_T1_Y, 
+		         FROZ_BALANCE, 
+		         OLD_FROZ_BALANCE, 
+		         LST_TX_DATETIME, 
+		         CHANGE_TYPE, 
+		         CHANGE_DESC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+		FROM 
+		        MPOMNG_CUST_ACCOUNT_HIS_INF
+		<where>
+		        <if test="accountLogId!= null and accountLogId!= ''">
+						AND ACCOUNT_LOG_ID =  #{accountLogId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="account!= null and account!= ''">
+						AND ACCOUNT =  #{account}
+				</if>
+		        <if test="acType!= null and acType!= ''">
+						AND AC_TYPE =  #{acType}
+				</if>
+		        <if test="ccy!= null and ccy!= ''">
+						AND CCY =  #{ccy}
+				</if>
+		        <if test="oldAcBal!= null and oldAcBal!= ''">
+						AND OLD_AC_BAL =  #{oldAcBal}
+				</if>
+		        <if test="oldAcT0!= null and oldAcT0!= ''">
+						AND OLD_AC_T0 =  #{oldAcT0}
+				</if>
+		        <if test="oldAcT1!= null and oldAcT1!= ''">
+						AND OLD_AC_T1 =  #{oldAcT1}
+				</if>
+		        <if test="oldAcT1Y!= null and oldAcT1Y!= ''">
+						AND OLD_AC_T1_Y =  #{oldAcT1Y}
+				</if>
+		        <if test="acBal!= null and acBal!= ''">
+						AND AC_BAL =  #{acBal}
+				</if>
+		        <if test="acT0!= null and acT0!= ''">
+						AND AC_T0 =  #{acT0}
+				</if>
+		        <if test="acT1!= null and acT1!= ''">
+						AND AC_T1 =  #{acT1}
+				</if>
+		        <if test="acT1Y!= null and acT1Y!= ''">
+						AND AC_T1_Y =  #{acT1Y}
+				</if>
+		        <if test="frozBalance!= null and frozBalance!= ''">
+						AND FROZ_BALANCE =  #{frozBalance}
+				</if>
+		        <if test="oldFrozBalance!= null and oldFrozBalance!= ''">
+						AND OLD_FROZ_BALANCE =  #{oldFrozBalance}
+				</if>
+		        <if test="lstTxDatetime!= null and lstTxDatetime!= ''">
+						AND LST_TX_DATETIME =  #{lstTxDatetime}
+				</if>
+		        <if test="changeType!= null and changeType!= ''">
+						AND CHANGE_TYPE =  #{changeType}
+				</if>
+		        <if test="changeDesc!= null and changeDesc!= ''">
+						AND CHANGE_DESC =  #{changeDesc}
+				</if>
+		        <if test="resField1!= null and resField1!= ''">
+						AND RES_FIELD1 =  #{resField1}
+				</if>
+		        <if test="resField2!= null and resField2!= ''">
+						AND RES_FIELD2 =  #{resField2}
+				</if>
+		        <if test="resField3!= null and resField3!= ''">
+						AND RES_FIELD3 =  #{resField3}
+				</if>
+		</where>
+	</select>
+
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CUST_ACCOUNT_HIS_INF  (
+		         ACCOUNT_LOG_ID, 
+		         CUST_ID, 
+		         ACCOUNT, 
+		         AC_TYPE, 
+		         CCY, 
+		         OLD_AC_BAL, 
+		         OLD_AC_T0, 
+		         OLD_AC_T1, 
+		         OLD_AC_T1_Y,
+		         OLD_AC_T1_UNA,
+		         OLD_AC_T1_AP,
+		         OLD_AC_T1_AUNP,
+		         AC_BAL, 
+		         AC_T0, 
+		         AC_T1, 
+		         AC_T1_UNA,
+		         AC_T1_AP,
+		         AC_T1_AUNP,
+		         AC_T1_Y, 
+		         FROZ_BALANCE, 
+		         OLD_FROZ_BALANCE, 
+		         LST_TX_DATETIME, 
+		         CHANGE_TYPE, 
+		         CHANGE_DESC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+				)
+		VALUES (
+		          #{accountLogId}, 
+		          #{custId}, 
+		          #{account}, 
+		          #{acType}, 
+		          #{ccy}, 
+		          #{oldAcBal}, 
+		          #{oldAcT0}, 
+		          #{oldAcT1}, 
+		          #{oldAcT1Y},
+		          #{oldAcT1UNA},
+		          #{oldAcT1AP},
+		          #{oldAcT1AUNP},
+		          #{acBal}, 
+		          #{acT0}, 
+		          #{acT1},
+		           #{acT1UNA},
+		           #{acT1AP},
+		           #{acT1AUNP},
+		          #{acT1Y}, 
+		          #{frozBalance}, 
+		          #{oldFrozBalance}, 
+		          #{lstTxDatetime}, 
+		          #{changeType}, 
+		          #{changeDesc}, 
+		          #{resField1}, 
+		          #{resField2}, 
+		          #{resField3}
+		      )
+	</insert>
+
+</mapper>

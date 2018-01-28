@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.HolidayDao">
+	<select id="queryHolidayBydate" parameterType="HolidayRuleInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		       <if test="hoDate != null and hoDate != ''">
+						HO_DATE =#{hoDate}
+				</if>
+		        
+		</where>
+	</select>
+</mapper>

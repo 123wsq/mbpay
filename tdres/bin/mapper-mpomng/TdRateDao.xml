@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.TdRateDao">
+	<resultMap type="TdRateInf" id="tdRateMap">
+		    <result property="paraCode"               column="PARA_CODE" /> 
+		    <result property="paraName"               column="PARA_NAME" /> 
+		    <result property="paraType"               column="PARA_TYPE" /> 
+		    <result property="paraVal"                column="PARA_VAL" /> 
+		    <result property="paraMaxMoney"           column="PARA_MAXMONEY" />
+		     <result property="paraValType"           column="PARA_VAL_TYPE" />
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="TdRateInf">
+		UPDATE 
+				MPOMNG_PLATFORM_PARAMETER_INF
+		<set>
+		        <if test="paraName!= null and paraName!= ''">
+						PARA_NAME =  #{paraName},
+				</if>
+		        <if test="paraType!= null and paraType!= ''">
+						PARA_TYPE =  #{paraType},
+				</if>
+		        <if test="paraVal!= null and paraVal!= ''">
+						PARA_VAL =  #{paraVal},
+				</if>
+				 <if test="paraMaxMoney!= null and paraMaxMoney!= ''">
+						PARA_MAXMONEY =  #{paraMaxMoney},
+				</if>
+				 <if test="paraValType!= null and paraValType!= ''">
+						PARA_VAL_TYPE =  #{paraValType}
+				</if>
+		</set>
+         WHERE  PARA_CODE =  #{paraCode}
+	</update>
+
+	<select id="selectEntity" parameterType="TdRateInf" resultMap="tdRateMap">
+		SELECT 
+		         PARA_CODE, 
+		         PARA_NAME, 
+		         PARA_TYPE, 
+		         PARA_VAL,
+		         PARA_MAXMONEY,
+		         PARA_VAL_TYPE
+		FROM 
+		        MPOMNG_PLATFORM_PARAMETER_INF
+		<where>
+		        <if test="paraCode!= null and paraCode!= ''">
+						AND PARA_CODE =  #{paraCode}
+				</if>
+		        <if test="paraName!= null and paraName!= ''">
+						AND PARA_NAME =  #{paraName}
+				</if>
+		        <if test="paraType!= null and paraType!= ''">
+						AND PARA_TYPE =  #{paraType}
+				</if>
+		        <if test="paraVal!= null and paraVal!= ''">
+						AND PARA_VAL =  #{paraVal}
+				</if>
+				 <if test="paraVal!= null and paraVal!= ''">
+						AND  PARA_MAXMONEY =  #{paraMaxMoney}
+				</if>
+				 <if test="paraVal!= null and paraVal!= ''">
+						AND PARA_VAL_TYPE =  #{paraValType}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="TdRateInf" resultMap="tdRateMap" databaseId="mysql">
+		SELECT 
+		         PARA_CODE, 
+		         PARA_NAME, 
+		         PARA_TYPE, 
+		         PARA_VAL ,
+		         PARA_MAXMONEY,
+		         PARA_VAL_TYPE
+		FROM 
+		       MPOMNG_PLATFORM_PARAMETER_INF
+		<where>
+		        <if test="paraCode!= null and paraCode!= ''">
+						AND PARA_CODE like concat ('%',#{paraCode},'%')
+				</if>
+		        <if test="paraName!= null and paraName!= ''">
+						AND PARA_NAME like concat ('%',#{paraName},'%')
+				</if>
+		        <if test="paraType!= null and paraType!= ''">
+						AND PARA_TYPE =  #{paraType}
+				</if>
+		        <if test="paraVal!= null and paraVal!= ''">
+						AND PARA_VAL =  #{paraVal}
+				</if>
+				 <if test="paraVal!= null and paraVal!= ''">
+						AND  PARA_MAXMONEY =  #{paraMaxMoney}
+				</if>
+				 <if test="paraVal!= null and paraVal!= ''">
+						AND PARA_VAL_TYPE =  #{paraValType}
+				</if>
+		</where>
+		ORDER BY PARA_CODE DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="TdRateInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPOMNG_PLATFORM_PARAMETER_INF
+		<where>
+		        <if test="paraCode!= null and paraCode!= ''">
+						AND PARA_CODE like concat ('%',#{paraCode},'%')
+				</if>
+		        <if test="paraName!= null and paraName!= ''">
+						AND PARA_NAME like concat ('%',#{paraName},'%')
+				</if>
+		        <if test="paraType!= null and paraType!= ''">
+						AND PARA_TYPE =  #{paraType}
+				</if>
+		        <if test="paraVal!= null and paraVal!= ''">
+						AND PARA_VAL =  #{paraVal}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="TdRateInf">
+		INSERT INTO MPOMNG_PLATFORM_PARAMETER_INF  (
+		         PARA_CODE, 
+		         PARA_NAME, 
+		         PARA_TYPE, 
+		         PARA_VAL,
+		         PARA_MAXMONEY,
+		         PARA_VAL_TYPE
+				)
+		VALUES (
+		          #{paraCode}, 
+		          #{paraName}, 
+		          #{paraType}, 
+		          #{paraVal},
+		          #{paraMaxMoney}, 
+		          #{paraValType}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="TdRateInf">
+		DELETE FROM MPOMNG_PLATFORM_PARAMETER_INF
+		WHERE
+			 PARA_CODE IN (${paraCode})
+	</delete>
+
+</mapper>

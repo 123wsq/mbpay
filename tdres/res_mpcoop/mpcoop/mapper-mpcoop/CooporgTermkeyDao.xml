@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpcoop.dao.CooporgTermkeyDao">
+	<resultMap type="CooporgTermkeyInf" id="cooporgTermkeyMap">
+		    <result property="cooporgNo"               column="COOPORG_NO" /> 
+		    <result property="merNo"               column="MER_NO" /> 
+		    <result property="terNo"               column="TER_NO" /> 
+		    <result property="pinkey"               column="PINKEY" /> 
+		    <result property="mackey"               column="MACKEY" /> 
+		    <result property="tdkey"               column="TDKEY" /> 
+		    <result property="tkCheckValue"               column="TK_CHECK_VALUE" /> 
+		    <result property="pkCheckValue"               column="PK_CHECK_VALUE" /> 
+		    <result property="mkCheckValue"               column="MK_CHECK_VALUE" /> 
+		    <result property="resField3"               column="RES_FIELD3" /> 
+		    <result property="resField1"               column="RES_FIELD1" /> 
+		    <result property="resField2"               column="RES_FIELD2" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="CooporgTermkeyInf">
+		UPDATE 
+				MPCOOP_COOPORG_TERMKEY_INF
+		<set>
+		       
+		        <if test="pinkey!= null and pinkey!= ''">
+						PINKEY =  #{pinkey},
+				</if>
+		        <if test="mackey!= null and mackey!= ''">
+						MACKEY =  #{mackey},
+				</if>
+		        <if test="tdkey!= null and tdkey!= ''">
+						TDKEY =  #{tdkey},
+				</if>
+		        <if test="tkCheckValue!= null and tkCheckValue!= ''">
+						TK_CHECK_VALUE =  #{tkCheckValue},
+				</if>
+		        <if test="pkCheckValue!= null and pkCheckValue!= ''">
+						PK_CHECK_VALUE =  #{pkCheckValue},
+				</if>
+		        <if test="mkCheckValue!= null and mkCheckValue!= ''">
+						MK_CHECK_VALUE =  #{mkCheckValue},
+				</if>
+		        
+		</set>
+		<where>
+			 <if test="cooporgNo!= null and cooporgNo!= ''">
+						COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+					AND	MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+					AND	TER_NO =  #{terNo}
+				</if>
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="CooporgTermkeyInf" resultMap="cooporgTermkeyMap">
+		SELECT 
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         PINKEY, 
+		         MACKEY, 
+		         TDKEY, 
+		         TK_CHECK_VALUE, 
+		         PK_CHECK_VALUE, 
+		         MK_CHECK_VALUE, 
+		         RES_FIELD3, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		FROM 
+		        MPCOOP_COOPORG_TERMKEY_INF
+		<where>
+		         1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="pinkey!= null and pinkey!= ''">
+						AND PINKEY =  #{pinkey}
+				</if>
+		        <if test="mackey!= null and mackey!= ''">
+						AND MACKEY =  #{mackey}
+				</if>
+		        <if test="tdkey!= null and tdkey!= ''">
+						AND TDKEY =  #{tdkey}
+				</if>
+		        <if test="tkCheckValue!= null and tkCheckValue!= ''">
+						AND TK_CHECK_VALUE =  #{tkCheckValue}
+				</if>
+		        <if test="pkCheckValue!= null and pkCheckValue!= ''">
+						AND PK_CHECK_VALUE =  #{pkCheckValue}
+				</if>
+		        <if test="mkCheckValue!= null and mkCheckValue!= ''">
+						AND MK_CHECK_VALUE =  #{mkCheckValue}
+				</if>
+		        <if test="resField3!= null and resField3!= ''">
+						AND RES_FIELD3 =  #{resField3}
+				</if>
+		        <if test="resField1!= null and resField1!= ''">
+						AND RES_FIELD1 =  #{resField1}
+				</if>
+		        <if test="resField2!= null and resField2!= ''">
+						AND RES_FIELD2 =  #{resField2}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="CooporgTermkeyInf" resultMap="cooporgTermkeyMap" databaseId="mysql">
+		SELECT 
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         PINKEY, 
+		         MACKEY, 
+		         TDKEY, 
+		         TK_CHECK_VALUE, 
+		         PK_CHECK_VALUE, 
+		         MK_CHECK_VALUE, 
+		         RES_FIELD3, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		FROM 
+		       MPCOOP_COOPORG_TERMKEY_INF
+		<where>
+		    1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="pinkey!= null and pinkey!= ''">
+						AND PINKEY =  #{pinkey}
+				</if>
+		        <if test="mackey!= null and mackey!= ''">
+						AND MACKEY =  #{mackey}
+				</if>
+		        <if test="tdkey!= null and tdkey!= ''">
+						AND TDKEY =  #{tdkey}
+				</if>
+		        <if test="tkCheckValue!= null and tkCheckValue!= ''">
+						AND TK_CHECK_VALUE =  #{tkCheckValue}
+				</if>
+		        <if test="pkCheckValue!= null and pkCheckValue!= ''">
+						AND PK_CHECK_VALUE =  #{pkCheckValue}
+				</if>
+		        <if test="mkCheckValue!= null and mkCheckValue!= ''">
+						AND MK_CHECK_VALUE =  #{mkCheckValue}
+				</if>
+		        <if test="resField3!= null and resField3!= ''">
+						AND RES_FIELD3 =  #{resField3}
+				</if>
+		        <if test="resField1!= null and resField1!= ''">
+						AND RES_FIELD1 =  #{resField1}
+				</if>
+		        <if test="resField2!= null and resField2!= ''">
+						AND RES_FIELD2 =  #{resField2}
+				</if>
+		</where>
+		ORDER BY  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CooporgTermkeyInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPCOOP_COOPORG_TERMKEY_INF
+		<where>
+			 1 = 1 
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO =  #{merNo}
+				</if>
+		        <if test="terNo!= null and terNo!= ''">
+						AND TER_NO =  #{terNo}
+				</if>
+		        <if test="pinkey!= null and pinkey!= ''">
+						AND PINKEY =  #{pinkey}
+				</if>
+		        <if test="mackey!= null and mackey!= ''">
+						AND MACKEY =  #{mackey}
+				</if>
+		        <if test="tdkey!= null and tdkey!= ''">
+						AND TDKEY =  #{tdkey}
+				</if>
+		        <if test="tkCheckValue!= null and tkCheckValue!= ''">
+						AND TK_CHECK_VALUE =  #{tkCheckValue}
+				</if>
+		        <if test="pkCheckValue!= null and pkCheckValue!= ''">
+						AND PK_CHECK_VALUE =  #{pkCheckValue}
+				</if>
+		        <if test="mkCheckValue!= null and mkCheckValue!= ''">
+						AND MK_CHECK_VALUE =  #{mkCheckValue}
+				</if>
+		        <if test="resField3!= null and resField3!= ''">
+						AND RES_FIELD3 =  #{resField3}
+				</if>
+		        <if test="resField1!= null and resField1!= ''">
+						AND RES_FIELD1 =  #{resField1}
+				</if>
+		        <if test="resField2!= null and resField2!= ''">
+						AND RES_FIELD2 =  #{resField2}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="CooporgTermkeyInf">
+		INSERT INTO MPCOOP_COOPORG_TERMKEY_INF  (
+		         COOPORG_NO, 
+		         MER_NO, 
+		         TER_NO, 
+		         PINKEY, 
+		         MACKEY, 
+		         TDKEY, 
+		         TK_CHECK_VALUE, 
+		         PK_CHECK_VALUE, 
+		         MK_CHECK_VALUE, 
+		         RES_FIELD3, 
+		         RES_FIELD1, 
+		         RES_FIELD2
+				)
+		VALUES (
+		          #{cooporgNo}, 
+		          #{merNo}, 
+		          #{terNo}, 
+		          #{pinkey}, 
+		          #{mackey}, 
+		          #{tdkey}, 
+		          #{tkCheckValue}, 
+		          #{pkCheckValue}, 
+		          #{mkCheckValue}, 
+		          #{resField3}, 
+		          #{resField1}, 
+		          #{resField2}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="CooporgTermkeyInf">
+		DELETE FROM MPCOOP_COOPORG_TERMKEY_INF
+		<where>
+			<if test="cooporgNo != null and cooporgNo != '' ">
+				COOPORG_NO =#{cooporgNo}
+			</if>
+			<if test="merNo != null and merNo != '' ">
+				AND MER_NO =#{merNo}
+			</if>
+			<if test="terNo != null and terNo != '' ">
+				AND TER_NO =#{terNo}
+			</if>
+			
+		</where>
+	</delete>
+
+</mapper>

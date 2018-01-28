@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+      
+    <!-- 扫描（service层注入） 需事务控制 应在mybatis配置文件中扫描 跟随contextConfigLocation启动 -->
+	<context:component-scan base-package="com.tangdi.production.mpaychl.front"/>
+	<context:component-scan base-package="com.tangdi.production.mpaychl.trans"/>
+	<context:component-scan base-package="com.tangdi.production.mpaychl.schedule.service"/>
+
+	<bean id="mpaychlConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:mpaychl/conf-mpaychl/mpaychl.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- HttpRequest Client对象(共用对象) -->
+	<bean id="httpRequestClient" class="com.tangdi.production.mpbase.http.client.HttpRequestClient">
+		<!-- 一次接收数据的容量 -->
+		<property name="byteSize" value="1024" />
+		<!-- 缓冲区大小 -->
+		<property name="byteBufferSize" value="10240" />
+	</bean>
+
+	<bean id="bFBluetoothTerminalServiceImpl" class="com.tangdi.production.mpaychl.trans.terminal.service.impl.BFBluetoothTerminalServiceImpl"/>
+	<bean id="JoyPulServiceImpl" class="com.tangdi.production.mpaychl.trans.sms.service.impl.JoyPulServiceImpl"/>
+	<import resource="classpath:mpaychl/conf-etc-channel/pay-hx/STHDHX_ATR.XML" />
+	
+	<import resource="classpath:mpaychl/conf-etc-channel/pay-sd/STHDSD_ATR.XML" />
+	
+	<import resource="classpath:mpaychl/conf-etc-encry/1311/STHDSJL05_ATR.XML" />
+	
+	<import resource="classpath:mpaychl/conf-etc-sms/joypul/STHDJP_ATR.XML" />
+	
+	<import resource="classpath:mpaychl/conf-etc-channel/pay-zl/STHDZL_ATR.XML" />
+	
+	<import resource="classpath:mpaychl/conf-etc-quickdf/posp/STHDQDF_ATR.XML" />
+</beans>

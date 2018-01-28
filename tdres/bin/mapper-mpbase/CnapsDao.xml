@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.CnapsDao">
+
+	<resultMap type="CnapsInf" id="CnapsInfMap">
+		<result property="cnapsCode" column="CNAPS_CODE" />
+		<result property="bankName"   column="BANK_NAME" />
+		<result property="subBranch"  column="SUB_BRANCH" />
+		<result property="bankPro"    column="BANK_PRO" />
+		<result property="bankCity"   column="BANK_CITY" />
+	</resultMap>
+	
+	<select id="selectList" parameterType="CnapsInf" resultMap="CnapsInfMap" databaseId="mysql">
+		SELECT
+			CNAPS_CODE,
+			BANK_NAME,
+			SUB_BRANCH,
+			BANK_PRO,
+			BANK_CITY
+		FROM
+			CNAPS
+		<where>
+			<if test="cnapsCode != null and cnapsCode != '' ">
+				AND CNAPS_CODE LIKE CONCAT('%',#{cnapsCode},'%')
+			</if>
+			<if test="bankName != null and bankName != '' ">
+				AND BANK_NAME LIKE CONCAT('%',#{bankName},'%')
+			</if>
+			<if test="subBranch != null and subBranch != '' ">
+				AND SUB_BRANCH LIKE CONCAT('%',#{subBranch},'%')
+			</if>
+			<if test="bankPro != null and bankPro != '' ">
+				AND BANK_PRO LIKE CONCAT('%',#{bankPro},'%')
+			</if>
+			<if test="bankCity != null and bankCity != '' ">
+				AND BANK_CITY LIKE CONCAT('%',#{bankCity},'%')
+			</if>
+		</where>
+		ORDER BY CNAPS_CODE ASC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="countEntity" parameterType="CnapsInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT 
+				COUNT(1)
+		FROM 
+				CNAPS
+		<where>
+			<if test="cnapsCode != null and cnapsCode != '' ">
+				AND CNAPS_CODE LIKE CONCAT('%',#{cnapsCode},'%')
+			</if>
+			<if test="bankName != null and bankName != '' ">
+				AND BANK_NAME LIKE CONCAT('%',#{bankName},'%')
+			</if>
+			<if test="subBranch != null and subBranch != '' ">
+				AND SUB_BRANCH LIKE CONCAT('%',#{subBranch},'%')
+			</if>
+			<if test="bankPro != null and bankPro != '' ">
+				AND BANK_PRO LIKE CONCAT('%',#{bankPro},'%')
+			</if>
+			<if test="bankCity != null and bankCity != '' ">
+				AND BANK_CITY LIKE CONCAT('%',#{bankCity},'%')
+			</if>
+		</where>
+	</select>
+	<select id="validateCnapsCode" parameterType="CnapsInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				CNAPS
+		<where>
+			<if test="cnapsCode != null and cnapsCode != '' ">
+				 CNAPS_CODE =#{cnapsCode}
+			</if>
+		</where>
+	</select>
+	
+	
+	<insert id="insertEntity" parameterType="CnapsInf">
+		INSERT INTO CNAPS (
+			CNAPS_CODE,
+			BANK_NAME,
+			SUB_BRANCH,
+			BANK_PRO,
+			BANK_CITY
+		)
+		VALUES
+			(
+				#{cnapsCode,jdbcType=VARCHAR},
+				#{bankName,jdbcType=VARCHAR},
+				#{subBranch,jdbcType=VARCHAR},
+				#{bankPro,jdbcType=VARCHAR},
+				#{bankCity,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<update id="updateEntity" parameterType="CnapsInf">
+		UPDATE CNAPS
+		<set>
+			<if test="cnapsCode != null and cnapsCode != '' ">
+				 CNAPS_CODE =#{cnapsCode},
+			</if>
+			<if test="bankName != null and bankName != '' ">
+				 BANK_NAME =#{bankName},
+			</if>
+			<if test="subBranch != null and subBranch != '' ">
+				 SUB_BRANCH =#{subBranch},
+			</if>
+			<if test="bankPro != null and bankPro != '' ">
+				 BANK_PRO =#{bankPro},
+			</if>
+			<if test="bankCity != null and bankCity != '' ">
+				 BANK_CITY =#{bankCity}
+			</if>
+		</set>
+		<where>
+				CNAPS_CODE =#{cnapsCode}
+		</where>
+	</update>
+	
+	<delete id="deleteEntity" parameterType="CnapsInf">
+		DELETE FROM CNAPS WHERE CNAPS_CODE =#{cnapsCode}
+	</delete>
+
+    <select id="selectEntity" parameterType="CnapsInf" resultMap="CnapsInfMap">
+		SELECT
+			CNAPS_CODE,
+			BANK_NAME,
+			SUB_BRANCH,
+			BANK_PRO,
+			BANK_CITY
+		FROM
+			CNAPS
+		 WHERE CNAPS_CODE =#{cnapsCode}
+	</select>
+	
+	<select id="validateBranchState" parameterType="CnapsInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				CNAPS
+		<where>
+			<if test="bankSubBranch != null and bankSubBranch != '' ">
+				AND SUB_BRANCH LIKE CONCAT('%',#{bankSubBranch},'%')
+			</if>
+			
+		</where>
+	</select>
+	<select id="getSubBranchName" parameterType="CnapsInf" resultType="java.lang.String">
+		SELECT SUB_BRANCH FROM CNAPS
+		WHERE CNAPS_CODE = #{cnapsCode}
+	</select>
+</mapper>

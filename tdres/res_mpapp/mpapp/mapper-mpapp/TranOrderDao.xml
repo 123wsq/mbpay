@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.TranOrderDao">
+	<resultMap type="java.util.Map" id="TranOrderListMap">
+		    <result property="ordno"                column="ORDNO"     typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordtype"              column="ORDTYPE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="biztype"              column="BIZTYPE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordstatus"            column="ORDSTATUS" typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordamt"               column="ORDAMT"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordtime"              column="ORDTIME"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="payType"              column="PAYTYPE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="payWay"               column="PAYWAY"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="acctType"             column="AC_TYPE"   typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	<resultMap type="java.util.Map" id="TranPrdOrderDetailMap">
+		    <result property="prdordno"              column="PRDORDNO"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="prdordtype"            column="PRDORDTYPE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="biztype"               column="BIZTYPE"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordstatus"             column="ORDSTATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="amt"                   column="NETRECAMT"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="payType"               column="PAYTYPE"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="payCardNo"             column="PAY_CARDNO" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rate"                  column="RATE"       typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateType"              column="RATE_TYPE"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="termNo"                column="TER_NO"     typeHandler="EmptyStringIfNull"/> 
+		    <result property="txamt"                 column="ORDAMT"     typeHandler="EmptyStringIfNull"/> 
+		    <result property="custId"                column="CUST_ID"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="custName"              column="CUST_NAME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordamt"                column="ORDAMT"     typeHandler="EmptyStringIfNull"/> 
+		    <result property="payordno"              column="PAYORDNO"   typeHandler="EmptyStringIfNull"/>
+		    <result property="goodsName"             column="GOODS_NAME" typeHandler="EmptyStringIfNull"/>
+		    <result property="ordtime"               column="ORDTIME"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="picId"                 column="PAY_SIGN_PIC"   typeHandler="EmptyStringIfNull"/> 
+	
+	</resultMap> 
+	<resultMap type="java.util.Map" id="TranCasOrderDetailMap">
+		    <result property="casordno"              column="CAS_ORD_NO" typeHandler="EmptyStringIfNull"/> 
+		    <result property="casType"               column="CAS_TYPE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="casDate"               column="CAS_DATE"   typeHandler="EmptyStringIfNull" /> 
+		    <result property="sucDate"               column="SUC_DATE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordstatus"             column="ORDSTATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custId"                column="CUST_ID"    typeHandler="EmptyStringIfNull"/> 
+		    <result property="custName"              column="CUST_NAME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordamt"                column="TXAMT"      typeHandler="EmptyStringIfNull"/> 
+		    <result property="fee"                   column="FEE"        typeHandler="EmptyStringIfNull"/> 
+		    <result property="serviceFee"            column="SERVICE_FEE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="netrecAmt"             column="NETRECAMT"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="cardno"                column="CARD_NO"    typeHandler="EmptyStringIfNull" />
+		    <result property="acctType"              column="AC_TYPE"    typeHandler="EmptyStringIfNull" />
+	</resultMap>
+	<resultMap type="java.util.Map" id="TranPrdPayStatusMap">
+		    <result property="prdordno"              column="PRDORDNO"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="prdordtype"            column="PRDORDTYPE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="paystatus"             column="PAYSTATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="ordstatus"             column="ORDSTATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="payordno"              column="PAYORDNO"   typeHandler="EmptyStringIfNull"/>
+		    <result property="payAmt"                column="TXAMT"      typeHandler="EmptyStringIfNull"/>
+		    <result property="payDate"               column="PAY_DATE"   typeHandler="EmptyStringIfNull"/>
+		    <result property="payTime"               column="PAY_TIME"   typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	<select id="selectList" parameterType="java.util.Map" resultMap="TranOrderListMap">
+		SELECT * FROM(
+			(SELECT
+				T11.PRDORDTYPE AS ORDTYPE,
+				T11.ORDSTATUS ,
+				T11.ORDAMT ,
+	            T11.PRDORDNO AS ORDNO,
+				T11.ORDTIME,
+				T12.PAYTYPE,
+				T11.CUST_ID,
+				T12.PAYTYPE AS PAYWAY,
+				NULL AS AC_TYPE
+			FROM
+				MPOMNG_PRD_INF T11 
+				LEFT OUTER JOIN  MPOMNG_PAY_INF T12 ON (T11.PAYORDNO=T12.PAYORDNO)
+			    LEFT JOIN MPOMNG_MOBILE_MER_INF T1 ON (T1.CUST_ID=T11.CUST_ID)
+			   <where>
+			   		<if test='recordType =="1"'>
+						AND T12.AUDIT_STATUS IN ('1','3')
+			 		 </if>
+			  		<if test='recordType =="2"'>
+						AND T12.AUDIT_STATUS IN ('0','2')
+			  		</if>
+			   </where>
+			ORDER BY ORDTIME  DESC 
+			)
+			UNION
+			(SELECT
+				'03' AS ORDTYPE,
+				T13.ORDSTATUS,
+				T13.TXAMT AS ORDAMT,
+				T13.CAS_ORD_NO AS ORDNO,
+				T13.CAS_DATE AS ORDTIME,
+				NULL AS PAYTYPE,
+				T13.CUST_ID,
+				NULL AS PAYWAY,
+				T13.AC_TYPE
+			FROM
+				MPOMNG_CAS_INF T13
+				LEFT JOIN MPOMNG_MOBILE_MER_INF T1 ON (T1.CUST_ID=T13.CUST_ID)
+			 <where>
+			   		<if test='recordType =="1"'>
+						AND T13.ORDSTATUS = '07'
+			 		 </if>
+			  		<if test='recordType =="2"'>
+						AND T13.ORDSTATUS != '07'
+			  		</if>
+			   </where>
+				ORDER BY SUC_DATE  DESC
+				)
+		) T1
+		<where>
+		1=1
+			  
+		      <if test="busType!= null and busType!= '' and busType !='00'">
+					AND T1.ORDTYPE =  #{busType}
+			  </if>
+			
+		      <if test="tranState!= null and tranState!= ''">
+					AND T1.ORDSTATUS =  #{tranState}
+			  </if>
+		     <if test="ordtime!= null and ordtime!= ''">
+					AND T1.ORDTIME =  #{ordtime}
+			 </if>
+		     <if test="paytype!= null and paytype!= ''">
+					AND T1.PAYTYPE =  #{paytype}
+			 </if>
+			  <if test="custId!= null and custId!= ''">
+					AND T1.CUST_ID =  #{custId}
+			 </if>
+			 <if test="startTime != null and startTime != ''">
+					AND T1.ORDTIME >= #{startTime}
+			 </if>
+			 <if test="endTime != null and endTime != ''">
+				<![CDATA[ AND T1.ORDTIME <= #{endTime} ]]>
+			 </if>
+		</where>
+        ORDER BY T1.ORDTIME DESC 
+        <if test="pageSize != null and pageSize != ''">
+			<choose>  
+		        <when test="start != null and start != ''">  
+		           LIMIT #{start},#{pageSize}
+		        </when>  
+		        <otherwise>  
+		            LIMIT #{pageSize}
+		        </otherwise>  
+		    </choose>  
+		</if>
+	</select>
+	
+	<select id="selectPrdDetail" parameterType="java.util.Map" resultMap="TranPrdOrderDetailMap">
+			SELECT
+				T2.PAYORDNO,
+				T1.PRDORDNO,
+				T1.PRDORDTYPE,
+				T1.ORDSTATUS ,
+				T1.ORDAMT ,
+	            T1.PRICE ,
+	            T1.GOODS_NAME,
+				T2.TXAMT,
+				T2.RATE,
+				T2.RATE_TYPE,
+				T2.FEE,
+				T2.NETRECAMT,		
+	            T1.CUST_ID ,
+				T1.ORDTIME ,
+				T2.TER_NO,
+	            T2.PAYTYPE,
+				T2.PAY_CARDNO,
+         	    T2.PAY_SIGN_PIC,
+         	    T2.PAY_CARDNO,
+         	    T3.CUST_NAME
+			FROM
+				MPOMNG_PRD_INF T1
+				LEFT JOIN MPOMNG_PAY_INF T2 ON T1.PAYORDNO = T2.PAYORDNO
+				LEFT JOIN MPOMNG_MOBILE_MER_INF T3 ON T1.CUST_ID = T3.CUST_ID
+			WHERE
+				 T1.PRDORDNO   =  #{ordno} AND 
+				 T1.PRDORDTYPE =  #{busType}
+	</select>
+	
+	<select id="selectPrdPayStatus" parameterType="java.util.Map" resultMap="TranPrdPayStatusMap">
+			SELECT
+				T2.PAYORDNO,
+				T1.PRDORDNO,
+				T1.PRDORDTYPE,
+				T1.ORDSTATUS,
+				T2.PAYSTATUS,
+				T2.TXAMT,
+				T2.PAY_DATE,
+				T2.PAY_TIME
+			FROM
+				MPOMNG_PRD_INF T1
+				LEFT JOIN MPOMNG_PAY_INF T2 ON T1.PAYORDNO = T2.PAYORDNO
+				LEFT JOIN MPOMNG_MOBILE_MER_INF T3 ON T1.CUST_ID = T3.CUST_ID
+			WHERE
+				 T1.PRDORDNO   =  #{prdordNo} 
+	</select>
+	
+	<select id="selectCasDetail" parameterType="java.util.Map" resultMap="TranCasOrderDetailMap">
+			SELECT
+				T1.CAS_ORD_NO,
+				T1.CAS_TYPE ,
+				T1.CAS_DATE ,
+	            T1.SUC_DATE ,
+	            T1.ORDSTATUS,
+				T1.CUST_ID,
+				T1.CUST_NAME,
+				T1.TXAMT,
+				T1.FEE,
+				T1.SERVICE_FEE,
+				T1.NETRECAMT,		
+	            T1.CARD_NO,
+	            T1.AC_TYPE
+			FROM
+				MPOMNG_CAS_INF T1
+			WHERE
+				 T1.CAS_ORD_NO   =  #{ordno}
+	</select>
+	
+	<select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+			SELECT
+				COUNT(*)
+			FROM
+				MPOMNG_PAY_INF 
+			<where>
+				AUDIT_STATUS in ('0','2')
+				
+				 <if test="custId!= null and custId!= ''">
+					AND CUST_ID =  #{custId}
+				 </if>
+			</where>	 
+				 
+	</select>
+</mapper>

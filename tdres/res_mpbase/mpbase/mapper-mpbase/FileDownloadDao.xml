@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 数据库表为 MPOMNG_FILE_DOWNLOAD_INF -->
+<mapper namespace="com.tangdi.production.mpbase.dao.FileDownloadDao">
+	<resultMap type="FileDownloadInf" id="FileDownloadMap">
+		<result property="dId" 		 column="DID" />
+		<result property="dName"	 column="DNAME" />
+		<result property="dFileName" column="DFILENAME" />
+		<result property="dPath"	 column="DPATH" />
+		<result property="dSize"	 column="DSIZE" />
+		<result property="dType" 	 column="DTYPE" />
+		<result property="dTime" 	 column="DTIME" />
+		<result property="dSTime"	 column="DSTIME" />
+		<result property="dETime" 	 column="DETIME" />
+		<result property="status"	 column="STATUS" />
+		<result property="RPTType"	 column="RPTTYPE" />
+		<result property="orgNo" 	 column="ORGNO"/>
+		<result property="uid" 		 column="UID"/>
+	</resultMap>
+	<delete id="deleteFile" parameterType="java.lang.String">
+		DELETE FROM MPOMNG_FILE_DOWNLOAD_INF WHERE DID = #{id}
+	</delete>
+	
+	<insert id="insertEntity" parameterType="FileDownloadInf">
+		INSERT INTO MPOMNG_FILE_DOWNLOAD_INF
+			(
+			DID,
+			DNAME,
+			DFILENAME,
+			DPATH,
+			DSIZE,
+			DTYPE,
+			DTIME,
+			DSTIME,
+			DETIME,
+			STATUS,
+			RPTTYPE,
+			ORGNO,
+			UID
+			)
+		VALUES 
+		 (#{dId,jdbcType=VARCHAR},#{dName,jdbcType=VARCHAR},#{dFileName,jdbcType=VARCHAR},#{dPath,jdbcType=VARCHAR},#{dSize,jdbcType=VARCHAR},#{dType,jdbcType=VARCHAR},#{dTime,jdbcType=VARCHAR},#{dSTime,jdbcType=VARCHAR},#{dETime,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{RPTType,jdbcType=VARCHAR},#{orgNo,jdbcType=VARCHAR},#{uid,jdbcType=VARCHAR})
+	</insert>
+	<select id="selectEntity" parameterType="FileDownloadInf" resultType="FileDownloadInf">
+		SELECT 
+			DID,DNAME,DFILENAME,DPATH,DSIZE,DTYPE,DTIME,DSTIME,DETIME,STATUS 
+		FROM
+			 MPOMNG_FILE_DOWNLOAD_INF,UID
+		<where>
+			<if test="dId != null and dId != ''">
+				DID = #{dId}
+			</if>
+			<if test="dName != null and dName != ''">
+				AND DNAME = #{dName}
+			</if>
+			<if test="dFileName != null and dFileName != ''">
+				AND T1.DFILENAME = #{dFileName}
+			</if>
+			<if test="status != null and status != ''">
+				AND STATUS =#{status}
+			</if>
+			<if test="RPTType != null and RPTType != ''">
+				AND RPTTYPE =#{RPTType}
+			</if>
+			<if test="uid != null and uid != ''">
+				AND UID =#{uid}
+			</if>
+		</where>
+	</select>
+	<select id="selectList" parameterType="java.util.Map" resultMap="ReportMap" databaseId="oracle">
+		SELECT * FROM (
+		SELECT PAGE_SUB.*,ROWNUM AS RN FROM (
+		SELECT * FROM (
+		SELECT
+		DID,DNAME,DFILENAME,DPATH,DSIZE,DTYPE,DTIME,DSTIME,DETIME,STATUS
+		FROM
+		MPOMNG_FILE_DOWNLOAD_INF
+		<where>
+			<if test="dId != null and dId != ''">
+				DID = #{dId}
+			</if>
+			<if test="dName != null and dName != ''">
+				AND DNAME = #{dName}
+			</if>
+			<if test="dFileName != null and dFileName != ''">
+				AND T1.DFILENAME = #{dFileName}
+			</if>
+			<if test="status != null and status != ''">
+				AND STATUS =#{status}
+			</if>
+			<if test="startDate != null and startDate != ''">
+				AND DSTIME >= #{startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND DSTIME &lt;= #{endDate}
+			</if>
+			<if test="RPTType != null and RPTType != ''">
+				AND RPTTYPE = #{RPTType}
+			</if>
+			<if test="orgNo != null and orgNo != '' ">
+				AND ORGNO IN (SELECT ORG_ID FROM AUTH_ORG_INF
+				START WITH ORG_ID = #{orgNo}
+				CONNECT BY PRIOR ORG_ID = ORG_PAR_ID
+				)
+			</if>
+		</where>
+		) ORDER BY DSTIME DESC
+		)PAGE_SUB
+		) WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="selectList" parameterType="FileDownloadInf" resultMap="FileDownloadMap" databaseId="mysql">
+		SELECT 
+			DID,DNAME,DFILENAME,DPATH,DSIZE,DTYPE,DTIME,DSTIME,DETIME,STATUS
+		FROM
+			MPOMNG_FILE_DOWNLOAD_INF
+		<where>
+			<if test="dId != null and dId != ''">
+				DID = #{dId}
+			</if>
+			<if test="dType != null and dType != ''">
+				AND DTYPE = #{dType}
+			</if>
+			<if test="dFileName != null and dFileName != ''">
+				AND T1.DFILENAME = #{dFileName}
+			</if>
+			<if test="status != null and status != ''">
+				AND STATUS =#{status}
+			</if>
+			<if test="startDate != null and startDate != ''">
+				AND DSTIME >= #{startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND DSTIME &lt;= #{endDate}
+			</if>
+			<if test="RPTType != null and RPTType != ''">
+				AND RPTTYPE = #{RPTType}
+			</if>
+			<if test="uid != null and uid != ''">
+				AND UID =#{uid}
+			</if>
+			<if test="dName != null and dName != ''">
+				AND DNAME  LIKE CONCAT('%',#{dName},'%')
+			</if>
+		</where>
+		ORDER BY DID DESC LIMIT #{start},#{pageSize}
+	</select>
+	<select id="countEntity" parameterType="java.util.Map" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT COUNT(DID)
+		FROM
+		MPOMNG_FILE_DOWNLOAD_INF
+		<where>
+			<if test="dId != null and dId != ''">
+				DID = #{dId}
+			</if>
+			<if test="dType != null and dType != ''">
+				AND DTYPE = #{dType}
+			</if>
+			<if test="dFileName != null and dFileName != ''">
+				AND DFILENAME = #{dFileName}
+			</if>
+			<if test="status != null and status != ''">
+				AND STATUS =#{status}
+			</if>
+			<if test="startDate != null and startDate != ''">
+				AND DSTIME >= #{startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND DSTIME &lt;= #{endDate}
+			</if>
+			<if test="RPTType != null and RPTType != ''">
+				AND RPTTYPE = #{RPTType}
+			</if>
+			<if test="uid != null and uid != ''">
+				AND UID =#{uid}
+			</if>
+			<if test="dName != null and dName != ''">
+				AND DNAME  LIKE CONCAT('%',#{dName},'%')
+			</if>
+		</where>
+	</select>
+	<update id="updateEntity" parameterType="FileDownloadInf">
+		UPDATE MPOMNG_FILE_DOWNLOAD_INF
+		<set>
+			<if test="dName != null and dName != ''">
+				DNAME = #{dName},
+			</if>
+			<if test="dFileName != null and dFileName != ''">
+				DFILENAME = #{dFileName},
+			</if>
+			<if test="dPath !=null and dPath !='' ">
+				DPATH = #{dpath},
+			</if>
+			<if test="dSize != null and dSize != ''">
+				DSIZE = #{dSize},
+			</if>
+			<if test="dType != null and dType != ''">
+				DTYPE = #{dType},
+			</if>
+			<if test="dTime != null and dTime != ''">
+				DTIME = #{dTime},
+			</if>
+			<if test="dSTime != null and dSTime != ''">
+				DSTIME = #{dSTime},
+			</if>
+			<if test="dETime != null and dETime != ''">
+				DETIME = #{dETime},
+			</if>
+			<if test="status != null and status != ''">
+				STATUS = #{status},
+			</if>
+			<if test="RPTType != null and RPTType != ''">
+				RPTTYPE =#{RPTType}
+			</if>
+		</set>
+		WHERE DID = #{dId}
+	</update>
+</mapper>

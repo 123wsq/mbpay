@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.PrdInfDao">
+	<resultMap type="PrdInf" id="PrdInfMap">
+		<result property="prdordno" column="PRDORDNO" />
+		<result property="prdordtype" column="PRDORDTYPE" />
+		<result property="biztype" column="BIZTYPE" />
+		<result property="ordstatus" column="ORDSTATUS" />
+		<result property="ordamt" column="ORDAMT" />
+		<result property="payordno" column="PAYORDNO" />
+		<result property="price" column="PRICE" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsNameShort" column="GOODS_NAME_SHORT" />
+		<result property="custId" column="CUST_ID" />
+		<result property="prddate" column="PRDDATE" />
+		<result property="prdtime" column="PRDTIME" />
+		<result property="ordtime" column="ORDTIME" />
+		<result property="modifyTime" column="MODIFY_TIME" />
+		<result property="payType" column="PAYTYPE" />
+		<result property="custName" column="CUST_NAME" />
+	</resultMap>
+	
+	<!-- 商品订单详细信息 -->
+	<resultMap type="java.util.Map" id="PrdInfDetailMap">
+		<result property="prdordno" column="PRDORDNO" />
+		<result property="prdordtype" column="PRDORDTYPE" />
+		<result property="biztype" column="BIZTYPE" />
+		<result property="ordstatus" column="ORDSTATUS" />
+		<result property="ordamt" column="ORDAMT" />
+		<result property="payordno" column="PAYORDNO" />
+		<result property="price" column="PRICE" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsNameShort" column="GOODS_NAME_SHORT" />
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="prddate" column="PRDDATE"/>
+		<result property="prdtime" column="PRDTIME" />
+		<result property="ordtime" column="ORDTIME" />
+		<result property="payStatus" column="PAYSTATUS" />
+		<result property="terNo" column="TER_NO" />
+		<result property="txAmt" column="TXAMT" />
+		<result property="rate" column="RATE"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payCardNo" column="PAY_CARDNO"/>
+		<result property="issNam" column="ISSNAM"/>
+		<result property="crdNam" column="CRDNAM"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="payTime" column="PAY_TIME"/>
+		<result property="payOrdTime" column="PAYORDTIME"/>
+		<result property="paySignPic" column="PAY_SIGN_PIC"/>
+		<result property="txnSrefNo" column="TXN_SREFNO"/>
+		<result property="inMod" column="INMOD"/>
+		<result property="ttxndt" column="TTXNDT"/>
+		<result property="ttxntm" column="TTXNTM"/>
+		<result property="tmercId" column="TMERCID"/>
+		<result property="ttermId" column="TTERMID"/>
+		<result property="tbatNo" column="TBATNO"/>
+		<result property="tsrefNo" column="TSREFNO"/>
+		<result property="tcpscod" column="TCPSCOD"/>
+		<result property="tautcod" column="TAUTCOD"/>
+		<result property="tlogno" column="TLOGNO"/>
+		<result property="payType" column="PAYTYPE"/>
+		<result property="txnType" column="TXN_TYPE"/>
+		<result property="cause"   column="ERROR_CAUSE"/>
+		<result property="cardSignPic" column="CARD_SIGN_PIC"/>
+	</resultMap>
+	
+	
+	<!-- 收款订单查询结果集 -->
+	<resultMap type="Map" id="RechargeMap">
+		<result property="prdOrdNo" column="PRDORDNO"/>
+		<result property="custId" column="CUST_ID"/>
+		<result property="custName" column="CUST_NAME"/>
+		<result property="custLogin" column="CUST_LOGIN"/>
+		<result property="prdOrdType" column="PRDORDTYPE"/>
+		<result property="bizType" column="BIZTYPE"/>
+		<result property="ordStatus" column="ORDSTATUS"/>
+		<result property="ordAmt" column="ORDAMT"/>
+		<result property="payOrdNo" column="PAYORDNO"/>
+		<result property="prdDate" column="PRDDATE"/>
+		<result property="prdTime" column="PRDTIME"/>
+		<result property="ordTime" column="ORDTIME"/>
+		<result property="payType" column="PAYTYPE"/>
+		<result property="txAmt" column="TXAMT"/>
+		<result property="rate" column="RATE"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payCardNo" column="PAY_CARDNO"/>
+		<result property="issNam" column="issNam"/>
+		<result property="crdNam" column="crdNam"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="payTime" column="PAY_TIME"/>
+		<result property="payOrdTime" column="PAYORDTIME"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="terNo" column="TER_NO"/>
+		<result property="agentId" column="AGENT_ID"/>
+		<result property="agentName" column="AGENT_NAME"/>
+		<result property="cause"   column="ERROR_CAUSE"/>
+		<result property="tcpscod" column="TCPSCOD"/>
+		<result property="rateGeneralTop" column="RATE_GENERAL_TOP"/>
+		<result property="rateGeneralMaximun" column="RATE_GENERAL_MAXIMUN"/>
+		<result property="fathRate" column="FATH_RATE"/>
+		<result property="fathAgentId"   column="FATH_AGENT_ID"/>
+		<result property="fathFee" column="FATH_FEE"/>
+		<result property="auditStatus" column="AUDIT_STATUS"/>
+		<result property="fathRateType" column="FATH_RATE_TYPE"/>
+		<result property="auditTime" column="AUDIT_TIME"/>
+	</resultMap>
+
+	<!-- 代理商模块发起的查询 -->
+	
+	<resultMap type="Map" id="AgentPrdMap">
+		<result property="prdOrdNo" column="PRDORDNO"/>
+		<result property="custId" column="CUST_ID"/>
+		<result property="custName" column="CUST_NAME"/>
+		<result property="custLogin" column="CUST_LOGIN"/>
+		<result property="prdOrdType" column="PRDORDTYPE"/>
+		<result property="bizType" column="BIZTYPE"/>
+		<result property="ordStatus" column="ORDSTATUS"/>
+		<result property="ordAmt" column="ORDAMT"/>
+		<result property="payOrdNo" column="PAYORDNO"/>
+		<result property="prdDate" column="PRDDATE"/>
+		<result property="prdTime" column="PRDTIME"/>
+		<result property="ordTime" column="ORDTIME"/>
+		<result property="payType" column="PAYTYPE"/>
+		<result property="txAmt" column="TXAMT"/>
+		<result property="rate" column="RATE"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payCardNo" column="PAY_CARDNO"/>
+		<result property="issNam" column="issNam"/>
+		<result property="crdNam" column="crdNam"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="payTime" column="PAY_TIME"/>
+		<result property="payOrdTime" column="PAYORDTIME"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="terNo" column="TER_NO"/>
+		<result property="agentId" column="AGENT_ID"/>
+		<result property="agentName" column="AGENT_NAME"/>
+	</resultMap>
+	
+	
+	<!-- 业务报表  商品订单-->
+	
+	<resultMap type="PrdTemplate" id="PrdReportMap">
+		<result property="prdordno" column="PRDORDNO" />
+		<result property="prdordtype" column="PRDORDTYPE" />
+		<result property="biztype" column="BIZTYPE" />
+		<result property="ordstatus" column="ORDSTATUS" />
+		<result property="ordamt" column="ORDAMT" />
+		<result property="payordno" column="PAYORDNO" />
+		<result property="price" column="PRICE" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsNameShort" column="GOODS_NAME_SHORT" />
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="prddate" column="PRDDATE"/>
+		<result property="prdtime" column="PRDTIME" />
+		<result property="payStatus" column="PAYSTATUS" />
+		<result property="terNo" column="TER_NO" />
+		<result property="txAmt" column="TXAMT" />
+		<result property="rate" column="RATE"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payCardNo" column="PAY_CARDNO"/>
+		<result property="issNam" column="ISSNAM"/>
+		<result property="crdNam" column="CRDNAM"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="payTime" column="PAY_TIME"/>
+		<result property="payOrdTime" column="PAYORDTIME"/>
+		<result property="paySignPic" column="PAY_SIGN_PIC"/>
+		<result property="txnSrefNo" column="TXN_SREFNO"/>
+		<result property="inMod" column="INMOD"/>
+		<result property="ttxndt" column="TTXNDT"/>
+		<result property="ttxntm" column="TTXNTM"/>
+		<result property="tmercId" column="TMERCID"/>
+		<result property="ttermId" column="TTERMID"/>
+		<result property="tbatNo" column="TBATNO"/>
+		<result property="tsrefNo" column="TSREFNO"/>
+		<result property="tcpscod" column="TCPSCOD"/>
+		<result property="tautcod" column="TAUTCOD"/>
+		<result property="tlogno" column="TLOGNO"/>
+		<result property="payType" column="PAYTYPE"/>
+		<result property="txnType" column="TXN_TYPE"/>
+	</resultMap>
+	
+	<!-- 业务报表 收款订单 -->
+	<resultMap type="RechargePrdTemplate" id="RechargePrdReportMap">
+		<result property="prdordno" column="PRDORDNO" />
+		<result property="prdordtype" column="PRDORDTYPE" />
+		<result property="biztype" column="BIZTYPE" />
+		<result property="ordstatus" column="ORDSTATUS" />
+		<result property="ordamt" column="ORDAMT" />
+		<result property="payordno" column="PAYORDNO" />
+		<result property="price" column="PRICE" />
+		<result property="goodsName" column="GOODS_NAME" />
+		<result property="goodsNameShort" column="GOODS_NAME_SHORT" />
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="prddate" column="PRDDATE"/>
+		<result property="prdtime" column="PRDTIME" />
+		<result property="payStatus" column="PAYSTATUS" />
+		<result property="terNo" column="TER_NO" />
+		<result property="txAmt" column="TXAMT" />
+		<result property="payType" column="PAYTYPE"/>
+		<result property="rate" column="RATE"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payCardNo" column="PAY_CARDNO"/>
+		<result property="issNam" column="ISSNAM"/>
+		<result property="crdNam" column="CRDNAM"/>
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="payTime" column="PAY_TIME"/>
+		<result property="payOrdTime" column="PAYORDTIME"/>
+		<result property="paySignPic" column="PAY_SIGN_PIC"/>
+		<result property="txnSrefNo" column="TXN_SREFNO"/>
+		<result property="inMod" column="INMOD"/>
+		<result property="ttxndt" column="TTXNDT"/>
+		<result property="ttxntm" column="TTXNTM"/>
+		<result property="tmercId" column="TMERCID"/>
+		<result property="ttermId" column="TTERMID"/>
+		<result property="tbatNo" column="TBATNO"/>
+		<result property="tsrefNo" column="TSREFNO"/>
+		<result property="tcpscod" column="TCPSCOD"/>
+		<result property="tautcod" column="TAUTCOD"/>
+		<result property="tlogno" column="TLOGNO"/>
+		<result property="txnType" column="TXN_TYPE"/>
+		<result property="ordtime" column="ORDTIME" />
+		<result property="agentId" column="AGENT_ID"/>
+		<result property="agentName" column="AGENT_NAME" />
+		<result property="fathRate" column="FATH_RATE"/>
+		<result property="fathAgentId" column="FATH_AGENT_ID" />
+		<result property="fathFee" column="FATH_FEE" />
+	</resultMap>
+	
+	
+	
+
+	<select id="selectEntity" parameterType="PrdInf" resultMap="PrdInfMap">
+		SELECT
+		PRDORDNO,
+		PRDORDTYPE,
+		BIZTYPE,
+		ORDSTATUS ,
+		ORDAMT ,
+		M1.PAYORDNO ,
+		M3.PAYTYPE,
+		PRICE ,
+		GOODS_NAME ,
+		GOODS_NAME_SHORT,
+		M1.CUST_ID ,
+		M2.CUST_NAME ,
+		PRDDATE ,
+		PRDTIME ,
+		ORDTIME ,
+		M1.MODIFY_TIME
+		FROM
+		MPOMNG_PRD_INF M1
+		LEFT JOIN MPOMNG_MOBILE_MER_INF M2 ON (M1.CUST_ID=M2.CUST_ID)
+		LEFT JOIN MPOMNG_PAY_INF M3 ON (M1.PAYORDNO=M3.PAYORDNO)
+		<where>
+			<if test="prdordno != null and prdordno!= ''">
+				PRDORDNO = #{prdordno}
+			</if>
+
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="PrdInf" resultMap="PrdInfMap"
+		databaseId="mysql">
+		SELECT
+		PRDORDNO,
+		PRDORDTYPE,
+		BIZTYPE,
+		ORDSTATUS ,
+		ORDAMT ,
+		M1.PAYORDNO ,
+		PRICE ,
+		GOODS_NAME ,
+		GOODS_NAME_SHORT,
+		M2.CUST_ID ,
+		PRDDATE ,
+		PRDTIME ,
+		ORDTIME ,
+		M1.MODIFY_TIME
+		FROM
+		MPOMNG_PRD_INF M1
+
+		LEFT JOIN MPOMNG_MOBILE_MER_INF M2 ON (M1.CUST_ID=M2.CUST_ID)
+		LEFT JOIN MPOMNG_PAY_INF M3 ON (M1.PAYORDNO=M3.PAYORDNO)
+		<where>
+			<if test="prdordno != null and prdordno!= ''">
+				AND PRDORDNO like concat('%',#{prdordno},'%')
+			</if>
+
+			<if test="biztype != null and biztype!= ''">
+				AND BIZTYPE = #{biztype}
+			</if>
+			<if test="ordstatus != null and ordstatus!= ''">
+				AND ORDSTATUS = #{ordstatus}
+			</if>
+			<if test="ordamt != null and ordamt!= ''">
+				AND ORDAMT = #{ordamt}
+			</if>
+			<if test="payordno != null and payordno!= ''">
+				AND M1.PAYORDNO like concat('%',#{payordno},'%')
+			</if>
+			<if test="price != null and price!= ''">
+				AND PRICE = #{price}
+			</if>
+			<if test="goodsName != null and goodsName!= ''">
+				AND GOODS_NAME like concat('%',#{goodsName},'%')
+			</if>
+			<if test="goodsNameShort != null and goodsNameShort!= ''">
+				AND GOODS_NAME_SHORT like concat('%',#{goodsNameShort},'%')
+			</if>
+			<if test="custId != null and custId!= ''">
+				CUST_ID = #{custId}
+			</if>
+			
+			<if test="startTime != null and startTime != ''">
+			AND M1.PRDDATE >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND M1.PRDDATE <= #{endTime} ]]>
+		</if>
+
+			AND PRDORDTYPE != '01'
+
+		</where>
+		ORDER BY PRDORDNO DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="PrdInf" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		MPOMNG_PRD_INF
+		<where>
+			<if test="prdordno != null and prdordno!= ''">
+				AND PRDORDNO = #{prdordno}
+			</if>
+			AND PRDORDTYPE != '01'
+			<if test="biztype != null and biztype!= ''">
+				AND BIZTYPE = #{biztype}
+			</if> 
+			<if test="ordstatus != null and ordstatus!= ''">
+				AND ORDSTATUS = #{ordstatus}
+			</if>
+			<if test="ordamt != null and ordamt!= ''">
+				AND ORDAMT = #{ordamt}
+			</if>
+			<if test="payordno != null and payordno!= ''">
+				AND PAYORDNO = #{payordno}
+			</if>
+			<if test="price != null and price!= ''">
+				AND PRICE = #{price}
+			</if>
+			<if test="goodsName != null and goodsName!= ''">
+				AND GOODS_NAME = #{goodsName}
+			</if>
+			<if test="goodsNameShort != null and goodsNameShort!= ''">
+				AND GOODS_NAME_SHORT = #{goodsNameShort}
+			</if>
+			<if test="custId != null and custId!= ''">
+				AND CUST_ID = #{custId}
+			</if>
+			<if test="startTime != null and startTime != ''">
+			AND PRDDATE >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+					<![CDATA[ AND PRDDATE <= #{endTime} ]]>
+			</if>
+			</where>
+	</select>
+
+
+	<select id="getCountList" parameterType="PrdInf" resultType="java.util.HashMap">
+		SELECT
+				COUNT(*) count,SUM(ORDAMT) ordamt
+		FROM
+				MPOMNG_PRD_INF
+		<where>
+			<if test="prdordno != null and prdordno!= ''">
+				AND PRDORDNO = #{prdordno}
+			</if>
+			AND PRDORDTYPE != '01'
+			<if test="biztype != null and biztype!= ''">
+				AND BIZTYPE = #{biztype}
+			</if>
+			<if test="ordstatus != null and ordstatus!= ''">
+				AND ORDSTATUS = #{ordstatus}
+			</if>
+			<if test="ordamt != null and ordamt!= ''">
+				AND ORDAMT = #{ordamt}
+			</if>
+			<if test="payordno != null and payordno!= ''">
+				AND PAYORDNO = #{payordno}
+			</if>
+			<if test="price != null and price!= ''">
+				AND PRICE = #{price}
+			</if>
+			<if test="goodsName != null and goodsName!= ''">
+				AND GOODS_NAME = #{goodsName}
+			</if>
+			<if test="goodsNameShort != null and goodsNameShort!= ''">
+				AND GOODS_NAME_SHORT = #{goodsNameShort}
+			</if>
+			<if test="custId != null and custId!= ''">
+				AND CUST_ID = #{custId}
+			</if>
+			<if test="prddate != null and prddate!= ''">
+				AND PRDDATE = #{prddate}
+			</if>
+			<if test="prdtime != null and prdtime!= ''">
+				AND PRDTIME = #{prdtime}
+			</if>
+			<if test="ordtime != null and ordtime!= ''">
+				AND ORDTIME = #{ordtime}
+			</if>
+			<if test="modifyTime != null and modifyTime!= ''">
+				AND MODIFY_TIME = #{modifyTime}
+			</if>
+		</where>
+	</select>
+
+	<!-- 获取收款订单信息sql条件 -->
+	<sql id="WHERE_GetRecharge">
+	    <choose>
+	     <when test="subAgentId != null and subAgentId != ''">  
+       		 	AND AGENT.AGENT_CODE LIKE CONCAT(
+       		 	(SELECT AGENT_CODE FROM MPAMNG_AGENT_INF 
+       		 		WHERE 1=1
+       		 		<if test="subAgentId != null and subAgentId != ''">
+       		 			AND AGENT_ID = '${subAgentId}'
+       		 		</if>
+       		 	)
+       		 	,'%') 
+	        </when>  
+	    </choose>    
+		<if test="prdOrdNo != null and prdOrdNo != ''">
+			AND PRD.PRDORDNO LIKE CONCAT('%',#{prdOrdNo},'%')
+		</if>
+		<if test="custId != null and custId != ''">
+			AND MER.CUST_ID LIKE CONCAT('%',#{custId},'%')
+		</if>
+		<if test="custName != null and custName != ''">
+			AND MER.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+		</if>
+		<if test="payCardNo != null and payCardNo != ''">
+			AND PAY.PAY_CARDNO LIKE CONCAT('%',#{payCardNo},'%')
+		</if>
+		<if test="fathAgentId != null and fathAgentId != ''">
+			AND AGENT.FATH_AGENT_ID LIKE CONCAT('%',#{fathAgentId},'%')
+		</if>
+		<if test="firstAgentId != null and firstAgentId != ''">
+			AND AGENT.FIRST_AGENT_ID LIKE CONCAT('%',#{firstAgentId},'%')
+		</if>
+		<if test="agentId != null and agentId != ''">
+			AND AGENT.AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+		</if>
+		<if test="agentName != null and agentName != ''">
+			AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+		</if>
+		<if test="ordStatus != null and ordStatus != ''">
+			AND PRD.ORDSTATUS = #{ordStatus}
+		</if>
+		<if test="payType != null and payType != ''">
+			AND PAY.PAYTYPE = #{payType}
+		</if>
+		<if test="rateType != null and rateType != ''">
+			AND PAY.RATE_TYPE = #{rateType}
+		</if>
+		<if test="auditStatus != null and auditStatus != ''">
+			AND PAY.AUDIT_STATUS = #{auditStatus}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			AND PRD.PRDDATE >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND PRD.PRDDATE <= #{endTime} ]]>
+		</if>
+		<if test="startTime_audit != null and startTime_audit != ''">
+			AND PAY.AUDIT_TIME >= #{startTime_audit}
+		</if>
+		<if test="endTime_audit != null and endTime_audit != ''">
+				<![CDATA[ AND PAY.AUDIT_TIME <= #{endTime_audit} ]]>
+		</if>
+	</sql>
+<select id="selectPrdDetails" parameterType="java.util.Map" resultMap="PrdInfDetailMap">
+		SELECT
+				T1.PRDORDNO,
+				T1.PRDORDTYPE,
+				T1.BIZTYPE,
+				T1.ORDSTATUS ,
+				T1.ORDAMT ,
+				T1.PAYORDNO ,
+				T3.PAYTYPE,
+				T1.PRICE ,
+				T1.GOODS_NAME ,
+				T1.GOODS_NAME_SHORT,
+				T1.CUST_ID ,
+				T2.CUST_NAME ,
+				T1.PRDDATE,
+				T1.PRDTIME,
+				T1.ORDTIME,
+			    T3.PAYSTATUS,
+			    T3.TER_NO,
+			    T3.TXAMT,
+			    T3.RATE,
+			    T3.RATE_TYPE,
+			    T3.FEE,
+			    T3.NETRECAMT,
+			    T3.PAY_CHANNEL,
+			    T3.PAY_CARDNO,
+			    T3.ISSNAM,
+			    T3.CRDNAM,
+			    T3.PAY_SIGN_PIC,
+			    T3.PAY_DATE,
+			    T3.PAY_TIME,
+			    T4.TXN_SREFNO,
+			    T4.INMOD,
+			    T4.TTXNDT, 
+				T4.TTXNTM, 
+			    T4.TMERCID,
+			    T4.TTERMID,
+			    T4.TBATNO,
+			    T4.TSREFNO,
+			    T4.TCPSCOD,
+			    T4.TAUTCOD,
+			    T4.TLOGNO,
+			    T4.TXN_TYPE,
+			    T4.ERROR_CAUSE,
+			    T3.CARD_SIGN_PIC
+		FROM
+		      MPOMNG_PRD_INF T1
+		      LEFT OUTER JOIN MPOMNG_MOBILE_MER_INF T2 ON (T1.CUST_ID=T2.CUST_ID)
+		      LEFT OUTER JOIN MPOMNG_PAY_INF T3 ON (T1.PAYORDNO=T3.PAYORDNO)
+		      LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (T3.PAYORDNO=T4.PAYORDNO)
+		WHERE
+				PRDORDNO = #{prdordno}
+				
+	</select>
+	<!-- 查询收款订单总条数 -->
+	<select id="getRechargeCount" parameterType="Map" resultType="Integer">
+		SELECT
+				COUNT(1) CNT
+		FROM MPOMNG_PRD_INF PRD 
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO 
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID 
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_NO = PAY.TER_NO 
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID AND AC.TERMINAL_ID=TER.TERMINAL_ID 
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID 
+		LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (PAY.PAYORDNO=T4.PAYORDNO) 
+		LEFT JOIN MPCOOP_COOPORG_MER_INF COOP ON T4.TMERCID = COOP.MER_NO 
+		WHERE PRDORDTYPE='01' AND T4.TXN_TYPE='01'
+		<include refid="WHERE_GetRecharge"/>
+	</select>
+	
+	<!-- 查询收款订单 -->
+	<select id="getRechargeListPage" parameterType="Map" resultMap="RechargeMap" databaseId="mysql">
+		SELECT
+			PRD.PRDORDNO,PRD.PRDORDTYPE,PRD.BIZTYPE,PRD.ORDSTATUS,
+			PRD.ORDAMT,
+			PAY.TXAMT,
+			PAY.FEE,
+			PAY.NETRECAMT,
+			PRD.PAYORDNO,PRD.CUST_ID,PRD.PRDDATE,PRD.PRDTIME,PRD.ORDTIME,
+			PAY.PAYTYPE,PAY.RATE,PAY.PAY_CHANNEL,
+			PAY.PAY_CARDNO,PAY.PAY_DATE,PAY.PAY_TIME,PAY.PAYORDTIME,MER.CUST_NAME,
+			MER.CUST_LOGIN,PAY.RATE_TYPE,PAY.ISSNAM,PAY.CRDNAM,
+			PAY.TER_NO,AGENT.AGENT_ID,AGENT.AGENT_NAME,T4.TCPSCOD,
+			T4.ERROR_CAUSE,
+			TER.RATE_GENERAL_TOP,
+			TER.RATE_GENERAL_MAXIMUN, 	
+			T4.TMERCID FATH_AGENT_ID,
+			T4.TXN_RATE FATH_RATE,
+			T4.TXN_FEE FATH_FEE, 
+			T4.TXN_RATE_TYPE FATH_RATE_TYPE,
+			PAY.AUDIT_STATUS,
+			PAY.AUDIT_TIME
+		FROM MPOMNG_PRD_INF PRD
+			LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+			LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_NO = PAY.TER_NO
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID AND AC.TERMINAL_ID=TER.TERMINAL_ID 
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID
+			LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (PAY.PAYORDNO=T4.PAYORDNO)
+
+		WHERE PRDORDTYPE='01' AND T4.TXN_TYPE='01'
+		<include refid="WHERE_GetRecharge"/>
+		ORDER BY PRD.PRDORDNO DESC
+		<if test="pageSize != null and pageSize != ''">
+			<choose>  
+		        <when test="start != null and start != ''">  
+		           LIMIT #{start},#{pageSize}
+		        </when>  
+		        <otherwise>  
+		            LIMIT #{pageSize}
+		        </otherwise>  
+		    </choose>  
+		</if>
+	</select>
+	
+	<select id="rechargeCount" parameterType="Map" resultType="Map">
+		SELECT 
+			COUNT(1) cntNum,
+			SUM(IFNULL(PRD.ORDAMT,0)) cntOrdAmt,
+			SUM(IFNULL(PAY.FEE,0)) cntFee,
+			SUM(IFNULL(PAY.NETRECAMT,0)) cntNetrecAmt
+		FROM MPOMNG_PRD_INF PRD 
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO 
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID 
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID 
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = AC.TERMINAL_ID 
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID 
+		LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (PAY.PAYORDNO=T4.PAYORDNO) 
+		WHERE PRDORDTYPE='01' AND T4.TXN_TYPE='01'
+		<include refid="WHERE_GetRecharge"/>
+	</select>
+	
+	<select id="rechargeDetails" parameterType="Map" resultMap="RechargeMap">
+		SELECT
+				PRD.PRDORDNO,
+				PRD.PRDORDTYPE,
+				PRD.BIZTYPE,
+				PRD.ORDSTATUS,
+				PRD.ORDAMT,
+				PAY.TXAMT,
+				PAY.FEE,
+				PAY.NETRECAMT,
+				PRD.PAYORDNO,
+				PRD.CUST_ID,
+				PRD.PRDDATE,
+				PRD.PRDTIME,
+				PRD.ORDTIME,
+				PAY.PAYTYPE,
+				PAY.RATE,
+				PAY.PAY_CHANNEL,
+				PAY.PAY_CARDNO,
+				PAY.PAY_DATE,
+				PAY.PAY_TIME,
+				PAY.PAYORDTIME,
+				MER.CUST_NAME,
+				MER.CUST_LOGIN,
+				PAY.RATE_TYPE,
+				PAY.ISSNAM,
+				PAY.CRDNAM,
+				PAY.TER_NO,
+				AGENT.AGENT_ID,
+				AGENT.AGENT_NAME
+		FROM 
+				MPOMNG_PRD_INF PRD 
+				LEFT JOIN MPOMNG_PAY_INF PAY ON (PRD.PAYORDNO = PAY.PAYORDNO)
+				LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON (MER.CUST_ID = PRD.CUST_ID)
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID 
+				LEFT JOIN MPAMNG_TERMINAL_INF TER ON (TER.TERMINAL_SEQ = PAY.TER_NO)
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON (AGENT.AGENT_ID = AC.AGE_ID)
+		WHERE 
+				PRD.PRDORDNO = #{prdOrdNo}
+	</select>
+	
+	<!-- 获取收款订单信息sql条件 -->
+	<sql id="WHERE_AgentPrdInf">
+		<if test="prdOrdType != null and prdOrdType != ''">
+			AND PRD.PRDORDTYPE=#{prdOrdType}
+		</if>
+		<choose>
+	        <when test="containsSubset != null and containsSubset != ''">  
+       		 	AND AGENT.AGENT_CODE LIKE CONCAT(
+       		 	(SELECT AGENT_CODE FROM MPAMNG_AGENT_INF 
+       		 		WHERE 1=1
+       		 		<if test="subAgentId != null and subAgentId != ''">
+       		 			AND AGENT_ID = '${subAgentId}'
+       		 		</if>
+       		 		<if test="subAgentName != null and subAgentName != ''">
+       		 			AND AGENT_NAME= '${subAgentName}'
+       		 		</if>
+       		 		<if test="(subAgentId == null or subAgentId == '') and (subAgentName == null or subAgentName == '')">
+       		 			AND AGENT_ID = '${agentId}'
+       		 		</if>
+       		 	)
+       		 	,'%') 
+	        </when>  
+	        <otherwise> 
+	        	<if test="subAgentId != null and subAgentId != ''">
+   		 			AND AGENT.AGENT_ID LIKE CONCAT('%','${subAgentId}','%')
+   		 		</if>
+   		 		<if test="subAgentName != null and subAgentName != ''">
+   		 			AND AGENT.AGENT_NAME LIKE CONCAT('%','${subAgentName}','%')
+   		 		</if>
+	        	<if test="(subAgentId == null or subAgentId == '') and (subAgentName == null or subAgentName == '')">
+   		 			AND AGENT.AGENT_ID = '${agentId}'
+   		 		</if>
+   		 	
+	        </otherwise>  
+	   	 </choose>  
+		
+		<if test="prdOrdNo != null and prdOrdNo != ''">
+			AND PRD.PRDORDNO LIKE CONCAT('%',#{prdOrdNo},'%')
+		</if>
+		<if test="custId != null and custId != ''">
+			AND MER.CUST_ID LIKE CONCAT('%',#{custId},'%')
+		</if>
+		<if test="custName != null and custName != ''">
+			AND MER.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+		</if>
+		<if test="payCardNo != null and payCardNo != ''">
+			AND PAY.PAY_CARDNO LIKE CONCAT('%',#{payCardNo},'%')
+		</if>
+		
+		<if test="agentName != null and agentName != ''">
+			AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+		</if>
+		<if test="ordStatus != null and ordStatus != ''">
+			AND PRD.ORDSTATUS = #{ordStatus}
+		</if>
+		<if test="payType != null and payType != ''">
+			AND PAY.PAYTYPE = #{payType}
+		</if>
+		<if test="rateType != null and rateType != ''">
+			AND PAY.RATE_TYPE = #{rateType}
+		</if>
+		<if test="prdDateStart != null and prdDateStart != ''">
+			AND PRD.PRDDATE >= #{prdDateStart}
+		</if>
+		<if test="prdDateEnd != null and prdDateEnd != ''">
+				<![CDATA[ AND PRD.PRDDATE <= #{prdDateEnd} ]]>
+		</if>
+	</sql>
+	
+	<select id="getAgentPrdCount" parameterType="Map" resultType="Integer">
+		SELECT
+		COUNT(1) CNT
+		FROM MPOMNG_PRD_INF PRD
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = AC.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID
+		WHERE AGENT.AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%')
+		<include refid="WHERE_AgentPrdInf"/>
+	</select>
+	
+	<select id="getAgentPrdList" parameterType="Map" resultMap="AgentPrdMap" databaseId="mysql">
+		SELECT
+		PRD.PRDORDNO,PRD.PRDORDTYPE,PRD.BIZTYPE,PRD.ORDSTATUS,
+		PRD.ORDAMT,
+		PAY.TXAMT,
+		PAY.FEE,
+		PAY.NETRECAMT,
+		PRD.PAYORDNO,PRD.CUST_ID,PRD.PRDDATE,PRD.PRDTIME,PRD.ORDTIME,
+		PAY.PAYTYPE,PAY.RATE,PAY.PAY_CHANNEL,
+		shieldCardNo(PAY.PAY_CARDNO) PAY_CARDzheNO,PAY.PAY_DATE,PAY.PAY_TIME,PAY.PAYORDTIME,MER.CUST_NAME,
+		MER.CUST_LOGIN,PAY.RATE_TYPE,PAY.ISSNAM,PAY.CRDNAM,
+		PAY.TER_NO,AGENT.AGENT_ID,AGENT.AGENT_NAME
+		FROM MPOMNG_PRD_INF PRD
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = AC.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID
+		WHERE AGENT.AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%')
+		<include refid="WHERE_AgentPrdInf"/>
+		ORDER BY PRD.PRDORDNO DESC
+		<if test="pageSize != null and pageSize != ''">
+			<choose>  
+		        <when test="start != null and start != ''">  
+		           LIMIT #{start},#{pageSize}
+		        </when>  
+		        <otherwise>  
+		            LIMIT #{pageSize}
+		        </otherwise>  
+		    </choose>  
+		</if>
+	</select>
+	
+	<select id="prmPrdCount" parameterType="Map" resultType="Map">
+		SELECT 
+			COUNT(1) cntNum,
+			SUM(IFNULL(PRD.ORDAMT,0)) cntOrdAmt,
+			SUM(IFNULL(PAY.FEE,0)) cntFee,
+			SUM(IFNULL(PAY.NETRECAMT,0)) cntNetrecAmt
+		FROM MPOMNG_PRD_INF PRD
+		 LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = AC.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID
+		WHERE AGENT.AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%')
+		<include refid="WHERE_AgentPrdInf"/>
+	</select>
+	
+	<select id="prmPrdDetails" parameterType="Map" resultMap="RechargeMap">
+		SELECT
+		PRD.PRDORDNO,PRD.PRDORDTYPE,PRD.BIZTYPE,PRD.ORDSTATUS,
+		PRD.ORDAMT,
+		PAY.TXAMT,
+		PAY.FEE,
+		PAY.NETRECAMT,
+		PRD.PAYORDNO,PRD.CUST_ID,PRD.PRDDATE,PRD.PRDTIME,PRD.ORDTIME,
+		PAY.PAYTYPE,PAY.RATE,PAY.PAY_CHANNEL,
+		shieldCardNo(PAY.PAY_CARDNO) PAY_CARDNO,PAY.PAY_DATE,PAY.PAY_TIME,PAY.PAYORDTIME,MER.CUST_NAME,
+		MER.CUST_LOGIN,PAY.RATE_TYPE,PAY.ISSNAM,PAY.CRDNAM,
+		PAY.TER_NO,AGENT.AGENT_ID,AGENT.AGENT_NAME
+		FROM MPOMNG_PRD_INF PRD
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = AC.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = AC.AGE_ID
+		WHERE PRD.PRDORDNO = #{prdOrdNo}
+		AND AGENT.AGENT_CODE LIKE CONCAT((SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%')
+	</select>
+	
+	<!-- 业务报表 商品订单 -->
+	<select id="selectPrdReport" parameterType="java.util.Map" resultMap="PrdReportMap">
+		SELECT
+				T1.PRDORDNO,
+				T1.PRDORDTYPE,
+				T1.BIZTYPE,
+				T1.ORDSTATUS ,
+				T1.ORDAMT ,
+				T1.PAYORDNO ,
+				T3.PAYTYPE,
+				T1.PRICE ,
+				T1.GOODS_NAME ,
+				T1.GOODS_NAME_SHORT,
+				T1.CUST_ID ,
+				T2.CUST_NAME ,
+				T1.PRDDATE,
+				T1.PRDTIME,
+			    T3.PAYSTATUS,
+			    T3.TER_NO,
+			    T3.TXAMT,
+			    T3.RATE,
+			    T3.RATE_TYPE,
+			    T3.FEE,
+			    T3.NETRECAMT,
+			    T3.PAY_CHANNEL,
+			    T3.PAY_CARDNO,
+			    T3.ISSNAM,
+			    T3.CRDNAM,
+			    T3.PAY_SIGN_PIC,
+			    T3.PAY_DATE,
+			    T3.PAY_TIME,
+			    T4.TXN_SREFNO,
+			    T4.INMOD,
+			    T4.TTXNDT, 
+				T4.TTXNTM, 
+			    T4.TMERCID,
+			    T4.TTERMID,
+			    T4.TBATNO,
+			    T4.TSREFNO,
+			    T4.TCPSCOD,
+			    T4.TAUTCOD,
+			    T4.TLOGNO,
+			    T4.TXN_TYPE
+		FROM
+		      MPOMNG_PRD_INF T1
+		      LEFT OUTER JOIN MPOMNG_MOBILE_MER_INF T2 ON (T1.CUST_ID=T2.CUST_ID)
+		      LEFT OUTER JOIN MPOMNG_PAY_INF T3 ON (T1.PAYORDNO=T3.PAYORDNO)
+		      LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (T3.PAYORDNO=T4.PAYORDNO)
+		<where>
+			<if test="prdordno != null and prdordno!= ''">
+				AND PRDORDNO like concat('%',#{prdordno},'%')
+			</if>
+
+			<if test="ordstatus != null and ordstatus!= ''">
+				AND ORDSTATUS = #{ordstatus}
+			</if>
+			<if test="payordno != null and payordno!= ''">
+				AND M1.PAYORDNO like concat('%',#{payordno},'%')
+			</if>
+			
+			<if test="goodsName != null and goodsName!= ''">
+				AND GOODS_NAME like concat('%',#{goodsName},'%')
+			</if>
+			<if test="goodsNameShort != null and goodsNameShort!= ''">
+				AND GOODS_NAME_SHORT like concat('%',#{goodsNameShort},'%')
+			</if>
+			
+			<if test="startTime != null and startTime!= ''">
+				AND T1.PRDDATE >=#{startTime}
+			</if>
+			
+			<if test="endTime != null and endTime!= ''">
+				<![CDATA[ AND T1.PRDDATE <= #{endTime} ]]>
+			</if>
+		
+			AND PRDORDTYPE != '01'
+
+		</where>
+		ORDER BY PRDORDNO DESC 
+	</select>
+	
+	<!-- 业务报表 收款订单 -->
+	<select id="selectRechargePrdReport" parameterType="java.util.Map" resultMap="RechargePrdReportMap">
+		SELECT
+				T1.PRDORDNO,
+				T1.PRDORDTYPE,
+				IFNULL(T1.BIZTYPE,'02') AS BIZTYPE,
+				T1.ORDSTATUS ,
+				T1.ORDAMT ,
+				T1.PAYORDNO ,
+				T3.PAYTYPE,
+				T1.PRICE ,
+				T1.GOODS_NAME ,
+				T1.GOODS_NAME_SHORT,
+				T1.CUST_ID ,
+				T2.CUST_NAME ,
+				T1.PRDDATE,
+				T1.PRDTIME,
+				T1.ORDTIME,
+			    T3.PAYSTATUS,
+			    T3.TER_NO,
+			    T3.TXAMT,
+			    T3.RATE,
+			    T3.RATE_TYPE,
+			    T3.FEE,
+			    T3.NETRECAMT,
+			    T3.PAY_CHANNEL,
+			    T3.PAY_CARDNO,
+			    T3.ISSNAM,
+			    T3.CRDNAM,
+			    T3.PAY_SIGN_PIC,
+			    T3.PAY_DATE,
+			    T3.PAY_TIME,
+			    T4.TXN_SREFNO,
+			    T4.INMOD,
+			    T4.TTXNDT, 
+				T4.TTXNTM, 
+			    T4.TMERCID,
+			    T4.TTERMID,
+			    T4.TBATNO,
+			    T4.TSREFNO,
+			    T4.TCPSCOD,
+			    T4.TAUTCOD,
+			    T4.TLOGNO,
+			    IFNULL(T4.TXN_TYPE ,'01') AS TXN_TYPE,
+			    T3.PAY_CARDNO,
+			    AGENT.AGENT_ID,
+        		AGENT.AGENT_NAME,
+        		COOP.RATE_T0 FATH_RATE, 
+			    AGENT.FATH_AGENT_ID, 
+			    T1.ORDAMT * COOP.RATE_T0 FATH_FEE
+		FROM
+		      MPOMNG_PRD_INF T1
+		      LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACREF ON ACREF.CUST_ID = T1.CUST_ID
+			  LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+			  LEFT JOIN MPCOOP_COOPORG_MER_INF COOP ON AGENT.FATH_AGENT_ID = COOP.MER_NO 
+		      LEFT OUTER JOIN MPOMNG_MOBILE_MER_INF T2 ON (T1.CUST_ID=T2.CUST_ID)
+		      LEFT OUTER JOIN MPOMNG_PAY_INF T3 ON (T1.PAYORDNO=T3.PAYORDNO)
+		      LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF T4 ON (T3.PAYORDNO=T4.PAYORDNO)
+		<where>
+			<if test="prdOrdNo != null and prdOrdNo!= ''">
+				AND PRDORDNO like concat('%',#{prdOrdNo},'%')
+			</if>
+
+			<if test="ordStatus != null and ordStatus!= ''">
+				AND ORDSTATUS = #{ordStatus}
+			</if>
+			<if test="payCardNo != null and payCardNo!= ''">
+				AND PAY_CARDNO = #{payCardNo}
+			</if>
+			<if test="custId != null and custId!= ''">
+				CUST_ID = #{custId}
+			</if>
+			<if test="custName != null and custName!= ''">
+				CUST_NAME = #{custName}
+			</if>
+			<if test="startTime != null and startTime!= ''">
+				AND T1.ORDTIME >=#{startTime}
+			</if>
+			
+			<if test="endTime != null and endTime!= ''">
+			<![CDATA[ AND T1.ORDTIME <= #{endTime} ]]>
+			</if>
+			<if test="payType != null and payType!= ''">
+				AND T3.PAYTYPE = #{payType}
+			</if>
+			AND ORDSTATUS !='00'
+			AND PRDORDTYPE = '01'
+		</where>
+		ORDER BY PRDORDNO DESC 
+	</select>
+	
+	<!-- wuhanfeng 20160225 add: update payinf status -->
+	<update id = "updateStatus" parameterType="PayInf">
+		UPDATE 
+			MPOMNG_PAY_INF
+		<set>
+			<if test="auditIdea != null and auditIdea!= ''">
+					 AUDIT_IDEA = #{auditIdea},
+			</if>
+			<if test="auditStatus != null and auditStatus!= ''">
+					 AUDIT_STATUS = #{auditStatus},
+			</if> 
+			<if test="cardSignPic != null and cardSignPic!= ''">
+					 CARD_SIGN_PIC = #{cardSignPic},
+			</if> 
+			<if test="auditTime != null and auditTime!= ''">
+					 AUDIT_TIME = #{auditTime}
+			</if> 
+		</set>
+		<where> 
+			PAYORDNO = #{payordno}
+		</where>
+	</update>
+	<select id ="selectStatus" parameterType="PayInf" resultMap="RechargeMap">
+		select AUDIT_STATUS from  
+			MPOMNG_PAY_INF where 
+			PAYORDNO = #{payordno}
+	</select>
+	
+</mapper>

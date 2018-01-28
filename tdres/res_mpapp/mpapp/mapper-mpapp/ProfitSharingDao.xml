@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.ProfitSharingDao">
+	<resultMap type="java.util.Map" id="profitsharingMap">
+	    <result property="sharDate"               column="SHAR_DATE" /> 
+	    <result property="agentId"               column="AGENT_ID" /> 
+	    <result property="payno"               column="PAYNO" /> 
+	    <result property="payamt"               column="PAYAMT" /> 
+	    <result property="payRate"               column="PAY_RATE" /> 
+	    <result property="payFee"               column="PAY_FEE" /> 
+	    <result property="sharamt"               column="SHARAMT" /> 
+	    <result property="agentRate"               column="AGENT_RATE" /> 
+	    <result property="agentFee"               column="AGENT_FEE" /> 
+	    <result property="agentDgr"               column="AGENT_DGR" /> 
+	    <result property="fathAgentId"               column="FATH_AGENT_ID" /> 
+	    <result property="firstAgentId"               column="FIRST_AGENT_ID" /> 
+	    <result property="sharTime"               column="SHAR_TIME" /> 
+	</resultMap>
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_PROFITSHARING_INF(
+			SHAR_DATE,
+			AGENT_ID,
+			PAYNO,
+			PAYAMT,
+			PAY_RATE,
+			PAY_FEE,
+			SHARAMT,
+			AGENT_RATE,
+			AGENT_FEE,
+			AGENT_DGR,
+			FATH_AGENT_ID,
+			FIRST_AGENT_ID,
+			SHAR_TIME,
+			PAY_TYPE
+		)
+		VALUES
+			(
+				#{sharDate,jdbcType=VARCHAR},
+				#{agentId,jdbcType=VARCHAR},
+				#{payno,jdbcType=VARCHAR},
+				#{payamt,jdbcType=VARCHAR},
+				#{payRate,jdbcType=VARCHAR},
+				#{payFee,jdbcType=VARCHAR},
+				#{sharamt,jdbcType=VARCHAR},
+				#{agentRate,jdbcType=VARCHAR},
+				#{agentFee,jdbcType=VARCHAR},
+				#{agentDgr,jdbcType=VARCHAR},
+				#{fathAgentId,jdbcType=VARCHAR},
+				#{firstAgentId,jdbcType=VARCHAR},
+				#{sharTime,jdbcType=VARCHAR},
+				#{payType,jdbcType=VARCHAR}
+			)
+	</insert>
+	
+	<delete id="deleteEntity" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_PROFITSHARING_INF WHERE AGENT_ID = #{agentId} AND PAYNO = #{payno}
+	</delete>
+</mapper>

@@ -1,0 +1,79 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpsms/messageTemplateAdd/add.do" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+		<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 短信模版类型： </label>
+		<div class="col-sm-9">
+
+			<div class="search_input" >
+			    <select 
+					rel="obj.MESSAGECODE"
+		 			location="local" 
+					name="messageCode" 
+		 			id="add_messageCode" 
+		 			data-placeholder="请选择短信模版类型" style="width: 100px;vertical-align:middle;">
+				<option value='' >--请选择--</option>
+		 		</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"
+				for="form-field-1"> 短信模版内容： </label>
+		<div class="col-sm-9">	
+				  <textarea id="messageContent" name="messageContent"  cols="55"  
+				  rows="9" maxlength="70" ></textarea>
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+});
+
+function submitForm(obj){
+	var cardType=$("#add_messageCode option:selected").val();
+	var messageContent=$("#messageContent").val();
+	if(cardType==''){
+		alertMsg.error('请选择短信模版类型'); 
+		return false;
+	}
+	if( messageContent==''){
+		alertMsg.error('请输入短信模板内容'); 
+		return false;
+	}
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg , 'error');
+		}
+	});
+}
+
+</script>

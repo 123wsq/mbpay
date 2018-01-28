@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.PayInfDao">
+	<resultMap type="PayInf" id="PayInfMap">
+		    <result property="payordno"               column="PAYORDNO" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		     <result property="custName"               column="CUST_NAME" /> 
+		    <result property="paystatus"               column="PAYSTATUS" /> 
+		    <result property="payordtype"               column="PAYORDTYPE" /> 
+		    <result property="paytype"               column="PAYTYPE" /> 
+		    <result property="txamt"               column="TXAMT" /> 
+		    <result property="rate"               column="RATE" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="netrecamt"         column="NETRECAMT" /> 
+		    <result property="payChannel"               column="PAY_CHANNEL" /> 
+		    <result property="payDate"               column="PAY_DATE" /> 
+		    <result property="payTime"               column="PAY_TIME" /> 
+		     <result property="payordtime"               column="PAYORDTIME" /> 
+		    <result property="modifyTime"               column="MODIFY_TIME" /> 
+		     <result property="agentId"               column="AGENT_ID" /> 
+		     <result property="agentName"               column="AGENT_NAME" /> 
+		     <result property="terminalSeq"               column="TERMINAL_SEQ" /> 
+		     <result property="bankpayacno"               column="BANKPAYACNO" /> 
+		     <result property="bankcode"               column="BANKCODE" /> 
+	</resultMap>
+
+	<select id="selectEntity" parameterType="PayInf" resultMap="PayInfMap">
+		SELECT
+	M1.PAYORDNO,
+	M1.CUST_ID,
+	T1.CUST_NAME,
+	T1.AGENT_ID,
+	T1.AGENT_NAME,
+	T1.BANKPAYACNO,
+	T1.BANKCODE,
+	T1.TERMINAL_SEQ,
+  M1.PAYSTATUS,
+	M1.PAYORDTYPE,
+	M1.PAYTYPE,
+	M1.TXAMT,
+	M1.RATE,
+	M1.FEE,
+	M1.NETRECAMT,
+	M1.PAY_CHANNEL,
+	M1.PAY_DATE,
+	M1.PAY_TIME,
+	M1.PAYORDTIME,
+	M1.MODIFY_TIME
+FROM
+	MPOMNG_PAY_INF M1
+LEFT JOIN (
+	SELECT
+		M2.TERMINAL_SEQ,
+		M4.CUST_ID,
+		M4.CUST_NAME,
+		M3.AGENT_ID,
+		M3.AGENT_NAME,
+		M3.BANKPAYACNO,
+		M3.BANKCODE
+	FROM
+		MPAMNG_TERMINAL_INF M2
+	LEFT JOIN MPAMNG_AGENT_INF M3 ON M2.AGENT_ID = M3.AGENT_ID
+	LEFT JOIN MPOMNG_MOBILE_MER_INF M4 ON M2.CUST_ID = M4.CUST_ID
+) T1 ON M1.CUST_ID = T1.CUST_ID
+		<where>
+		
+		 <if test="payordno != null and payordno!= ''">
+					AND PAYORDNO =  #{payordno}
+				</if>
+		       <if test="custId != null and custId!= ''">
+					AND M1.CUST_ID =  #{custId}
+				</if> 
+		        <if test="paystatus != null and paystatus!= ''">
+					AND	PAYSTATUS =  #{paystatus}
+				</if>
+		        <if test="payordtype != null and payordtype!= ''">
+					AND	PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype != null and paytype!= ''">
+					AND	PAYTYPE =  #{paytype}
+				</if>
+		        <if test="txamt != null and txamt!= ''">
+					AND	TXAMT =  #{txamt}
+				</if>
+		        <if test="rate != null and rate!= ''">
+					AND	RATE =  #{rate}
+				</if>
+		        <if test="fee != null and fee!= ''">
+					AND	FEE =  #{fee}
+				</if>
+				<if test="netrecamt != null and netrecamt!= ''">
+					AND	NETRECAMT =  #{netrecamt}
+				</if>
+				
+				<if test="payChannel != null and payChannel!= ''">
+					AND	PAY_CHANNEL =  #{payChannel}
+				</if>
+				<if test="payDate != null and payDate!= ''">
+					AND	PAY_DATE =  #{payDate}
+				</if>
+				<if test="payordtime != null and payordtime!= ''">
+					AND	PAYORDTIME =  #{payordtime}
+				</if>
+				<if test="payTime != null and payTime!= ''">
+					AND	PAY_TIME =  #{payTime}
+				</if>
+				<if test="modifyTime != null and modifyTime!= ''">
+					AND	MODIFY_TIME =  #{modifyTime}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="PayInf" resultMap="PayInfMap" databaseId="mysql">
+		SELECT
+	M1.PAYORDNO,
+	M1.CUST_ID,
+	T1.CUST_NAME,
+	T1.AGENT_ID,
+	T1.AGENT_NAME,
+	T1.BANKPAYACNO,
+	T1.BANKCODE,
+	T1.TERMINAL_SEQ,
+  M1.PAYSTATUS,
+	M1.PAYORDTYPE,
+	M1.PAYTYPE,
+	M1.TXAMT,
+	M1.RATE,
+	M1.FEE,
+	M1.NETRECAMT,
+	M1.PAY_CHANNEL,
+	M1.PAY_DATE,
+	M1.PAY_TIME,
+	M1.PAYORDTIME,
+	M1.MODIFY_TIME
+FROM
+	MPOMNG_PAY_INF M1
+LEFT JOIN (
+	SELECT
+		M2.TERMINAL_SEQ,
+		M4.CUST_ID,
+		M4.CUST_NAME,
+		M3.AGENT_ID,
+		M3.AGENT_NAME,
+		M3.BANKPAYACNO,
+		M3.BANKCODE
+	FROM
+		MPAMNG_TERMINAL_INF M2
+	LEFT JOIN MPAMNG_AGENT_INF M3 ON M2.AGENT_ID = M3.AGENT_ID
+	LEFT JOIN MPOMNG_MOBILE_MER_INF M4 ON M2.CUST_ID = M4.CUST_ID
+) T1 ON M1.CUST_ID = T1.CUST_ID
+		<where>
+		         <if test="payordno != null and payordno!= ''">
+						AND PAYORDNO like concat('%',#{payordno},'%')  
+				</if>
+		      <if test="custId != null and custId!= ''">
+					AND	M1.CUST_ID like concat('%',#{custId},'%')   
+				</if>
+				  <if test="agentId != null and agentId!= ''">
+					AND	T1.AGENT_ID like concat('%',#{agentId},'%')   
+				</if>
+				 <if test="bankpayacno != null and bankpayacno!= ''">
+					AND	T1.BANKPAYACNO like concat('%',#{bankpayacno},'%')   
+				</if>
+				
+				<if test="bankcode != null and bankcode!= ''">
+					AND	T1.BANKCODE like concat('%',#{bankcode},'%')   
+				</if>
+				 <if test="custName != null and custName!= ''">
+					AND	T1.CUST_NAME like concat('%',#{custName},'%')   
+				</if>
+		        <if test="paystatus != null and paystatus!= ''">
+					AND	M1.PAYSTATUS = #{paystatus}
+				</if>
+		        <if test="payordtype != null and payordtype!= ''">
+					AND	PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype != null and paytype!= ''">
+					AND	PAYTYPE like concat ('%',#{paytype},'%') 
+				</if>
+		        <if test="txamt != null and txamt!= ''">
+					AND	TXAMT =  #{txamt}
+				</if>
+		        <if test="rate != null and rate!= ''">
+					AND	RATE =  #{rate}
+				</if>
+		        <if test="fee != null and fee!= ''">
+					AND	FEE =  #{fee}
+				</if>
+				<if test="netrecamt != null and netrecamt!= ''">
+					AND	NETRECAMT =  #{netrecamt}
+				</if>
+				
+				<if test="payChannel != null and payChannel!= ''">
+					AND	PAY_CHANNEL =  #{payChannel}
+				</if>
+				<if test="payordtime != null and payordtime!= ''">
+					AND	PAYORDTIME =  #{payordtime}
+				</if>
+				<if test="payDate != null and payDate!= ''">
+					AND	PAY_DATE =  #{payDate}
+				</if>
+				<if test="payTime != null and payTime!= ''">
+					AND	PAY_TIME =  #{payTime}
+				</if>
+				<if test="modifyTime != null and modifyTime!= ''">
+					AND	MODIFY_TIME =  #{modifyTime}
+				</if>
+		</where>
+		 ORDER BY PAYORDNO  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="PayInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPOMNG_PAY_INF M1
+				 LEFT JOIN 
+             (
+            SELECT
+		M2.TERMINAL_SEQ,
+		M4.CUST_ID,
+		M4.CUST_NAME,
+		M3.AGENT_ID,
+		M3.AGENT_NAME,
+		M3.BANKPAYACNO,
+		M3.BANKCODE
+	FROM
+		MPAMNG_TERMINAL_INF M2
+	LEFT JOIN MPAMNG_AGENT_INF M3 ON M2.AGENT_ID = M3.AGENT_ID
+	LEFT JOIN MPOMNG_MOBILE_MER_INF M4 ON M2.CUST_ID = M4.CUST_ID
+                             ) T1
+              ON M1.CUST_ID = T1.CUST_ID
+		<where>
+		         <if test="payordno != null and payordno!= ''">
+						AND PAYORDNO like concat('%',#{payordno},'%')  
+				</if>
+		      <if test="custId != null and custId!= ''">
+					AND	M1.CUST_ID like concat('%',#{custId},'%')   
+				</if>
+				  <if test="agentId != null and agentId!= ''">
+					AND	T1.AGENT_ID like concat('%',#{agentId},'%')   
+				</if>
+				 <if test="bankpayacno != null and bankpayacno!= ''">
+					AND	T1.BANKPAYACNO like concat('%',#{bankpayacno},'%')   
+				</if>
+				
+				<if test="bankcode != null and bankcode!= ''">
+					AND	T1.BANKCODE like concat('%',#{bankcode},'%')   
+				</if>
+				 <if test="custName != null and custName!= ''">
+					AND	T1.CUST_NAME like concat('%',#{custName},'%')   
+				</if>
+		        <if test="paystatus != null and paystatus!= ''">
+					AND	M1.PAYSTATUS  = #{paystatus}
+				</if>
+		        <if test="payordtype != null and payordtype!= ''">
+					AND	PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype != null and paytype!= ''">
+					AND	PAYTYPE like concat ('%',#{paytype},'%') 
+				</if>
+		        <if test="txamt != null and txamt!= ''">
+					AND	TXAMT =  #{txamt}
+				</if>
+		        <if test="rate != null and rate!= ''">
+					AND	RATE =  #{rate}
+				</if>
+		        <if test="fee != null and fee!= ''">
+					AND	FEE =  #{fee}
+				</if>
+				<if test="netrecamt != null and netrecamt!= ''">
+					AND	NETRECAMT =  #{netrecamt}
+				</if>
+				
+				<if test="payChannel != null and payChannel!= ''">
+					AND	PAY_CHANNEL =  #{payChannel}
+				</if>
+				<if test="payordtime != null and payordtime!= ''">
+					AND	PAYORDTIME =  #{payordtime}
+				</if>
+				<if test="payDate != null and payDate!= ''">
+					AND	PAY_DATE =  #{payDate}
+				</if>
+				<if test="payTime != null and payTime!= ''">
+					AND	PAY_TIME =  #{payTime}
+				</if>
+				<if test="modifyTime != null and modifyTime!= ''">
+					AND	MODIFY_TIME =  #{modifyTime}
+				</if>
+		</where>
+	</select>
+	<select id="getCountList" parameterType="PayInf" resultType="java.util.HashMap">
+		SELECT 
+	COUNT(*) count,
+	SUM(M1.TXAMT) txamt,
+	SUM(M1.FEE) fee,
+	M1.PAYORDNO,
+	M1.CUST_ID,
+	T1.CUST_NAME,
+	T1.AGENT_ID,
+	T1.AGENT_NAME,
+	T1.BANKPAYACNO,
+	T1.BANKCODE,
+	T1.TERMINAL_SEQ,
+    M1.PAYSTATUS,
+	M1.PAYORDTYPE,
+	M1.PAYTYPE,
+	M1.TXAMT,
+	M1.RATE,
+	M1.FEE,
+	M1.NETRECAMT,
+	M1.PAY_CHANNEL,
+	M1.PAY_DATE,
+	M1.PAY_TIME,
+	M1.PAYORDTIME,
+	M1.MODIFY_TIME
+				
+		FROM 
+				MPOMNG_PAY_INF M1
+				 LEFT JOIN 
+             (
+            SELECT
+		M2.TERMINAL_SEQ,
+		M4.CUST_ID,
+		M4.CUST_NAME,
+		M3.AGENT_ID,
+		M3.AGENT_NAME,
+		M3.BANKPAYACNO,
+		M3.BANKCODE
+	FROM
+		MPAMNG_TERMINAL_INF M2
+	LEFT JOIN MPAMNG_AGENT_INF M3 ON M2.AGENT_ID = M3.AGENT_ID
+	LEFT JOIN MPOMNG_MOBILE_MER_INF M4 ON M2.CUST_ID = M4.CUST_ID
+                             ) T1
+              ON M1.CUST_ID = T1.CUST_ID
+				<where>
+		         <if test="payordno != null and payordno!= ''">
+						AND PAYORDNO like concat('%',#{payordno},'%')  
+				</if>
+		      <if test="custId != null and custId!= ''">
+					AND	M1.CUST_ID like concat('%',#{custId},'%')   
+				</if>
+				  <if test="agentId != null and agentId!= ''">
+					AND	T1.AGENT_ID like concat('%',#{agentId},'%')   
+				</if>
+				 <if test="bankpayacno != null and bankpayacno!= ''">
+					AND	T1.BANKPAYACNO like concat('%',#{bankpayacno},'%')   
+				</if>
+				
+				<if test="bankcode != null and bankcode!= ''">
+					AND	T1.BANKCODE like concat('%',#{bankcode},'%')   
+				</if>
+				 <if test="custName != null and custName!= ''">
+					AND	T1.CUST_NAME like concat('%',#{custName},'%')   
+				</if>
+		        <if test="paystatus != null and paystatus!= ''">
+					AND	M1.PAYSTATUS = #{paystatus}
+				</if>
+		        <if test="payordtype != null and payordtype!= ''">
+					AND	PAYORDTYPE =  #{payordtype}
+				</if>
+		        <if test="paytype != null and paytype!= ''">
+					AND	PAYTYPE like concat ('%',#{paytype},'%') 
+				</if>
+		        <if test="txamt != null and txamt!= ''">
+					AND	TXAMT =  #{txamt}
+				</if>
+		        <if test="rate != null and rate!= ''">
+					AND	RATE =  #{rate}
+				</if>
+		        <if test="fee != null and fee!= ''">
+					AND	FEE =  #{fee}
+				</if>
+				<if test="netrecamt != null and netrecamt!= ''">
+					AND	NETRECAMT =  #{netrecamt}
+				</if>
+				
+				<if test="payChannel != null and payChannel!= ''">
+					AND	PAY_CHANNEL =  #{payChannel}
+				</if>
+				<if test="payordtime != null and payordtime!= ''">
+					AND	PAYORDTIME =  #{payordtime}
+				</if>
+				<if test="payDate != null and payDate!= ''">
+					AND	PAY_DATE =  #{payDate}
+				</if>
+				<if test="payTime != null and payTime!= ''">
+					AND	PAY_TIME =  #{payTime}
+				</if>
+				<if test="modifyTime != null and modifyTime!= ''">
+					AND	MODIFY_TIME =  #{modifyTime}
+				</if>
+		</where>
+	</select>
+	
+	
+	
+	
+</mapper>

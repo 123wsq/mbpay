@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+
+<div class="search_panel">
+<form action="" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						<!--  
+							<div class="table-from">
+							<input id="userId" name="userId" class="search-input" type="text" autocomplete="off" placeholder="操作员账号 ...">
+							<i class="ace-icon fa fa-search glyphicon-search"></i>
+							</div>-->
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户名称:</label>
+							<div class="search_input">
+								<input id="custName" type="text" name="custName"
+									placeholder="请输入商户名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input id="custId" type="text" name="custId"
+									placeholder="请输入商户编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">证件号码:</label>
+							<div class="search_input">
+								<input id="certificateNo" type="text" name="certificateNo"
+									placeholder="请输入证件号码">
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px;margin-right: 15px;width: 260px;">
+						    <label class="label_search">注册时间:</label>
+							<div class="input-group">
+								<input type="text" class="form-control date-picker" name="startTime" data-date-format="yyyy-mm-dd" placeholder="起始日期" />
+								<span class="input-group-addon">
+									<i class="fa fa-exchange"></i>
+								</span>
+								<input type="text" class="form-control date-picker" name="endTime" data-date-format="yyyy-mm-dd" placeholder="结束日期" />
+							</div>
+
+							<!-- /section:plugins/date-time.datepicker -->
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px;width: 200px">
+							<label class="label_search" for="userName">认证状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.CUSTSTATUS"
+						 			 location="local" 
+									 name="custStatus" 
+						 			id="custStatus"
+						 			data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+							<option value='4' >--请选择--</option>
+							<option value='1' selected="selected">审核中</option>
+						 </select>
+							
+							</div>
+						</div>
+						<!-- 
+						<div class="search_elm" style="margin-left: 0px;width: 300px">
+							<label class="label_search" for="userName">公安认证状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.POLICEIDENTIFYSTATUS"
+						 			 location="local" 
+									 name="policeIdentifystatus" 
+						 			id="policeIdentifystatus" 
+						 			data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+							<option value='' >--请选择--</option>
+						 </select>
+							
+							</div>
+						</div>-->
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >搜索</button>
+							<button class="btn btn-small" onclick="resetForm1();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+							
+				<a auth="mpomng/meridentifyManage/view.do" class="btn btn-small btn-success"
+					onclick="selectMeridentify('view');"> <!-- 
+					<i class="icon-envelope"></i> -->详细
+				</a>
+				<!-- <a auth="mpomng/meridentifyManage/audit.do" class="btn btn-small btn-warning"
+					onclick="selectMeridentify('audit');"> 
+					<i class="icon-envelope"></i>审核
+				</a> -->
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+				url : "mpomng/meridentifyManage/query.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '商户名称', '商户编号','证件类型', '证件号码','认证状态','注册时间','认证时间'],//,'审核人'
+				colModel : [ {name : 'custName',     index : 'custName',     width : '150px' }, 
+				             {name : 'custId',       index : 'custId',       width : '150px' }, 
+				             {name : 'certificateType',     index : 'certificateType',     width : '130px' , ditcKey:'CERTTYPE', formatter : gridFormatByDict},
+				             {name : 'certificateNo',    index : 'certificateNo',    width : '200px' }, 
+				             {name : 'custStatus',   index : 'custStatus',   width : '150px' ,ditcKey:'CUSTSTATUS' ,formatter : gridFormatByDict}, 
+				             {name : 'custRegDatetime',  index : 'custRegDatetime',   width : '200px',formatter : gridFormatByDate}, 
+				             {name : 'identifyTime',  index : 'identifyTime',   width : '150px',formatter : gridFormatByDate}
+				            // {name : 'identifyUser',   index : 'identifyUser',   width : '150px' } 
+				             
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+				shrinkToFit:false,
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			//格式化日期
+			function dateFormat(cellvalue, options, rowObject){
+				return getDateFormat(rowObject["identifyTime"]);
+			}
+		});
+
+		function selectMeridentify(type) {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			var ids =$('#grid-table').jqGrid('getRowData',rows[0]).custId;
+			
+			if(type=="audit"){
+				var status=$('#grid-table').jqGrid('getRowData',rows[0]).custStatus;
+				var cst = DICT.getKey("CUSTSTATUS", status);
+				if(cst==2){
+					msg.alert("错误", "审核已通过，不能重复审核", 'error');
+					return false;
+				}
+				if(cst==3){
+					msg.alert("错误", "审核不通过，不能重复审核", 'error');
+					return false;
+				}
+			}
+			
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-agentEdit',
+				title : '商户实名认证信息详情',
+				pageUrl :'mpomng/meridentifyManage/view.do',
+				dataUrl : 'mpomng/meridentifyManage/queryById.do',
+				width : '60%',
+				height:'90%',
+				dataParam : {
+					custId : ids,
+					type:type
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			});
+		}
+		
+		
+			
+	   
+	function report(){
+		var sdate = "00000000";
+		var edate = "99999999";
+		var param = "";
+		
+		msg.confirm({title:'确认',position:'center',msg:'确认导出当前数据吗？',call:function(ok){
+			if(ok){
+				$.ajax({
+					type : "post",
+				    url : "mpomng/mobileMerManage/report.do?"+param,
+					dataType : 'json',
+					success : function(result) {
+						if (result.rspcod != 200) {
+							msg.alert("错误", result.rspmsg , 'error');
+						} else {
+							msg.alert("提示", result.rspmsg, 'correct');
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+								+ textStatus, 'error');
+					}
+				});
+			}
+		}});
+	}
+	
+	function resetForm1(){
+		$("#custStatus option[value='1']").remove();
+		resetForm();
+		
+	}
+	
+	</script>

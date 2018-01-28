@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.AgentProfitDayLogDao">
+	<resultMap type="java.util.Map" id="agentProfitDayLogMap">
+		 	<result property="agentId"               column="AGENT_ID" /> 
+		    <result property="sharDate"               column="SHAR_DATE" /> 
+		    <result property="sharAmt"               column="SHAR_AMT" /> 
+		    <result property="payAmt"               column="PAY_AMT" /> 
+		    <result property="payFee"               column="PAY_FEE" />
+		    <result property="agentFee"               column="AGENT_FEE" />  
+		    <result property="agentDgr"               column="AGENT_DGR" /> 
+		    <result property="fathAgentId"               column="FATH_AGENT_ID" /> 
+		    <result property="firstAgentId"               column="FIRST_AGENT_ID" /> 
+		    <result property="auditUser"               column="AUDIT_USER" /> 
+		    <result property="updateTime"               column="UPDATE_TIME" />
+		    <result property="payType"               column="PAY_TYPE" />
+	</resultMap>
+	
+	<select id="selectDayLogList" parameterType="java.util.Map" resultMap="agentProfitDayLogMap">
+		SELECT
+			AGENT_ID,
+			PAY_TYPE,
+			SUM(SHAR_AMT) SHAR_AMT,
+			SUM(PAY_AMT) PAY_AMT,
+			SUM(PAY_FEE) PAY_FEE,
+			SUM(AGENT_FEE) AGENT_FEE,
+			AGENT_DGR,
+			FATH_AGENT_ID,
+			FIRST_AGENT_ID
+		FROM
+			MPBATCH_PROFITSHARING_DAYLOG_INF
+		WHERE SHAR_DATE >= #{firstDate}
+		<![CDATA[ AND SHAR_DATE <= #{lastDate} ]]>
+		GROUP BY
+			AGENT_ID,PAY_TYPE
+	</select>
+</mapper>

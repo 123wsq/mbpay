@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+
+<div class="search_panel">
+<form action="" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						<div class="search_elm" style="margin-left: 0px;width: 220px">
+							<label class="label_search">手机号:</label>
+							<div class="search_input">
+								<input id="custLogin" type="text" name="custLogin" 
+									placeholder="请输入手机号" >
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户名称:</label>
+							<div class="search_input">
+								<input id="custName" type="text" name="custName"
+									placeholder="请输入商户名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input id="custId" type="text" name="custId"
+									placeholder="请输入商户编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px;">
+							<label class="label_search" for="userName">交易状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.MERSTATUS"
+						 			 location="local" 
+									 name="custStatus" 
+						 			id="search_custStatus" 
+						 			data-placeholder="请选" style="width: 100px;vertical-align:middle;">
+									<option value='' >--请选择--</option>
+								 </select>
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px;">
+							<label class="label_search" for="userName">登陆状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.LOGINSTATUS"
+						 			 location="local" 
+									 name="isLoginFlag" 
+						 			id="search_isLoginFlag" 
+						 			data-placeholder="请选" style="width: 100px;vertical-align:middle;">
+									<option value='' >--请选择--</option>
+								 </select>
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px;margin-right: 15px;width: 260px;">
+						    <label class="label_search">注册时间:</label>
+							<div class="input-group">
+								<input type="text" class="form-control date-picker" id="startTime" name="startTime" data-date-format="mm/dd/yyyy" placeholder="起始时间" />
+								<span class="input-group-addon">
+									<i class="fa fa-exchange"></i>
+								</span>
+								<input type="text" class="form-control date-picker" id="endTime" name="endTime" data-date-format="mm/dd/yyyy" placeholder="结束时间" />
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">所属代理商:</label>
+							<div class="search_input">
+								<input id="agentName" type="text" name="agentName"
+									placeholder="请输入代理商名称">
+							</div>
+						</div>
+						
+						
+						
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >搜索</button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+				
+				
+				<a class="btn btn-small btn-warning"
+					onclick="selectMobile();"> <!-- 
+					<i class="icon-envelope"></i> -->详细
+				</a>
+				<a class="btn btn-small btn-warning"
+					onclick="selectAccount();"> <!-- 
+					<i class="icon-envelope"></i> -->余额
+				</a>
+				<a class="btn btn-small btn-warning"
+					onclick="updateFee();">
+					查看/修改费率
+				</a>
+				<a class="btn btn-small btn-info"
+					onclick="exportCustInf();"> <!-- 
+					<i class="icon-envelope"></i> -->导出文件
+				</a>
+				<a class="btn btn-small btn-default"
+					onclick="statusUpdate0();"> 交易启用<!-- 
+					<i class="icon-envelope"></i> --> 
+				</a>
+				<a class="btn btn-small btn-default"
+					onclick="statusUpdate1();"> <!-- 
+					<i class="icon-envelope"></i> --> 交易禁用
+				</a>
+				
+				<a class="btn btn-small btn-default"
+					onclick="lock();"> 登录锁定<!-- 
+					<i class="icon-envelope"></i> --> 
+				</a>
+				<a class="btn btn-small btn-default"
+					onclick="unlock();"> <!-- 
+					<i class="icon-envelope"></i> -->登录解锁
+				</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+
+				url : "mpomng/mobileMerManage/query.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : ['商户名称', '商户编号','注册时间','证件类型','证件号码', '手机号','登录状态','交易状态','认证状态','地址' ,'上次登陆时间','认证通过时间',
+				            '所属代理商','所属代理商编号' ],
+				colModel : [ {name : 'custName',     index : 'custName',     width : '100px' }, 
+				             {name : 'custId',       index : 'custId',       width : '120px' }, 
+				             {name : 'custRegDateTime',  index : 'custRegDateTime',   width : '150px',formatter : gridFormatByDate}, 
+				             {name : 'certificateType',     index : 'certificateType',     width : '100px' , ditcKey:'CERTTYPE', formatter : gridFormatByDict},
+				             {name : 'certificateNo',    index : 'certificateNo',    width : '180px' }, 
+				             {name : 'usrMobile',    index : 'usrMobile',    width : '100px' },  
+				             {name : 'isLoginFlag',  index : 'isLoginFlag',   width : '80px', ditcKey:'LOGINSTATUS', formatter : gridFormatByDict }, 
+				             {name : 'custStatus',   index : 'custStatus',   width : '90px' ,ditcKey:'MERSTATUS', formatter : gridFormatByDict}, 
+				             {name : 'authStatus',   index : 'authStatus',   width : '80px' ,ditcKey:'CUSTSTATUS' ,formatter : gridFormatByDict}, 
+				             {name : 'address',   index : 'address',   width : '200px' }, 
+				             {name : 'lastOperTime',         index : 'lastOperTime',         width : '150px' ,formatter : gridFormatByDate}, 
+				             {name : 'identifyTime', index : 'identifyTime', width :'150px',formatter : gridFormatByDate},
+				             {name : 'agentName',         index : 'agentName',         width : '100px' } ,
+				             {name : 'agentId',         index : 'agentId',         width : '100px' }
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+				shrinkToFit:false,
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+
+			
+		});
+		function selectMobile() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += $('#grid-table').jqGrid('getRowData',rows[i]).custId+ ",";
+			}
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-merDetailInfo',
+				title : '商户详细信息',
+				pageUrl :'mpomng/mobileMerManage/view.do',
+				dataUrl : 'mpomng/mobileMerManage/queryById.do',
+				width :  '60%',
+				height :  '85%',
+				dataParam : {
+					custId : ids,
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+			});
+		}
+		
+		function selectAccount() {
+           var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += $('#grid-table').jqGrid('getRowData',rows[i]).custId+ ",";
+			}
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-custAccountView',
+				title : '资金账户信息',
+				pageUrl :'mpomng/custAccountForCustView.do',
+				width : '70%',
+				height:'60%',
+				pageParam : {
+					custId : ids,
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+			});
+		}
+		
+	    function statusUpdate0(){
+	    	setUserStatus(0);
+	    }
+	    function statusUpdate1(){
+	    	setUserStatus(1);
+	    }
+	    
+	    
+	    function lock(){
+	    	lockOrUnlock('01');
+	    }
+	    
+	    function unlock(){
+	    	lockOrUnlock('00');
+	    }
+	    
+	    function lockOrUnlock(status){
+		    var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择的数据项,请选择数据！", "warn");
+				return;
+			}
+			
+			var ids="",uname="",isLoginFlag="";
+			var rowData ;
+			for(var i=0; i<rows.length; i++){
+				rowData = $('#grid-table').jqGrid('getRowData',rows[i]);
+				ids   = ids+rowData.custId+",";
+				uname = uname + rowData.custName+",";
+				isLoginFlag = isLoginFlag + rowData.isLoginFlag+",";
+			}
+			ids   = ids.substring(0, ids.lastIndexOf(","));
+			uname = uname.substring(0, uname.lastIndexOf(","));
+			isLoginFlag = isLoginFlag.substring(0, isLoginFlag.lastIndexOf(","));
+			var tmsg = "正常";
+			if(status =='01'){
+				tmsg = "锁定";
+			}
+			if(isLoginFlag==tmsg){
+				msg.alert("警告", "当前商户登录状态已经为"+tmsg+"状态!", "warn");
+				return;
+			}
+			
+			msg.confirm({title:'确认',position:'center',msg:'您确定要将商户['+uname+']的登录状态置为'+tmsg+'吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+					    url : "mpomng/mobileMerManage/unlockLoginStatus.do?status="+status+"&ids="+ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+	
+				}
+			}});
+			
+		}
+		function setUserStatus(status){
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择的数据项,请选择数据！", "warn");
+				return;
+			}
+			
+			var ids="",uname="",custStatus="";
+			var rowData ;
+			for(var i=0; i<rows.length; i++){
+				rowData = $('#grid-table').jqGrid('getRowData',rows[i]);
+				ids   = ids+rowData.custId+",";
+				uname = uname + rowData.custName+",";
+				custStatus = custStatus+rowData.custStatus+",";
+			}
+			ids   = ids.substring(0, ids.lastIndexOf(","));
+			uname = uname.substring(0, uname.lastIndexOf(","));
+			custStatus = custStatus.substring(0, custStatus.lastIndexOf(","));
+			
+			var tmsg = "正常";
+			var statusMsg = "启用";
+			if(status == 1){
+				tmsg = "禁用";
+				statusMsg = "禁用";
+			}
+			if(custStatus==tmsg){
+				msg.alert("警告", "当前商户交易已"+statusMsg+"!", "warn");
+				return;
+			}
+			msg.confirm({title:'确认',position:'center',msg:'您确定要将商户['+uname+']的交易状态置为'+tmsg+'吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+					    url : "mpomng/mobileMerManage/modifyCustStatus.do?status="+status+"&ids="+ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+
+				}
+			}});
+			
+		}
+	
+	function exportCustInf(){
+		$.ajax({
+			type : "post",
+			url : "mpomng/mobileMerManage/report.do",
+			data:$("#custSearchForm").serialize(),
+			dataType : 'json',
+			async:true,
+			success : function(result) {
+				if (result.rspcod != 200) {
+					msg.alert("错误", result.rspmsg, 'error');
+				} else {
+					msg.alert("提示",result.rspmsg,'correct');
+					$("#grid-table").trigger("reloadGrid");
+					dialog.closeById('dlg-coopOrgMerAdd');
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		});
+	}
+	
+	
+	function updateFee(){
+		
+		var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+		if (rows.length == 0) {
+			msg.alert("警告", "当前没有选择数据项！", "error");
+			return;
+		}
+		if (rows.length > 1) {
+			msg.alert("警告", "不能同时选择多项数据！", "warn");
+			return;
+		}
+	
+	
+	var ids = "";
+	for (var i = 0; i < rows.length; i++) {
+		ids += $('#grid-table').jqGrid('getRowData',rows[i]).custId+ ",";
+	}
+	ids = ids.substring(0, ids.lastIndexOf(","));
+	
+	openDialog({
+		dialogId : 'dlg-custupdateFeeEdit',
+		title : '商户费率详情',
+		pageUrl : 'mpomng/agentMobileMerManage/updateFeeView.do',
+		width : '80%' , //
+		height : '80%' , //
+		dataParam : {
+			custId: ids,
+			type:'view'
+		},
+		pageParam: {
+			custId : ids,
+		},
+		dataName : 'obj,map'//表单数据存储对象名称
+	});
+	}
+	
+	</script>

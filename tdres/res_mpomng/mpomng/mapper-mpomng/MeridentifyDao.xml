@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.MeridentifyDao">
+	<resultMap type="MeridentifyInf" id="meridentifyMap">
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="custName"               column="CUST_NAME" /> 
+		    <result property="certificateType"               column="CERTIFICATE_TYPE" /> 
+		    <result property="certificateNo"               column="CERTIFICATE_NO" /> 
+		    <result property="idcardHandheld"               column="IDCARD_HANDHELD" /> 
+		    <result property="idcardFront"               column="IDCARD_FRONT" /> 
+		    <result property="idcardBack"               column="IDCARD_BACK" /> 
+		    <result property="custStatus"               column="CUST_STATUS" /> 
+		    <result property="identifyTime"               column="IDENTIFY_TIME" /> 
+		    <result property="auditIdea"               column="AUDIT_IDEA" /> 
+		    <result property="identifyUser"               column="IDENTIFY_USER" /> 
+		    <result property="policeIdentifystatus"               column="POLICE_IDENTIFYSTATUS" /> 
+		    <result property="policeIdentifypic"               column="POLICE_IDENTIFYPIC" /> 
+		    <result property="resField1"               column="RES_FIELD1" /> 
+		    <result property="resField2"               column="RES_FIELD2" /> 
+		    <result property="resField3"               column="RES_FIELD3" /> 
+		    <result property="custRegDatetime"               column="CUST_REG_DATETIME" /> 
+		    <result property="cityName"               column="CITY_NAME" /> 
+		    <result property="provinceName"               column="PROVINCE_NAME" /> 
+		    <result property="address"               column="ADDRESS" /> 
+		    <result property="usrEmall"               column="USR_EMAIL" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="MeridentifyInf">
+		UPDATE 
+				MPOMNG_MERIDENTIFY_INF
+		<set>
+		        <if test="custStatus!= null and custStatus!= ''">
+						CUST_STATUS =  #{custStatus},
+				</if>
+		        <if test="identifyTime!= null and identifyTime!= ''">
+						IDENTIFY_TIME =  #{identifyTime},
+				</if>
+		        <if test="auditIdea!= null and auditIdea!= ''">
+						AUDIT_IDEA =  #{auditIdea},
+				</if>
+		        <if test="identifyUser!= null and identifyUser!= ''">
+						IDENTIFY_USER =  #{identifyUser},
+				</if>
+		</set>
+		
+			WHERE CUST_ID =  #{custId}
+			
+	</update>
+
+	<select id="selectEntity" parameterType="MeridentifyInf" resultMap="meridentifyMap">
+		SELECT 
+		         MOB.CUST_ID, 
+		         MER.CUST_NAME, 
+		         CERTIFICATE_TYPE, 
+		         CERTIFICATE_NO, 
+		         IDCARD_HANDHELD, 
+		         IDCARD_FRONT, 
+		         IDCARD_BACK, 
+		         MER.CUST_STATUS, 
+		         IDENTIFY_TIME, 
+		         AUDIT_IDEA, 
+		         IDENTIFY_USER, 
+		         POLICE_IDENTIFYSTATUS, 
+		         POLICE_IDENTIFYPIC, 
+				 MOB.CITY_NAME,
+				 MOB.PROVINCE_NAME,
+				 MOB.USR_EMAIL,
+				 CONCAT(MOB.PROVINCE_NAME,",",MOB.CITY_NAME)AS ADDRESS
+				 
+		FROM 
+		  MPOMNG_MERIDENTIFY_INF MER
+		LEFT JOIN (SELECT CITY.CITY_NAME,PRO.PROVINCE_NAME,CUST_ID,MOB.USR_EMAIL FROM MPOMNG_MOBILE_MER_INF MOB 
+							LEFT JOIN PROVINCE PRO ON PRO.PROVINCE_ID = MOB.PROVINCE_ID
+							LEFT JOIN CITY ON CITY.CITY_ID = MOB.CITY_ID
+		) MOB ON MER.CUST_ID = MOB.CUST_ID
+		WHERE MER.CUST_ID =  #{custId}
+	</select>
+
+	<select id="selectList" parameterType="MeridentifyInf" resultMap="meridentifyMap" databaseId="mysql">
+		SELECT 
+		         T1.CUST_ID, 
+		         T1.CUST_NAME, 
+		         T1.CERTIFICATE_TYPE, 
+		         T1.CERTIFICATE_NO, 
+		         T1.IDCARD_HANDHELD, 
+		         T1.IDCARD_FRONT, 
+		         T1.IDCARD_BACK, 
+		         T1.CUST_STATUS, 
+		         T1.IDENTIFY_TIME, 
+		         T1.AUDIT_IDEA, 
+		         T1.IDENTIFY_USER, 
+		         T1.POLICE_IDENTIFYSTATUS, 
+		         T1.POLICE_IDENTIFYPIC, 
+		         T1.RES_FIELD1, 
+		         T1.RES_FIELD2, 
+		         T1.RES_FIELD3,
+		         T2.CUST_REG_DATETIME
+		FROM 
+		       MPOMNG_MERIDENTIFY_INF T1 LEFT JOIN 
+		       MPOMNG_MOBILE_MER_INF T2 ON T1.CUST_ID =T2.CUST_ID
+		       
+		<where>
+		        <if test="custId!= null and custId!= ''">
+						AND T1.CUST_ID LIKE  CONCAT('%',#{custId},'%')
+				</if>
+		        <if test="custName!= null and custName!= ''">
+						AND T1.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+				</if>
+		        <if test="certificateNo!= null and certificateNo!= ''">
+						AND T1.CERTIFICATE_NO LIKE CONCAT('%',#{certificateNo},'%')
+				</if>
+		        <if test="custStatus!= null and custStatus!= ''">
+						AND T1.CUST_STATUS =  #{custStatus}
+				</if>
+				<if test="startTime != null and startTime != ''">
+						AND T2.CUST_REG_DATETIME >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+						<![CDATA[ AND T2.CUST_REG_DATETIME <= #{endTime} ]]>
+				</if>
+		</where>
+		ORDER BY T1.CUST_ID DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="MeridentifyInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPOMNG_MERIDENTIFY_INF T1
+				LEFT JOIN 
+		      	MPOMNG_MOBILE_MER_INF T2 ON T1.CUST_ID =T2.CUST_ID
+		<where>
+		        <if test="custId!= null and custId!= ''">
+						AND T1.CUST_ID LIKE  CONCAT('%',#{custId},'%')
+				</if>
+		        <if test="custName!= null and custName!= ''">
+						AND T1.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+				</if>
+		        <if test="certificateNo!= null and certificateNo!= ''">
+						AND T1.CERTIFICATE_NO LIKE CONCAT('%',#{certificateNo},'%')
+				</if>
+		        <if test="custStatus!= null and custStatus!= ''">
+						AND T1.CUST_STATUS =  #{custStatus}
+				</if>
+				<if test="startTime != null and startTime != ''">
+						AND T2.CUST_REG_DATETIME >= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+						<![CDATA[ AND T2.CUST_REG_DATETIME <= #{endTime} ]]>
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="MeridentifyInf">
+		INSERT INTO MPOMNG_MERIDENTIFY_INF  (
+		         CUST_ID, 
+		         CUST_NAME, 
+		         CERTIFICATE_TYPE, 
+		         CERTIFICATE_NO, 
+		         IDCARD_HANDHELD, 
+		         IDCARD_FRONT, 
+		         IDCARD_BACK, 
+		         CUST_STATUS, 
+		         IDENTIFY_TIME, 
+		         AUDIT_IDEA, 
+		         IDENTIFY_USER, 
+		         POLICE_IDENTIFYSTATUS, 
+		         POLICE_IDENTIFYPIC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+				)
+		VALUES (
+		          #{custId}, 
+		          #{custName}, 
+		          #{certificateType}, 
+		          #{certificateNo}, 
+		          #{idcardHandheld}, 
+		          #{idcardFront}, 
+		          #{idcardBack}, 
+		          #{custStatus}, 
+		          #{identifyTime}, 
+		          #{auditIdea}, 
+		          #{identifyUser}, 
+		          #{policeIdentifystatus}, 
+		          #{policeIdentifypic}, 
+		          #{resField1}, 
+		          #{resField2}, 
+		          #{resField3}
+		      )
+	</insert>
+	
+	<insert id="insertEntityMap" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_MERIDENTIFY_INF  (
+		         CUST_ID, 
+		         CUST_NAME, 
+		         CERTIFICATE_TYPE, 
+		         CERTIFICATE_NO, 
+		         IDCARD_HANDHELD, 
+		         IDCARD_FRONT, 
+		         IDCARD_BACK, 
+		         CUST_STATUS, 
+		         IDENTIFY_TIME, 
+		         AUDIT_IDEA, 
+		         IDENTIFY_USER, 
+		         POLICE_IDENTIFYSTATUS, 
+		         POLICE_IDENTIFYPIC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+				)
+		VALUES (
+		          #{custId,jdbcType=CHAR}, 
+		          #{custName,jdbcType=VARCHAR}, 
+		          #{certificateType,jdbcType=VARCHAR}, 
+		          #{certificateNo,jdbcType=VARCHAR},  
+		          #{idcardHandheld,jdbcType=VARCHAR}, 
+		          #{idcardFront,jdbcType=VARCHAR}, 
+		          #{idcardBack,jdbcType=VARCHAR}, 
+		          #{custStatus,jdbcType=CHAR}, 
+		          #{identifyTime,jdbcType=VARCHAR}, 
+		          #{auditIdea,jdbcType=VARCHAR}, 
+		          #{identifyUser,jdbcType=VARCHAR}, 
+		          #{policeIdentifystatus,jdbcType=VARCHAR}, 
+		          #{policeIdentifypic,jdbcType=VARCHAR}, 
+		          #{resField1,jdbcType=VARCHAR}, 
+		          #{resField2,jdbcType=VARCHAR}, 
+		          #{resField3,jdbcType=VARCHAR}
+		      )
+	</insert>
+
+</mapper>

@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.CasPrdDao">
+	<!-- 提现订单查询结果集 -->
+	<resultMap type="Map" id="CasPrdMap">
+		<result property="casOrdNo" 	column="CAS_ORD_NO"/>
+		<result property="casType" 		column="CAS_TYPE"/>
+		<result property="casDate" 		column="CAS_DATE"/>
+		<result property="modifyDate" 	column="MODIFY_DATE"/>
+		<result property="sucDate" 		column="SUC_DATE"/>
+		<result property="ordStatus" 	column="ORDSTATUS"/>
+		<result property="custId" 		column="CUST_ID"/>
+		<result property="custName" 	column="CUST_NAME"/>
+		<result property="ordAmt" 		column="TXAMT"/>
+		<result property="txccy" 		column="TXCCY"/>
+		<result property="rate" 		column="RATE"/>
+		<result property="fee" 			column="FEE"/>
+		<result property="serviceFee" 	column="SERVICE_FEE"/>
+		<result property="netrecAmt" 	column="NETRECAMT"/>
+		<result property="issno" 		column="ISSNO"/>
+		<result property="issNam" 		column="ISSNAM"/>
+		<result property="cardNo" 		column="CARD_NO"/>
+		<result property="casDesc" 		column="CAS_DESC"/>
+		<result property="casAudit" 	column="CAS_AUDIT"/> 
+		<result property="auditDesc" 	column="AUDIT_DESC"/>
+		<result property="casRel" 		column="CAS_REL"/>
+		<result property="t0Amt" 		column="T0_AMT"/>
+		<result property="acType" 		column="AC_TYPE"/>
+		<result property="t1Amt" 		column="T1_AMT"/>
+		<result property="agentId" 		column="AGENT_ID"/>
+		<result property="firstAgentId" 		column="FIRST_AGENT_ID"/>
+		<result property="agentName" 	column="AGENT_NAME"/>
+		<result property="proCity" 		column="PROCITY"/>
+		<result property="custName" 		column="CUST_NAME"/>
+		<result property="filed3" 		column="FILED3"/>
+		<result property="coopName" 		column="COOPNAME"/>
+	</resultMap>
+	
+	<resultMap type="Map" id="CasPrdT0Map">
+		<result property="casOrdNo" 	column="CAS_ORD_NO"/>
+		<result property="custId" 		column="CUST_ID"/>
+		<result property="t0" 			column="T0_AMT"/>
+		<result property="t1" 			column="T1_AMT"/>
+		<result property="txamt" 		column="TXAMT"/>
+		<result property="fee" 			column="FEE"/>
+		<result property="serviceFee" 	column="SERVICE_FEE"/>
+		<result property="acType" 		column="AC_TYPE"/>
+	</resultMap>
+	
+	<resultMap type="Map" id="ConPayMap">
+		<result property="casOrdNo" 	column="CAS_ORD_NO"/>
+		<result property="tseqNo" 		column="TSEQ_NO"/>
+		<result property="payAmt" 		column="PAY_AMT"/>
+		<result property="cardNo" 		column="CARD_NO"/>
+		<result property="agentId" 		column="AGENT_ID"/>
+		<result property="firstAgentId" column="FIRST_AGENT_ID"/>
+		<result property="rateType" 	column="RATE_TYPE"/>
+		<result property="payTime" 	column="PAY_TIME"/>
+		<result property="cooporgNo" 	column="COOPORG_NO"/>
+		<result property="paymentId" column="PAYMENT_ID" />
+		<result property="TMercId" column="TMERCID" />
+		<result property="TTermId" column="TTERMID" />
+		<result property="txnDate" column="TXN_DATE" />
+		<result property="txnTime" column="TXN_TIME" />
+		<result property="payOrdNo" column="PAYORDNO" />
+		<result property="TLogNo" column="TLOGNO" />
+		<result property="txnActNo" column="TXN_ACTNO" />
+		<result property="txnAmt" column="TXN_AMT" />
+		<result property="txnFee" column="TXN_FEE" />
+		<result property="TSRefno" column="TSREFNO" />
+		<result property="txnstatus" column="TXN_STATUS" />
+	</resultMap>
+	
+	<!-- 业务报表结果集 -->
+	<resultMap type="CasPrdTemplate" id="CasPrdReportMap">
+		<result property="casOrdNo" 	column="CAS_ORD_NO"/>
+		<result property="casType" 		column="CAS_TYPE"/>
+		<result property="casDate" 		column="CAS_DATE"/>
+		<result property="modifyDate" 	column="MODIFY_DATE"/>
+		<result property="sucDate"	 	column="SUC_DATE"/>
+		<result property="ordStatus" 	column="ORDSTATUS"/>
+		<result property="custId" 		column="CUST_ID"/>
+		<result property="custName" 	column="CUST_NAME"/>
+		<result property="txamt" 		column="TXAMT"/>
+		<result property="rate" 		column="RATE"/>
+		<result property="fee"  		column="FEE"/>
+		<result property="serviceFee" 	column="SERVICE_FEE"/>
+		<result property="netrecAmt" 	column="NETRECAMT"/>
+		<result property="issno" 		column="ISSNO"/>
+		<result property="issNam" 		column="ISSNAM"/>
+		<result property="cardNo" 		column="CARD_NO"/>
+		<result property="casDesc" 		column="CAS_DESC"/>
+		<result property="casAudit" 	column="CAS_AUDIT"/>
+		<result property="auditDesc" 	column="AUDIT_DESC"/>
+		<result property="casRel" 		column="CAS_REL"/>
+		<result property="t0Amt" 		column="T0_AMT"/>
+		<result property="t1Amt" 		column="T1_AMT"/>
+	</resultMap>
+	
+	
+	<resultMap type="Map" id="SettleMap">
+		<result property="custId" 		column="CUST_ID"/>
+		<result property="t0" 			column="T0_AMT"/>
+		<result property="t1" 			column="T1_AMT"/>
+		<result property="txamt" 		column="TXAMT"/>
+		<result property="fee" 			column="FEE"/>
+		<result property="serviceFee" 	column="SERVICE_FEE"/>
+	</resultMap>
+	
+	<resultMap type="Map" id="PayTypeMap">
+		<result property="cooporgNo" 		column="COOPORG_NO"/>
+		<result property="coopName" 		column="COOPNAME"/>
+		<result property="merNo" 		column="MER_NO"/>
+		<result property="terNo" 		column="TER_NO"/>
+		<result property="agentId" 		column="AGENT_ID"/>
+		<result property="firstAgentId" 	column="FIRST_AGENT_ID"/>
+	</resultMap>
+	
+	<insert id="insertConPay" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CONPAY_INF  (
+		         CAS_ORD_NO, 
+		         TSEQ_NO, 
+		         PAY_TIME, 
+		         PAY_AMT, 
+		         CARD_NO, 
+		         PAY_STATUS, 
+		         AGENT_ID, 
+		         FIRST_AGENT_ID, 
+		         RATE_TYPE,
+		         COOPORG_NO
+				)
+		VALUES (
+		          #{casOrdNo,jdbcType=VARCHAR}, 
+		          #{tseqNo,jdbcType=VARCHAR}, 
+		          #{payTime,jdbcType=VARCHAR}, 
+		          #{payAmt,jdbcType=VARCHAR}, 
+		          #{cardNo,jdbcType=VARCHAR}, 
+		          #{payStatus,jdbcType=VARCHAR}, 
+		          #{agentId,jdbcType=VARCHAR}, 
+		          #{firstAgentId,jdbcType=VARCHAR}, 
+		          #{rateType,jdbcType=VARCHAR},
+		          #{cooporgNo,jdbcType=VARCHAR}
+		      )
+	</insert>
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_CAS_INF  (
+		         CAS_ORD_NO, 
+		         CAS_TYPE, 
+		         CAS_DATE, 
+		         MODIFY_DATE, 
+		         SUC_DATE, 
+		         ORDSTATUS, 
+		         TXCCY, 
+		         CUST_ID, 
+		         CUST_NAME, 
+		         TXAMT, 
+		         RATE, 
+		         FEE, 
+		         SERVICE_FEE,
+		         NETRECAMT, 
+		         ISSNO, 
+		         ISSNAM, 
+		         CARD_NO, 
+		         PROVINCE_ID, 
+		         CAS_DESC, 
+		         CAS_AUDIT, 
+		         AUDIT_DESC, 
+		         CAS_REL, 
+		         FILED1, 
+		         FILED2, 
+		         FILED3,
+		         T0_AMT, 
+		         T1_AMT,
+		         AC_TYPE
+				)
+		VALUES (
+		          #{casOrdNo,jdbcType=VARCHAR}, 
+		          #{casType,jdbcType=VARCHAR}, 
+		          #{casDate,jdbcType=VARCHAR}, 
+		          #{modifyDate,jdbcType=VARCHAR}, 
+		          #{sucDate,jdbcType=VARCHAR}, 
+		          #{ordstatus,jdbcType=VARCHAR}, 
+		          #{txccy,jdbcType=VARCHAR}, 
+		          #{custId,jdbcType=VARCHAR}, 
+		          #{custName,jdbcType=VARCHAR}, 
+		          #{txamt,jdbcType=VARCHAR}, 
+		          #{rate,jdbcType=VARCHAR}, 
+		          #{fee,jdbcType=VARCHAR}, 
+		          #{serviceFee,jdbcType=VARCHAR}, 
+		          #{netrecamt,jdbcType=VARCHAR}, 
+		          #{issno,jdbcType=VARCHAR}, 
+		          #{issnam,jdbcType=VARCHAR}, 
+		          #{cardNo,jdbcType=VARCHAR}, 
+		          #{provinceId,jdbcType=VARCHAR}, 
+		          #{casDesc,jdbcType=VARCHAR}, 
+		          #{casAudit,jdbcType=VARCHAR}, 
+		          #{auditDesc,jdbcType=VARCHAR}, 
+		          #{casRel,jdbcType=VARCHAR}, 
+		          #{filed1,jdbcType=VARCHAR}, 
+		          #{filed2,jdbcType=VARCHAR}, 
+		          #{filed3,jdbcType=VARCHAR},
+		          #{t0Amt,jdbcType=VARCHAR},
+		          #{t1Amt,jdbcType=VARCHAR},
+		          #{acType,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="selectConPayInf" parameterType="String" resultMap="ConPayMap">
+		SELECT
+			T1.CAS_ORD_NO,
+			T1.TSEQ_NO,
+			T1.PAY_AMT,
+			T1.CARD_NO,
+			T1.AGENT_ID,
+        	T1.FIRST_AGENT_ID,
+        	T1.RATE_TYPE,
+        	T1.PAY_TIME,
+        	T1.COOPORG_NO,
+        	T2.PAYMENT_ID,
+        	T2.TMERCID,
+        	T2.TTERMID,
+        	T2.TXN_DATE,
+        	T2.TXN_TIME,
+        	T2.TLOGNO,
+        	T2.TXN_ACTNO,
+        	T2.TXN_AMT,
+        	T2.TXN_FEE,
+        	T2.TSREFNO,
+        	T2.TXN_STATUS
+		FROM 
+			MPOMNG_CONPAY_INF T1
+		LEFT JOIN MPOMNG_ANOTHERPAY_JOURNAL_INF T2 ON T2.PAYORDNO=T1.CAS_ORD_NO
+		WHERE
+			T1.PAY_STATUS='0'
+			<if test="startTime != null and startTime != ''">
+				<![CDATA[AND T1.PAY_TIME <= #{startTime}]]>
+			</if>
+			
+	</select>
+	
+	<delete id="deleteConPay"  parameterType="Map">
+	    DELETE FROM MPOMNG_CONPAY_INF  WHERE  CAS_ORD_NO = #{casOrdNo}
+	</delete>
+
+	<select id="selectCasPrdT0" parameterType="String" resultMap="CasPrdT0Map">
+		SELECT
+			CAS_ORD_NO,
+			CUST_ID,
+			AC_TYPE,
+			T1_AMT,
+			T0_AMT,
+			TXAMT,
+        	FEE,
+        	SERVICE_FEE
+		FROM 
+			MPOMNG_CAS_INF
+		WHERE
+			ORDSTATUS='04'
+			<if test="startTime != null and startTime != ''">
+				AND CAS_DATE >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND CAS_DATE <=#{endTime}]]>
+			</if>
+	</select>
+	
+	<select id="selectCustByCasNo" parameterType="String" resultMap="SettleMap">
+		SELECT
+		 		CUST_ID,
+		 		T1_AMT,
+				T0_AMT,
+				TXAMT,
+        		FEE,
+        		SERVICE_FEE
+		FROM 
+				MPOMNG_CAS_INF
+		WHERE
+				CAS_ORD_NO = #{casOrdNo}
+	</select>
+	
+	<select id="selectCustByCasNoForUpdate" parameterType="String" resultMap="SettleMap">
+		SELECT
+		 		CUST_ID,
+		 		T1_AMT,
+				T0_AMT,
+				TXAMT,
+        		FEE,
+        		SERVICE_FEE
+		FROM 
+				MPOMNG_CAS_INF
+		WHERE
+				CAS_ORD_NO = #{casOrdNo}
+		FOR UPDATE
+	</select>
+	
+	
+	
+	<sql id="WHERE_CasPrd">
+	   <choose>
+	     <when test="ageId != null and ageId != ''">  
+       		AND  AGENT.AGENT_CODE LIKE CONCAT(
+       		 	(SELECT AGENT_CODE FROM MPAMNG_AGENT_INF 
+       		 		WHERE 1=1
+       		 		<if test="ageId != null and ageId != ''">
+       		 			AND AGENT_ID = '${ageId}'
+       		 		</if>
+       		 	)
+       		 	,'%') 
+	        </when>  
+	    </choose>    
+		<if test="casOrdNo != null and casOrdNo != ''">
+			AND CAS.CAS_ORD_NO LIKE CONCAT('%',#{casOrdNo},'%')
+		</if>
+		<if test="agentId != null and agentId != ''">
+			AND AGENT.AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+		</if>
+		<if test="agentName != null and agentName != ''">
+			AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+		</if>
+		<if test="custId != null and custId != ''">
+			AND CAS.CUST_ID LIKE CONCAT('%',#{custId},'%')
+		</if>
+		<if test="custName != null and custName != ''">
+			AND CAS.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+		</if>
+		<if test="cardNo != null and cardNo != ''">
+			AND CAS.CARD_NO LIKE CONCAT('%',#{cardNo},'%')
+		</if>
+		<if test="ordStatus != null and ordStatus != ''">
+			AND CAS.ORDSTATUS = #{ordStatus}
+		</if>
+		<if test="casType != null and casType != ''">
+			AND CAS.CAS_TYPE = #{casType}
+		</if>
+		<if test="issnam != null and issnam != ''">
+			AND CAS.ISSNAM LIKE CONCAT('%',#{issnam},'%')
+		</if>
+		<if test="auditStatus != null and auditStatus != ''">
+			AND CAS.CAS_AUDIT = #{auditStatus}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			AND CAS.CAS_DATE >= #{startTime}
+		</if>
+		<if test="acType != null and acType !='' and acType !='02' ">
+			AND CAS.AC_TYPE = #{acType}	
+		</if>
+		<if test="acType != null and acType !='' and acType =='02' ">
+			AND (CAS.AC_TYPE IS NULL OR CAS.AC_TYPE = 02)	
+		</if>
+		
+		<if test="endTime != null and endTime != ''">
+			<![CDATA[ AND CAS.CAS_DATE <=#{endTime}]]>
+		</if>
+	</sql>
+	
+	<select id="getCasPrdCount" parameterType="Map" resultType="Integer">
+		SELECT
+		 COUNT(1) CNT
+		FROM MPOMNG_CAS_INF CAS
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACREF ON ACREF.CUST_ID = CAS.CUST_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+		WHERE 1=1
+		<include refid="WHERE_CasPrd"/>
+	</select>
+	
+	<select id="getCasPrdListPage" parameterType="Map" resultMap="CasPrdMap" databaseId="mysql">
+	 	SELECT
+		 	CAS.CAS_ORD_NO,
+			CAS.CAS_TYPE,
+			CAS.CAS_DATE,
+			CAS.MODIFY_DATE,
+			CAS.SUC_DATE,
+			CAS.ORDSTATUS,
+			CAS.TXCCY,
+			CAS.CUST_ID,
+			CAS.CUST_NAME,
+			CAS.TXAMT,
+			RATE,
+			CAS.FEE,
+			CAS.SERVICE_FEE,
+			CAS.NETRECAMT,
+			CAS.ISSNO,
+			CAS.ISSNAM,
+			CAS.CARD_NO,
+			CAS.PROVINCE_ID,
+			CAS.CAS_DESC,
+			CAS.CAS_AUDIT,
+			CAS.AUDIT_DESC,
+			CAS.CAS_REL,
+			CAS.T1_AMT,
+			CAS.T0_AMT,
+			(CASE WHEN CAS.AC_TYPE IS NULL OR CAS.AC_TYPE= '' THEN '02' ELSE CAS.AC_TYPE END) AS AC_TYPE,
+			AGENT.AGENT_ID,
+			AGENT.AGENT_NAME,
+			CAS.FILED3,
+			MCI.COOPNAME,
+			CONCAT(CN.BANK_PRO,',',CN.BANK_CITY) PROCITY
+		FROM MPOMNG_CAS_INF CAS
+		LEFT JOIN MPOMNG_CUST_BANK_INF BANK ON BANK.CUST_ID = CAS.CUST_ID
+		LEFT JOIN CNAPS CN ON CN.CNAPS_CODE = BANK.CNAPS_CODE
+		LEFT JOIN (SELECT DISTINCT CUST_ID,AGE_ID FROM MPOMNG_AGE_CUST_REF_INF) ACREF ON ACREF.CUST_ID = CAS.CUST_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+		LEFT JOIN MPCOOP_COOPORG_INF MCI ON CAS.FILED3=MCI.COOPORG_NO
+		
+		WHERE    1=1
+			<include refid="WHERE_CasPrd"/>
+		ORDER BY CAS_ORD_NO  DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="casCount" parameterType="Map" resultType="Map">
+		SELECT 
+			COUNT(1) cntNum,
+			SUM(IFNULL(CAS.TXAMT,0)) cntOrdAmt,
+			SUM(IFNULL(CAS.FEE,0)) cntFee,
+			SUM(IFNULL(CAS.SERVICE_FEE,0)) cntServiceFee,
+			SUM(IFNULL(CAS.NETRECAMT,0)) cntNetrecAmt
+		FROM MPOMNG_CAS_INF CAS
+		<if test="(agentId != null and agentId != '') or (agentName != null and agentName != '')">
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF ACREF ON ACREF.CUST_ID = CAS.CUST_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = ACREF.AGE_ID
+		</if>
+		<where>
+			<include refid="WHERE_CasPrd"/>
+		</where>
+	</select>
+	
+	<select id="casDetails" parameterType="Map" resultMap="CasPrdMap">
+		SELECT
+		 	CAS_ORD_NO,
+			CAS_TYPE,
+			CAS_DATE,
+			MODIFY_DATE,
+			SUC_DATE,
+			ORDSTATUS,
+			TXCCY,
+			CUST_ID,
+			CUST_NAME,
+			TXAMT,
+			RATE,
+			FEE,
+			SERVICE_FEE,
+			NETRECAMT,
+			ISSNO,
+			ISSNAM,
+			CARD_NO,
+			PROVINCE_ID,
+			CAS_DESC,
+			CAS_AUDIT,
+			AUDIT_DESC,
+			CAS_REL,
+			T1_AMT,
+			T0_AMT
+		FROM MPOMNG_CAS_INF CAS
+		WHERE
+		<include refid="WHERE_CasPrd"/>
+	</select>
+	
+	<select id="getCasPayInfo" parameterType="String" resultMap="CasPrdMap">
+		SELECT 
+	       	CAS.NETRECAMT,
+	       	CAS.CARD_NO,
+	       	CAS.CUST_NAME,
+	       	CAS.CAS_ORD_NO,
+	       	AGE.AGENT_ID,
+           	AGE.FIRST_AGENT_ID
+		FROM 
+			MPOMNG_CAS_INF CAS 
+        	LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON CAS.CUST_ID = REF.CUST_ID
+         	LEFT JOIN MPAMNG_AGENT_INF AGE ON REF.AGE_ID = AGE.AGENT_ID
+ 		WHERE 
+ 			CAS.CAS_ORD_NO = #{casOrdNo}
+	</select>
+	
+	<select id="selectReport" parameterType="CasPrdTemplate" resultMap="CasPrdReportMap">
+		SELECT
+		 	CAS_ORD_NO,
+			CAS_TYPE,
+			CAS_DATE,
+			MODIFY_DATE,
+			SUC_DATE,
+			ORDSTATUS,
+			CUST_ID,
+			CUST_NAME,
+			TXAMT,
+			RATE,
+			FEE,
+			SERVICE_FEE,
+			NETRECAMT,
+			ISSNO,
+			ISSNAM,
+			CARD_NO,
+			PROVINCE_ID,
+			CAS_DESC,
+			CAS_AUDIT,
+			AUDIT_DESC,
+			CAS_REL,
+			T0_AMT ,
+			T1_AMT,
+			FILED3
+		FROM MPOMNG_CAS_INF CAS
+		<where>
+			<include refid="WHERE_CasPrd"/>
+		</where>
+	</select>
+	
+	<update id="modifyCasPrdBystauts" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		<set>
+			<if test="auditDesc != null and auditDesc != ''">
+				 AUDIT_DESC = #{auditDesc},
+			</if>  
+			<if test="casAudit != null and casAudit != ''">
+				 CAS_AUDIT = #{casAudit},
+			</if>  
+			<if test="sucDate != null and sucDate != ''">
+				 SUC_DATE = #{sucDate},
+			</if>  
+			<if test="filed3 != null and filed3 != ''">
+				 FILED3 = #{filed3},
+			</if> 
+			<if test="ordStatus != null and ordStatus != ''">
+				 ORDSTATUS = #{ordStatus}
+			</if> 
+		</set>
+		WHERE 
+				CAS_ORD_NO = #{casOrdNo}
+		
+	</update>
+	
+	<update id="updateCasPrdT0" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		SET 
+			ORDSTATUS=#{ordStatus},
+			CAS_AUDIT=#{casAudit},
+			SUC_DATE = #{sucDate}
+		WHERE
+			CAS_ORD_NO = #{casOrdNo}
+	</update>
+	
+	<update id="updateCasPrdStatusForDone" parameterType="Map">
+		UPDATE 
+				MPOMNG_CAS_INF
+		SET 
+			ORDSTATUS='07'
+		WHERE
+			ORDSTATUS=#{ordStatus} AND
+			CAS_AUDIT=#{casAudit}
+			<if test="startTime != null and startTime != ''">
+				AND CAS_DATE >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND CAS_DATE <=#{endTime}]]>
+			</if>
+	</update>
+	<!--
+	<update id="updateCasPrdStatus">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS='07' WHERE ORDSTATUS='06'
+	</update>  -->
+	<update id="updateCasPrdStatusById">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS=#{ordStatus},SUC_DATE=#{sucDate} WHERE CAS_ORD_NO=#{casOrdNo}
+	</update>
+	
+	<delete id="emprtAccounts"  parameterType="Map">
+	    DELETE FROM MPOMNG_CAS_INF  WHERE  CAS_TYPE='03' AND CAS_DATE LIKE CONCAT(#{casDate},'%')
+	</delete>
+	
+	<update id="updateConPayStatus" parameterType="Map">
+		UPDATE MPOMNG_CONPAY_INF SET PAY_STATUS=#{payStatus} WHERE CAS_ORD_NO=#{casOrdNo}
+	</update>
+	
+	<update id="updateCasPrdStatusByCasPay" parameterType="Map">
+		UPDATE MPOMNG_CAS_INF SET ORDSTATUS='06',SUC_DATE=#{sucDate},FILED3=#{filed3}  WHERE CAS_ORD_NO=#{casOrdNos}
+	</update>
+	
+	<select id="getPayTypeList" parameterType="String" resultMap="PayTypeMap">
+		SELECT 
+	       	MCI.COOPORG_NO,
+	       	MCI.COOPNAME
+		FROM 
+			MPCOOP_COOPORG_INF MCI, MPCOOP_COOPORG_ROUTE_INF MCR
+		WHERE 
+			MCI.COOPORG_NO = MCR.COOPORG_NO AND MCR.RTRTYPE = '07'
+	</select>
+	<select id="getCasPayType" parameterType="String" resultMap="PayTypeMap">
+		SELECT 
+	       	MER_NO
+		FROM 
+			MPCOOP_COOPORG_MER_INF
+		WHERE
+			COOPORG_NO=#{cooporgNo}
+	</select>
+	
+	<select id="getLImitQuery" parameterType="String" resultMap="PayTypeMap">
+		SELECT 
+	       	T1.MER_NO,TER_NO,T2.AGENT_ID,T3.FIRST_AGENT_ID
+		FROM 
+			MPCOOP_COOPORG_MER_INF T1
+			LEFT JOIN MPAMNG_AGENT_ORG_INF T2 ON T2.MER_NO=T1.MER_NO AND T2.COOPORG_NO=T1.COOPORG_NO
+			LEFT JOIN MPAMNG_AGENT_INF T3 ON T3.AGENT_ID=T2.AGENT_ID
+		WHERE
+			T1.COOPORG_NO=#{cooporgNo} AND T3.AGENT_ID IS NOT NULL
+			LIMIT 1
+	</select>
+	
+</mapper>

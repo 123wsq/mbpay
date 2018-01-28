@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.TerminalCompanyDao">
+
+	<resultMap type="TerminalCompanyInf" id="TerminalCompanyMap">
+		<id property="termId" 			   column="TERM_ID" />
+		<result property="termcomCode"     column="TERMCOM_CODE" />
+		<result property="termcomName"     column="TERMCOM_NAME" />
+		<result property="termType"    	   column="TERMTYPE" />
+		<result property="termTypeName"    column="TERMTYPE_NAME" />
+	</resultMap>
+	
+
+	<insert id="insertEntity" parameterType="TerminalCompanyInf">
+		INSERT INTO MPAMNG_TERMINALCOMPANY_INF
+		 	(TERM_ID,
+		 	 TERMCOM_CODE,
+		 	 TERMCOM_NAME,
+		 	 TERMTYPE,
+		  	 TERMTYPE_NAME
+		 	 )
+		VALUES 
+			(#{termId,jdbcType=VARCHAR}, 
+			#{termcomCode,jdbcType=VARCHAR},
+			#{termcomName,jdbcType=VARCHAR},
+			#{termType,jdbcType=VARCHAR},
+			#{termTypeName,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<update id="updateEntity" parameterType="TerminalCompanyInf">
+		UPDATE MPAMNG_TERMINALCOMPANY_INF
+		<set>
+			<if test="termcomCode != null and termcomCode!=''">
+				TERMCOM_CODE = #{termcomCode,jdbcType=VARCHAR},
+			</if>
+			<if test="termcomName != null and termcomName != ''">
+				TERMCOM_NAME = #{termcomName,jdbcType=VARCHAR},
+			</if>
+			<if test="termType != null and termType != ''">
+				TERMTYPE = #{termType,jdbcType=VARCHAR},
+			</if>
+			<if test="termTypeName != null and termTypeName != ''">
+				TERMTYPE_NAME = #{termTypeName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE TERM_ID = #{termId}
+	</update>
+
+	<delete id="deleteEntity" parameterType="TerminalCompanyInf">
+		DELETE FROM MPAMNG_TERMINALCOMPANY_INF WHERE TERM_ID = #{termId}
+	</delete>
+
+	<select id="selectEntity" parameterType="TerminalCompanyInf" resultMap="TerminalCompanyMap">
+		SELECT
+			  TERM_ID ,TERMCOM_CODE ,TERMCOM_NAME , TERMTYPE , TERMTYPE_NAME   
+		FROM 
+			  MPAMNG_TERMINALCOMPANY_INF 
+		WHERE TERM_ID=#{termId}
+	</select>
+	
+	<select id="countEntity" parameterType="TerminalCompanyInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT 
+			COUNT(TERM_ID) 
+		FROM 
+			MPAMNG_TERMINALCOMPANY_INF
+		<where>
+			<if test="type==1">
+			    AND	TERMCOM_CODE IS NOT NULL AND TERMCOM_CODE!='' 
+			</if>
+			<if test="type==2">
+				AND TERMTYPE IS NOT NULL AND TERMTYPE!='' 
+			</if>
+			<if test="termcomName != null and termcomName != ''">
+				AND TERMCOM_NAME LIKE CONCAT('%',#{termcomName},'%')
+			</if>
+			<if test="termTypeName != null and termTypeName != ''">
+				AND TERMTYPE_NAME LIKE CONCAT('%',#{termTypeName},'%')
+			</if>
+			<if test="termcomCode != null and termcomCode != ''">
+				AND TERMCOM_CODE LIKE CONCAT('%',#{termcomCode},'%')
+			</if>
+			<if test="termType != null and termType != ''">
+				AND TERMTYPE LIKE CONCAT('%',#{termType},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="TerminalCompanyInf" resultMap="TerminalCompanyMap" databaseId="mysql">
+		SELECT 
+			TERM_ID ,TERMCOM_CODE ,TERMCOM_NAME , TERMTYPE , TERMTYPE_NAME 
+		FROM 
+			MPAMNG_TERMINALCOMPANY_INF
+		<where>
+			<if test="type==1">
+				AND TERMCOM_CODE IS NOT NULL AND TERMCOM_CODE!='' 
+			</if>
+			<if test="type==2">
+				AND TERMTYPE IS NOT NULL AND TERMTYPE!='' 
+			</if>
+			<if test="termType != null and termType != ''">
+				AND TERMTYPE LIKE CONCAT('%',#{termType},'%')
+			</if>
+			<if test="termcomName != null and termcomName != ''">
+				AND TERMCOM_NAME LIKE CONCAT('%',#{termcomName},'%')
+			</if>
+			<if test="termTypeName != null and termTypeName != ''">
+				AND TERMTYPE_NAME LIKE CONCAT('%',#{termTypeName},'%')
+			</if>
+			<if test="termcomCode != null and termcomCode != ''">
+				AND TERMCOM_CODE LIKE CONCAT('%',#{termcomCode},'%')
+			</if>
+		</where>
+		ORDER BY TERM_ID ASC LIMIT #{start},#{pageSize} 
+	</select>
+	
+	
+	<select id="getTermTypeList" parameterType="TerminalCompanyInf" resultMap="TerminalCompanyMap">
+		SELECT 
+			TERM_ID,TERMTYPE, TERMTYPE_NAME 
+		 FROM 
+		 	MPAMNG_TERMINALCOMPANY_INF
+		 WHERE 
+		 	TERMTYPE IS NOT NULL AND TERMTYPE != '' 
+	</select>
+	
+	<select id="getTermComList" parameterType="TerminalCompanyInf" resultMap="TerminalCompanyMap">
+		SELECT 
+			TERM_ID ,TERMCOM_CODE ,TERMCOM_NAME 
+		 FROM 
+		 	MPAMNG_TERMINALCOMPANY_INF 
+		 WHERE
+		    TERMCOM_CODE IS NOT NULL AND TERMCOM_CODE != '' 
+	</select>
+	
+</mapper>

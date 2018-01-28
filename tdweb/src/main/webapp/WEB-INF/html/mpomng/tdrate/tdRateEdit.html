@@ -1,0 +1,145 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpomng/tdRateEdit/edit.do" id="_form">
+	<!-- #section:elements.form -->
+	<br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+		<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 参数代码： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="dlg_rateCode" name="paraCode" readonly="readonly"  maxlength="28"  
+					class="col-xs-12 col-sm-12"  />
+				<i class="ace-icon fa fa-star-o"></i>
+			 </span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 参数名称： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="dlg_rateName" name="paraName" maxlength="23" datatype="word" validate="true" placeholder="请输入[参数名称]" 
+					class="col-xs-12 col-sm-12"  />
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 参数类型： </label>
+		<div class="col-sm-9">
+
+			 <label>
+					<div class="search_input" style="pEditing-top: 5px;">
+					  <select 
+					        rel="obj.RATEDTYPE"
+				 			location="local" 
+							name="paraType" 
+				 			id="dlg_rateType" 
+				 			data-placeholder="请选择收费类型" style="width: 100px;vertical-align:middle;" readonly="readonly" >
+						<option value='' >--请选择--</option>
+				    </select>
+					</div>
+				</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 参数值： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="dlg_rateVal" name="paraVal" maxlength="18" datatype="money" validate="true" placeholder="请输入[参数值]"  init-format="change(this,'{value}')" 
+					class="col-xs-12 col-sm-12"  />
+					<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+	</div>
+	<div class="form-group" id="topMoney">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 封顶金额： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="dlg_rateMaxMoney" init-format="cent2Yuan('{value}')" name="paraMaxMoney"  datatype="money" maxlength="18"placeholder="请输入[封顶金额]" 
+					class="col-xs-12 col-sm-12"  />
+			</span>
+		</div>
+	</div>
+	<div class="form-group"  style="display:none;">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 类型值： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="paraValType"  name="paraValType" maxlength="18"
+				 class="col-xs-10 col-sm-7"  />
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	var time = setInterval(function(){
+		if($("#dlg_rateType option:selected").val()!=''){
+			clearInterval(time);
+			
+			if($("#dlg_rateType option:selected").val()=="02"&&$("#paraValType").val()=="2"){
+				$("#dlg_rateVal").val(cent2Yuan($("#dlg_rateVal").val()));
+			}
+			if($("#dlg_rateType option:selected").val()!="01"){
+				$("#topMoney").hide();
+			}
+		}
+	},100);
+	
+});
+
+
+function submitForm(obj){
+	
+	var rateType=$("#dlg_rateType option:selected").val();
+	if(rateType==''){
+		alertMsg.error('请选择收费类型'); 
+		return false;
+	}
+	var dlg_rateVal=$("#dlg_rateVal").val();
+	var dlg_rateMaxMoney=$("#dlg_rateMaxMoney").val();
+	var dlg_rateCode=$("#dlg_rateCode").val();
+	if(parseFloat(dlg_rateVal)==0 && dlg_rateCode !="HOLIDAY_RATE_FEE" && $("#dlg_rateCode").val()!='T0_RATE_FEE'){
+		alertMsg.error('参数值不能为0'); 
+		return false;
+	}
+	if(parseInt(dlg_rateMaxMoney)<0){
+		alertMsg.error('封顶金额要大于0'); 
+		return false;
+	}
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+
+</script>

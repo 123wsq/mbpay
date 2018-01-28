@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+	<form action="" id="casSearchForm" method="post" onsubmit="return pageSearch(this);">
+		<div style="display: block;" class="widget-body ">
+			<div class="widget-main">
+				<div class="rowt">
+					<div class="col-sm-12">
+								<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">开户行名称:</label>
+								<div class="search_input">
+									<input id="issnam" type="text" name="issnam"
+										placeholder="请输入开户行名称">
+								</div>
+							</div>
+							
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">商户编号:</label>
+								<div class="search_input">
+									<input id="custId" type="text" name="custId"
+										placeholder="请输入商户编号">
+								</div>
+							</div>
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">商户名称:</label>
+								<div class="search_input">
+									<input id="custName" type="text" name="custName"
+										placeholder="请输入商户名称">
+								</div>
+							</div>
+
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">结算账号:</label>
+								<div class="search_input">
+									<input id="cardNo" type="text" name="cardNo"
+										placeholder="请输入银行卡号">
+								</div>
+							</div>
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">代理商编号:</label>
+								<div class="search_input">
+									<input id="agentId" type="text" name="agentId" 
+										placeholder="请输入商户名称">
+								</div>
+							</div>
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">代理商名称:</label>
+								<div class="search_input">
+									<input id="agentName" type="text" name="agentName" 
+										placeholder="请输入代理商名称">
+								</div>
+							</div>
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">订单号:</label>
+								<div class="search_input">
+									<input id="casOrdNo" type="text" name="casOrdNo"
+										placeholder="请输入订单号">
+								</div>
+							</div>
+				
+
+							<!-- <div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">开户行:</label>
+							<div class="search_input">
+								<input id="bankcode" type="text" name="bankcode" placeholder="请输入开户行">
+							</div>
+						</div> -->
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">订单状态:</label>
+								<div class="search_input">
+									<select rel="obj.CASORDSTATUS" location="local"
+										name="ordStatus" id="search_paystatus"
+										style="width: 120px; vertical-align: middle;">
+										<option value="">---选择---
+										<option>
+									</select>
+								</div>
+							</div>
+							
+							<!-- <div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">审核状态:</label>
+								<div class="search_input">
+									<select rel="obj.CASAUDITSTATUS" location="local"
+										name="auditStatus" id="search_auditstatus"
+										style="width: 120px; vertical-align: middle;">
+										<option value="">---选择---
+										<option>
+									</select>
+								</div>
+							</div> -->
+							
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">提现类型:</label>
+								<div class="search_input">
+									<select rel="obj.CASTPYE" location="local"
+										name="casType" id="search_casType"
+										style="width: 120px; vertical-align: middle;">
+										<option value="">---选择---
+										<option>
+									</select>
+								</div>
+							</div>
+
+							<div class="search_elm"
+								style="margin-left: 0px; margin-right: 15px; width: 280px;">
+								<label class="label_search" for="userName">订单时间:</label>
+								<div class="input-group">
+									<input type="text" class="form-control date-picker"
+										name="sdate" id="startTime" placeholder="起始日期" data-date-format="yyyy-mm-dd" />
+									<span class="input-group-addon"> <i
+										class="fa fa-exchange"></i>
+									</span> <input type="text" class="form-control date-picker"
+										name="edate" id="endTime" placeholder="结束日期" data-date-format="yyyy-mm-dd" />
+								</div>
+							</div>
+							
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">代付通道:</label>
+								<div class="search_input">
+									<select name="payType" id="payType"
+										style="width: 120px; vertical-align: middle;">
+<!-- 										<option value="">---选择--- -->
+<!-- 										<option> -->
+									</select>
+								</div>
+							</div>
+							
+							<div class="search_elm" style="margin-left: 0px">
+								<label class="label_search">线下清算通道:</label>
+								<div class="search_input">
+									<select rel="obj.STLCHNL" location="local"
+										name="stlChnl" id="search_stlChnl"
+										style="width: 120px; vertical-align: middle;">
+										<option value="">---选择---
+										<option>
+									</select>
+								</div>
+							</div>
+							<div class="search_elm" style="margin-left: 0px;width: 180px">
+								<label class="label_search">支付方式:</label>
+								<div class="search_input">
+									<select 
+										rel="obj.PAYTYPE"
+										location="local" 
+										 name="acType" 
+										 id="acType" 
+										 style="width: 100px;vertical-align:middle;">
+										 <option value="">---选择---<option>	
+							 		</select>
+								</div>
+							</div>
+
+							<div class="search_elm">
+								<button class="btn btn-small btn_search" type="submit"
+									title="搜索" onclick="searchCount()" id="search" name="search">搜索</button>
+								<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >
+									清空
+								</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div style="display: block;" class="widget-body " id="total"></div>
+	</form>
+</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn"> 
+					<a  class="btn btn-small btn-warning"
+					onclick="settleOperate('settleOver')">清算完成</a>
+					<!-- <a  class="btn btn-small btn-warning"
+					onclick="settleOperate('settleFail')">清算失败</a> -->
+					<a auth="" class="btn btn-small btn-info"
+					onclick="reportData_02();">导出清算文件</a>
+					<a auth="mpomng/prdInf/casPrdAudit.do" class="btn btn-small btn-success"
+					onclick="casAuditSubmit('02')">审核通过</a>
+					<a auth="mpomng/prdInf/casPrdAudit.do" class="btn btn-small btn-danger"
+					onclick="casAuditSubmit('01')">审核拒绝</a>
+					<a auth="mpomng/prdInf/casPay.do" class="btn btn-small btn-danger"
+					onclick="casPay()">代付</a>
+					<!-- <a class="btn btn-small btn-danger"
+					onclick="limitQuery()">额度查询</a> -->
+				</span> <span id="paging_bar" style="float: right"> </span>
+				 <span id="paging_bar" style="float: right"> </span>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid(
+					{
+						url : "mpomng/prdInf/casPrdList.do",
+						datatype : "json",
+						height : '100%',
+						width : '100%',
+						colNames : [ '订单号', '商户编号  ', '商户名称', '代理商编号', '代理商名称', '订单时间','提现类型','支付方式','订单状态',
+								'审核状态', '订单金额', '费率', '手续费', '服务费', '到账金额','T0金额','T1金额',
+								'结算账号', '银行名称','开户行省市', '完成时间','代付通道'],
+						colModel : [ {
+							name : 'casOrdNo',
+							index : 'casOrdNo',
+							width : '140px',
+							sortable : false,
+						},
+						{
+							name : 'custId',
+							index : 'custId',
+							width : '120px',
+							sortable : false
+						}, {
+							name : 'custName',
+							index : 'custName',
+							width : '80px',
+							sortable : false
+						}, {
+							name : 'agentId',
+							index : 'agentId',
+							width : '120px',
+							sortable : false,
+						}, {
+							name : 'agentName',
+							index : 'agentName',
+							width : '80px',
+							sortable : false
+						}, {
+							name : 'casDate',
+							index : 'casDate',
+							width : '140px',
+							sortable : false,
+							formatter : gridFormatByDate
+						}, {
+							name : 'casType',
+							index : 'casType',
+							width : '80px',
+							sortable : false,
+							ditcKey : 'CASTPYE',
+							formatter : gridFormatByDict
+						}, {
+							name : 'acType',
+							index : 'acType',
+							width : '100px',
+							sortable:false,
+							ditcKey:'PAYTYPE',
+							formatter : gridFormatByDict
+						},{
+							name : 'ordStatus',
+							index : 'ordStatus',
+							width : '80px',
+							sortable : false,
+							ditcKey : 'CASORDSTATUS',
+							formatter : gridFormatByDict
+						}, {
+							name : 'casAudit',
+							index : 'casAudit',
+							width : '100px',
+							sortable : false,
+							hidden:true,
+							ditcKey : 'CASAUDITSTATUS',
+							formatter : gridFormatByDict
+						}, {
+							name : 'ordAmt',
+							index : 'ordAmt',
+							width : '100px',
+							sortable : false,
+							formatter : centYuan
+						}, {
+							name : 'rate',
+							index : 'rate',
+							width : '100px',
+							hidden : true,
+							sortable : false,
+							ditcKey : 'RATE'
+						}, {
+							name : 'fee',
+							index : 'fee',
+							width : '80px',
+							sortable : false,
+							formatter : centYuan
+						}, {
+							name : 'serviceFee',
+							index : 'serviceFee',
+							width : '80px',
+							sortable : false,
+							formatter : centYuan
+						}, {
+							name : 'netrecAmt',
+							index : 'netrecamt',
+							width : '100px',
+							sortable : false,
+							formatter : centYuan
+						}, {
+							name : 't0Amt',
+							index : 't0Amt',
+							width : '100px',
+							sortable : false,
+							formatter : centYuan
+						}, {
+							name : 't1Amt',
+							index : 't1Amt',
+							width : '100px',
+							sortable : false,
+							formatter : centYuan
+						}, 
+						{
+							name : 'cardNo',
+							index : 'cardNo',
+							width : '150px',
+							sortable : false
+						}, {
+							name : 'issNam',
+							index : 'issNam',
+							width : '150px',
+							sortable : false
+						}, {
+							name : 'proCity',
+							index : 'proCity',
+							width : '140px',
+							sortable : false,
+						},{
+							name : 'sucDate',
+							index : 'sucDate',
+							width : '140px',
+							sortable : false,
+							formatter : gridFormatByDate
+						},{
+							name : 'coopName',
+							index : 'coopName',
+							width : '100px',
+							sortable : false
+						}],
+						viewrecords : true,
+						rowNum : 10,
+						rowList : [ 10, 20, 30 ],
+						altRows : true,
+
+						shrinkToFit : false,
+						multiselect : true,//设置行可多选的 
+						multiboxonly : true,//
+
+						loadComplete : function() {
+							var table = this;
+							setTimeout(function() {
+								//加载分页
+								initPagingBar(grid_selector);
+							}, 0);
+						},
+						beforeRequest : function() {//请求之前执行
+							jqGrid = this;
+						},
+					});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+
+			function operateEdit(cellvalue, options, rowObject) {//定义button按钮
+				var button = "<div class=\"hidden-sm hidden-xs btn-group\">";
+				button += "<button class='btn btn-xs btn-warning' onclick='casDetails(\""
+						+ rowObject["casOrdNo"]
+						+ "\")'"
+						+ "title='详细信息查看'>详细</button>";
+				return button;
+			}
+			;
+			function centYuan(cellvalue, options, rowObject) {
+				return cent2Yuan(cellvalue);
+			}
+		});
+
+		function createDetailsBtn(cellvalue, options, rowObject) {
+			var button = "";
+			button += "<a class='pointer' onclick='casDetails(\""
+					+ rowObject["casOrdNo"] + "\")'" + "title='" + cellvalue
+					+ "'>" + cellvalue + "</a>";
+			return button;
+		}
+
+		function casDetails(casOrdNo) {
+			if (!casOrdNo || casOrdNo.length <= 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-casAudit',
+				title : '提现订单详情',
+				pageUrl : 'mpomng/prdInf/casDetailsView.do',
+				dataUrl : 'mpomng/prdInf/casDetails.do',
+				width : '80%',
+				height : '80%',
+				dataParam : {
+					casOrdNo : casOrdNo
+				},
+				pageParam : {
+					type : 'view'
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			});
+
+		}
+
+		function casEdit(casOrdNo) {
+			if (!casOrdNo || casOrdNo.length <= 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-casAudit',
+				title : '收款订单详情',
+				pageUrl : 'mpomng/prdInf/casDetailsView.do',
+				dataUrl : 'mpomng/prdInf/casDetails.do',
+				width : '80%',
+				height : '80%',
+				dataParam : {
+					casOrdNo : casOrdNo
+				},
+				pageParam : {
+					type : 'edit'
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			});
+
+		}
+		
+		$(document).ready(function() {
+			getPayTypeList();
+		});
+		
+		function getPayTypeList() {
+			$(document).ready(
+					function() {
+						$('#payType').html("");
+						var payType = $('#payType');
+						payType.append('<option value="">---选择---</option>');
+						$.ajax({ 
+					        url: "mpomng/prdInf/getPayTypeList.do",  
+					        type: "post",  
+					        //data: {proCode:proCode},  
+					        dataType: 'json',
+					        cache:false,
+					        success: function(result) {
+					            var data = eval("("+result.obj+")");
+					            if (data!=null && data.length > 0) {  
+					                 for (var i = 0; i < data.length; i++) {  
+					                   	payType.append('<option value="'+data[i].cooporgNo+'">'+data[i].coopName+'</option>');
+					                 }  
+					             }  
+					        },
+					    });  
+
+			});
+		}
+
+		$(document).ready(function() {
+			searchCount();
+
+		});
+
+		function searchCount() {
+			$(document).ready(
+					function() {
+						$.ajax({
+							type : "post",
+							url : "mpomng/prdInf/casCount.do",
+							data : $("#casSearchForm").serialize(),
+							dataType : 'json',
+							async : true,
+							success : function(result) {
+								if (result.rspcod != 200) {
+									msg.alert("错误", result.rspmsg , 'error');
+								} else {
+									var count = result.obj.cntNum;
+									var txamt = cent2Yuan(result.obj.cntOrdAmt);
+									var fee = cent2Yuan(result.obj.cntFee);
+									var serviceFee = cent2Yuan(result.obj.cntServiceFee);
+									if (!count) {
+										count = "0";
+									}
+									if (!txamt) {
+										txamt = "0";
+									}
+									if (!fee) {
+										fee = "0";
+									}
+									if (!serviceFee) {
+										serviceFee = "0";
+									}
+									var html = "";
+									html += "汇总笔数和金额:[" + count + "]笔  |  ["
+											+ txamt + "]元  "
+									html += "&nbsp;&nbsp;&nbsp;&nbsp;";
+									html += "手续费总额:[" + fee + "]元  服务费总额:["
+											+ serviceFee + "]";
+									$("#total").html(html);
+
+								}
+							},
+							error : function(XMLHttpRequest, textStatus) {
+								msg.alert("错误", "错误代码：" + XMLHttpRequest.status
+										+ ",错误描述：" + textStatus, 'error');
+							}
+						});
+
+					});
+
+		}
+		
+		function reportData_02_check() {
+			var ch = true;
+			$.ajax({
+				type : "post",
+				url : "mpomng/prdInf/ordStatusCount.do",
+				data : {
+					"ordStatus" : "01"
+				},
+				dataType : 'json',
+				async : false,
+				success : function(result) {
+					if (result.obj == 0) {
+						ch = false;
+					} else {
+					}
+				},
+				error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+							+ textStatus, 'error');
+				}
+			});
+			return ch;
+		}
+
+		function reportData_02() {
+			if (reportData_02_check() == false) {
+				msg.alert("警告", "没有要清算的订单信息！", "error");
+				return false;
+			} else {
+				var casOrdNo = $("#casOrdNo").val();
+				var custId = $("#custId").val();
+				var custName = $("#custName").val();
+				var agentId = $("#agentId").val();
+				var agentName = $("#agentName").val();
+				var cardNo = $("#cardNo").val();
+				var search_paystatus = $("#search_paystatus").val();
+				var sdate = $("#startTime").val();
+				var edate = $("#endTime").val();
+				var acType = $("#acType").val();
+				var stlChl = $("#search_stlChnl").val();
+				if(stlChl == "" || stlChl == null){
+					msg.alert("警告", "导出清算文件请选择清算通道！", "warn");
+					return false;
+				}else{
+					stlChl = "STL_" + stlChl;
+				}
+				
+				var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+				var casOrdNos = "";
+				for (var i = 0; i < rows.length; i++) {
+					if($('#grid-table').jqGrid('getRowData',rows[i]).ordStatus!='待清算' && $('#grid-table').jqGrid('getRowData',rows[i]).ordStatus!='待清算（代付失败）'){
+						msg.alert("警告", "只能导出[ 待清算 ]的订单！", "warn");
+						return;
+					}
+					casOrdNos += $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo + ",";
+				}
+				var askmsg="请确认";
+				if (rows.length == 0) {
+					casOrdNos = "";
+					askmsg="当前没有选择数据项！将导出所有要清算的订单，请确认";
+				}else{
+					casOrdNos = casOrdNos.substring(0, casOrdNos.lastIndexOf(","));
+					askmsg="将导出已选择清算的订单，请确认";
+				}
+				msg.confirm({title:'确认',position:'center',msg:askmsg,call:function(ok){
+					if(ok){
+						var querycon = {
+							"server" : stlChl,
+							"casOrdNos" : casOrdNos,
+							"custId" : custId,
+							"custName" : custName,
+							"agentId" : agentId,
+							"agentName" : agentName,
+							"cardNo" : cardNo,
+							"ordStatus" : "01",
+							"startTime" : sdate,
+							"acType":acType,
+							"endTime" : edate
+						};
+						report(querycon);
+					}
+				}});
+			}
+			setTimeout("submitSearch()", 4000);
+		}
+		
+		
+		function submitSearch(){
+			document.all.search.click();
+		}
+		
+		function reportData_04(){
+			var casOrdNo=$("#casOrdNo").val();
+			var custId=$("#custId").val();
+			var custName=$("#custName").val();
+			var agentId=$("#agentId").val();
+			var agentName=$("#agentName").val();
+			var cardNo=$("#cardNo").val();
+			var casType=$("#search_casType").val();
+			var search_paystatus=$("#search_paystatus").val();
+			var startTime=$("#startTime").val();
+			var endTime=$("#endTime").val();
+			var acType = $("#acType").val();
+			var querycon = {"casOrdNo":casOrdNo,
+							"custId":custId,
+							"custName":custName,
+							"agentId":agentId,
+							"agentName":agentName,
+							"cardNo":cardNo,
+							"casType":casType,
+							"casStatus":search_paystatus,
+							"startTime":startTime,
+							"endTime":endTime,
+							"server":"07",
+							"acType":acType
+			};
+			report(querycon);
+		}
+		
+		function settleOperate(url) {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			var casOrdNos = "";
+			for (var i = 0; i < rows.length; i++) {
+				if($('#grid-table').jqGrid('getRowData',rows[i]).ordStatus!='清算中'){
+					msg.alert("警告", "只能设置清算中的订单！", "warn");
+					return;
+				}
+				　casOrdNos += $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo + ",";
+			}
+			casOrdNos = casOrdNos.substring(0, casOrdNos.lastIndexOf(","));
+			var askmsg="您确定要清算完成吗？";
+			if(url=='settleFail'){
+				askmsg="您确定要清算失败吗？";
+			}
+			
+			msg.confirm({title:'确认',position:'center',msg:askmsg,call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpomng/cas/"+url+".do?casOrdNos=" + casOrdNos,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg + " 错误代码："+ result.rspcod, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+						}
+					});
+				}
+			}});
+			
+			}
+		function auditAll(type){
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			var casOrdNos = "";
+			for (var i = 0; i < rows.length; i++) {
+				　casOrdNos += $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo + ",";
+			}
+			casOrdNos = casOrdNos.substring(0, casOrdNos.lastIndexOf(","));
+			msg.confirm({title:'确认',position:'center',msg:'您确定要清算完成吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpomng/cas/settleOver.do?casOrdNos=" + casOrdNos,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg , 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+						}
+					});
+				}
+			}});
+		}
+		
+		function casAuditSubmit(casAudit){
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			msg.confirm({title:'确认',position:'center',msg:'确定要审核此订单么？',call:function(ok){
+			if(ok){
+				var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+				var casOrdNos = "";
+				var auditDesc = "";
+				for (var i = 0; i < rows.length; i++) {
+					var casType = $('#grid-table').jqGrid('getRowData',rows[i]).casType;
+					　if(casType == 'T1提现'){
+						msg.alert("警告", "只能选择[T0]订单！", "warn");
+						return;
+					　}
+					
+					if($('#grid-table').jqGrid('getRowData',rows[i]).casAudit!='审核中'){
+						msg.alert("警告", "只能审核[ 审核中 ]的订单！", "warn");
+						return;
+					}
+					
+					if (rows.length == 0) {
+						msg.alert("警告", "当前没有选择数据项！", "warn");
+						return;
+					}
+	// 				if (rows.length > 1) {
+	// 					msg.alert("警告", "不能同时选择多项数据！", "warn");
+	// 					return;
+	// 				}
+// 					casOrdNo = $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo;
+					casOrdNos += $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo + ",";
+					if(casAudit == '01'){
+						ordStatus = '05'
+					}else{
+						ordStatus = '01'
+					}
+	
+					auditDesc="T0提现审核拒绝";
+					var tmsg = "审核拒绝吗？";
+					if(ordStatus == '01'){
+						tmsg = "审核通过吗？";
+						auditDesc="T0提现审核通过";
+					}
+	// 				msg.confirm({title:'确认',position:'center',msg:tmsg,call:function(ok){
+	// 					if(ok){
+	// 					}
+	// 				}});
+				}
+				casOrdNos = casOrdNos.substring(0, casOrdNos.lastIndexOf(","));
+				$.ajax({
+					type : "post",
+					url : "mpomng/prdInf/casPrdAudit.do",
+					data:{"casOrdNos":casOrdNos,"auditDesc":auditDesc,"casAudit":casAudit,"ordStatus":ordStatus},
+					dataType : 'json',
+					success : function(result) {
+						if(result.rspcod== 200){
+							msg.alert("提示",result.rspmsg,'correct');
+							$("#grid-table").trigger("reloadGrid");
+							dialog.closeById('dlg-casAudit');
+							$("#grid-table").trigger("reloadGrid");
+						}else{
+							msg.alert("错误",result.rspmsg,'error');
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+					}
+				});
+			}
+			}});
+		}
+		
+		function casPay(){
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			if($("#payType").val() == "" || $("#payType").val() == null){
+				msg.alert("警告", "代付请选择代付通道！", "warn");
+				return;
+			}
+			msg.confirm({title:'确认',position:'center',msg:'确定要进行代付吗？',call:function(ok){
+			if(ok){
+				var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+				var casOrdNos = "";
+				var cooporgNo = $("#payType").val();
+				//var netrecAmts = "";
+				//var cardNos = "";
+				//var agentIds = "";
+				//var custNames = ""; 
+				for (var i = 0; i < rows.length; i++) {
+					var casType = $('#grid-table').jqGrid('getRowData',rows[i]).casType;
+					
+					if($('#grid-table').jqGrid('getRowData',rows[i]).ordStatus!='待清算' && $('#grid-table').jqGrid('getRowData',rows[i]).ordStatus!='待清算（代付失败）'){
+						msg.alert("警告", "只能代付[ 待清算 ]的订单！", "warn");
+						return;
+					}
+					if (rows.length == 0) {
+						msg.alert("警告", "当前没有选择数据项！", "warn");
+						return;
+					}
+					casOrdNos += $('#grid-table').jqGrid('getRowData',rows[i]).casOrdNo + ",";
+					//netrecAmts += $('#grid-table').jqGrid('getRowData',rows[i]).netrecAmt + ",";
+					//cardNos += $('#grid-table').jqGrid('getRowData',rows[i]).cardNo + ",";
+					//agentIds += $('#grid-table').jqGrid('getRowData',rows[i]).agentId + ",";
+					//custNames += $('#grid-table').jqGrid('getRowData',rows[i]).custName + ",";
+				}
+				casOrdNos = casOrdNos.substring(0, casOrdNos.lastIndexOf(","));
+				//netrecAmts = netrecAmts.substring(0, casOrdNos.lastIndexOf(","));
+				//cardNos	= cardNos.substring(0, casOrdNos.lastIndexOf(","));
+				//agentIds = agentIds.substring(0, casOrdNos.lastIndexOf(","));
+				//custNames = custNames.substring(0, casOrdNos.lastIndexOf(","));
+				var payType_=document.getElementById("payType").value;
+				$.ajax({
+					type : "post",
+					url : "mpomng/prdInf/casPay.do",
+					data:{"casOrdNos":casOrdNos,"cooporgNo":cooporgNo,"payType":payType_}, //,"netrecAmts":netrecAmts,"cardNos":cardNos,"agentIds":agentIds,"custNames":custNames
+					dataType : 'json',
+					success : function(result) {
+						if(result.rspcod== 200){
+							msg.alert("提示",result.rspmsg,'correct');
+							$("#grid-table").trigger("reloadGrid");
+							dialog.closeById('dlg-casAudit');
+							$("#grid-table").trigger("reloadGrid");
+						}else{
+							msg.alert("错误",result.rspmsg,'error');
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+					}
+				});
+			}
+			}});
+		}
+		function limitQuery(){
+			if($("#payType").val() == "" || $("#payType").val() == null){
+				msg.alert("警告", "代付请选择代付通道！", "warn");
+				return;
+			}
+			
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-orgLimit',
+				title : '额度查询页面',
+				pageUrl : 'mpomng/prdInf/orgLmtQuery.do',
+				dataUrl : 'mpomng/prdInf/limitQuery.do',
+				width : '80%',
+				height : '80%',
+				dataParam : {
+					casOrdNos : "",
+					cooporgNo : "001"
+				},
+				pageParam : {
+					type : 'view'
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+			});
+		} 
+	</script>

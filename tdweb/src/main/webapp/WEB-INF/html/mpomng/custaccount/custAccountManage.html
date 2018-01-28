@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+	<div class="rowt">
+		<div class="col-xs-12">
+			<table id="grid-table-dialog"></table>
+
+			<div id="grid-pager-dialog"></div>
+
+			<div style="margin-top: 10px">
+				 <span id="paging_bar-dialog" style="float: right"> </span>
+			</div>
+
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid_dialog;
+		jQuery(function($) {
+			var grid_selector = "#grid-table-dialog";
+			var pager_selector = "#grid-pager-dialog";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+
+				url : "mpomng/custAccountManage/queryList.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : ['账户编号','账户类型', '货币类型','总余额','T+0', 'T+1','T+1未提','冻结金额','最后交易时间','是否冻结','操作' ],
+				colModel : [ {name : 'account',       index : 'account',       width : '100px' }, 
+				             {name : 'acType',     index : 'acType',     width : '150px' , ditcKey:'ACTYPE', formatter : gridFormatByDict},
+				             {name : 'ccy',    index : 'ccy',    width : '150px' ,ditcKey:'CERTIFICATETYPE' ,formatter : gridFormatByDict}, 
+				             {name : 'acBal',   index : 'acBal',   width : '150px' }, 
+				             {name : 'acT0',  index : 'acT0',   width : '150px'}, 
+				             {name : 'acT1',   index : 'acT1',   width : '150px' }, 
+				             {name : 'acT1Y',   index : 'acT1Y',   width : '150px' }, 
+				             {name : 'frozBalance',    index : 'frozBalance',    width : '150px'}, 
+				             {name : 'lstTxDatetime',         index : 'lstTxDatetime',         width : '150px' ,formatter : dateFormat}, 
+				             {name : 'accountStatus',    index : 'accountStatus',    width : '150px' ,ditcKey:'ACSTATUS' ,formatter : gridFormatByDict}, 
+				             {name : 'op',  index : 'op',  width : '150px' ,formatter:operateEdit}
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 12, 20, 30 ],
+				altRows : true,
+				shrinkToFit : false,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid_dialog = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+
+			function operateEdit(cellvalue, options, rowObject){// "<div class='hidden-phone visible-desktop btn-group'>"
+				var status=rowObject["accountStatus"];
+				if(status=='0'){
+					var button = "<div class=\"hidden-sm hidden-xs btn-group\">";  //定义button
+					button += "<button class='btn btn-xs btn-warning'  title='详细信息查看'>冻结</button>";
+				}else{
+					var button = "<div class=\"hidden-sm hidden-xs btn-group\">";  //定义button
+					button += "<button class='btn btn-xs btn-warning'  title='详细信息查看'>解冻</button>";
+				}
+				
+				return button;
+			}
+			//格式化日期
+			function dateFormat(cellvalue, options, rowObject){
+				return getDateFormat(rowObject["lastOperTime"]);
+			}
+		});
+
+	</script>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--易美接口 -->
+<channel name="STHDJP" log_level="DEBUG" timeout="300">
+	<!-- 注册 -->
+	<transaction code="regist">
+		<unpack>
+			<readelement name="response">
+				<readelement name="error"   expr="error" />
+				<readelement name="message" expr="message" />
+			</readelement>
+		</unpack>
+	</transaction>
+	<!-- 发送短信 -->
+	<transaction code="sendsms">
+		<unpack>
+			<readelement name="response">
+				<readelement name="error"   expr="error" />
+				<readelement name="message" expr="message" />
+			</readelement>
+		</unpack>
+	</transaction>
+	<!-- 查询余额 -->
+	<transaction code="querybalance">
+		<unpack>
+			<readelement name="response">
+				<readelement name="error"   expr="error" />
+				<readelement name="message" expr="message" />
+			</readelement>
+		</unpack>
+	</transaction>
+</channel>

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.tdauth.dao.UserDao">
+	<resultMap type="UserInf" id="userMap">
+		<id property="id" column="USER_ID" />
+		<result property="orgId" column="ORG_ID" />
+		<result property="sysId" column="SYSTEMFLAG" />
+		<result property="userId" column="LOGIN_ID" />
+		<result property="userName" column="USER_NAM" />
+		<result property="userPwd" column="USER_PWD" />
+		<result property="userRandom" column="RANDOM" />
+		<result property="userStatus" column="USER_STATE" />
+		<result property="lnum" column="LNUM" />
+		<result property="lastLoginTime" column="LAST_LOGIN_TIME" />
+		<result property="lastLoginIp" column="LAST_LOGIN_IP" />
+		<result property="phone" column="SALTEL" />
+		<result property="email" column="EMAIL" />
+		<result property="agentId" column="AGENTID" />
+		<result property="isFirstLoginFlag" column="IS_FIRST_LOGINFLAG" />
+		<result property="roleName" column="ROLE_NAM" />
+		<result property="roleId" column="ROLE_ID" />
+		<result property="operId" column="OPERID" />
+		<result property="userTyp" column="USER_TYP" />
+	</resultMap>
+
+	<insert id="insertEntity" parameterType="UserInf">
+		insert into PMUSRINF (USER_ID,LOGIN_ID, USER_NAM, USER_PWD,RANDOM, USER_STATE,SALTEL,EMAIL,AGENTID,USER_TYP,USER_NUM)
+		values (#{id,jdbcType=NUMERIC},#{userId},#{userName},#{userPwd},#{userRandom},'1',#{phone,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{agentId,jdbcType=VARCHAR},'00',#{agentId,jdbcType=VARCHAR})
+	</insert>
+     
+     <!-- oracle数据源使用 -->
+	<insert id="insertList" parameterType="java.util.List" databaseId="oracle">
+		insert into AUTH_USER_INF (ORG_ID, USER_ID, USER_NAME, USER_PWD, USER_RANDOM, USER_STATUS)
+		<foreach collection="list" item="lt" separator="union all">
+			select #{lt.orgId},#{lt.userId}, #{lt.userName},#{lt.userPwd},#{lt.userRandom},#{lt.userStatus} from dual
+		</foreach>
+	</insert>
+
+	<update id="updateEntity" parameterType="UserInf">
+		update PMUSRINF
+		<set>
+			<if test="userName != null and userName != ''">
+				USER_NAM = #{userName},
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				USER_PWD = #{userPwd},
+			</if>
+			<if test="userRandom != null and userRandom != ''">
+				RANDOM = #{userRandom},
+			</if>
+			<if test="userStatus != null">
+				USER_STATE = #{userStatus},
+			</if>
+			<if test="phone != null">
+				SALTEL = #{phone},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email},
+			</if>
+		</set>
+		<where>
+			USER_ID = #{id}
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="UserInf" resultMap="userMap">
+		SELECT USER_ID, LOGIN_ID, USER_NAM, USER_PWD, RANDOM, USER_STATE,SALTEL,EMAIL,AGENTID
+		FROM PMUSRINF
+		<where>
+			<if test="userName != null and userName != ''">
+				USER_NAM = #{userName}
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				AND USER_PWD = #{userPwd}
+			</if>
+			<if test="userRandom != null and userRandom != ''">
+				AND RANDOM = #{userRandom}
+			</if>
+			<if test="userStatus != null">
+				AND USER_STATE = #{userStatus}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND LOGIN_ID = #{userId}
+			</if>
+			
+			<if test="id != null">
+				AND USER_ID = #{id}
+			</if>
+			
+			<if test="agentId != null">
+				AND AGENTID = #{agentId}
+			</if>
+			<if test="rids != null and rids != ''">
+				AND USER_ID IN (SELECT
+				USER_ID
+				FROM
+				PMRURELE
+				WHERE
+				ROLE_ID IN (${rids}))
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="UserInf" resultMap="userMap">
+		SELECT ID,SYS_ID, ORG_ID, USER_ID, USER_NAME, USER_PWD, USER_RANDOM, USER_STATUS,LNUM,LAST_LOGIN_TIME,LAST_LOGIN_IP,PHONE,EMAIL,AGENT_ID
+		FROM AUTH_USER_INF
+		<where>
+			<if test="userName != null and userName != ''">
+				USER_NAME LIKE CONCAT(#{userName},'%')
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				and USER_PWD = #{userPwd}
+			</if>
+			<if test="userRandom != null and userRandom != ''">
+				and USER_RANDOM = #{userRandom}
+			</if>
+			<if test="userStatus != null">
+				and USER_STATUS = #{userStatus}
+			</if>
+			<if test="userId != null and userId != ''">
+				and USER_ID = #{userId}
+			</if>
+			<if test="orgId != null and orgId != ''">
+				and ORG_ID = #{orgId}
+			</if>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="rids != null and rids != ''">
+				AND ID IN (SELECT
+				U_ID
+				FROM
+				AUTH_USER_ROLE_REL_INF
+				WHERE
+				R_ID IN (${rids}))
+			</if>
+			<if test="sysId != null">
+				AND SYS_ID = #{sysId}
+			</if>
+			<if test="agentId != null">
+				AND AGENT_ID = #{agentId}
+			</if>
+		</where>
+	</select>
+
+	<select id="countEntity" parameterType="UserInf" resultType="java.lang.Integer" databaseId="oracle">
+		SELECT count(*)
+		FROM PMUSRINF
+		<where>
+			<if test="userName != null and userName != ''">
+				USER_NAM LIKE CONCAT(#{userName},'%')
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				and USER_PWD = #{userPwd}
+			</if>
+			<if test="userStatus != null">
+				and USER_STATE= #{userStatus}
+			</if>
+			<if test="userId != null and userId != ''">
+				and LOGIN_ID = #{userId}
+			</if>
+			<if test="id != null">
+				AND USER_ID = #{id}
+			</if>
+			<if test="rids != null and rids != ''">
+				AND ID IN (SELECT
+				U_ID
+				FROM
+				AUTH_USER_ROLE_REL_INF
+				WHERE
+				R_ID IN (${rids}))
+			</if>
+			<if test="orgId != null and orgId != ''">
+				and ORG_ID IN (SELECT ORG_ID FROM AUTH_ORG_INF
+				START WITH ORG_ID =#{orgId}
+				CONNECT BY PRIOR ORG_ID = ORG_PAR_ID
+				)
+			</if>
+		
+			<if test="agentId != null">
+				AND AGENTID = #{agentId}
+			</if>
+		</where>
+	</select>
+	<select id="countEntity" parameterType="UserInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT count(*)
+		FROM AUTH_USER_INF
+		<where>
+			<if test="userName != null and userName != ''">
+				USER_NAME LIKE CONCAT(#{userName},'%')
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				and USER_PWD = #{userPwd}
+			</if>
+			<if test="userRandom != null and userRandom != ''">
+				and USER_RANDOM = #{userRandom}
+			</if>
+			<if test="userStatus != null">
+				and USER_STATUS = #{userStatus}
+			</if>
+			<if test="userId != null and userId != ''">
+				and USER_ID = #{userId}
+			</if>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="rids != null and rids != ''">
+				AND ID IN (SELECT
+				U_ID
+				FROM
+				AUTH_USER_ROLE_REL_INF
+				WHERE
+				R_ID IN (${rids}))
+			</if>
+			<if test="sysId != null">
+				AND SYS_ID = #{sysId}
+			</if>
+			<if test="agentId != null">
+				AND AGENT_ID = #{agentId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" databaseId="oracle">
+		SELECT count(*)
+		FROM PMUSRINF
+		<where>
+		    1=1
+			<if test="userName != null and userName != ''">
+						USER_NAM LIKE #{userName}||'%'
+					</if>
+					<if test="userStatus != null">
+						and USER_STATE= #{userStatus}
+					</if>
+					<if test="userId != null and userId != ''">
+						and LOGIN_ID = #{userId}
+					</if>
+				
+					<if test="agentId != null">
+						AND AGENTID = #{agentId}
+					</if>
+		</where>
+	</select>
+	<select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT count(*)
+		FROM AUTH_USER_INF
+		<where>
+		    1=1
+			<if test="userName != null and userName != ''">
+				AND USER_NAME LIKE CONCAT('%',#{userName},'%')
+			</if>
+			<if test="userPwd != null and userPwd != ''">
+				AND USER_PWD = #{userPwd}
+			</if>
+			<if test="userRandom != null and userRandom != ''">
+				AND USER_RANDOM = #{userRandom}
+			</if>
+			<if test="userStatus != null">
+				AND USER_STATUS = #{userStatus}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND USER_ID  LIKE CONCAT(#{userId},'%')
+			</if>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="rids != null and rids != ''">
+				AND ID IN (SELECT
+				U_ID
+				FROM
+				AUTH_USER_ROLE_REL_INF
+				WHERE
+				R_ID IN (${rids}))
+			</if>
+			<if test="orgId != null and orgId != '' ">
+				AND ORG_ID = #{orgId}
+			</if>
+			<if test="sysId != null">
+				AND SYS_ID = #{sysId}
+			</if>
+			<if test="agentId != null">
+				AND AGENT_ID = #{agentId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectPageList" parameterType="java.util.HashMap" resultMap="userMap" databaseId="oracle">
+				SELECT USER_ID, LOGIN_ID, USER_NAM, USER_PWD,  USER_STATE,AGENTID,SALTEL,EMAIL,ROLE_NAM
+				FROM (
+				SELECT USER_ID, LOGIN_ID, USER_NAM, USER_PWD,  USER_STATE,AGENTID, ROWNUM RN,SALTEL,EMAIL,ROLE_NAM
+				FROM (
+				SELECT a.USER_ID,a.LOGIN_ID, a.USER_NAM, a.USER_PWD,  a.USER_STATE,a.AGENTID,a.SALTEL,a.EMAIL,c.role_nam
+				FROM PMUSRINF a
+				left join PMRURELE b on a.user_id=b.user_id
+                left join PMROLEINF c on c.role_id=b.role_id
+			
+				<where>
+					<if test="userName != null and userName != ''">
+						a.USER_NAM LIKE #{userName}||'%'
+					</if>
+					<if test="userStatus != null">
+						and a.USER_STATE= #{userStatus}
+					</if>
+					<if test="userId != null and userId != ''">
+						and a.LOGIN_ID = #{userId}
+					</if>
+					<if test="agentId != null">
+						AND a.AGENTID = #{agentId}
+					</if>
+				</where>
+				ORDER BY USER_ID DESC
+				) A
+				WHERE ROWNUM &lt;= #{end}
+				)
+				WHERE RN &gt;= #{start}
+	</select>
+	<select id="selectPageList" parameterType="java.util.HashMap" resultMap="userMap" databaseId="mysql">
+			
+			SELECT uer.ID, uer.SYS_ID, uer.ORG_ID, uer.USER_ID, uer.USER_NAME, uer.USER_PWD, uer.USER_RANDOM, uer.USER_STATUS, 
+			uer.LNUM, uer.LAST_LOGIN_TIME, uer.LAST_LOGIN_IP, uer.PHONE, uer.EMAIL, uer.AGENT_ID,ro.ROLE_NAME,ro.ROLE_ID
+			FROM AUTH_USER_INF uer left join  AUTH_USER_ROLE_REL_INF  ref
+			on uer.id=ref.u_id
+			left join AUTH_ROLE_INF ro on ref.r_id=ro.role_id
+				<where>
+					<if test="userName != null and userName != ''">
+						AND uer.USER_NAME LIKE CONCAT('%',#{userName},'%')
+					</if>
+					<if test="userPwd != null and userPwd != ''">
+						AND uer.USER_PWD = #{userPwd}
+					</if>
+					<if test="userRandom != null and userRandom != ''">
+						AND uer.USER_RANDOM = #{userRandom}
+					</if>
+					<if test="userStatus != null">
+						AND uer.USER_STATUS = #{userStatus}
+					</if>
+					<if test="userId != null and userId != ''">
+						AND uer.USER_ID  LIKE CONCAT(#{userId},'%')
+					</if>
+					<if test="id != null">
+						AND uer.ID = #{id}
+					</if>
+					<if test="rids != null and rids != ''">
+						AND ID IN (SELECT
+						U_ID
+						FROM
+						AUTH_USER_ROLE_REL_INF
+						WHERE
+						R_ID IN (${rids}))
+					</if>
+					<if test="orgId != null and orgId != ''">
+						AND uer.ORG_ID = #{orgId}
+					</if>			
+					<if test="sysId != null">
+						AND uer.SYS_ID = #{sysId}
+					</if>
+					<if test="agentId != null">
+						AND uer.AGENT_ID = #{agentId}
+					</if>
+				</where>
+				ORDER BY uer.ID DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+
+	<update id="updateUsersStatus" parameterType="java.util.HashMap">
+		UPDATE PMUSRINF  SET USER_STATE= #{userStatus}
+		WHERE USER_ID IN ${ids}
+	</update>
+
+	<delete id="deleteUsers" parameterType="java.util.HashMap">
+		DELETE FROM PMUSRINF WHERE USER_ID IN (${ids})
+	</delete>
+
+	<update id="updateUserPwd" parameterType="java.util.HashMap">
+		update PMUSRINF
+		<set>
+			<if test="npwd != null and npwd != ''">
+				USER_PWD = #{npwd},
+			</if>
+			<if test="random != null and random != ''">
+				RANDOM = #{random},
+			</if>
+		
+		</set>
+		<where>
+			USER_ID = #{ids}
+			<if test="opwd != null and opwd != ''">
+				AND USER_PWD = #{opwd}
+			</if>
+		</where>
+	</update>
+	<update id="updateAgentUserPwd" parameterType="java.util.HashMap">
+		UPDATE PMUSRINF
+		<set>
+			<if test="pwd != null and pwd != ''">
+				USER_PWD = #{pwd},
+			</if>
+			<if test="random != null and random != ''">
+				RANDOM = #{random},
+			</if>
+		
+		</set>
+		<where>
+			<if test="userId != null and userId != ''">
+				 LOGIN_ID = #{userId}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				AND AGENTID = #{agentId}
+			</if>
+		</where>
+	</update>
+
+    <select id="countLonEntity" parameterType="UserInf" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM PMUSRINF WHERE AGENTID = #{agentId} AND LOGIN_ID = #{userId}
+	</select>
+	<select id="selectByUserId" parameterType="UserInf" resultMap="userMap">
+		SELECT USER_ID, LOGIN_ID,AGENTID,USER_NAM
+		FROM PMUSRINF
+		where LOGIN_ID = #{userId} and AGENTID = #{agentId}
+	</select>
+	<select id="selectUsers" parameterType="java.util.HashMap" resultMap="userMap">
+		SELECT ID,SYS_ID, ORG_ID, USER_ID,OPERID,AGENT_ID
+		FROM AUTH_USER_INF
+		where id in (${ids})
+	</select>
+	<select id="selectAgentByUserId" parameterType="String" resultMap="userMap">
+		SELECT ID,SYS_ID, ORG_ID, USER_ID, USER_NAME, USER_PWD, USER_RANDOM, USER_STATUS,LNUM,LAST_LOGIN_TIME,LAST_LOGIN_IP,PHONE,EMAIL,AGENT_ID,IS_FIRST_LOGINFLAG,OPERID
+		FROM AUTH_USER_INF
+		where USER_ID = #{userId} and SYS_ID = '0002'
+	</select>
+	<select id="selectCityId" parameterType="String" resultType="java.lang.String">
+		SELECT DISTINCT
+				ag.BANK_CITY as city
+			FROM 
+			AUTH_USER_INF au
+			left join MPAMNG_AGENT_INF ag on ag.AGENT_ID=au.AGENT_ID
+			WHERE
+		ag.AGENT_ID =#{agentId}
+	</select>
+	<select id="selectAgents" parameterType="java.util.HashMap" resultMap="userMap">
+		SELECT ID,SYS_ID, ORG_ID, USER_ID,OPERID,AGENT_ID
+		FROM AUTH_USER_INF
+		where AGENT_ID in (${ids})
+	</select>
+</mapper>

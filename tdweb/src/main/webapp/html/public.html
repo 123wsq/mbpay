@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>棠棣支付</title>
+		<script type="text/javascript">
+			/*
+			*设置请求地址访问根目录（如：http://127.0.0.1:8080/tdweb/）
+			*
+			*这样做之后在项目中需要填写路径的地方只需要填写项目相对路径
+			*请框架主页面（模板）页面中引入该脚本，避免在链接或引入js/css/image等文件时路径不好写
+			*之后在有路径的地方都只要填写相对于该路径的值
+			*如服务器访问地址为：http://127.0.0.1:8080 ，项目名称为：tdweb即访根地址：http://127.0.0.1:8080/tdweb/下文件
+			*引入项目下css文件http://127.0.0.1:8080/tdweb/ace_v1.3/assets/css/bootstrap.css为例
+			*在加入该段js后，只需要用
+			*	<link rel="stylesheet" href="ace_v1.3/assets/css/bootstrap.css" />
+			*  即可正确引用
+			*/
+		
+			//取得请求协议+服务器地址，如：http: + "//" + 127.0.0.1:8080
+			var server_base_url = window.location.protocol+"//"+window.location.host;
+			var pathname = window.location.pathname;
+			pathname = pathname.substring(0, pathname.indexOf("/", 1) + 1);
+			server_base_url = server_base_url + pathname;
+			document.write("<base href='"+server_base_url +"'/>");
+		</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="stylesheet" href="css/camera.css" />
+<link rel="stylesheet" href="css/style.css" />
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="ace_v1.3/assets/css/bootstrap.css" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/font-awesome.css" />
+
+<!-- text fonts -->
+<link rel="stylesheet" href="ace_v1.3/assets/css/ace-fonts.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="ace_v1.3/assets/css/ace.css" />
+<link rel="stylesheet" type="text/css" href="css/public.css">
+<style type="text/css">
+	.channel_down{text-align:center;border-radius: 0.2em;padding: .5em 0;font-size: 1.25em;color: #DB4932;}
+	html{background:#E1E1E1;}
+</style>
+</head>
+<body>
+<header style="text-align: left;">
+	<img src="img/k7LOGO.png" />
+</header>
+<div class="main">
+    <div class="mainbox inforbox">
+        <div style="color: #ff6b00"> 棠棣温馨提示：<br>
+                      如果您使用的是微信扫一扫，请单击右上角的分享按钮，选择在浏览器中打开。
+        </div>
+        <br>
+        <h2>棠棣支付客户端下载</h2>
+        <ul class="down">
+            <li class="even">
+                <div class="cont">
+                    <img src="img/android-d.png"/>
+					<p>最新版本V2.0</p>
+                </div>
+                <a href="https://210.22.153.30:8098/pay/file/upload/android/TangDiPay.apk" class="down_btn">立即下载<img src="img/download_ico.png"/></a>
+            </li>
+            <li>
+                <div class="cont">
+                    <img src="img/apple-d.png"/>
+                    <p>最新版本V2.0</p>
+                </div>
+                <a href="itms-services://?action=download-manifest&url=https://www.k7pay.com:9988/pay/file/upload/ios/TangDiPay_adhoc_0522_1759.plist" class="down_btn">立即下载<img src="img/download_ico.png"/></a>
+                
+            </li>      
+        </ul>
+</div></div></body>
+</html>

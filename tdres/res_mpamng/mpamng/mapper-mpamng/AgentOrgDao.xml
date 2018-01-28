@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentOrgDao">
+	<resultMap type="AgentOrgInf" id="agentOrgMap">
+		    <result property="ageorgId"                column="AGEORG_ID" /> 
+		    <result property="agentId"                 column="AGENT_ID" /> 
+		    <result property="cooporgNo"               column="COOPORG_NO" /> 
+		    <result property="merNo"               	   column="MER_NO" /> 
+		    <result property="rateType"                column="RATE_TYPE" /> 
+		    <result property="rateTypeTop"             column="RATE_TYPE_TOP" /> 
+		    <result property="provinceName"             column="PROVINCE_NAME" /> 
+		    <result property="merName"             column="MER_NAME" /> 
+		    <result property="coopName"             column="COOPNAME" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="AgentOrgInf">
+		UPDATE 
+				MPAMNG_AGENT_ORG_INF
+		<set>
+		        <if test="ageorgId!= null and ageorgId!= ''">
+						AGEORG_ID =  #{ageorgId},
+				</if>
+		        <if test="agentId!= null and agentId!= ''">
+						AGENT_ID =  #{agentId},
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						COOPORG_NO =  #{cooporgNo},
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						MER_NO =  #{merNo}
+				</if>
+		</set>
+		<where>
+			
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="AgentOrgInf" resultMap="agentOrgMap">
+		SELECT 
+		         AGEORG_ID, 
+		         AGENT_ID, 
+		         COOPORG_NO, 
+		         MER_NO 
+		FROM 
+		        MPAMNG_AGENT_ORG_INF
+		<where>
+		         1 = 1 
+		        <if test="ageorgId!= null and ageorgId!= ''">
+						AND AGEORG_ID =  #{ageorgId}
+				</if>
+		        <if test="agentId!= null and agentId!= ''">
+						AND AGENT_ID =  #{agentId}
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="merNo!= null and merNo!= ''">
+						AND MER_NO =  #{merNo}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="AgentOrgInf" resultMap="agentOrgMap">
+		SELECT
+			t.AGEORG_ID,
+			t.AGENT_ID,
+			t.COOPORG_NO,
+			te.MER_NO,
+			te.RATE_TYPE,
+			te.RATE_TYPE_TOP,
+			te.PROVINCE_NAME,
+			te.MER_NAME,
+			te.COOPNAME
+		FROM
+			MPAMNG_AGENT_ORG_INF t
+		LEFT JOIN (
+			SELECT
+				t.COOPORG_NO,
+				t.MER_NO,
+				t.MER_NAME,
+				p.PROVINCE_NAME,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP,
+				f.COOPNAME
+			FROM
+				MPCOOP_COOPORG_MER_INF t
+			LEFT JOIN MPCOOP_COOPORG_INF m ON t.COOPORG_NO = m.COOPORG_NO
+			LEFT JOIN PROVINCE p ON t.PROVINCE_ID = p.PROVINCE_ID
+			LEFT JOIN MPCOOP_COOPORG_INF f ON t.COOPORG_NO = f.COOPORG_NO
+			WHERE
+				m.COOP_TYPE = 0
+			GROUP BY
+				t.COOPORG_NO,
+				t.MER_NO,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP
+		) te ON t.COOPORG_NO = te.COOPORG_NO
+		AND t.MER_NO = te.MER_NO 
+		where  t.AGENT_ID=#{agentId}
+		ORDER BY t.AGEORG_ID ASC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="AgentOrgInf" resultType="java.lang.Integer">
+		SELECT
+			COUNT(1)
+		FROM
+			MPAMNG_AGENT_ORG_INF t
+		LEFT JOIN (
+			SELECT
+				t.COOPORG_NO,
+				t.MER_NO,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP
+			FROM
+				MPCOOP_COOPORG_MER_INF t
+			LEFT JOIN MPCOOP_COOPORG_INF m ON t.COOPORG_NO = m.COOPORG_NO
+			WHERE
+				m.COOP_TYPE = 0
+			GROUP BY
+				t.COOPORG_NO,
+				t.MER_NO,
+				t.RATE_TYPE,
+				t.RATE_TYPE_TOP
+		) te ON t.COOPORG_NO = te.COOPORG_NO
+		AND t.MER_NO = te.MER_NO 
+		where  t.AGENT_ID=#{agentId}
+	</select>
+	
+	<insert id="insertEntity" parameterType="AgentOrgInf">
+		INSERT INTO MPAMNG_AGENT_ORG_INF  (
+		         AGEORG_ID, 
+		         AGENT_ID, 
+		         COOPORG_NO, 
+		         MER_NO
+				)
+		VALUES (
+		          #{ageorgId,jdbcType=VARCHAR}, 
+		          #{agentId,jdbcType=VARCHAR}, 
+		          #{cooporgNo,jdbcType=VARCHAR}, 
+		          #{merNo,jdbcType=VARCHAR}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="AgentOrgInf">
+		DELETE FROM MPAMNG_AGENT_ORG_INF WHERE AGEORG_ID=#{ageorgId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CasPrdInfDao">
+	<resultMap type="java.util.Map" id="CasPrdInfMap">
+		    <result property="prdordno"            column="PRDORDNO" /> 
+		    <result property="prdordtype"          column="PRDORDTYPE" /> 
+		    <result property="biztype"             column="BIZTYPE" /> 
+		    <result property="ordstatus"           column="ORDSTATUS" /> 
+		    <result property="ordamt"              column="ORDAMT" /> 
+		    <result property="payordno"            column="PAYORDNO" /> 
+		    <result property="price"               column="PRICE" /> 
+		    <result property="goodsName"           column="GOODS_NAME" /> 
+		    <result property="goodsNameShort"      column="GOODS_NAME_SHORT" /> 
+		    <result property="custId"              column="CUST_ID" /> 
+		    <result property="prddate"             column="PRDDATE" /> 
+		    <result property="prdtime"             column="PRDTIME" /> 
+		    <result property="ordtime"             column="ORDTIME" /> 
+		    <result property="modifyTime"          column="MODIFY_TIME" />  
+	</resultMap>
+	<select id="selectList" parameterType="java.util.Map" resultMap="CasPrdInfMap" databaseId="">
+		SELECT * FROM(
+		  (
+		  SELECT
+			PRD.PRDORDNO,
+			PRD.PRDORDTYPE,
+			PRD.ORDSTATUS ,
+			PRD.ORDAMT ,
+            PRD.PRICE ,
+			PAY.TXAMT,
+			PAY.RATE,
+			PAY.RATE_TYPE,
+			PAY.FEE,
+			PAY.NETRECAMT,		
+            PRD.CUST_ID ,
+			PRD.ORDTIME ,
+			PAY.TER_NO,
+            PAY.PAYTYPE,
+			PAY.PAY_CARDNO,
+            b.FJNAME as PAY_SIGN_PIC
+		FROM
+			MPOMNG_PRD_INF PRD
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+        LEFT JOIN ATTACHMENT b on PAY.PAY_SIGN_PIC = b.ID
+		ORDER BY ORDTIME  DESC
+			)
+		UNION
+		(
+			SELECT
+				NULL,
+				CAS_TYPE,
+				ORDSTATUS,
+				TXAMT,
+				NULL,
+				TXAMT,
+				RATE,
+				NULL,
+				FEE,
+				NETRECAMT,
+				CUST_ID,
+				SUC_DATE,
+				NULL,
+                NULL,
+				CARD_NO,
+                NULL
+			FROM
+				MPOMNG_CAS_INF CAS
+				ORDER BY SUC_DATE  DESC
+				) ) aa
+				
+				<where>
+		        <if test="prdordtype!= null and prdordtype!= ''">
+						AND aa.PRDORDTYPE =  #{prdordtype}
+				</if>
+		        <if test="ordstatus!= null and ordstatus!= ''">
+						AND aa.ORDSTATUS =  #{ordstatus}
+				</if>
+		        <if test="ordamt!= null and ordamt!= ''">
+						AND aa.ORDAMT = {ordamt}
+				</if>
+		        <if test="price!= null and price!= ''">
+						AND aa.PRICE =  #{price}
+				</if>
+		        <if test="txamt!= null and txamt!= ''">
+						AND aa.TXAMT =  #{txamt}
+				</if>
+				 <if test="rateType!= null and rateType!= ''">
+						aa.RATE_TYPE =  #{rateType}
+				</if>
+				 <if test="fee!= null and fee!= ''">
+						aa.FEE =  #{fee}
+				</if>
+				 <if test="netrecamt!= null and netrecamt!= ''">
+						aa.NETRECAMT =  #{netrecamt}
+				</if>
+				 <if test="custId!= null and custId!= ''">
+						aa.CUST_ID =  #{custId}
+				</if>
+				 <if test="ordtime!= null and ordtime!= ''">
+						aa.ORDTIME =  #{ordtime}
+				</if>
+				 <if test="terNo!= null and terNo!= ''">
+						aa.TER_NO =  #{terNo}
+				</if>
+				 <if test="paytype!= null and paytype!= ''">
+						aa.PAYTYPE =  #{paytype}
+				</if>
+				 <if test="payCardno!= null and payCardno!= ''">
+						aa.PAY_CARDNO =  #{payCardno}
+				</if>
+				 <if test="fjname!= null and fjname!= ''">
+						aa.FJNAME =  #{fjname}
+				</if>
+		</where>
+         ORDER BY aa.ORDTIME DESC 
+         <if test="start!= null and start!= '' and pageSize!= null and pageSize!= ''"  >
+						 LIMIT ${start},${pageSize}
+				</if>
+	</select>
+	
+	
+</mapper>

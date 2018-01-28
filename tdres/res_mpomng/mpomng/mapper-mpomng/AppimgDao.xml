@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.AppimgDao">
+	<resultMap type="AppimgInf" id="appimgMap">
+		    <result property="appimgId"               column="APPIMG_ID" /> 
+		    <result property="appimgPath"               column="APPIMG_PATH" /> 
+		    <result property="appimgDisplay"               column="APPIMG_DISPLAY" /> 
+		    <result property="appimgDesc"               column="APPIMG_DESC" /> 
+		    <result property="createUserId"               column="CREATE_USER_ID" /> 
+		    <result property="createDate"               column="CREATE_DATE" /> 
+		    <result property="appimgName"               column="FJNAME" />
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="AppimgInf">
+		UPDATE 
+				MPOMNG_APPIMG_INF
+		<set>
+		       
+		        <if test="appimgPath!= null and appimgPath!= ''">
+						APPIMG_PATH =  #{appimgPath},
+				</if>
+		        <if test="appimgDesc!= null and appimgDesc!= ''">
+						APPIMG_DESC =  #{appimgDesc},
+				</if>
+		        <if test="createUserId!= null and createUserId!= ''">
+						CREATE_USER_ID =  #{createUserId},
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						CREATE_DATE =  #{createDate},
+				</if>
+				 <if test="appimgDisplay!= null and appimgDisplay!= ''">
+						APPIMG_DISPLAY =  #{appimgDisplay},
+				</if>
+				
+		</set>
+		WHERE
+			APPIMG_ID = #{appimgId}
+	
+	</update>
+
+	<select id="selectEntity" parameterType="AppimgInf" resultMap="appimgMap">
+		SELECT 
+		         a.APPIMG_ID, 
+		         a.APPIMG_PATH, 
+		         a.APPIMG_DESC, 
+		         a.CREATE_USER_ID, 
+		         a.CREATE_DATE, 
+		         a.APPIMG_DISPLAY,
+		         b.FJNAME
+		FROM 
+		        MPOMNG_APPIMG_INF a
+		        LEFT JOIN ATTACHMENT b
+		        ON a.appimg_path = b.id 
+		<where>
+		        <if test="appimgId!= null and appimgId!= ''">
+						a.APPIMG_ID =  #{appimgId}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="AppimgInf" resultMap="appimgMap" databaseId="mysql">
+		SELECT 
+		         a.APPIMG_ID, 
+		         a.APPIMG_PATH, 
+		         a.APPIMG_DESC, 
+		         a.CREATE_USER_ID, 
+		         a.CREATE_DATE,
+		         a.APPIMG_DISPLAY,
+		         b.FJNAME
+		FROM 
+		       MPOMNG_APPIMG_INF a
+		       LEFT JOIN ATTACHMENT b
+		       ON a.appimg_path = b.id
+		<where>
+		        <if test="appimgDesc!= null and appimgDesc!= ''">
+						a.APPIMG_DESC LIKE CONCAT('%',#{appimgDesc},'%')
+				</if>
+		</where>
+		ORDER BY a.APPIMG_ID  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="AppimgInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(APPIMG_ID)
+		FROM 
+				MPOMNG_APPIMG_INF
+		<where>
+		        <if test="appimgDesc!= null and appimgDesc!= ''">
+						APPIMG_DESC LIKE CONCAT('%',#{appimgDesc},'%')
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="AppimgInf">
+		INSERT INTO MPOMNG_APPIMG_INF  (
+		         APPIMG_ID, 
+		         APPIMG_PATH, 
+		         APPIMG_DESC, 
+		         CREATE_USER_ID, 
+		         CREATE_DATE,
+		         APPIMG_DISPLAY
+				)
+		VALUES (
+		          #{appimgId}, 
+		          #{appimgPath}, 
+		          #{appimgDesc}, 
+		          #{createUserId}, 
+		          #{createDate} ,
+		          #{appimgDisplay}
+		          
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="AppimgInf">
+		DELETE FROM MPOMNG_APPIMG_INF
+		WHERE APPIMG_ID = #{appimgId}
+	</delete>
+	
+	<update id="modifyAppImgStatus" parameterType="java.util.HashMap">
+		UPDATE MPOMNG_APPIMG_INF 
+			<set>
+				 <if test="appimgDisplay!= null and appimgDisplay!= ''">
+						APPIMG_DISPLAY =  #{appimgDisplay},
+				</if>
+			</set>
+		WHERE APPIMG_ID IN (${ids})
+	</update>
+
+</mapper>

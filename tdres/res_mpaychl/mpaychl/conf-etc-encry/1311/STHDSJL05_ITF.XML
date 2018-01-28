@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="STHDSJL05" timeout="120">
+	<transaction code="key_gen" log_level="1">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="KeyLen" expr="HEX2STRNEW(KeyLen)" />
+			<item name="KeyTyp" expr="HEX2STRNEW(KeyTyp)" />
+			<item name="ZmkIdx" expr="HEX2STRNEW(ZmkIdx)" />
+			<item name="ZmkLen" expr="HEX2STRNEW(ZmkLen)" />
+			<if condition="IS_EQUAL_STRING('FFFF', ZmkIdx)">
+				<item name="LmkZmk" expr="HEX2STRNEW(LmkZmk)" />
+			</if>
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="newwrklen" expr="STR2HEXNEW(1)" />
+				<if condition="IS_EQUAL_STRING('12', KeyTyp)">
+					<set name="lmkkey" expr="STR2HEXNEW(8)" />
+					<set name="zmkkey" expr="STR2HEXNEW(8)" />
+				</if>
+				<else>
+					<set name="lmkkey" expr="STR2HEXNEW(16)" />
+					<set name="zmkkey" expr="STR2HEXNEW(16)" />
+				</else>
+				<set name="keycv" expr="STR2HEXNEW(8)" />
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+
+	<transaction code="pin_convert" log_level="1" desc="pin转换">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="pik1len" expr="HEX2STRNEW(pik1len)" />
+			<item name="pik1" expr="HEX2STRNEW(pik1)" />
+			<item name="pik2len" expr="HEX2STRNEW(pik2len)" />
+			<item name="pik2" expr="HEX2STRNEW(pik2)" />
+			<item name="pin1format" expr="HEX2STRNEW(pin1format)" />
+			<item name="pin2format" expr="HEX2STRNEW(pin2format)" />
+			<item name="oriPinBlk" expr="HEX2STRNEW(oriPinBlk)" />
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'12' )">
+				<item name="ac_before" length="12" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'13' )">
+				<item name="ac_before" length="13" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'14' )">
+				<item name="ac_before" length="14" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'15' )">
+				<item name="ac_before" length="15" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'16' )">
+				<item name="ac_before" length="16" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'17' )">
+				<item name="ac_before" length="17" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'18' )">
+				<item name="ac_before" length="18" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'19' )">
+				<item name="ac_before" length="19" />
+			</if>
+			<item name="split_before" length="1" />
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'12' )">
+				<item name="ac_before" length="12" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'13' )">
+				<item name="ac_before" length="13" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'14' )">
+				<item name="ac_before" length="14" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_after),'15' )">
+				<item name="ac_after" length="15" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_after),'16' )">
+				<item name="ac_after" length="16" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_after),'17' )">
+				<item name="ac_after" length="17" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_after),'18' )">
+				<item name="ac_after" length="18" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_after),'19' )">
+				<item name="ac_after" length="19" />
+			</if>
+			<item name="split_after" length="1" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="ObjPIN" expr="STR2HEXNEW(8)" />
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+	
+	<transaction code="pin_dec" log_level="1" desc="pin转换">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="pik1len" expr="HEX2STRNEW(pik1len)" />
+			<item name="pik1" expr="HEX2STRNEW(pik1)" />
+			<item name="pin1format" expr="HEX2STRNEW(pin1format)" />
+			<item name="oriPinBlk" expr="HEX2STRNEW(oriPinBlk)" />
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'12' )">
+				<item name="ac_before" length="12" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'13' )">
+				<item name="ac_before" length="13" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'14' )">
+				<item name="ac_before" length="14" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'15' )">
+				<item name="ac_before" length="15" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'16' )">
+				<item name="ac_before" length="16" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'17' )">
+				<item name="ac_before" length="17" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'18' )">
+				<item name="ac_before" length="18" />
+			</if>
+			<if condition="IS_EQUAL_STRING(STRLEN(ac_before),'19' )">
+				<item name="ac_before" length="19" />
+			</if>
+			
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+			    <set name="ObjPINLEN" expr="STR2HEXNEW(1)" />
+				<set name="ObjPIN" expr="STR2HEXNEW(6)" />
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+	
+	<transaction code="mac_gen" log_level="1" desc="mac计算">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="macflg" expr="HEX2STRNEW(macflg)" />
+			<item name="maklen" expr="HEX2STRNEW(maklen)" />
+			<item name="makkey" expr="HEX2STRNEW(makkey)" />
+			<item name="inivec" expr="HEX2STRNEW(inivec)" />
+			<item name="datlen" expr="HEX2STRNEW(datlen)" />
+			<item name="datval" expr="HEX2STRNEW(datval)" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="MAC" expr="STR2HEXNEW(8)" />
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+
+
+	<transaction code="key_Disperse" log_level="1" desc="密钥分散">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod"        expr="HEX2STRNEW(InsCod)" />
+			<item name="SourceKeyLen"  expr="HEX2STRNEW(SourceKeyLen)" />
+			<item name="SourceKey"     expr="HEX2STRNEW(SourceKey)" />
+			<item name="SourceKeyType" expr="HEX2STRNEW(SourceKeyType)" />
+			<item name="BmkLen"        expr="HEX2STRNEW(BmkLen)" />
+			<item name="Bmk"           expr="HEX2STRNEW(Bmk)" />
+			<item name="WorkKeyType"   expr="HEX2STRNEW(WorkKeyType)" />
+			<item name="Mode"          expr="HEX2STRNEW(Mode)" />
+			<item name="Level"         expr="HEX2STRNEW(Level)" />
+			<item name="Factor"        expr="HEX2STRNEW(Factor)" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="ZSUBKEY"  expr="STR2HEXNEW(16)" />     <!-- 分散后由LMK加密的密钥密文 -->
+				<set name="SUBKEY"   expr="STR2HEXNEW(16)" />    <!-- 校验值 -->
+				<set name="KEYVALUE" expr="STR2HEXNEW(8)" />    <!-- 校验值 -->
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+
+	<transaction code="data_Decryption" log_level="1" desc="分散密钥解密数据">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod"        expr="HEX2STRNEW(InsCod)" />
+			<item name="ArithmeticMod" expr="HEX2STRNEW(ArithmeticMod)" />
+			<item name="WorkKey"       expr="HEX2STRNEW(WorkKey)" />
+			<item name="datlen"        expr="HEX2STRNEW(datlen)" />
+			<item name="datval"        expr="HEX2STRNEW(datval)" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+			    <set name="TmpLen"  expr="STR2HEXNEW(2)" />
+                <set name="Data"    expr="GETLENHEXSTR(TmpLen)"/>
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+	
+	<transaction code="d108_convert" log_level="1">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="KeyLen" expr="HEX2STRNEW(KeyLen)" />
+			<item name="KeyTyp" expr="HEX2STRNEW(KeyTyp)" />
+			<item name="LmkZmk" expr="HEX2STRNEW(LmkZmk)" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="newwrklen" expr="STR2HEXNEW(1)" />
+				<if condition="IS_EQUAL_STRING('10', KeyTyp)">
+					<if condition="IS_EQUAL_STRING('10', newwrklen)">
+						<set name="lmkkey" expr="STR2HEXNEW(16)" />
+					</if>
+					<else>
+						<set name="lmkkey" expr="STR2HEXNEW(8)" />
+					</else>
+				</if>
+				<else>
+					<set name="lmkkey" expr="STR2HEXNEW(16)" />
+				</else>
+				<set name="keycv" expr="STR2HEXNEW(8)" />
+			</if>
+			<else>
+				<item name="errcod" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+
+	<transaction code="D102_CONVERT" log_level="1">
+		<pack cache="true" cacheSize="50">
+			<item name="InsCod" expr="HEX2STRNEW(InsCod)" />
+			<item name="KeyLen" expr="HEX2STRNEW(KeyLen)" />
+			<item name="ZmkLen" expr="HEX2STRNEW(ZmkLen)" />
+			<item name="ZmkIdx" expr="HEX2STRNEW(ZmkIdx)" />
+			<item name="KeyTyp" expr="HEX2STRNEW(KeyTyp)" />
+			<if condition="IS_EQUAL_STRING('FFFF', ZmkIdx)">
+				<item name="LmkZmk" expr="HEX2STRNEW(LmkZmk)" />
+			</if>
+			<item name="ZmkKey" expr="HEX2STRNEW(ZmkKey)" />
+		</pack>
+		<unpack>
+			<item name="RSPCODE" length="1" />     <!-- 应答码 -->
+			<if condition="IS_EQUAL_STRING(RSPCODE,'A')">
+				<set name="newwrklen" expr="STR2HEXNEW(1)" />
+				<if condition="IS_EQUAL_STRING('10', newwrklen)">
+					<set name="lmkkey" expr="STR2HEXNEW(16)" />
+				</if>
+				<else>
+					<set name="lmkkey" expr="STR2HEXNEW(8)" />
+				</else>
+				<set name="keycv" expr="STR2HEXNEW(8)" />
+			</if>
+			<else>
+				<item name="ERRCODE" length="1" />
+			</else>
+		</unpack>
+	</transaction>
+</channel>

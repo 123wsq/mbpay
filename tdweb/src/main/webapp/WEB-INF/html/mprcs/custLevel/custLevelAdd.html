@@ -1,0 +1,75 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mprcs/custLevelAdd/add.do" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+		<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 商户等级编号： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="level" name="level" placeholder="请输入[商户等级编号]" maxlength="2"
+				 validate="true"  class="col-xs-10 col-sm-7" datatype = "number" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 商户等级名称： </label>
+		<div class="col-sm-9">
+
+			<input type="text" id="levelName" name="levelName" placeholder="请输入[商户等级名称]" validate="true" 
+				class="col-xs-10 col-sm-7"  datatype="notempty"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 商户等级描述： </label>
+            <div class="col-sm-9">
+				  <textarea name="levelDesc"  cols="40"
+				  rows="5" maxlength="200" placeholder="请输入[商户等级描述]"></textarea>
+		    </div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	
+});
+
+function submitForm(obj){
+	
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+</script>

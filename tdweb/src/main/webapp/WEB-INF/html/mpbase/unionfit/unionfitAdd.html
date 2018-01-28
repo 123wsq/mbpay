@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);" action="mpbase/addUnionfit.do" method="post">
+	<br/>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">发卡行名称: </label>
+		<div class="col-sm-4">
+			<input type="text" id="issnam" name="issnam" placeholder="请输入发卡行名称" class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right tooltip-error" for="form-field-1">发卡行代码: </label>
+		<div class="col-sm-4">
+			<input type="text" id="issno" name="issno" placeholder="请输入发卡行代码" class="col-xs-10 col-sm-7" validate="true"  datatype="number"/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">卡名: </label>
+		<div class="col-sm-4">
+			<input type="text" id="crdnam" name="crdnam" placeholder="请输入卡名" class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Fit所在磁道: </label>
+		<div class="col-sm-4">
+			<input type="text" id="fitcrk" name="fitcrk" placeholder="请输入Fit所在磁道(2-3)" class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Fit起始字节: </label>
+		<div class="col-sm-4">
+			<input type="text" id="fitoff" name="fitoff" placeholder="请输入Fit起始字节(2-2)" class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Fit长度: </label>
+		<div class="col-sm-4">
+			<input type="text" id="fitlen" name="fitlen" placeholder="请输入Fit长度(36-101)" class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">主账号起始字节: </label>
+		<div class="col-sm-4">
+			<input type="text" id="crdoff" name="crdoff" placeholder="请输入主账号起始字节(2)" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">主账号长度: </label>
+		<div class="col-sm-4">
+			<input type="text" id="crdlen" name="crdlen" placeholder="请输入主账号长度(19)" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">主账号: </label>
+		<div class="col-sm-4">
+			<input type="text" id="crdctt" name="crdctt" placeholder="请输入主账号" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">主账号所在磁道: </label>
+		<div class="col-sm-4">
+			<input type="text" id="crdcrk" name="crdcrk" placeholder="请输入主账号所在磁道" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">发卡行标识起始字节: </label>
+		<div class="col-sm-4">
+			<input type="text" id="binoff" name="binoff" placeholder="请输入发卡行标识起始字节" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">发卡行标识长度: </label>
+		<div class="col-sm-4">
+			<input type="text" id="binlen" name="binlen" placeholder="请输入发卡行标识长度" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">发卡行标识取值: </label>
+		<div class="col-sm-4">
+			<input type="text" id="binctt" name="binctt" placeholder="请输入发卡行标识取值" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">发卡行标识读取磁道: </label>
+		<div class="col-sm-4">
+			<input type="text" id="bincrk" name="bincrk" placeholder="请输入发卡行标识读取磁道" class="col-xs-10 col-sm-7"  validate="true" datatype="number"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-pEditing-right" for="form-field-1">卡种: </label>
+		<div class="col-sm-3">
+			<label>
+				<div class="search_input" style="pEditing-top: 5px;">
+					<select 
+					 rel="obj.UNIONFIT_DCFLAG"
+					 location="local" 
+					 name="dcflag" 
+					 id="dcflag" 
+					 data-placeholder="请选择卡种" style="width: 200px;vertical-align:middle;" validate="true">
+						<option value='' >----请选择----</option>
+					 </select>
+				</div>
+			</label>
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+function submitForm(obj){
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+</script>

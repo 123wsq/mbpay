@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.OrgTermLimitDao">
+	
+	<select id="selectTxnAmt" parameterType="java.util.Map" resultType="java.util.Map">
+	<![CDATA[
+		SELECT
+			mer.COOPORG_NO cooporgNo,
+			mer.MER_NO merNo,
+			mer.TER_NO terNo,
+			mer.BATCH_NO batchNo,
+			lim.TXN_DATE txnDate
+		FROM(
+				SELECT
+					age.AGENT_ID,
+					mer.COOPORG_NO,
+					mer.MER_NO,
+					mer.TER_NO,
+					mer.BATCH_NO,
+					mer.DT_LIMIT,
+					mer.MT_LIMIT
+				FROM
+					MPAMNG_AGENT_ORG_INF age
+				LEFT JOIN MPCOOP_COOPORG_MER_INF mer ON age.COOPORG_NO = mer.COOPORG_NO
+				LEFT JOIN MPCOOP_COOPORG_INF coop on coop.COOPORG_NO=mer.COOPORG_NO
+				AND age.MER_NO = mer.MER_NO
+				WHERE
+					age.AGENT_ID = #{agentId}
+				AND mer.RATE_TYPE = #{rateType}
+				AND mer.MER_STATUS = '0'
+				AND coop.SVRSTS='0'
+				AND coop.COOP_TYPE='0'
+				AND CONVERT (mer.LOW_LIMIT, SIGNED) <= CONVERT (#{amt}, SIGNED)
+				AND CONVERT (mer.HIGH_LIMIT, SIGNED) >= CONVERT (#{amt}, SIGNED)
+			) mer
+		LEFT JOIN MPRCS_ORG_TERM_LIMIT_INF lim ON mer.COOPORG_NO = lim.LIMIT_ORG_ID
+		AND mer.MER_NO = lim.LIMIT_MER_NO
+		AND mer.TER_NO = lim.LIMIT_TERM_NO
+		WHERE
+			(	lim. DAY = #{day}
+		AND lim. MONTH =#{month}
+		AND (CONVERT (lim.LIMIT_DAY_AMT, SIGNED)+${amt} < CONVERT (mer.DT_LIMIT, SIGNED) OR mer.DT_LIMIT = '')
+		AND (CONVERT (lim.LIMIT_MONTH_AMT, SIGNED)+${amt} < CONVERT (mer.MT_LIMIT, SIGNED) OR mer.MT_LIMIT = '')
+		) or  lim.DAY  is null 
+		ORDER BY
+			lim.TXN_DATE ASC
+		LIMIT 1
+		]]>
+	</select>
+	
+<!-- 	SELECT -->
+<!-- 		mer.AGENT_ID, -->
+<!-- 		mer.COOPORG_NO cooporgNo, -->
+<!-- 		mer.MER_NO merNo, -->
+<!-- 		mer.TER_NO terNo, -->
+<!-- 		mer.BATCH_NO batchNo, -->
+<!-- 		mer.DT_LIMIT, -->
+<!-- 		mer.MT_LIMIT, -->
+<!-- 		lim.LIMIT_ORG_ID, -->
+<!-- 		lim.LIMIT_MER_NO, -->
+<!-- 		lim.LIMIT_TERM_NO, -->
+<!-- 		lim.LIMIT_DAY_AMT, -->
+<!-- 		lim.LIMIT_MONTH_AMT, -->
+<!-- 		lim.TXN_DATE txnDate -->
+<!-- 	FROM -->
+<!-- 		( -->
+<!-- 			SELECT -->
+<!-- 				age.AGENT_ID, -->
+<!-- 				mer.COOPORG_NO, -->
+<!-- 				mer.MER_NO, -->
+<!-- 				mer.TER_NO, -->
+<!-- 				mer.BATCH_NO, -->
+<!-- 				mer.DT_LIMIT, -->
+<!-- 				mer.MT_LIMIT -->
+<!-- 			FROM -->
+<!-- 				MPAMNG_AGENT_ORG_INF age -->
+<!-- 					LEFT JOIN MPCOOP_COOPORG_MER_INF mer ON age.COOPORG_NO = mer.COOPORG_NO -->
+<!-- 					LEFT JOIN MPCOOP_COOPORG_INF coop on coop.COOPORG_NO=mer.COOPORG_NO -->
+<!-- 					AND age.MER_NO = mer.MER_NO -->
+<!-- 					WHERE -->
+<!-- 						age.AGENT_ID = '8150800307' -->
+<!-- 					AND mer.RATE_TYPE = '1' -->
+<!-- 					AND mer.MER_STATUS = '0' -->
+<!-- 					AND coop.SVRSTS='0' -->
+<!-- 					AND coop.COOP_TYPE='0' -->
+<!-- 		) mer -->
+<!-- 	LEFT JOIN MPRCS_ORG_TERM_LIMIT_INF lim ON mer.COOPORG_NO = lim.LIMIT_ORG_ID -->
+<!-- 	AND mer.MER_NO = lim.LIMIT_MER_NO -->
+<!-- 	AND mer.TER_NO = lim.LIMIT_TERM_NO -->
+<!-- 	WHERE -->
+<!-- 	  ( lim. DAY = '28' -->
+<!-- 	AND lim. MONTH = '8' -->
+<!-- 	AND ( CONVERT (lim.LIMIT_DAY_AMT, SIGNED)+100 < CONVERT (mer.DT_LIMIT, SIGNED) OR mer.DT_LIMIT = '' ) -->
+<!-- 	AND ( CONVERT (lim.LIMIT_MONTH_AMT, SIGNED)+100 < CONVERT (mer.MT_LIMIT, SIGNED) OR mer.MT_LIMIT = '' ) -->
+<!-- 		) or  lim.DAY  is null  -->
+<!-- 	ORDER BY -->
+<!-- 		lim.TXN_DATE ASC -->
+<!-- 	LIMIT 1 -->
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPRCS_ORG_TERM_LIMIT_INF (
+			LIMIT_ID,
+			LIMIT_ORG_ID,
+			LIMIT_MER_NO,
+			LIMIT_TERM_NO,
+			LIMIT_DAY_AMT,
+			LIMIT_MONTH_AMT,
+			DAY,
+			MONTH,
+			TXN_DATE
+		)VALUES (
+		    #{limitId},
+			#{limitOrgId},
+			#{limitMerNo},
+			#{limitTermNo},
+			#{limitDayAmt},
+			#{limitMonthAmt},
+			#{day},
+			#{month},
+			#{txnDate}
+		      )
+	</insert>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE MPRCS_ORG_TERM_LIMIT_INF
+			SET LIMIT_DAY_AMT = LIMIT_DAY_AMT + #{amt},
+			 LIMIT_MONTH_AMT = LIMIT_MONTH_AMT + #{amt},
+			 TXN_DATE=#{txnDate}
+			WHERE
+				LIMIT_ORG_ID = #{limitOrgId} and
+				LIMIT_MER_NO = #{limitMerNo} and
+				LIMIT_TERM_NO = #{limitTermNo}
+	</update>
+	
+	<update id="updateEntityAmt" parameterType="java.util.Map">
+		UPDATE MPRCS_ORG_TERM_LIMIT_INF
+			SET LIMIT_DAY_AMT = LIMIT_DAY_AMT - #{amt},
+			 LIMIT_MONTH_AMT = LIMIT_MONTH_AMT - #{amt},
+			 TXN_DATE=#{txnDate}
+			WHERE
+				LIMIT_ORG_ID = #{limitOrgId} and
+				LIMIT_MER_NO = #{limitMerNo} and
+				LIMIT_TERM_NO = #{limitTermNo}
+				and (LIMIT_DAY_AMT > 0 and LIMIT_DAY_AMT!='' and LIMIT_DAY_AMT IS NOT null)
+				and (LIMIT_MONTH_AMT > 0 and LIMIT_MONTH_AMT!='' and LIMIT_MONTH_AMT IS NOT null)
+	</update>
+</mapper>

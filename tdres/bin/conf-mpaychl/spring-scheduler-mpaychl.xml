@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+      
+      <!-- 
+		定时任务
+		1.中联商户自动签到
+	 -->
+	 
+	<!-- 1.中联商户自动签到 -->
+	<bean id="zLPayBankSignTaskBean" class="com.tangdi.production.mpaychl.schedule.ZLPayBankSignTask" />
+	<bean id="zLPayBankSignTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="zLPayBankSignTaskBean" />
+		<property name="targetMethod" value="bankSign"  />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="zLPayBankSignTask" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="zLPayBankSignTaskBeanDetail" />
+		<!-- 每天0点5分运行 -->
+		<property name="cronExpression" value="0 5 0 * * ?" />
+	</bean>
+	
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="zLPayBankSignTask" />
+				
+				<ref bean="messageSendTask"/>
+			</list>
+		</property>
+		<!-- quartz配置文件路径 -->
+		<property name="configLocation" value="classpath:mpaychl/conf-mpaychl/quartz.properties" />
+	</bean>
+	
+	
+
+	<!-- 节假日未审核交易信息发送 -->
+	<bean id="messageSendTaskBean" class="com.tangdi.production.mpaychl.schedule.MessageSendTask" />
+	<bean id="messageSendTaskBeanDetail" class="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="messageSendTaskBean" />
+		<property name="targetMethod" value="run" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="messageSendTask" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="messageSendTaskBeanDetail" />
+		<!-- 每15分钟运行一次 -->
+		<property name="cronExpression" value="0 0/15 * * * ?" />
+	</bean>
+</beans>

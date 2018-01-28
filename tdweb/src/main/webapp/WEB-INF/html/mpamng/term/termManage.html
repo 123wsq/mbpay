@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="mpamng/term/queryTerm.do" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">终端物理号:</label>
+							<div class="search_input">
+								<input id="search_terminalNo" type="text" name="terminalNo" placeholder="请输入终端物理号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">代理商编号:</label>
+							<div class="search_input">
+								<input id="search_agentId" type="text" name="agentId" placeholder="请输入代理商编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">代理商名称:</label>
+							<div class="search_input">
+								<input id="search_agentName" type="text" name="agentName" placeholder="请输入代理商名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input id="search_custId" type="text" name="custId" placeholder="请输入商户编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户名称:</label>
+							<div class="search_input">
+								<input id="search_custName" type="text" name="custName" placeholder="请输入商户名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">终端类型:</label>
+							<div class="search_input">
+								<select 
+								 rel="obj.options"
+					 			 location="mpamng/selectoption/termType.do" 
+								 name="terminalType" 
+								 id="search_terminalType" 
+					 			 data-placeholder="请选择终端类型" style="width: 130px;vertical-align:middle;">
+									<option value="">----请选择----</option>
+								</select>
+							
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">终端厂商:</label>
+							<div class="search_input">
+								<select 
+								 rel="obj.options"
+					 			 location="mpamng/selectoption/termCom.do" 
+								 name="terminalCom" 
+								 id="search_terminalCom" 
+					 			 data-placeholder="请选择终端厂商" style="width: 130px;vertical-align:middle;">
+									<option value="">----请选择----</option>
+								</select>
+							
+							</div>
+						</div>
+						
+						<div class="search_elm">
+							<label class="label_search" >终端状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.TERMINALSTATUS"
+						 			 location="local" 
+									 name="terminalStatus" 
+						 			id="search_terminalStatus" 
+						 			data-placeholder="请选择状态" style="width: 130px;vertical-align:middle;">
+									<option value='' >----请选择----</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" > 搜索 </button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="rowt">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+					<a auth="mpamng/term/termView.do"  class="btn btn-small btn-add" onclick="addTerm();">终端入库</a> 
+					<a auth="mpamng/term/unbindMer.do" class="btn btn-small btn-delete" onclick="unbind('mer');">解绑商户</a>
+					<a auth="mpamng/term/unbindAgent.do" class="btn btn-small btn-delete" onclick="unbind('agent');">解绑代理商</a>
+					<a auth="mpbase/termStepListView.do" class="btn btn-small btn-info" onclick="queryTermStep();">终端日志</a>
+					<a auth="mpamng/term/termManualView.do"  class="btn btn-small btn-add" onclick="addManualTerm();">手工终端入库</a> 
+				</span> 
+				<span id="paging_bar" style="float: right"> </span>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="existEffectivePayFlg">
+
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+				url : "mpamng/term/queryTerm.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '编号', '终端物理号','代理商编号','代理商名称','商户编号','商户名称','终端类型','终端厂商','终端状态','入库人','入库时间','出库时间' ],
+				colModel : [ {name : 'terminalId',index : 'terminalId', width : '0px' ,hidden : true,sortable:false}, 
+				             {name : 'terminalNo',  index : 'terminalNo', width : '120px' ,sortable:false},
+				             {name : 'agentId', index : 'agentId',  width : '120px' ,sortable:false},
+				             {name : 'agentName', index : 'agentName',  width : '120px' ,sortable:false},
+				             {name : 'custId', index : 'custId',  width : '120px' ,sortable:false},
+				             {name : 'custName', index : 'custName',  width : '120px' ,sortable:false},
+				             {name : 'terminalType', index : 'terminalType',  width : '120px' ,sortable:false,formatter:termTypeFormat},
+				             {name : 'terminalCom', index : 'terminalCom',  width : '100px' ,sortable:false,formatter:termComFormat},
+				             {name : 'terminalStatus', index : 'terminalStatus',  width : '100px' ,sortable:false,ditcKey:'TERMINALSTATUS', formatter : gridFormatByDict},
+				             {name : 'createUserId', index : 'createUserId',  width : '100px' ,sortable:false},
+				             {name : 'createDate', index : 'createDate',  width : '150px' ,sortable:false,formatter : gridFormatByDate},
+				             {name : 'editDate', index : 'editDate',  width : '150px' ,sortable:false,formatter : gridFormatByDate}
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+				shrinkToFit:false,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+		});
+		function termStatusFormat(cellvalue, options, rowObject){
+			return DICT.get("TERMINALSTATUS")[cellvalue];
+		}
+		function termTypeFormat(cellvalue, options, rowObject){
+			var url="mpamng/selectoption/termType.do";
+			select2textData(url,"termType");
+			return SELECT2TEXT.get(cellvalue,"termType");
+		}
+		function termComFormat(cellvalue, options, rowObject){
+			var url="mpamng/selectoption/termCom.do";
+			select2textData(url,"termCom");
+			return SELECT2TEXT.get(cellvalue,"termCom");
+		}
+
+		//新增
+		function addTerm() {
+			openDialog({
+				dialogId : 'dlg-termEdit',
+				title : '终端入库',
+				pageUrl : 'mpamng/term/termView.do',
+				width : '50%',
+				height:'60%'
+			});
+		}
+		
+		//手工新增
+		function addManualTerm() {
+			openDialog({
+				dialogId : 'dlg-termManual',
+				title : '手工终端入库',
+				pageUrl : 'mpamng/term/termManualView.do',
+				width : '50%',
+				height:'60%'
+			});
+		}
+		
+		//查询终端日志
+		function queryTermStep() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			var rowData = $('#grid-table').jqGrid('getRowData',rows[0]);
+			openDialog({
+				dialogId : 'dlg-termStep',
+				title : '终端日志',
+				pageUrl : 'mpbase/termStepListView.do',
+				width : '85%',
+				height:'80%',
+				dataParam : {
+					termNo : rowData.terminalNo
+				},
+				dataName : 'obj' //表单数据存储对象名称
+			});
+		}
+		
+		
+		//解绑
+		function unbind(args) {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			var msgtxt=('mer'==args?'商户':'代理商');
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				var cName = $('#grid-table').jqGrid('getRowData',rows[i]).custName;
+				var tNo = $('#grid-table').jqGrid('getRowData',rows[i]).terminalNo;
+				  if('mer'==args){
+					  // 验证此用户当天，是否存在有效交易
+					  existEffectivePay($('#grid-table').jqGrid('getRowData',rows[i]).terminalNo);
+					  if($("#existEffectivePayFlg").val() == 'true'){
+						  msg.alert("警告","用户\"" + cName + "\"的\"" + tNo + "终端，存在有效交易，不能解绑！", "warn");
+						  $("#existEffectivePayFlg").val("");
+						  return false;
+					  }
+					  $("#existEffectivePayFlg").val("");
+				  }
+				  if(msgtxt == '商户' && $('#grid-table').jqGrid('getRowData',rows[i]).custName == ''){
+					  msg.alert("警告", "终端\"" + tNo + "\"未绑定商户！", "warn");
+					  return false;
+				  }
+				  if(msgtxt == '代理商' && $('#grid-table').jqGrid('getRowData',rows[i]).agentName == ''){
+					  msg.alert("警告", "终端\"" + tNo + "\"未绑定代理商！", "warn");
+					  return false;
+				  }
+				  if(msgtxt == '代理商' && $('#grid-table').jqGrid('getRowData',rows[i]).custName != ''){
+					  msg.alert("警告", "终端\"" + tNo + "\"的用户未解绑！", "warn");
+					  return false;
+				  }
+
+				　ids += $('#grid-table').jqGrid('getRowData',rows[i]).terminalId+ ",";
+			}
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			var url=('mer'==args?'unbindMer':'unbindAgent');
+			msg.confirm({title:'确认',position:'center',msg:'您确定要解绑'+msgtxt+'吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpamng/term/"+url+".do?termIds=" + ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+						}
+					});
+				}
+			}});
+			
+			}
+		
+		// 验证此终端当天是否有交易完成的订单
+		function existEffectivePay(terminalNo){
+			$.ajax({
+				type : "post",
+				url : "mpamng/term/existEffectivePay.do",
+				data:{terminalNo:terminalNo},
+				dataType : 'json',
+				async : false,
+				success : function(result) {
+					$("#existEffectivePayFlg").val(result);
+				},
+				error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+			});
+		}
+	</script>

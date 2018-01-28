@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentFeeDao">
+	<resultMap type="AgentFeeInfo" id="AgentFeeMap">
+		<result property="rateCode"             column="RATE_CODE" />
+		<result property="rateId"               column="RATE_ID" />
+		<result property="rateType"             column="RATE_TYPE" />
+		<result property="rateTCas"             column="RATE_TCAS" />
+		<result property="maxTCas"              column="MAX_TCAS" />
+		<result property="rateLivelihood"       column="RATE_LIVELIHOOD" />
+		<result property="rateGeneral"          column="RATE_GENERAL" />
+		<result property="rateGeneralTop"       column="RATE_GENERAL_TOP" />
+		<result property="rateGeneralMaximun"   column="RATE_GENERAL_MAXIMUN" />
+		<result property="rateEntertain"        column="RATE_ENTERTAIN" />
+		<result property="rateEntertainTop"     column="RATE_ENTERTAIN_TOP" />
+		<result property="rateEntertainMaximun" column="RATE_ENTERTAIN_MAXIMUN" />
+		<result property="insTim"               column="INS_TIM" />
+		<result property="ipdTim"               column="IPD_TIM" />
+	</resultMap>
+	
+	<insert id="insertEntity" parameterType="AgentFeeInfo">
+		INSERT INTO HX_RATES_INF
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rateCode != null">
+				RATE_CODE,
+			</if>
+			<if test="rateId != null">
+				RATE_ID,
+			</if>
+			<if test="rateType != null">
+				RATE_TYPE,
+			</if>
+			<if test="rateTCas != null">
+				RATE_TCAS,
+			</if>
+			<if test="maxTCas != null">
+				MAX_TCAS,
+			</if>
+			<if test="rateLivelihood != null">
+				RATE_LIVELIHOOD,
+			</if>
+			<if test="rateGeneral != null">
+				RATE_GENERAL,
+			</if>
+			<if test="rateGeneralTop != null">
+				RATE_GENERAL_TOP,
+			</if>
+			<if test="rateGeneralMaximun != null">
+				RATE_GENERAL_MAXIMUN,
+			</if>
+			<if test="rateEntertain != null">
+				RATE_ENTERTAIN,
+			</if>
+			<if test="rateEntertainTop != null">
+				RATE_ENTERTAIN_TOP,
+			</if>	
+			<if test="rateEntertainMaximun != null">
+				RATE_ENTERTAIN_MAXIMUN,
+			</if>
+			<if test="insTim != null">
+				INS_TIM,
+			</if>
+			<if test="ipdTim != null">
+				IPD_TIM,
+			</if>										
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rateCode != null">
+				#{rateCode,jdbcType=CHAR},
+			</if>
+			<if test="rateId != null">
+				#{rateId,jdbcType=VARCHAR},
+			</if>
+			<if test="rateType != null">
+				#{rateType,jdbcType=CHAR},
+			</if>
+			<if test="rateTCas != null">
+				#{rateTCas,jdbcType=VARCHAR},
+			</if>
+			<if test="maxTCas != null">
+				#{maxTCas,jdbcType=VARCHAR},
+			</if>
+			<if test="rateLivelihood != null">
+				#{rateLivelihood,jdbcType=VARCHAR},
+			</if>
+			<if test="rateGeneral != null">
+				#{rateGeneral,jdbcType=VARCHAR},
+			</if>
+			<if test="rateGeneralTop != null">
+				#{rateGeneralTop,jdbcType=VARCHAR},
+			</if>
+			<if test="rateGeneralMaximun != null">
+				#{rateGeneralMaximun,jdbcType=VARCHAR},
+			</if>
+			<if test="rateEntertain != null">
+				#{rateEntertain,jdbcType=VARCHAR},
+			</if>
+			<if test="rateEntertainTop != null">
+				#{rateEntertainTop,jdbcType=VARCHAR},
+			</if>				
+			<if test="rateEntertainMaximun != null">
+				#{rateEntertainMaximun,jdbcType=VARCHAR},
+			</if>
+			<if test="insTim != null">
+				#{insTim,jdbcType=VARCHAR},
+			</if>
+			<if test="ipdTim != null">
+				#{ipdTim,jdbcType=VARCHAR},
+			</if>							
+		</trim>
+	</insert>
+
+	<update id="updateEntity" parameterType="AgentFeeInfo">
+		UPDATE HX_RATES_INF
+		<set>
+			<if test="rateTCas != null and rateTCas != ''">
+				RATE_TCAS = #{rateTCas},
+			</if>
+			<if test="maxTCas != null and maxTCas != ''">
+				MAX_TCAS = #{maxTCas},
+			</if>
+			<if test="rateLivelihood != null and rateLivelihood != ''">
+				RATE_LIVELIHOOD = #{rateLivelihood},
+			</if>
+			<if test="rateGeneral != null and rateGeneral != ''">
+				RATE_GENERAL = #{rateGeneral},
+			</if>
+			<if test="rateGeneralTop != null and rateGeneralTop != ''">
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+			</if>
+			<if test="rateGeneralMaximun != null and rateGeneralMaximun != ''">
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			</if>
+			<if test="rateEntertain != null and rateEntertain != ''">
+				RATE_ENTERTAIN = #{rateEntertain},
+			</if>
+			<if test="rateEntertainTop != null and rateEntertainTop != ''">
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			</if>
+			<if test="rateEntertainMaximun != null and rateEntertainMaximun != ''">
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			</if>
+			<if test="insTim != null and insTim != ''">
+				INS_TIM = #{insTim},
+			</if>
+			<if test="ipdTim != null and ipdTim != ''">
+				IPD_TIM = #{ipdTim},
+			</if>						
+		</set>
+		<where>
+			RATE_CODE = #{rateCode} AND RATE_ID = #{rateId} AND RATE_TYPE = #{rateType}
+		</where>
+	</update>
+
+	<delete id="deleteEntity" parameterType="AgentFeeInfo">
+		DELETE FROM HX_RATES_INF
+		<where>
+			RATE_ID = #{rateId}
+		</where>
+	</delete>
+
+	
+	<select id="selectEntity" parameterType="AgentFeeInfo" resultMap="AgentFeeMap">
+		SELECT * FORM HX_RATES_INF
+		<where>
+			RATE_ID = #{rateId}
+		</where>
+	</select>
+	<select id="selectGrade" parameterType="AgentFeeInfo" resultMap="AgentFeeMap">
+		SELECT 
+		  RATE_CODE,
+		  RATE_ID,
+		  RATE_TYPE,
+		  RATE_TCAS,
+		  MAX_TCAS,
+		  RATE_LIVELIHOOD,
+		  RATE_GENERAL,
+		  RATE_GENERAL_TOP,
+		  RATE_GENERAL_MAXIMUN,
+		  RATE_ENTERTAIN,
+		  RATE_ENTERTAIN_TOP,
+		  RATE_ENTERTAIN_MAXIMUN,
+		  INS_TIM,
+		  IPD_TIM
+        FROM HX_RATES_INF
+		<where>
+			RATE_CODE = #{rateCode} AND RATE_ID = #{rateId} AND RATE_TYPE = #{rateType} 
+		</where>
+	</select>		
+</mapper>

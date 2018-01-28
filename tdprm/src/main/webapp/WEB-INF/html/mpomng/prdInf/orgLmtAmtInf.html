@@ -1,0 +1,57 @@
+<meta charset="utf-8" />
+
+<div style="width: 850px;height:35px;background-color: #FFFFFF;">
+<div style="background-color: #FFFFFF;height: 10px;"></div>
+<b><font style="font-size:15px;margin-left: 50px;">额度查询</font></b>
+</div>
+<div style="border: 1px black solid; width: 850px ;margin-left: 0px;margin-top: 0px"></div><br/>
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ 	<input type="hidden" id="paySignPic" name="paySignPic"/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 授信额度T+0： </label>
+		<div class="col-sm-3">
+			<input type="text" id="txamt1" name="txamt1" 
+				class="report"  readonly="readonly"/>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 清算额度T+1： </label>
+		<div class="col-sm-3">
+			<input type="text" id="txamt2" name="txamt2" 
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+</script>

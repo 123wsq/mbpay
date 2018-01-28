@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style type="text/css">
+.table-header {
+    background-color: #46A3FF;
+    color: #fff;
+    font-size: 12px;
+    line-height: 38px;
+    margin-bottom: 1px;
+    padding-left: 10px;
+}
+
+</style>
+<div class="rowt" >
+	<div class="col-xs-12">
+		<div>
+			<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom: 0px !important">
+				<thead>
+					<tr>
+						<th >编号</th>
+						<th >文件名</th>
+						<th >文件大小</th>
+						<th >文件类型</th>
+						<th >开始时间</th>
+						<th>总耗时</th>
+						<th>状态</th>
+						<th>下载</th>
+					</tr>
+				</thead>
+
+				<tbody id="table-body">
+				</tbody>
+			
+			</table>
+		</div>
+	
+		
+	</div>
+</div>
+<div class="form-actions align-right  form-button-box" style="margin-top: 10px">			
+	<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+		 关闭
+	</button>
+</div>
+<script type="text/javascript">
+	var pageSize=7;
+	var bodycp1=0;
+	$(document).ready(function() {
+		$("#checkboxlbl1").change(function(){  
+			var is_checked =$("#checkboxlbl1").is(":checked");
+			$("input[name='mybody1paging_bar_1']").each(function(){
+				this.checked=is_checked;
+			}); 
+		});
+		getjson("mpbase/fileDownloadByCuday/query.do","table-body");
+	});
+
+	function getjson(url,body){
+		var dialog=$("#dlg-fileDownloadByCuday").Dialog();
+		 $.ajax({
+			 type:"post",
+			 dataType:"json",
+			 url:url,
+			 success : function(result) {
+					if (result.rspcod != 200) {
+						msg.alert("错误", result.rspmsg + " 错误代码："+ result.rspcod, 'error');
+					} else {
+						$("#"+body+" tr").remove();
+						if(result.obj==null||result.obj=='null'){
+							return false;
+						}
+						$.each(result.obj,function(index,obj){
+							var inputVal="1";
+							var tr ='<tr>'+
+							'<td style="width: 100px"><a href="javascript:downloadFile_dialog(\''+obj.dPath+'\');">'+obj.dId+'</a></td>'+
+							'<td style="width: 200px">'+obj.dName+'</td>'+
+							'<td style="width: 120px">'+sizeForamt(obj.dSize)+'</td>'+
+							'<td style="width: 120px">'+DICT.get("FILETYPE",obj.dType)+'</td>'+
+							'<td style="width: 150px">'+dateFormat(obj.dSTime)+'</td>'+
+							'<td style="width: 100px">'+msecFormat(obj.dTime)+'</td>'+
+							'<td style="width: 100px">'+DICT.get("RPSTATUS",obj.status)+'</td>'+
+							'<td style="width: 50px"><div class=\"hidden-sm hidden-xs btn-group\"><button onClick=\"downloadFile_dialog(\''+obj.dPath+'\');\" class=\"btn btn-xs btn-warning\"  title=\"\"">'+
+							'下载</button></div></td>'+
+							'</tr>';
+							$("#"+body).append(tr);
+						});
+					}
+				},
+			 error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+		 });
+	}
+	
+	function downloadFile_dialog(dpath){	
+		$.ajax({
+			type: "post",
+			url:"mpbase/fileDownloadManage/hasFile.do?filePath="+dpath,
+			dateType:'json',
+			async:false,
+			success:function(result){
+				if(result==true||result=='true'){
+					var a = $("<a href="+dpath+" ></a>").get(0);
+			        var e = document.createEvent('MouseEvents');
+			        e.initEvent( 'click', true, true );
+			        a.dispatchEvent(e);
+				}else{
+					msg.alert("错误", "文件不存在，请重新生成！", "error");
+				}
+			},
+			error: function() {
+				msg.alert('提示', "网络异常！",'error');
+            }
+			
+		});
+		
+	}
+
+</script>

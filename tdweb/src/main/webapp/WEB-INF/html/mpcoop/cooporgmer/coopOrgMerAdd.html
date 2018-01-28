@@ -1,0 +1,314 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpcoop/cooporgmer/coopOrgMerAdd/add.do" id="cooporgMeradd_form">
+ <br/>
+	<input type="hidden" id="editUserId" name="editUserId" />
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+		<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 合作机构名称： </label>
+		<div class="col-sm-3">
+                <label>
+					<div class="search_input" style="padding-top: 5px;">
+						 <select  name="cooporgNo" id="cooporgNo" data-placeholder="请选择合作机构编号"  style="width: 185px;vertical-align:middle;">
+							
+						 </select>
+					</div>
+				</label>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 商户编号： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+					<input type="text" id="merNo" name="merNo" placeholder="请输入[商户编号]" 
+						class="col-xs-12 col-sm-12" validate="true" datatype="number" maxlength="15"/>
+					<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+		
+	</div>
+	
+	<div class="form-group">
+		 
+		<label class="col-sm-2 control-label no-padding-right"
+					for="form-field-1">终端编号： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="terNo" name="terNo" placeholder="请输入[终端编号]" 
+						class="col-xs-12 col-sm-12"  validate="true" datatype="number" maxlength="8"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 商户名称： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="merName" name="merName" placeholder="请输入[商户名称]" 
+					class="col-xs-12 col-sm-12"  validate="true"  datatype="word" maxlength="50"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+					for="form-field-1">费率类型： </label>
+		<div class="col-sm-3">
+		        <select 
+						rel="obj.RATETYPE"
+						location="local" 
+						name="rateType" 
+						id="rateType" 
+						data-placeholder="请选择类型" style="width: 185px;vertical-align:middle;">
+						<option value='' >--请选择--</option>
+				</select>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+					for="form-field-1">商户所属行业： </label>
+		<div class="col-sm-3">
+		
+				<input type="text" id="mType" name="mType" placeholder="请输入[商户所属行业]" 
+						class="col-xs-12 col-sm-12"  maxlength="100"/>
+		</div>	
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 主密钥： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="merKey" name="merKey" placeholder="请输入[商户密钥(快捷通道/终端主密钥)]" 
+					class="col-xs-12 col-sm-12"  validate="true"  maxlength="33"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>
+			
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 校验值： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="checkValue" name="checkValue" placeholder="请输入[主密钥校验值]" 
+				class="col-xs-12 col-sm-12"  maxlength="16"/>
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 日交易限额： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="dtLimit" name="dtLimit" placeholder="请输入[日交易限额]" 
+				class="col-xs-12 col-sm-12"  maxlength="8" datatype="money"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 月交易限额： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="mtLimit" name="mtLimit" placeholder="请输入[月交易限额]" 
+				class="col-xs-12 col-sm-12" maxlength="8" datatype="money"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最低交易额： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="lowLimit" name="lowLimit" placeholder="请输入[单笔最低交易额]" 
+				class="col-xs-12 col-sm-12" maxlength="8" datatype="money"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最高交易额： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="highLimit" name="highLimit" placeholder="请输入[单笔最高交易额]" 
+				class="col-xs-12 col-sm-12" maxlength="8" datatype="money"/>
+		</div>
+	</div>
+	
+	
+
+<!-- 合作机构类型为收单 -->
+		<div class="form-group"  id="pos_div">
+				<label class="col-sm-2 control-label no-padding-right"
+					for="form-field-1"> 成本费率： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateTop" name="rateTop" placeholder="请输入[成本费率]" 
+							class="col-xs-12 col-sm-12"  datatype="Dnumber" />
+							<i class="ace-icon">%</i>
+					</span>
+				</div>
+				
+				<label class="col-sm-2 control-label no-padding-right"
+					for="form-field-1"> 成本封顶金额： </label>
+				<div class="col-sm-3">
+		
+					<input type="text" id="rateTypeTop" name="rateTypeTop" placeholder="请输入[封顶金额]" 
+						class="col-xs-12 col-sm-12"  datatype="money" maxlength="8"/>
+				</div>
+		</div>
+<!-- 合作机构类型为快捷 -->
+<div class="form-group" id="shortcut_div">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> T0成本费率(%)： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="rateT0" name="rateT0" placeholder="请输入[大商户T0刷卡成本费率(%)]" 
+					class="col-xs-12 col-sm-12"  datatype="Dnumber" />
+				<i class="ace-icon">%</i>
+			</span>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> T1成本费率(%)： </label>
+		<div class="col-sm-3">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="rateT1" name="rateT1" placeholder="请输入[大商户T1刷卡成本费率(%)]" 
+					class="col-xs-12 col-sm-12"  datatype="Dnumber" />
+				<i class="ace-icon">%</i>
+			</span>
+		</div>
+</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 省份： </label>
+		<div class="col-sm-3">
+                <label>
+					<div class="search_input" style="padding-top: 5px;">
+						 <select  name="provinceID" id="provinceID" data-placeholder="请选择省份"  style="width: 185px;vertical-align:middle;">
+						 </select>
+					</div>
+				</label>
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit" >
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+/**
+ * 	初始化下拉框
+ */
+$(document).ready(function() {
+	 loadOption("cooporgNo","","0","mpcoop/selectoption/cooporgNo.do");
+	 loadOption("provinceID","","0","mpcoop/selectoption/provinceID.do");
+	 var p = dialog.getById('dlg-coopOrgMerAdd');
+	//设置页面初始值
+	$("#editUserId").attr("value",p.dataParam.editUserId);
+	$("#editUserName").attr("value",p.dataParam.editUserName);
+	
+});
+
+/**
+ * 验证合作机构的类型
+ */
+$(document).ready(function(){
+    $('#cooporgNo').change(
+			 function (){
+				 var p1=$(this).children('option:selected').val();
+				 if(p1==''){
+					 return false;
+				 }
+				 $.ajax({
+						type : "post",
+						url : "mpcoop/coopManage/queryCoopTypeById.do",
+						data:{cooporgNo:p1},
+						dataType : 'json',
+						async:true,
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								coopType=result.obj.coopType;
+								if(coopType == "0" ){//收单
+									$("#pos_div").show();
+									$("#shortcut_div").hide();
+								}
+								if(coopType == "1" ){
+									$("#pos_div").hide();
+									$("#shortcut_div").show();
+								}
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+						}
+					});
+			 }
+	 ); 
+     $('#rateType').change(
+    		function(){
+			    var rateType=$(this).children('option:selected').val();
+				if(rateType == '1' || rateType == '2' || rateType == '3' ){
+					$("#rateTypeTop").attr("disabled","disabled");    			
+				}
+				if(rateType == '4' || rateType == '5'){
+					$("#rateTypeTop").removeAttr("disabled");
+				}
+    		}	
+	); 
+   
+});
+
+
+function submitForm(obj){
+	var merStatus=$("#merStatus option:selected").val();
+	if(merStatus==''){
+		alertMsg.error('请选择商户状态');
+		return false;
+	}
+	if($("#pos_div").is(":visible")){
+		var rateType=$("#rateType option:selected").val();
+		var provinceID=$("#provinceID option:selected").val();
+		if(rateType==''){
+			alertMsg.error('请选择费率类型');
+			return false;
+		}
+		if(provinceID==''){
+			alertMsg.error('请选择省份');
+			return false;
+		}
+		if(rateType == '4' || rateType == '5'){
+			var rateTypeTop=$("rateTypeTop").val();
+			if(rateTypeTop==''){
+				alertMsg.error('请输入费率类型 封顶金额');
+				return false;
+			}
+		}
+	}
+	return validateCallback(obj,editUserDone);
+}
+
+function editUserDone(result){
+	dialogAjaxDone(result);
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		$("#grid-table").trigger("reloadGrid");
+		dialog.closeById('dlg-coopOrgMerAdd');
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+	
+</script>

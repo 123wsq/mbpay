@@ -1,0 +1,183 @@
+<!DOCTYPE  html  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <title>商户注册</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.md5.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-ipad-retina.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-iphone.png" />
+    <link href="css/common.css" rel="stylesheet" />
+    <link href="css/css.css" rel="stylesheet" />
+   
+</head>
+<<script type="text/javascript">
+
+var cust_id = getParameter('cust_Id');
+//var host = 'http://103.47.137.53:8098';
+var host = 'http://localhost:8080';
+function getParameter(param){
+	
+	var query = window.location.search;
+	var iLen = param.length;
+	var iStart = query.indexOf(param);
+	if (iStart == -1)
+	　return "";
+	iStart += iLen + 1;
+	var iEnd = query.indexOf("&", iStart);
+	if (iEnd == -1)
+	　return query.substring(iStart);
+	
+	return query.substring(iStart, iEnd);
+}
+
+
+function onRegister() {
+	var tel = document.getElementById("custMobile").value;
+	var password = document.getElementById("custPwd").value;
+	var  rePwd = $("#rePwd").val();
+	
+	var checkValue = document.getElementById("checkValue").value;
+	var checkbox = document.getElementById("checkbox").checked;
+
+	if(tel =='' || tel.length != 11){
+		alert("请输入正确的手机号码");
+		return;
+	}
+	if (password == '' || rePwd == '') {
+		alert("密码不能为空");
+		return;
+	}
+	
+	if(password !=rePwd){
+		alert("两次密码不一致");
+		return;
+	}
+	if (checkValue == '' || checkValue.length != 6) {
+		alert("请输入正确的验证码");
+		return;
+	}
+	
+	if (checkbox == false) {
+		alert("请确认协议");
+		return;
+	}
+	
+	
+	$.ajax({
+		type : 'post',
+		url : host +'/mpcctp/SY0022.json',
+		dataType : 'json',
+		data : {
+			custMobile : tel,
+			custPwd : hex_md5(password),
+			checkValue : checkValue,
+			cust_Id : cust_id
+		},
+		success : function(result) {
+			
+			if (result.rspcod == '200') {
+				// 以下方式直接跳转
+				window.location.href='downloadapp.html';
+			} else {
+				alert(result.rspmsg);
+			}
+
+		},
+
+	});
+}
+
+function get_CheckValue2() {
+
+	var tel = document.getElementById("custMobile").value;
+	if(tel =='' || tel.length != 11){
+		alert("请输入正确的手机号码");
+		return;
+	}
+	
+	$.ajax({
+		type : 'post',
+		url : host+'/mpcctp/SY0111.json',
+		dataType : 'json',
+		data : {
+			custMobile : tel,
+			codeType : '01'
+		},
+		success : function(result) {
+			
+			if (result.rspcod == '200') {
+				timedCount();
+			}else {
+				alert(result.rspmsg);
+			}
+
+		},
+
+	});
+}
+var c = 60;
+function timedCount() {
+
+	var button = document.getElementById('get_CheckValue');
+	button.value = c +' 秒';
+	c = c - 1;
+	if (c >= 0) {
+		t = setTimeout("timedCount()", 1000);
+		button.disabled = true;
+	} else {
+		clearTimeout(t);
+		button.removeAttribute('disabled');
+		button.value = '重新获取';
+		c = 60;
+	}
+}
+
+</script>
+
+<body style="background-color:#eeeee8;">
+<header>
+	<div class=" jrj-clear" style="background-color: #4574df;">
+    	
+        <h1 class="center_ts">满e刷</h1>
+    </div>
+</header>
+<article class="form_s1">
+	<form id="form0" action="/sso/mobileRegister" method="post" accept-charset="utf-8">
+		
+        <div class="input_bz ibtop">
+			<input type="text" name="mobile" maxlength="11"  value="" id="custMobile" class="ipt_m1" placeholder="请输入手机号"/>
+		</div>
+        <div class="input_bz ibbottom">
+			<input type='button' id='get_CheckValue' class='ipb_yz' value='获取验证码' onclick='get_CheckValue2();' />
+			<input type="text" name="verifyCode"  maxlength="6" id="checkValue" class="ipt_m1 mone" placeholder="请输入验证码"/>
+		</div>
+        <p class="ts_wone" id="message1">
+        <div class="input_bz ibtop mt">
+			<input type="password" name="passportName" value="" id="custPwd" class="ipt_m1" placeholder="请输入密码"maxlength="30"/>
+		</div>
+        <div class="input_bz ibbottom">
+			<input type="password" name="passportPwd" id="rePwd" class="ipt_m1" placeholder="请确认密码"/>
+		</div>
+		<div class="input_bz ibbottom">
+			<input id='checkbox' type="checkbox"  style="width: 1.5em; height: 1.5em"/>
+			<a href="http://103.47.137.51:8899/pay/test/agreement.html">同意协议</a>
+		</div>
+		
+        <p class="ts_wone" id="message">
+		   
+		</p>
+        <input type="button" class="btnEnd" style="margin-top: 20px; font-size:17px;" value="立即注册" onclick='onRegister();'/>
+    </form>
+</article>
+
+</body>
+</html>

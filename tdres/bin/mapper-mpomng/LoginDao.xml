@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.LoginDao">
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_LOGIN_INF  (
+		         CUST_ID, 
+		         LOGIN_TIME, 
+		         IP, 
+		         MAC, 
+		         SYS_TYPE, 
+		         TOKEN, 
+		         LAST_LOGIN_DATE, 
+		         LAST_LOGIN_TIME
+				)
+		VALUES (
+		          #{custId}, 
+		          #{logintime}, 
+		          #{ip}, 
+		          #{mac}, 
+		          #{sysType}, 
+		          #{token}, 
+		          #{lastLoginDate}, 
+		          #{lastLoginTime}
+		      )
+	</insert>
+</mapper>

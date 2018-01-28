@@ -1,0 +1,63 @@
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);" action="mpbase/eidtCnaps.do" method="post">
+	<br/>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">联行号:</label>
+		<div class="col-sm-3">
+			<input type="text" id="cnapsCode" name="cnapsCode" placeholder="请输入联行号" class="col-xs-10 col-sm-12" readonly="readonly"  validate="true" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right tooltip-error" for="form-field-1">银行名称:</label>
+		<div class="col-sm-4">
+			<input type="text" id="bankName" name="bankName" placeholder="请输入银行名称" class="col-xs-10 col-sm-12" validate="true"  />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">支行信息:</label>
+		<div class="col-sm-9">
+			<input type="text" id="subBranch" name="subBranch" placeholder="请输入支行信息" class="col-xs-10 col-sm-12"  validate="true" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">所在省:</label>
+		<div class="col-sm-3">
+			<input type="text" id="bankPro" name="bankPro" placeholder="请输入所在省" class="col-xs-10 col-sm-12"  validate="true" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">所在地市:</label>
+		<div class="col-sm-4">
+			<input type="text" id="bankCity" name="bankCity" placeholder="请输入所在地市" class="col-xs-10 col-sm-12"  validate="true" />
+		</div>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+
+
+</script>

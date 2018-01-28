@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 数据库表为 MPOMNG_FILE_DOWNLOAD_INF -->
+<mapper namespace="com.tangdi.production.mpbase.dao.PayRateDao">
+	<resultMap type="PayRateInf" 		id="PayFeeMap"		>
+		<result property="feeId" 		column="FEE_ID" 	/>
+		<result property="feeCode"  	column="FEE_CODE" 	/>
+		<result property="relType" 		column="REL_TYPE" 	/>
+		<result property="relId" 		column="REL_ID" 	/>
+		<result property="ccy" 			column="CCY"		/>
+		<result property="feeName" 		column="FEE_NAME" 	/>
+		<result property="feeType" 		column="FEE_TYPE"	/>
+		<result property="pricing" 		column="PRICING"	/>
+		<result property="percent" 		column="PERCENT" 	/>
+		<result property="feeLow" 		column="FEE_LOW" 	/>
+		<result property="feeTop" 		column="FEE_TOP" 	/>
+		<result property="feeStatus" 	column="FEE_STATUS"	/>
+
+	</resultMap>
+	
+	<select id="selectList" parameterType="PayRateInf" resultMap="PayFeeMap">
+		SELECT 
+			FEE_ID,FEE_CODE,REL_TYPE,REL_ID,CCY,FEE_NAME,FEE_TYPE,PRICING,PERCENT,FEE_LOW,FEE_TOP,FEE_STATUS
+		FROM
+			MPOMNG_PAY_RATE_INF
+		<where>
+			<if test="feeCode != null and feeCode != ''">
+				 FEE_CODE = #{feeCode}
+			</if>
+			<if test="feeStatus != null and feeStatus != ''">
+				AND FEE_STATUS =#{feeStatus}
+			</if>
+		</where>
+	</select>
+	<insert id="insertEntity" parameterType="PayRateInf">
+		INSERT INTO MPOMNG_PAY_RATE_INF
+			(FEE_ID,FEE_CODE,REL_TYPE,REL_ID,CCY,FEE_NAME,FEE_TYPE,PRICING,PERCENT,FEE_LOW,FEE_TOP,FEE_STATUS)
+		VALUES (#{feeId,jdbcType=VARCHAR},
+				#{feeCode,jdbcType=VARCHAR},
+				#{relType,jdbcType=VARCHAR},
+				#{relId,jdbcType=VARCHAR},
+				#{ccy,jdbcType=VARCHAR},
+				#{feeName,jdbcType=VARCHAR},
+				#{feeType,jdbcType=VARCHAR},
+				#{pricing,jdbcType=VARCHAR},
+				#{percent,jdbcType=VARCHAR},
+				#{feeLow,jdbcType=VARCHAR},
+				#{feeTop,jdbcType=VARCHAR},
+				#{feeStatus,jdbcType=VARCHAR})
+				
+	</insert>
+	
+	<select id="selectEntity" parameterType="PayRateInf" resultMap="PayFeeMap">
+		SELECT 
+			FEE_ID,FEE_CODE,REL_TYPE,REL_ID,CCY,FEE_NAME,FEE_TYPE,PRICING,PERCENT,FEE_LOW,FEE_TOP,FEE_STATUS
+		FROM
+			MPOMNG_PAY_RATE_INF
+		<where>
+			<if test="feeId != null and feeId != ''">
+				FEE_ID = #{feeId}
+			</if>
+			<if test="feeCode != null and feeCode != ''">
+				AND FEE_CODE = #{feeCode}
+			</if>
+			<if test="relType != null and relType != ''">
+				AND REL_TYPE = #{relType}
+			</if>
+			<if test="relId != null and relId != ''">
+				AND REL_ID =#{relId}
+			</if>
+			<if test="ccy != null and startDate != ''">
+				AND CCY = #{ccy}
+			</if>
+			<if test="feeName != null and feeName != ''">
+				AND FEE_NAME = #{feeName}
+			</if>
+			<if test="feeType != null and feeType != ''">
+				AND FEE_TYPE = #{feeType}
+			</if>
+			<if test="pricing != null and pricing != ''">
+				AND PRICING =#{pricing}
+			</if>
+			<if test="percent != null and percent != ''">
+				AND PERCENT =#{percent}
+			</if>
+			<if test="feeLow != null and feeLow != ''">
+				AND FEE_LOW =#{feeLow}
+			</if>
+			<if test="feeTop != null and feeTop != ''">
+				AND FEE_TOP =#{feeTop}
+			</if> 
+			<if test="feeStatus != null and feeStatus != ''">
+				AND FEE_STATUS =#{feeStatus}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateEntity" parameterType="PayRateInf">
+		UPDATE MPOMNG_PAY_RATE_INF
+		<set>
+		<!-- <if test="feeCode != null and feeCode != ''">
+				FEE_CODE = #{feeCode},
+			</if>
+			<if test="relType != null and relType != ''">
+				REL_TYPE = #{relType},
+			</if>
+			<if test="relId != null and relId != ''">
+				REL_ID =#{relId},
+			</if>
+			<if test="ccy != null and startDate != ''">
+				CCY = #{ccy},
+			</if>
+			<if test="feeName != null and feeName != ''">
+				FEE_NAME = #{feeName},
+			</if>
+			<if test="feeType != null and feeType != ''">
+				FEE_TYPE = #{feeType},
+			</if>
+			<if test="pricing != null and pricing != ''">
+				PRICING =#{pricing},
+			</if>
+			<if test="percent != null and percent != ''">
+				PERCENT =#{percent},
+			</if>
+			<if test="feeLow != null and feeLow != ''">
+				FEE_LOW =#{feeLow},
+			</if>
+			<if test="feeTop != null and feeTop != ''">
+				FEE_TOP =#{feeTop},
+			</if>-->
+			<if test="feeStatus != null and feeStatus != ''">
+				FEE_STATUS =#{feeStatus}
+			</if>
+		</set>
+		<where>
+		    <if test="feeId != null and feeId != ''">
+				AND FEE_ID = #{feeId}
+			</if>
+			<if test="feeCode != null and feeCode != ''">
+				AND FEE_CODE = #{feeCode}
+			</if>
+			<if test="feeType != null and feeType != ''">
+				AND FEE_TYPE = #{feeType}
+			</if>	
+		</where>
+	</update>
+</mapper>

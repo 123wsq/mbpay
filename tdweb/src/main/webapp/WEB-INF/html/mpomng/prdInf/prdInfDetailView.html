@@ -1,0 +1,340 @@
+<meta charset="utf-8" />
+<!-- #F4F4F4 -->
+<div style="width: 850px;height:35px;background-color: #FFFFFF;">
+<div style="background-color: #FFFFFF;height: 10px;"></div>
+<b><font style="font-size:15px;margin-left: 50px;">商品订单</font></b>
+</div>
+<div style="border: 1px black solid; width: 850px ;margin-left: 0px;margin-top: 0px"></div><br/>
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ 	
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商品单号： </label>
+		<div class="col-sm-3">
+			<input type="text" id="prdordno" name="prdordno" 
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 订单状态： </label>
+		<div class="col-sm-3">
+		<input type="text" id="ordstatus" name="ordstatus" 
+				class="report" readonly="readonly" dict="ORDSTATUS"/>
+		</div>
+		
+	</div>
+	
+	<div class="form-group" style="margin-bottom: 8px !important;">
+	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商户编号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="custId" name="custId" readonly="readonly"
+				class="report" />
+		</div>
+	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商户名称 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="custName" name="custName"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+		
+		
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 订单类型 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="prdordtype" name="prdordtype" 
+				class="report" readonly="readonly" dict="PRDORDTYPE"/> 
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 子业务类型 ： </label>
+		<div class="col-sm-3">
+		<input type="text" id="biztype" name="biztype" 
+				class="report" readonly="readonly" dict="BUSCODE"/>
+			 
+		</div>
+		
+	</div> 
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 订单金额： </label>
+		<div class="col-sm-3">
+			<input type="text" id="ordamt" name="ordamt" init-format="cent2Yuan('{value}')"
+				class="report"  readonly="readonly"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 商品单价(分)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="price" name="price" init-format="cent2Yuan('{value}')"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商品名称 ： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="goodsName" name="goodsName"
+				class="report"  readonly="readonly"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">订单日期 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="prddate" name="prddate" 
+				class="report" readonly="readonly" init-format="dtFormat('{value}')"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商品简称 ： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="goodsNameShort" name="goodsNameShort" 
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">订单时间 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="prdtime" name="prdtime" 
+				class="report" readonly="readonly" init-format="tmFormat('{value}')"/>
+		</div>
+	</div>
+	
+<!-- 支付信息 -->
+<div id="payInf">
+<div style="width: 850px;height:35px;background-color: #FFFFFF;margin-top: 20px">
+<div style="background-color: #FFFFFF;height: 10px;"></div>
+<b><font style="font-size:15px;margin-left: 50px;">支付信息</font></b>
+</div>
+<div style="border: 1px black solid; width: 850px ;margin-left: 0px;margin-top: 0px"></div><br/>	
+
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">支付单号： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="payordno" name="payordno"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">支付状态 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="payStatus" name="payStatus" 
+				class="report" readonly="readonly" dict="PAYSTATUS"/>
+		</div>
+	</div>
+	
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易金额： </label>
+		<div class="col-sm-3">
+			<input type="text" id="txAmt" name="txAmt" init-format="cent2Yuan('{value}')"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">支付方式 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="payType" name="payType" 
+				class="report" readonly="readonly" dict="PAYTYPE"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">费率： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="rate" name="rate"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">费率类型 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="rateType" name="rateType" 
+				class="report" readonly="readonly" dict="RATETYPE"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">手续费： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="fee" name="fee"
+				class="report" readonly="readonly" init-format="cent2Yuan('{value}')"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">实际金额 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="netrecAmt" name="netrecAmt" 
+				class="report" readonly="readonly" init-format="cent2Yuan('{value}')"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">支付渠道： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="payChannel" name="payChannel" dict="CHNAME"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">支付银行卡号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="payCardNo" name="payCardNo" 
+				class="report" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">发卡行： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="issNam" name="issNam"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">卡名称 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="crdNam" name="crdNam" 
+				class="report" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易日期： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="ttxndt" name="ttxndt"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易时间 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="ttxntm" name="ttxntm" 
+				class="report" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易类型： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="txnType" name="txnType"
+				class="report" readonly="readonly" dict="TXNTYP" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">批次号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="txnSrefNo" name="txnSrefNo" 
+				class="report" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">接入方式： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="inMod" name="inMod"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">第三方商户号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="tmercId" name="tmercId" 
+				class="report" readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易流水： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="tlogno" name="tlogno"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">第三方终端号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="ttermId" name="ttermId" 
+				class="report" readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">授权码 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="tautcod" name="tautcod" 
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">渠道响应码： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="tcpscod" name="tcpscod"
+				class="report" readonly="readonly" />
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">系统参考号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="tsrefNo" name="tsrefNo" 
+				class="report" readonly="readonly"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">交易响应描述： </label>
+		<div class="col-sm-3">
+			<input type="text" id="cause" name="cause"
+				class="report" readonly="readonly" />
+		</div>
+	</div>
+</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	var p = dialog.getById('dlg-prdDetail');
+	var payno = p.dataParam.payordno;
+	if(payno == "" || payno == null){
+		document.getElementById("payInf").style.visibility="hidden";
+	}
+});
+
+function submitForm(obj){
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+</script>

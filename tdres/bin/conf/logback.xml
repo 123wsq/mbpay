@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="FileNamePattern" value="/home/mobpay/tds/mpcctp/log/" /> 
+	<property name="logFileNamePattern" value="${FileNamePattern}%d{yyyyMM}/%d{dd}" />
+	
+	
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+     
+     <appender name="REDOFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${FileNamePattern}%d{yyyy-MM-dd}.Redo.trc
+			</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+	
+	<appender name="SCHDULEFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${FileNamePattern}%d{yyyy-MM-dd}.Schdule.trc
+			</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+     
+     <appender name="WEBFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${FileNamePattern}%d{yyyy-MM-dd}.Web.trc
+			</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>processid</Key>
+			<DefaultValue>sys</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE-${processid}"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<FileNamePattern>
+						${logFileNamePattern}/${processid}.trc
+					</FileNamePattern>
+				</rollingPolicy>
+				<layout class="ch.qos.logback.classic.PatternLayout">
+					<Pattern>
+						%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+					</Pattern>
+				</layout>
+			</appender>
+		</sift>
+	</appender>
+
+
+
+
+	<appender name="CHANNELSIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>CHANNELNAME</Key>
+			<DefaultValue>channel</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE-${CHANNELNAME}"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<FileNamePattern>
+						${FileNamePattern}%d{yyyy-MM-dd}.${CHANNELNAME}.trc
+					</FileNamePattern>
+				</rollingPolicy>
+				<layout class="ch.qos.logback.classic.PatternLayout">
+					<Pattern>
+						%d{yyyyMMdd:HH:mm:ss.SSS} %-5level %msg%n
+					</Pattern>
+				</layout>
+			</appender>
+		</sift>
+	</appender>
+
+
+	<root level="debug" additivity="false">
+		<appender-ref ref="SIFT" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+	<logger
+		name="com.tangdi.production.tdcomm.springmvc.intecerptor.TdLogInterceptor"
+		level="INFO" additivity="false">
+		<appender-ref ref="WEBFILE" />
+	</logger>
+
+	<logger name="com.tangdi.production.tdcomm.engine.IChannel"
+		level="INFO" additivity="false">
+		<appender-ref ref="CHANNELSIFT" />
+	</logger>
+
+    <logger
+		name="com.tangdi.production.tdcomm.redoservice.TdRedoService"
+		level="INFO" additivity="false" >
+		<appender-ref ref="REDOFILE" />
+	</logger>
+	
+	<logger
+		name="com.tangdi.production.tdcomm.quartz.TdMethodInvokingJobDetailFactoryBean"
+		level="INFO" additivity="false" >
+		<appender-ref ref="SCHDULEFILE" />
+	</logger>
+	
+
+</configuration>

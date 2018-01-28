@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.CustRateDao">
+	<resultMap type="CustRatesInf" 						id="ratesMap">
+		<result property="rateCode" 					column="RATE_CODE"/>
+		<result property="custId" 						column="RATE_ID"/>
+		<result property="rateType" 					column="RATE_TYPE"/>
+		<result property="rateTCas" 					column="RATE_TCAS"/>
+		<result property="rateTCasMax" 					column="RATE_TCAS_MAX"/>
+		<result property="maxTCas" 						column="MAX_TCAS"/>
+		<result property="rateLivelihood" 				column="RATE_LIVELIHOOD"/>
+		<result property="rateGeneral" 					column="RATE_GENERAL"/>
+		<result property="rateEntertain" 				column="RATE_ENTERTAIN"/>
+		<result property="rateGeneralTop" 				column="RATE_GENERAL_TOP"/>
+		<result property="rateGeneralMaximun" 			column="RATE_GENERAL_MAXIMUN"/>
+		<result property="rateEntertainTop" 			column="RATE_ENTERTAIN_TOP"/>
+		<result property="rateEntertainMaximun" 		column="RATE_ENTERTAIN_MAXIMUN"/>
+		<result property="insertTime" 					column="INS_TIM"/>
+		<result property="updateTime" 					column="IPD_TIM"/>
+	
+	</resultMap>
+	<resultMap type="java.util.Map" id="feeMap">
+		<result property="fee" column="FEESUM"/>
+		<result property="maxTCas" column="MAX_TCAS"/>
+		<result property="rateGeneralMaximun" column="RATE_GENERAL_MAXIMUN"/>
+		<result property="rateEntertainMaximun" column="RATE_ENTERTAIN_MAXIMUN"/>
+	</resultMap>
+	
+	<select id="selectEntry" parameterType="java.util.Map" resultMap="ratesMap">
+		SELECT
+			*
+		FROM
+		HX_RATES_INF
+		<where>
+			<if test="rateCode != null and rateCode != ''">
+					AND RATE_CODE =#{rateCode}
+			</if>
+			<if test="custId != null and custId !=''">
+				AND  RATE_ID = #{custId}
+			</if>
+			<if test="rateType != null and rateType != ''">
+				AND RATE_TYPE = #{rateType}
+			</if>
+		</where>
+	</select>
+
+	<update id="updateRate" parameterType="CustRatesInf">
+		UPDATE
+			HX_RATES_INF
+		SET
+			RATE_TCAS = #{rateTCas},
+			MAX_TCAS = #{maxTCas},
+			RATE_LIVELIHOOD = #{rateLivelihood},
+			RATE_GENERAL = #{rateGeneral},
+			RATE_GENERAL_TOP = #{rateGeneralTop},
+			RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			RATE_ENTERTAIN = #{rateEntertain},
+			RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			IPD_TIM = #{updateTime}
+		<where>
+			<if test="rateCode != null and rateCode != ''">
+					AND RATE_CODE = #{rateCode}
+			</if>
+			<if test="custId != null and custId !=''">
+				AND  RATE_ID = #{custId}
+			</if>
+			<if test="rateType != null and rateType != ''">
+				AND RATE_TYPE = #{rateType}
+			</if>
+		</where>
+	</update>
+	
+	<insert id="insertEntry" parameterType="CustRatesInf">
+		INSERT
+			INTO
+			HX_RATES_INF
+			(
+			RATE_CODE,
+			RATE_ID,
+			RATE_TYPE,
+			RATE_TCAS,
+			MAX_TCAS,
+			RATE_LIVELIHOOD,
+			RATE_GENERAL,
+			RATE_GENERAL_TOP,
+			RATE_GENERAL_MAXIMUN,
+			RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP,
+			RATE_ENTERTAIN_MAXIMUN,
+			INS_TIM
+			) 
+			
+			VALUES
+			(
+			#{rateCode},
+			#{custId},
+			#{rateType},
+			#{rateTCas},
+			#{maxTCas},
+			#{rateLivelihood},
+			#{rateGeneral},
+			#{rateGeneralTop},
+			#{rateGeneralMaximun},
+			#{rateEntertain},
+			#{rateEntertainTop},
+			#{rateEntertainMaximun},
+			#{insertTime}
+			)
+	</insert>
+
+	<select id="selectCustUpRatede" parameterType="java.util.Map" resultMap="ratesMap">
+		
+		SELECT 
+  		*
+		FROM
+		  HX_RATES_INF H 
+		  
+		  <where>
+		RATE_ID IN 
+		  (SELECT 
+		    AGE_ID 
+		  FROM
+		    MPOMNG_AGE_CUST_REF_INF M 
+		    <where>
+		    	<if test="custId != null and custId !=''">
+		    		M.CUST_ID = #{custId}
+		    	</if>
+		    </where>
+		  ) 
+	 
+	  	<if test="rateType != null and rateType !=''">
+	  		AND H.RATE_TYPE = #{rateType} 
+	  	</if>
+	  	<if test="rateCode != null and rateCode !=''">
+	  	 AND H.RATE_CODE = #{rateCode}
+	  	</if>
+	  </where>
+	</select>
+
+	
+	
+	
+</mapper>

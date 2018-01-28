@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.AppCnapsDao">
+	
+	<resultMap type="java.util.Map" id="cnapsMap">
+	 	<result property="cnapsCode"               column="CNAPS_CODE" /> 
+	 	<result property="subBranch"               column="SUB_BRANCH" /> 
+	</resultMap>
+	
+	
+	<select id="selectBankName" parameterType="java.util.Map"  resultType="java.lang.String">
+		SELECT BANK_NAME FROM CNAPS 
+		<where>
+			<if test="bankCityId!=null and bankCityId!=''">
+				AND BANK_CITY_ID=#{bankCityId}
+			</if>
+			<if test="bankProId!=null and bankProId!=''">
+				AND BANK_PRO_ID=#{bankProId}
+			</if>
+		</where>
+		GROUP BY BANK_NAME 
+	</select>
+	
+	<select id="selectList"  parameterType="java.util.Map" resultMap="cnapsMap">
+		SELECT 
+			CNAPS_CODE,
+			trim(SUB_BRANCH) AS SUB_BRANCH
+		FROM CNAPS 
+		<where>
+			BANK_PRO_ID=#{bankProId}
+			AND BANK_CITY_ID=#{bankCityId}
+			<if test="bankName!=null and bankName!=''">
+				AND BANK_NAME=#{bankName}
+			</if>
+			<if test="categories!=null and categories!=''">
+				AND SUB_BRANCH LIKE CONCAT('%',#{categories},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

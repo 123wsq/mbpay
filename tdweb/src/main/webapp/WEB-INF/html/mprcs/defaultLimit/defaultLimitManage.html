@@ -1,0 +1,712 @@
+<meta charset="utf-8" />
+<div class="page-header">
+	
+</div>
+
+<form  id="defaultLimitForm" class="form-horizontal" role="form" onsubmit="return submitForm(this);"  
+action="mprcs/defaultLimitEdit/edit.do">
+<input id="defaultLimitId" name="limitId" type="hidden" >
+<div class="row" id="defaultLimitFormDiv">
+	<div class="col-xs-10">
+		<!-- PAGE CONTENT BEGINS -->
+		<div class="tabbable">
+			<!-- #section:pages/faq -->
+			<ul class="nav nav-tabs padding-18 tab-size-bigger" id="myTab">
+				<li class="active">
+					<a data-toggle="tab" href="#faq-tab-1">
+				
+						终端收款
+					</a>
+				</li>
+
+				<li>
+					<a data-toggle="tab" href="#faq-tab-2">
+			
+						终端T+0提现
+					</a>
+				</li>
+
+				<li>
+					<a data-toggle="tab" href="#faq-tab-3">
+				
+						快捷收款
+					</a>
+				</li>
+
+				<li>
+					<a data-toggle="tab" href="#faq-tab-4">
+			
+						快捷T+0提现
+					</a>
+				</li>
+				
+				<li>
+					<a data-toggle="tab" href="#faq-tab-5">
+				
+						扫码收款
+					</a>
+				</li>
+
+				<li>
+					<a data-toggle="tab" href="#faq-tab-6">
+			
+						扫码T+0提现
+					</a>
+				</li>								
+			</ul>
+
+			<!-- /section:pages/faq -->
+			<div class="tab-content no-border padding-24">
+				<div id="faq-tab-1" class="tab-pane fade in active">
+					
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 终端收款 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtTp" name="limitMinAmtTp" placeholder="请输入[终端收款 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端收款 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtTp" name="limitMaxAmtTp" placeholder="请输入[终端收款 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端收款 ,每日次数： </label>
+							<div class="col-sm-6">
+		
+								<input type="text" id="limitDayTimesTp" name="limitDayTimesTp" placeholder="请输入[终端收款 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端收款 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtTp" name="limitDayAmtTp" placeholder="请输入[终端收款 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端收款 ,每月交易次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthTimesTp" name="limitMonthTimesTp" placeholder="请输入[终端收款 ,每月交易次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端收款 ,每月交易金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthAmtTp" name="limitMonthAmtTp" placeholder="请输入[终端收款 ,每月交易金额,单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>
+
+				<div id="faq-tab-2" class="tab-pane fade">
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 终端提现 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtTc" name="limitMinAmtTc" placeholder="请输入[终端提现 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端提现 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtTc" name="limitMaxAmtTc" placeholder="请输入[终端提现 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端提现 ,每日次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayTimesTc" name="limitDayTimesTc" placeholder="请输入[终端提现 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 终端提现 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtTc" name="limitDayAmtTc" placeholder="请输入[终端提现 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>
+				
+				<div id="faq-tab-3" class="tab-pane fade">
+					
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 快捷收款 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtOp" name="limitMinAmtOp" placeholder="请输入[快捷收款 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷收款 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtOp" name="limitMaxAmtOp" placeholder="请输入[快捷收款 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷收款 ,每日次数： </label>
+							<div class="col-sm-6">
+		
+								<input type="text" id="limitDayTimesOp" name="limitDayTimesOp" placeholder="请输入[快捷收款 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷收款 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtOp" name="limitDayAmtOp" placeholder="请输入[快捷收款 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷收款 ,每月交易次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthTimesOp" name="limitMonthTimesOp" placeholder="请输入[快捷收款 ,每月交易次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷收款 ,每月交易金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthAmtOp" name="limitMonthAmtOp" placeholder="请输入[快捷收款 ,每月交易金额,单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>
+
+				<div id="faq-tab-4" class="tab-pane fade">
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 快捷提现 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtOc" name="limitMinAmtOc" placeholder="请输入[快捷提现 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷提现 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtOc" name="limitMaxAmtOc" placeholder="请输入[快捷提现 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷提现 ,每日次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayTimesOc" name="limitDayTimesOc" placeholder="请输入[快捷提现 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 快捷提现 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtOc" name="limitDayAmtOc" placeholder="请输入[快捷提现 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>	
+				
+				<div id="faq-tab-5" class="tab-pane fade">
+					
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 扫码收款 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtSp" name="limitMinAmtSp" placeholder="请输入[扫码收款 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码收款 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtSp" name="limitMaxAmtSp" placeholder="请输入[扫码收款 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码收款 ,每日次数： </label>
+							<div class="col-sm-6">
+		
+								<input type="text" id="limitDayTimesSp" name="limitDayTimesSp" placeholder="请输入[扫码收款 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码收款 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtSp" name="limitDayAmtSp" placeholder="请输入[扫码收款 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码收款 ,每月交易次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthTimesSp" name="limitMonthTimesSp" placeholder="请输入[扫码收款 ,每月交易次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码收款 ,每月交易金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMonthAmtSp" name="limitMonthAmtSp" placeholder="请输入[扫码收款 ,每月交易金额,单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>
+
+				<div id="faq-tab-6" class="tab-pane fade">
+					<div class="space-8"></div>
+					
+					<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-2"> 扫码提现 ,单笔最小金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMinAmtSc" name="limitMinAmtSc" placeholder="请输入[扫码提现 ,单笔最小金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码提现 ,单笔最大金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitMaxAmtSc" name="limitMaxAmtSc" placeholder="请输入[扫码提现 ,单笔最大金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+						
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码提现 ,每日次数： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayTimesSc" name="limitDayTimesSc" placeholder="请输入[扫码提现 ,每日次数]" 
+									class="col-xs-10 col-sm-8"  maxlength="8"  datatype="number"/>
+							</div>
+						</div>
+						<div class="form-group" style="width: 95%">
+							<label class="col-sm-3 control-label no-padding-right"
+								for="form-field-1"> 扫码提现 ,每日金额(单位：元)： </label>
+							<div class="col-sm-6">
+					
+								<input type="text" id="limitDayAmtSc" name="limitDayAmtSc" placeholder="请输入[扫码提现 ,每日金额，单位：元]" 
+									class="col-xs-10 col-sm-8"  maxlength="10"  datatype="money"/>
+							</div>
+						</div>
+				</div>					
+						
+			</div>
+			
+			<div class="form-group" style="width: 95%">
+					<label class="col-sm-2 control-label no-padding-right">
+						开启状态： </label>
+					<div class="col-sm-3">
+						<label>
+							<input name="isUse" id="isUse" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" />
+							<span class="lbl" data-lbl="开启 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关闭"></span>
+						</label>
+					</div>
+			
+		</div>	
+		</div>
+<div class="space-8"></div>
+<hr/>
+<div style="margin-top: 10px;margin-left: 20px">
+	<span id="auth_btn"> 
+		<a auth="mprcs/defaultLimitManage/query.do" class="btn btn-small btn-warning"
+		onclick="editDefaultLimit()" id="editDefaultLimit">编辑</a>
+		<button  class="btn btn-small btn_search" type="submit" title="搜索" id="saveDefaultLimit">
+			保存
+		</button><!-- 
+		<a class="btn btn-small btn-info"
+		onclick="saveDefaultLimit(this);" id="saveDefaultLimit">保存</a>-->
+		<a   class="btn btn-small btn-default"
+		onclick="cancelDefaultLimit()" id="cancelDefaultLimit">取消</a>
+	</span> 
+</div>
+
+		<!-- PAGE CONTENT ENDS -->
+	</div><!-- /.col -->
+</div><!-- /.row -->
+</form>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	setTimeout(setDefaultLimitToReadOnly, 100);
+	
+	initDefaultLimit();
+	
+	
+});
+
+function initDefaultLimit(){
+	$.ajax({
+		type : "post",
+		url : "mprcs/defaultLimitManage/query.do",
+		dataType : 'json',
+		success : function(result) {
+			if (result.rspcod != 200) {
+				msg.alert("错误", result.rspmsg , 'error');
+			} else {
+				setDefaultLimitToValue(result.obj);
+			}
+		},
+		error : function(XMLHttpRequest, textStatus) {
+			msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+					+ textStatus, 'error');
+		}
+	});
+}
+
+
+function editDefaultLimit(){
+	msg.confirm({title:'确认',position:'center',msg:'是否启用编辑？',call:function(ok){
+		if(ok){
+			initDefaultLimit();
+			setDefaultLimitToRemove();
+			
+		}
+	}});
+}
+
+function cancelDefaultLimit(){
+	msg.confirm({title:'确认',position:'center',msg:'是否撤销修改？',call:function(ok){
+		if(ok){
+			initDefaultLimit();
+			setDefaultLimitToReadOnly();
+		}
+	}});
+	
+}
+
+
+function submitForm(obj){
+//	msg.confirm({title:'确认',position:'center',msg:'是否需要保存已修改的数据？',call:function(ok){
+//		if(ok){
+	var	limitMinAmtTp     = parseInt($("#limitMinAmtTp").val());
+	var	limitMaxAmtTp	  = parseInt($("#limitMaxAmtTp").val());
+  	var limitDayTimesTp	  = parseInt($("#limitDayTimesTp").val());
+  	var limitDayAmtTp	  = parseInt($("#limitDayAmtTp").val());
+	var limitMonthTimesTp = parseInt($("#limitMonthTimesTp").val());
+	var limitMonthAmtTp   = parseInt($("#limitMonthAmtTp").val());
+	
+  	var limitMinAmtTc	  = parseInt($("#limitMinAmtTc").val());
+  	var limitMaxAmtTc	  = parseInt($("#limitMaxAmtTc").val());
+  	var limitDayTimesTc	  = parseInt($("#limitDayTimesTc").val());
+  	var limitDayAmtTc	  = parseInt($("#limitDayAmtTc").val());
+//
+	var	limitMinAmtOp     = parseInt($("#limitMinAmtOp").val());
+	var	limitMaxAmtOp	  = parseInt($("#limitMaxAmtOp").val());
+  	var limitDayTimesOp	  = parseInt($("#limitDayTimesOp").val());
+  	var limitDayAmtOp	  = parseInt($("#limitDayAmtOp").val());
+	var limitMonthTimesOp = parseInt($("#limitMonthTimesOp").val());
+	var limitMonthAmtOp   = parseInt($("#limitMonthAmtOp").val());
+	
+  	var limitMinAmtOc	  = parseInt($("#limitMinAmtOc").val());
+  	var limitMaxAmtOc	  = parseInt($("#limitMaxAmtOc").val());
+  	var limitDayTimesOc	  = parseInt($("#limitDayTimesOc").val());
+  	var limitDayAmtOc	  = parseInt($("#limitDayAmtOc").val());
+//
+    var	limitMinAmtSp     = parseInt($("#limitMinAmtSp").val());
+	var	limitMaxAmtSp	  = parseInt($("#limitMaxAmtSp").val());
+  	var limitDayTimesSp	  = parseInt($("#limitDayTimesSp").val());
+  	var limitDayAmtSp	  = parseInt($("#limitDayAmtSp").val());
+	var limitMonthTimesSp = parseInt($("#limitMonthTimesSp").val());
+	var limitMonthAmtSp   = parseInt($("#limitMonthAmtSp").val());
+	
+  	var limitMinAmtSc	  = parseInt($("#limitMinAmtSc").val());
+  	var limitMaxAmtSc	  = parseInt($("#limitMaxAmtSc").val());
+  	var limitDayTimesSc	  = parseInt($("#limitDayTimesSc").val());
+  	var limitDayAmtSc	  = parseInt($("#limitDayAmtSc").val());
+  	
+	if(limitMinAmtTp > limitMaxAmtTp || limitMinAmtTc > limitMaxAmtTc){
+		msg.alert("提示", "终端，单笔最小金额不能大于单笔最大金额！", 'warn');
+		return false;
+	}
+	
+	if(limitDayTimesTp > limitMonthTimesTp){
+		msg.alert("提示", "终端，每日交易次数不能大于每月交易次数！", 'warn');
+		return false;
+	}
+//
+	if(limitMinAmtOp > limitMaxAmtOp || limitMinAmtOc > limitMaxAmtOc){
+		msg.alert("提示", "快捷，单笔最小金额不能大于单笔最大金额！", 'warn');
+		return false;
+	}
+	
+	if(limitDayTimesOp > limitMonthTimesOp){
+		msg.alert("提示", "快捷，每日交易次数不能大于每月交易次数！", 'warn');
+		return false;
+	}
+//
+	if(limitMinAmtSp > limitMaxAmtSp || limitMinAmtSc > limitMaxAmtSc){
+		msg.alert("提示", "扫码，单笔最小金额不能大于单笔最大金额！", 'warn');
+		return false;
+	}
+	
+	if(limitDayTimesSp > limitMonthTimesSp){
+		msg.alert("提示", "扫码，每日交易次数不能大于每月交易次数！", 'warn');
+		return false;
+	}	
+	
+	var isChecked = $('#isUse').prop('checked');
+	
+	if(isChecked){
+		$("#isUse").val("1");
+	}else{
+		$("#isUse").val("0");
+	}
+			//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+			return validateCallback(obj,function(result){
+				if(result.rspcod== 200){
+					setDefaultLimitToReadOnly();
+					msg.alert("提示", result.rspmsg, 'correct');
+					
+				}else{
+					msg.alert("错误", result.rspmsg, 'error');
+				}
+			});
+//		}
+//	}});
+}
+
+
+function setDefaultLimitToValue(obj){
+	$("#defaultLimitId").val(obj.limitId);
+	//终端收款
+	$("#limitMinAmtTp").val(centToYuan(obj.limitMinAmtTp));
+	$("#limitMaxAmtTp").val(centToYuan(obj.limitMaxAmtTp));
+	$("#limitDayTimesTp").val(obj.limitDayTimesTp);
+	$("#limitDayAmtTp").val(centToYuan(obj.limitDayAmtTp));
+	$("#limitMonthTimesTp").val(obj.limitMonthTimesTp);
+	$("#limitMonthAmtTp").val(centToYuan(obj.limitMonthAmtTp));
+	//终端提现
+	$("#limitMinAmtTc").val(centToYuan(obj.limitMinAmtTc));
+	$("#limitMaxAmtTc").val(centToYuan(obj.limitMaxAmtTc));
+	$("#limitDayTimesTc").val(obj.limitDayTimesTc);
+	$("#limitDayAmtTc").val(centToYuan(obj.limitDayAmtTc));
+
+	//快捷收款
+	$("#limitMinAmtOp").val(centToYuan(obj.limitMinAmtOp));
+	$("#limitMaxAmtOp").val(centToYuan(obj.limitMaxAmtOp));
+	$("#limitDayTimesOp").val(obj.limitDayTimesOp);
+	$("#limitDayAmtOp").val(centToYuan(obj.limitDayAmtOp));
+	$("#limitMonthTimesOp").val(obj.limitMonthTimesOp);
+	$("#limitMonthAmtOp").val(centToYuan(obj.limitMonthAmtOp));
+	//快捷提现
+	$("#limitMinAmtOc").val(centToYuan(obj.limitMinAmtOc));
+	$("#limitMaxAmtOc").val(centToYuan(obj.limitMaxAmtOc));
+	$("#limitDayTimesOc").val(obj.limitDayTimesOc);
+	$("#limitDayAmtOc").val(centToYuan(obj.limitDayAmtOc));
+	
+	//扫码收款
+	$("#limitMinAmtSp").val(centToYuan(obj.limitMinAmtSp));
+	$("#limitMaxAmtSp").val(centToYuan(obj.limitMaxAmtSp));
+	$("#limitDayTimesSp").val(obj.limitDayTimesSp);
+	$("#limitDayAmtSp").val(centToYuan(obj.limitDayAmtSp));
+	$("#limitMonthTimesSp").val(obj.limitMonthTimesSp);
+	$("#limitMonthAmtSp").val(centToYuan(obj.limitMonthAmtSp));
+	//扫码提现
+	$("#limitMinAmtSc").val(centToYuan(obj.limitMinAmtSc));
+	$("#limitMaxAmtSc").val(centToYuan(obj.limitMaxAmtSc));
+	$("#limitDayTimesSc").val(obj.limitDayTimesSc);
+	$("#limitDayAmtSc").val(centToYuan(obj.limitDayAmtSc));
+	
+	$("#isUse").val(obj.isUse);
+	if(obj.isUse === '1'){
+		$("#isUse").attr('checked', true);
+	}else{
+		$("#isUse").attr('checked', false);
+	}
+	
+	$('.ace-switch').aceSwitchInit();
+}
+
+function setDefaultLimitToReadOnly(){
+	//终端收款
+	$("#limitMinAmtTp").attr("readonly","readonly");
+	$("#limitMaxAmtTp").attr("readonly","readonly");
+	$("#limitDayTimesTp").attr("readonly","readonly");
+	$("#limitDayAmtTp").attr("readonly","readonly");
+	$("#limitMonthTimesTp").attr("readonly","readonly");
+	$("#limitMonthAmtTp").attr("readonly","readonly");
+	//终端提现
+	$("#limitMinAmtTc").attr("readonly","readonly");
+	$("#limitMaxAmtTc").attr("readonly","readonly");
+	$("#limitDayTimesTc").attr("readonly","readonly");
+	$("#limitDayAmtTc").attr("readonly","readonly");
+// 
+	//快捷收款
+	$("#limitMinAmtOp").attr("readonly","readonly");
+	$("#limitMaxAmtOp").attr("readonly","readonly");
+	$("#limitDayTimesOp").attr("readonly","readonly");
+	$("#limitDayAmtOp").attr("readonly","readonly");
+	$("#limitMonthTimesOp").attr("readonly","readonly");
+	$("#limitMonthAmtOp").attr("readonly","readonly");
+	//快捷提现
+	$("#limitMinAmtOc").attr("readonly","readonly");
+	$("#limitMaxAmtOc").attr("readonly","readonly");
+	$("#limitDayTimesOc").attr("readonly","readonly");
+	$("#limitDayAmtOc").attr("readonly","readonly");
+//
+	//扫码收款
+	$("#limitMinAmtSp").attr("readonly","readonly");
+	$("#limitMaxAmtSp").attr("readonly","readonly");
+	$("#limitDayTimesSp").attr("readonly","readonly");
+	$("#limitDayAmtSp").attr("readonly","readonly");
+	$("#limitMonthTimesSp").attr("readonly","readonly");
+	$("#limitMonthAmtSp").attr("readonly","readonly");
+	//扫码提现
+	$("#limitMinAmtSc").attr("readonly","readonly");
+	$("#limitMaxAmtSc").attr("readonly","readonly");
+	$("#limitDayTimesSc").attr("readonly","readonly");
+	$("#limitDayAmtSc").attr("readonly","readonly");
+	
+//	$("#isUse").attr("readonly","readonly");
+
+   $("#isUse").attr("disabled","disabled");
+
+	
+	$("#saveDefaultLimit").attr("disabled","disabled");
+	$("#cancelDefaultLimit").attr("disabled","disabled");
+	
+	$('.ace-switch').aceSwitchInit();
+	
+}
+function setDefaultLimitToRemove(){
+	//终端收款
+	$("#limitMinAmtTp").removeAttr("readonly","readonly");
+	$("#limitMaxAmtTp").removeAttr("readonly","readonly");
+	$("#limitDayTimesTp").removeAttr("readonly","readonly");
+	$("#limitDayAmtTp").removeAttr("readonly","readonly");
+	$("#limitMonthTimesTp").removeAttr("readonly","readonly");
+	$("#limitMonthAmtTp").removeAttr("readonly","readonly");
+	//终端提现
+	$("#limitMinAmtTc").removeAttr("readonly","readonly");
+	$("#limitMaxAmtTc").removeAttr("readonly","readonly");
+	$("#limitDayTimesTc").removeAttr("readonly","readonly");
+	$("#limitDayAmtTc").removeAttr("readonly","readonly");
+//
+	//快捷收款
+	$("#limitMinAmtOp").removeAttr("readonly","readonly");
+	$("#limitMaxAmtOp").removeAttr("readonly","readonly");
+	$("#limitDayTimesOp").removeAttr("readonly","readonly");
+	$("#limitDayAmtOp").removeAttr("readonly","readonly");
+	$("#limitMonthTimesOp").removeAttr("readonly","readonly");
+	$("#limitMonthAmtOp").removeAttr("readonly","readonly");
+	//快捷提现
+	$("#limitMinAmtOc").removeAttr("readonly","readonly");
+	$("#limitMaxAmtOc").removeAttr("readonly","readonly");
+	$("#limitDayTimesOc").removeAttr("readonly","readonly");
+	$("#limitDayAmtOc").removeAttr("readonly","readonly");
+//
+	//扫码收款
+	$("#limitMinAmtSp").removeAttr("readonly","readonly");
+	$("#limitMaxAmtSp").removeAttr("readonly","readonly");
+	$("#limitDayTimesSp").removeAttr("readonly","readonly");
+	$("#limitDayAmtSp").removeAttr("readonly","readonly");
+	$("#limitMonthTimesSp").removeAttr("readonly","readonly");
+	$("#limitMonthAmtSp").removeAttr("readonly","readonly");
+	//扫码提现
+	$("#limitMinAmtSc").removeAttr("readonly","readonly");
+	$("#limitMaxAmtSc").removeAttr("readonly","readonly");
+	$("#limitDayTimesSc").removeAttr("readonly","readonly");
+	$("#limitDayAmtSc").removeAttr("readonly","readonly");
+	
+	//$("#isUse").removeAttr("readonly","readonly");
+	
+	$("#saveDefaultLimit").removeAttr("disabled","disabled");
+	$("#cancelDefaultLimit").removeAttr("disabled","disabled");
+	
+	$("#isUse").removeAttr("disabled","disabled");
+	$('.ace-switch').aceSwitchInit();
+}
+function centToYuan(cent) { 
+	if(cent==null||cent==""||isNaN(cent)){
+		return "";
+	}
+	var yuan=cent/100;
+	return yuan;
+} 
+
+
+
+</script>

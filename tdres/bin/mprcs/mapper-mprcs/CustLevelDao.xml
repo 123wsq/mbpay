@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.CustLevelDao">
+	<resultMap type="CustLevelInf" id="custLevelMap">
+		    <result property="level"               column="LEVEL" /> 
+		    <result property="levelName"               column="LEVEL_NAME" /> 
+		    <result property="levelDesc"               column="LEVEL_DESC" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="CustLevelInf">
+		UPDATE 
+				MPRCS_CUST_LEVEL_INF
+		<set> 
+		        <if test="levelName!= null and levelName!= ''">
+						LEVEL_NAME =  #{levelName},
+				</if>
+		        <if test="levelDesc!= null and levelDesc!= ''">
+						LEVEL_DESC =  #{levelDesc}
+				</if>
+		</set>
+		<where>
+			<if test="level!= null and level!= ''">
+						LEVEL =  #{level}
+			</if>
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="CustLevelInf" resultMap="custLevelMap">
+		SELECT 
+		         LEVEL, 
+		         LEVEL_NAME, 
+		         LEVEL_DESC 
+		FROM 
+		        MPRCS_CUST_LEVEL_INF
+		<where>
+		        <if test="level!= null and level!= ''">
+						AND LEVEL =  #{level}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="CustLevelInf" resultMap="custLevelMap" databaseId="mysql">
+		SELECT 
+		         LEVEL, 
+		         LEVEL_NAME, 
+		         LEVEL_DESC 
+		FROM 
+		       MPRCS_CUST_LEVEL_INF
+		<where>
+		        <if test="level!= null and level!= ''">
+						AND LEVEL like concat ('%',#{level},'%')
+				</if>
+		        <if test="levelName!= null and levelName!= ''">
+						AND LEVEL_NAME like concat ('%',#{levelName},'%') 
+				</if>
+		        <if test="levelDesc!= null and levelDesc!= ''">
+						AND LEVEL_DESC =  #{levelDesc}
+				</if>
+		</where>
+		ORDER BY LEVEL DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CustLevelInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPRCS_CUST_LEVEL_INF
+		<where>
+		        <if test="level!= null and level!= ''">
+						AND LEVEL like concat ('%',#{level},'%')
+				</if>
+		        <if test="levelName!= null and levelName!= ''">
+						AND LEVEL_NAME like concat ('%',#{levelName},'%')
+				</if>
+		        <if test="levelDesc!= null and levelDesc!= ''">
+						AND LEVEL_DESC =  #{levelDesc}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="CustLevelInf">
+		INSERT INTO MPRCS_CUST_LEVEL_INF  (
+		         LEVEL, 
+		         LEVEL_NAME, 
+		         LEVEL_DESC
+				)
+		VALUES (
+		          #{level}, 
+		          #{levelName}, 
+		          #{levelDesc} 
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="CustLevelInf">
+		DELETE FROM MPRCS_CUST_LEVEL_INF
+		WHERE
+			 <if test="level!= null and level!= ''">
+			 	 LEVEL = #{level}	
+			 </if>
+	</delete>
+
+   <select id="custLevelAll"  resultMap="custLevelMap">
+		select * from MPRCS_CUST_LEVEL_INF 
+	</select>
+</mapper>

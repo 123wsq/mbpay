@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.ProfitShareDao">
+	<resultMap type="CustShareInf" id="custShareMap">
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="sharDate"               column="SHAR_DATE" /> 
+		    <result property="sharAmt"               column="SHARAMT" /> 
+		    <result property="payAmt"               column="PAYAMT" /> 
+		    <result property="rate"               column="RATE" /> 
+		    <result property="status"               column="STATUS" /> 
+		    <result property="updateTime"               column="UPDATE_TIME" /> 
+		    <result property="audituser"               column="AUDIT_USER" /> 
+		    <result property="custName"               column="CUST_NAME" /> 
+		    <result property="payFee"               column="PAY_FEE" /> 
+		    <result property="sharDate"               column="SHAR_DATE" /> 
+		    <result property="agentId"               column="AGENT_ID" /> 
+		    <result property="agentName"               column="AGENT_NAME" /> 
+		    <result property="agentDgr"               column="AGENT_DGR" /> 
+		    <result property="firstAgentId"               column="FIRST_AGENT_ID" /> 
+		    <result property="fatherAgentId"               column="FATH_AGENT_ID" /> 
+		    <result property="payType"               column="PAY_TYPE" /> 
+	</resultMap>
+	<resultMap type="java.util.Map" id="querySharingMap">
+		<result property="agentId" column="AGENT_ID" />
+	</resultMap>
+	
+	<select id="querySharingList" resultMap="querySharingMap" databaseId="mysql">
+		SELECT distinct A.AGENT_ID
+		FROM 
+    		MPBATCH_PROFITSHARING_DAYLOG_INF A
+     		LEFT JOIN MPAMNG_AGENT_INF B ON A.AGENT_ID = B.AGENT_ID
+	</select>
+
+	<select id="selectCustShareList" parameterType="java.util.Map" resultMap="custShareMap">
+		SELECT
+			PAY.CUST_ID,
+			MER.CUST_NAME,
+			cast(cast(SUM(PRO.PAY_FEE) AS decimal(20,2))/100 AS decimal(20,2)) as PAYFEE,
+			cast(cast(SUM(PRO.PAY_AMT) AS decimal(20,2))/100 AS decimal(20,2)) as PAYAMT,
+			cast(cast(PRO.AGENT_FEE    AS decimal(20,2))/10 AS decimal(20,2)) as RATE,
+			cast(cast(PRO.SHAR_AMT     AS decimal(20,2))/100 AS decimal(20,2)) as SHARAMT,
+			LEFT(SHA.SHAR_DATE,6) SHAR_DATE,
+			SHA.AGENT_ID,
+			AGENT.AGENT_NAME,
+			AGENT.AGENT_DGR,
+			AGENT.FIRST_AGENT_ID,
+			AGENT.FATH_AGENT_ID,
+			SHA.PAY_TYPE
+		FROM
+			MPBATCH_PROFITSHARING_INF SHA
+			LEFT JOIN MPOMNG_PAY_INF PAY ON PAY.PAYORDNO = SHA.PAYNO
+			LEFT JOIN MPOMNG_MERIDENTIFY_INF MER ON MER.CUST_ID = PAY.CUST_ID
+			LEFT JOIN MPBATCH_PROFITSHARING_DAYLOG_INF PRO ON PRO.AGENT_ID = SHA.FIRST_AGENT_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = SHA.AGENT_ID
+		<where>
+		    1=1
+		       <if test="sTime != null and sTime != ''">
+					AND PRO.SHAR_DATE &gt;= #{sTime}
+				</if>
+				<if test="eTime != null and eTime != ''">
+					AND PRO.SHAR_DATE &lt;= #{eTime}
+				</if>
+				 <if test="agentId!= null and agentId!= ''">
+						AND AGENT.AGENT_ID LIKE CONCAT ('%',#{agentId},'%')
+				</if>
+		        <if test="agentName != null and agentName != ''">
+						AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+				</if>
+				<if test="agentDgr != null and agentDgr != ''">
+						AND AGENT.AGENT_DGR = #{agentDgr}
+				</if>
+				<if test="payType != null and payType != ''">
+						AND SHA.PAY_TYPE = #{payType}
+				</if>	
+		<!-- 	AND PRO.SHAR_DATE LIKE CONCAT(#{date},'%') -->
+		 	<!-- <if test="startTime != null and startTime != ''">
+				AND SHA.SHAR_DATE >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND SHA.SHAR_DATE <=#{endTime}]]>
+			</if>   -->
+		</where>
+		GROUP BY PAY.CUST_ID
+	</select>
+	
+	<select id="selectCustMonthShareList" parameterType="java.util.Map" resultMap="custShareMap">
+		SELECT
+			PAY.CUST_ID,
+			MER.CUST_NAME,
+			cast(cast(PRO.PAY_FEE AS decimal(20,2))/100 AS decimal(20,2)) as PAYFEE,
+			cast(cast(PRO.PAY_AMT AS decimal(20,2))/100 AS decimal(20,2)) as PAYAMT,
+			cast(cast(PRO.AGENT_FEE AS decimal(20,2))/10 AS decimal(20,2)) as RATE,
+			cast(cast(PRO.SHAR_AMT AS decimal(20,2))/100 AS decimal(20,2)) as SHARAMT,
+			LEFT(PRO.SHAR_DATE,6) SHAR_DATE,
+			AGENT.AGENT_ID,
+			AGENT.AGENT_NAME,
+			AGENT.AGENT_DGR,
+			AGENT.FIRST_AGENT_ID,
+			AGENT.FATH_AGENT_ID,
+			SHA.PAY_TYPE
+		FROM
+			MPBATCH_PROFITSHARING_INF SHA
+			LEFT JOIN MPOMNG_PAY_INF PAY ON PAY.PAYORDNO = SHA.PAYNO
+			LEFT JOIN MPOMNG_MERIDENTIFY_INF MER ON MER.CUST_ID = PAY.CUST_ID
+			LEFT JOIN MPBATCH_PROFITSHARING_MONTHLOG_INF PRO ON PRO.AGENT_ID = SHA.FIRST_AGENT_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON AGENT.AGENT_ID = SHA.AGENT_ID
+		<where>
+		    1=1
+			  <if test="sTime != null and sTime != ''">
+						AND PRO.SHAR_DATE &gt;= #{sTime}
+				</if>
+				<if test="eTime != null and eTime != ''">
+						AND PRO.SHAR_DATE &lt;= #{eTime}
+				</if>
+				 <if test="search_sharStatus != null and search_sharStatus != ''">
+						AND PRO.STATUS	= #{search_sharStatus}
+				</if>
+				 <if test="agentId!= null and agentId!= ''">
+						AND AGENT.AGENT_ID LIKE CONCAT ('%',#{agentId},'%')
+				</if>
+		        <if test="agentName != null and agentName != ''">
+						AND AGENT.AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+				</if>
+				<if test="agentDgr != null and agentDgr != ''">
+						AND AGENT.AGENT_DGR = #{agentDgr}
+				</if>
+				<if test="payType != null and payType != ''">
+						AND SHA.PAY_TYPE = #{payType}
+				</if>				
+ <!-- 		<if test="startTime != null and startTime != ''">
+				AND PRO.SHAR_DATE >= #{sTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND PRO.SHAR_DATE <=#{eTime}]]>
+			</if>  -->
+		</where>
+		GROUP BY PAY.CUST_ID
+	</select>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.RcsTransactionDao">
+	
+	<resultMap type="CustLimitInf" id="RcsUserLimitMap">
+		<result property="limitId" column="LIMIT_ID" />
+		<result property="limitType" column="LIMIT_TYPE" />
+		<result property="limitCustLevel" column="LIMIT_CUST_LEVEL" />
+		<result property="limitCustId" column="LIMIT_CUST_ID" />
+		<result property="limitBusType" column="LIMIT_BUS_TYPE" />
+		<result property="limitSubBus" column="LIMIT_SUB_BUS" />
+		<result property="limitPayWay" column="LIMIT_PAY_WAY" />
+		<result property="limitMinAmt" column="LIMIT_MIN_AMT" />
+		<result property="limitMaxAmt" column="LIMIT_MAX_AMT" />
+		<result property="limitDayTimes" column="LIMIT_DAY_TIMES" />
+		<result property="limitDayAmt" column="LIMIT_DAY_AMT" />
+		<result property="limitMonthTimes" column="LIMIT_MONTH_TIMES" />
+		<result property="limitMonthAmt" column="LIMIT_MONTH_AMT" />
+		<result property="limitYearTimes" column="LIMIT_YEAR_TIMES" />
+		<result property="limitYearAmt" column="LIMIT_YEAR_AMT" />
+		<result property="limitStartDate" column="LIMIT_START_DATE" />
+		<result property="limitEndDate" column="LIMIT_END_DATE" />
+		<result property="limitDesc" column="LIMIT_DESC" />
+		<result property="isUse" column="IS_USE" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="totalAmtMap">
+	 	<result property="cntTranAmt"      column="TRAN_AMT" typeHandler="EmptyStringIfNull"/> 
+		<result property="cntTranNum"      column="TRAN_NUM" typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="totalCasMap">
+	 	<result property="amt"      column="CAS_AMT" typeHandler="EmptyStringIfNull"/> 
+		<result property="num"      column="CAS_NUM" typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	
+	
+     <!-- 风控使用 -->
+	<select id="transactionAmtTotal" parameterType="Map" resultMap="totalAmtMap" databaseId="mysql">
+		SELECT 
+			SUM(M1.TRAN_AMT) AS TRAN_AMT,
+			COUNT(M1.REC_ID) AS TRAN_NUM
+		FROM 
+			MPRCS_TRAN_SERIAL_RECORD_INF M1
+		<where>
+					M1.TRAN_STATE='1' 
+		        <if test="busType != null and busType != ''">
+						AND  M1.BUS_TYPE = #{busType}
+				</if>
+		        <if test="subBus != null and subBus != ''">
+						AND M1.SUB_BUS = #{subBus}
+				</if>
+				<if test="termno != null and termno != ''">
+						AND M1.TER_ID = #{termno}
+				</if>
+				<if test="ttermno != null and ttermno != ''">
+						AND M1.TER_NO = #{ttermno}
+				</if>
+				<if test="tmerno != null and tmerno != ''">
+						AND M1.MER_NO = #{tmerno}
+				</if>
+		        <if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID = #{custId}
+				</if>
+				 <if test="cardno != null and cardno != ''">
+						AND M1.BANK_CARD_NO = #{cardno}
+				</if>
+				<if test="year != null and year != ''">
+						AND M1.TRAN_YEAR = #{year}
+				</if>
+				<if test="month != null and month != ''">
+						AND M1.TRAN_MONTH = #{month}
+				</if>
+				<if test="day != null and day != ''">
+						AND M1.TRAN_DAY = #{day}
+				</if>   
+		</where>
+	</select>
+	 <!-- 风控使用 -->
+	<select id="transactionCasTotal" parameterType="Map" resultMap="totalCasMap" databaseId="mysql">
+		SELECT 
+			SUM(M1.T0_AMT) AS CAS_AMT
+			SUM(M1.CUST_ID) AS CAS_NUM
+		FROM 
+			MPOMNG_CAS_INF T1
+		WHERE
+				T1.CUST_ID = #{custId} AND 
+				T1.ORDSTATUS IN ('01','04','06','07') AND 
+				T1.CAS_DATE LIKE CONCAT('#{date}','%') AND 
+	</select>
+
+</mapper>

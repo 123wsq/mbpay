@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.CustBankInfDao">
+	<resultMap type="CustBankInf" id="custBankInfMap">
+			<result property="custName"               column="CUST_NAME" /> 
+			<result property="custType"               column="CUST_TYPE" /> 
+			<result property="usrMobile"               column="USR_MOBILE" /> 
+		    <result property="bankCardId"               column="BANK_CARD_ID" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="issno"               column="ISSNO" /> 
+		    <result property="issnam"               column="ISSNAM" /> 
+		    <result property="provinceId"               column="PROVINCE_ID" /> 
+		    <result property="provinceName"               column="PROVINCE_NAME" /> 
+		    <result property="cityId"               column="CITY_ID" /> 
+		    <result property="cityName"               column="CITY_NAME" /> 
+		    <result property="cnapsCode"               column="CNAPS_CODE" /> 
+		    <result property="cardType"               column="CARD_TYPE" /> 
+		    <result property="cardState"               column="CARD_STATE" /> 
+		    <result property="oldCardNo"               column="OLD_CARD_NO" /> 
+		    <result property="cardNo"               column="CARD_NO" /> 
+		    <result property="mobileNo"               column="MOBILE_NO" /> 
+		    <result property="bindingTime"               column="BINDING_TIME" /> 
+		    <result property="unbundlingTime"               column="UNBUNDLING_TIME" /> 
+		    <result property="bankcardFront"               column="BANKCARD_FRONT" /> 
+		    <result property="bankcardBack"               column="BANKCARD_BACK" /> 
+		    <result property="updateDesc"               column="UPDATE_DESC" /> 
+		    <result property="subBranch"               column="SUB_BRANCH" /> 
+		    <result property="provinceId" column="PROVINCE" />
+			<result property="cityId" column="CITY" />
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="CustBankInf">
+		UPDATE 
+				MPOMNG_CUST_BANK_INF
+		<set>
+		        <if test="custId!= null and custId!= ''">
+						CUST_ID =  #{custId},
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						ISSNO =  #{issno},
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						ISSNAM =  #{issnam},
+				</if>
+		        <if test="provinceId!= null and provinceId!= ''">
+						PROVINCE_ID =  #{provinceId},
+				</if>
+		        <if test="cityId!= null and cityId!= ''">
+						CITY_ID =  #{cityId},
+				</if>
+		        <if test="cnapsCode!= null and cnapsCode!= ''">
+						CNAPS_CODE =  #{cnapsCode},
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						CARD_TYPE =  #{cardType},
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						CARD_STATE =  #{cardState},
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						CARD_NO =  #{cardNo},
+				</if>
+		        <if test="mobileNo!= null and mobileNo!= ''">
+						MOBILE_NO =  #{mobileNo},
+				</if>
+		        <if test="unbundlingTime!= null and unbundlingTime!= ''">
+						UNBUNDLING_TIME =  #{unbundlingTime},
+				</if>
+		        <if test="bankcardFront!= null and bankcardFront!= ''">
+						BANKCARD_FRONT =  #{bankcardFront},
+				</if>
+		        <if test="bankcardBack!= null and bankcardBack!= ''">
+						BANKCARD_BACK =  #{bankcardBack},
+				</if>
+				<if test="subBranch != null and subBranch != ''">
+						SUB_BRANCH = #{subBranch}
+				</if>
+		</set>
+		<where>
+			CUST_ID=#{custId} 
+			<if test="oldCardNo != null and oldCardNo != ''">
+				AND CARD_NO=#{oldCardNo}
+			</if>
+			
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="CustBankInf" resultMap="custBankInfMap">
+		SELECT  
+				c.CUST_NAME,
+				c.CUST_TYPE,
+				c.USR_MOBILE,
+		         t.BANK_CARD_ID, 
+		         t.CUST_ID, 
+		         t.ISSNO, 
+		         t.ISSNAM, 
+		         t.PROVINCE_ID, 
+		         T2.PROVINCE_NAME,
+		         t.CITY_ID, 
+		         T3.CITY_NAME,
+		         t.CNAPS_CODE, 
+		         t.CARD_TYPE, 
+		         t.CARD_STATE, 
+		         t.CARD_NO, 
+		         t.MOBILE_NO, 
+		         t.BINDING_TIME,  
+		         t.UNBUNDLING_TIME, 
+		         t.BANKCARD_FRONT, 
+		         t.BANKCARD_BACK,
+		         t.SUB_BRANCH
+		FROM 
+		        MPOMNG_CUST_BANK_INF t 
+		        LEFT JOIN 
+		        MPOMNG_MOBILE_MER_INF c
+		        ON t.CUST_ID=c.CUST_ID 
+		        LEFT OUTER JOIN  PROVINCE T2 ON(t.PROVINCE_ID=T2.PROVINCE_ID) 
+			    LEFT OUTER JOIN  CITY T3 ON(t.CITY_ID=T3.CITY_ID)
+		        
+		<where>
+		         <if test="custName!= null and custName!= ''">
+						AND c.CUST_NAME =  #{custName}
+				</if>
+				<if test="custType!= null and custType!= ''">
+						AND c.CUST_TYPE =  #{custType}
+				</if>
+				<if test="usrMobile!= null and usrMobile!= ''">
+						AND c.USR_MOBILE =  #{usrMobile}
+				</if>
+				<if test="bankCardId!= null and bankCardId!= ''">
+						AND t.BANK_CARD_ID =  #{bankCardId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND t.CUST_ID =  #{custId}
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						AND t.ISSNO =  #{issno}
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND t.ISSNAM =  #{issnam}
+				</if>
+		        <if test="provinceId!= null and provinceId!= ''">
+						AND t.PROVINCE_ID =  #{provinceId}
+				</if>
+		        <if test="cityId!= null and cityId!= ''">
+						AND t.CITY_ID =  #{cityId}
+				</if>
+		        <if test="cnapsCode!= null and cnapsCode!= ''">
+						AND t.CNAPS_CODE =  #{cnapsCode}
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND t.CARD_TYPE =  #{cardType}
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						AND t.CARD_STATE =  #{cardState}
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND t.CARD_NO =  #{cardNo}
+				</if>
+		        <if test="mobileNo!= null and mobileNo!= ''">
+						AND t.MOBILE_NO =  #{mobileNo}
+				</if>
+		        <if test="bindingTime!= null and bindingTime!= ''">
+						AND t.BINDING_TIME =  #{bindingTime}
+				</if>
+		        <if test="unbundlingTime!= null and unbundlingTime!= ''">
+						AND t.UNBUNDLING_TIME =  #{unbundlingTime}
+				</if>
+		        <if test="bankcardFront!= null and bankcardFront!= ''">
+						AND t.BANKCARD_FRONT =  #{bankcardFront}
+				</if>
+		        <if test="bankcardBack!= null and bankcardBack!= ''">
+						AND t.BANKCARD_BACK =  #{bankcardBack}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="CustBankInf" resultMap="custBankInfMap" databaseId="mysql">
+		SELECT 
+				c.CUST_NAME,
+				c.CUST_TYPE,
+				c.USR_MOBILE,
+		         t.BANK_CARD_ID, 
+		         t.CUST_ID, 
+		         t.ISSNO, 
+		         t.ISSNAM, 
+		         t.PROVINCE_ID, 
+		         t.CITY_ID, 
+		         t.CNAPS_CODE, 
+		         t.CARD_TYPE, 
+		         t.CARD_STATE, 
+		         t.CARD_NO, 
+		         t.MOBILE_NO, 
+		         t.BINDING_TIME, 
+		         t.UNBUNDLING_TIME, 
+		         t.BANKCARD_FRONT, 
+		         t.BANKCARD_BACK,
+		         t.SUB_BRANCH,
+		         T2.PROVINCE_NAME AS PROVINCE,
+				 T3.CITY_NAME AS CITY
+		FROM 
+		        MPOMNG_CUST_BANK_INF t LEFT JOIN MPOMNG_MOBILE_MER_INF c
+		        ON t.CUST_ID=c.CUST_ID
+		        LEFT OUTER JOIN  PROVINCE T2 ON(t.PROVINCE_ID=T2.PROVINCE_ID) 
+			    LEFT OUTER JOIN  CITY T3 ON(t.CITY_ID=T3.CITY_ID) 
+		<where>
+		         <if test="custName!= null and custName!= ''">
+						AND c.CUST_NAME LIKE CONCAT('%',#{custName},'%')
+				</if>
+				<if test="custType!= null and custType!= ''">
+						AND c.CUST_TYPE =  #{custType}
+				</if>
+				<if test="usrMobile!= null and usrMobile!= ''">
+						AND c.USR_MOBILE LIKE  CONCAT('%',#{usrMobile},'%')
+				</if>
+				<if test="custId!= null and custId!= ''">
+						AND t.CUST_ID LIKE  CONCAT('%',#{custId},'%')
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND t.ISSNAM =  #{issnam}
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						AND t.CARD_STATE =  #{cardState}
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND t.CARD_NO LIKE  CONCAT('%',#{cardNo},'%')
+				</if>
+		        <if test="mobileNo!= null and mobileNo!= ''">
+						AND t.MOBILE_NO =  #{mobileNo}
+				</if>
+		        <if test="startTime!= null and startTime!= ''">
+						AND t.BINDING_TIME &gt;  #{startTime}
+				</if>
+				<if test="endTime!= null and endTime!= ''">
+						AND t.BINDING_TIME &lt;  #{endTime}
+				</if>
+		</where>
+		ORDER BY t.BINDING_TIME  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CustBankInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(BANK_CARD_ID)
+		FROM 
+				MPOMNG_CUST_BANK_INF
+		<where>
+		        <if test="bankCardId!= null and bankCardId!= ''">
+						AND BANK_CARD_ID =  #{bankCardId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="issno!= null and issno!= ''">
+						AND ISSNO =  #{issno}
+				</if>
+		        <if test="issnam!= null and issnam!= ''">
+						AND ISSNAM =  #{issnam}
+				</if>
+		        <if test="provinceId!= null and provinceId!= ''">
+						AND PROVINCE_ID =  #{provinceId}
+				</if>
+		        <if test="cityId!= null and cityId!= ''">
+						AND CITY_ID =  #{cityId}
+				</if>
+		        <if test="cnapsCode!= null and cnapsCode!= ''">
+						AND CNAPS_CODE =  #{cnapsCode}
+				</if>
+		        <if test="cardType!= null and cardType!= ''">
+						AND CARD_TYPE =  #{cardType}
+				</if>
+		        <if test="cardState!= null and cardState!= ''">
+						AND CARD_STATE =  #{cardState}
+				</if>
+		        <if test="cardNo!= null and cardNo!= ''">
+						AND CARD_NO =  #{cardNo}
+				</if>
+		        <if test="mobileNo!= null and mobileNo!= ''">
+						AND MOBILE_NO =  #{mobileNo}
+				</if>
+				<if test="startTime!= null and startTime!= ''">
+						AND BINDING_TIME &gt;  #{startTime}
+				</if>
+		        <if test="endTime!= null and endTime!= ''">
+						AND BINDING_TIME &lt;  #{endTime}
+				</if>
+		        <if test="bankcardFront!= null and bankcardFront!= ''">
+						AND BANKCARD_FRONT =  #{bankcardFront}
+				</if>
+		        <if test="bankcardBack!= null and bankcardBack!= ''">
+						AND BANKCARD_BACK =  #{bankcardBack}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="CustBankInf">
+		INSERT INTO MPOMNG_CUST_BANK_INF  (
+		         BANK_CARD_ID, 
+		         CUST_ID, 
+		         ISSNO, 
+		         ISSNAM, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         CNAPS_CODE, 
+		         CARD_TYPE, 
+		         CARD_STATE, 
+		         CARD_NO, 
+		         MOBILE_NO, 
+		         BINDING_TIME, 
+		         UNBUNDLING_TIME, 
+		         BANKCARD_FRONT, 
+		         BANKCARD_BACK,
+		         SUB_BRANCH
+				)
+		VALUES (
+		          #{bankCardId}, 
+		          #{custId}, 
+		          #{issno}, 
+		          #{issnam}, 
+		          #{provinceId}, 
+		          #{cityId}, 
+		          #{cnapsCode}, 
+		          #{cardType}, 
+		          #{cardState}, 
+		          #{cardNo}, 
+		          #{mobileNo}, 
+		          #{bindingTime}, 
+		          #{unbundlingTime}, 
+		          #{bankcardFront}, 
+		          #{bankcardBack},
+		          #{subBranch}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="CustBankInf">
+		DELETE FROM MPOMNG_CUST_BANK_INF
+		WHERE CUST_ID = #{custId}
+			 
+	</delete>
+	
+	
+	<select id="selectBankNum" parameterType="String" resultType="java.lang.Integer">
+		SELECT  
+				COUNT(CUST_ID)
+		FROM 
+		        MPOMNG_CUST_BANK_INF 
+		WHERE
+		        CUST_ID = #{custId}
+	</select>
+	
+	<select id="selecCertificateNo" parameterType="String" resultType="java.lang.String">
+		SELECT  
+				CERTIFICATE_NO
+		FROM 
+		        MPOMNG_MERIDENTIFY_INF
+		WHERE
+		        CUST_ID = #{custId}
+	</select>
+
+</mapper>

@@ -1,0 +1,365 @@
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);" action="mpomng/notice/saveNotice.do" >
+ <br/>
+	<!-- #section:elements.form -->
+	<input type="hidden" name="id" />
+	<input type="hidden" name="noticeId" id="noticeId"/>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 公告平台 ： </label>
+		<div class="col-sm-9">
+			<select 
+				 rel="obj.NOTICE_PLATFORM"
+				 location="local" 
+				 name="noticePlatform" 
+				 id="noticePlatform" 
+				 data-placeholder="请选择公告平台" 
+				 style="width: 258px;vertical-align:middle;">
+		   	 </select>
+		</div>
+	</div> 
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 公告状态 ： </label>
+		<div class="col-sm-9">
+			<select 
+				 rel="obj.NOTICE_TYPE"
+				 location="local" 
+				 name="noticeType" 
+				 id="noticeType" 
+				 data-placeholder="请选择公告状态" 
+				 style="width: 258px;vertical-align:middle;">
+		   	 </select>
+		</div>
+	</div> 
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 公告标题： </label>
+		<div class="col-sm-9">
+	   <span class="block input-icon input-icon-right" >
+			<input type="text" id="noticeTitle" name="noticeTitle" placeholder="请输入[公告标题]" validate="true"
+				class="col-xs-10 col-sm-12"  maxlength="30" datatype="word"/>
+						<i class="ace-icon fa fa-star-o"></i>
+		</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 公告内容： </label>
+			<textarea rows="10" cols="20" name="noticeBody" id="noticeBody"   style="display: none;" ></textarea>
+		<div class="col-xs-10 col-sm-9">
+			<div class="wysiwyg-editor" id="noticeBodyEditor" style="border: 1px solid silver;"></div>
+		</div>
+	</div>
+	<div class="form-group" id="protoFileDiv">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 附件：</label>
+		<div class="col-sm-5">
+			<input type="hidden" id="fileId1" name="fileId1"/>
+			<input class="col-xs-12 col-sm-8"  type="text" id="fileName1" name="fileName1" readonly="readonly"/>
+			<span class="">
+				<button class="btn btn-small btn-yellow" type="button" onclick="upload02('fileId1','fileName1')">
+					选择文件
+				</button>
+			</span>
+			<!-- 注释“+按钮” -->
+			<!-- <span onclick="addFile()" style="margin-left:10px;"><i class="fa fa-plus green"></i></span> -->
+		</div> 
+	</div>
+	<input type="hidden" id="attachmentId" name="attachmentId">
+	<div id="addFileDiv">
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button id="btn-save" class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+</form>
+
+<script type="text/javascript">
+	// 点击添加按钮，添加附件
+	var fileCont = 2;
+	function addFile(){
+		if($(".col-xs-12.col-sm-8").length != 0){
+			fileCont = $(".col-xs-12.col-sm-8").length + 1;
+		}
+		if(fileCont < 6){
+		 	var fileObj = '<div class="form-group">'+
+			 		'<label class="col-sm-2 control-label no-padding-right"'+
+					'for="form-field-1"> 附件： </label><div class="col-sm-5">'+
+					'<input type="hidden" id="fileId'+ fileCont +'" name="fileId' + fileCont + '">'+
+					'<input class="col-xs-12 col-sm-8"  type="text" id="fileName' + fileCont + 
+					'" name="fileName' + fileCont+'" readonly="readonly"/><span class="">'+
+					'<button class="btn btn-small btn-yellow" type="button" onclick="upload02(\'fileId' + 
+					fileCont + '\',\'fileName' + fileCont + '\')">选择文件</button></span>'+
+					'</div></div>';
+			$("#addFileDiv").append(fileObj);
+			fileCont++;
+		}else{
+			msg.alert("警告", "最多只能添加5个附件！", "warn");
+		}
+	}
+
+
+	jQuery(function($){
+		function showErrorAlert (reason, detail) {
+			var msg='';
+			if (reason==='unsupported-file-type') {
+				msg = "Unsupported format " +detail;
+			}
+			$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+			 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+		}
+		$('#noticeBodyEditor').ace_wysiwyg({
+			toolbar:
+			[
+				'font',
+				null,
+				'fontSize',
+				null,
+				{name:'bold', className:'btn-info'},
+				{name:'italic', className:'btn-info'},
+				{name:'strikethrough', className:'btn-info'},
+				{name:'underline', className:'btn-info'},
+				null,
+				{name:'insertunorderedlist', className:'btn-success'},
+				{name:'insertorderedlist', className:'btn-success'},
+				{name:'outdent', className:'btn-purple'},
+				{name:'indent', className:'btn-purple'},
+				null,
+				{name:'justifyleft', className:'btn-primary'},
+				{name:'justifycenter', className:'btn-primary'},
+				{name:'justifyright', className:'btn-primary'},
+				{name:'justifyfull', className:'btn-inverse'},
+				null,
+	// 			{name:'createLink', className:'btn-pink'},
+	// 			{name:'unlink', className:'btn-pink'},
+				null,
+				{name:'insertImage', className:'btn-success'},
+				null,
+				'foreColor',
+				null,
+				{name:'undo', className:'btn-grey'},
+				{name:'redo', className:'btn-grey'}
+			],
+			'wysiwyg': {
+				fileUploadError: showErrorAlert
+			}
+		}).prev().addClass('wysiwyg-style2');
+	
+		$('[data-toggle="buttons"] .btn').on('click', function(e){
+			var target = $(this).find('input[type=radio]');
+			var which = parseInt(target.val());
+			var toolbar = $('#noticeBodyEditor').prev().get(0);
+			if(which >= 1 && which <= 4) {
+				toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g , '');
+				if(which == 1) $(toolbar).addClass('wysiwyg-style1');
+				else if(which == 2) $(toolbar).addClass('wysiwyg-style2');
+				if(which == 4) {
+					$(toolbar).find('.btn-group > .btn').addClass('btn-white btn-round');
+				} else $(toolbar).find('.btn-group > .btn-white').removeClass('btn-white btn-round');
+			}
+		});
+		//RESIZE IMAGE
+		
+		//Add Image Resize Functionality to Chrome and Safari
+		//webkit browsers don't have image resize functionality when content is editable
+		//so let's add something using jQuery UI resizable
+		//another option would be opening a dialog for user to enter dimensions.
+		if ( typeof jQuery.ui !== 'undefined' && ace.vars['webkit'] ) {
+			var lastResizableImg = null;
+			function destroyResizable() {
+				if(lastResizableImg == null) return;
+				lastResizableImg.resizable( "destroy" );
+				lastResizableImg.removeData('resizable');
+				lastResizableImg = null;
+			}
+	
+			var enableImageResize = function() {
+				$('.wysiwyg-editor')
+				.on('mousedown', function(e) {
+					var target = $(e.target);
+					if( e.target instanceof HTMLImageElement ) {
+						if( !target.data('resizable') ) {
+							target.resizable({
+								aspectRatio: e.target.width / e.target.height,
+							});
+							target.data('resizable', true);
+							if( lastResizableImg != null ) {
+								//disable previous resizable image
+								lastResizableImg.resizable( "destroy" );
+								lastResizableImg.removeData('resizable');
+							}
+							lastResizableImg = target;
+						}
+					}
+				})
+				.on('click', function(e) {
+					if( lastResizableImg != null && !(e.target instanceof HTMLImageElement) ) {
+						destroyResizable();
+					}
+				})
+				.on('keydown', function() {
+					destroyResizable();
+				});
+		    }
+			enableImageResize();
+		}
+	});
+	
+	$(document).ready(function() {
+		$("#noticePlatform").change(function(){
+			$("#noticeBodyEditor",$("#dlg-NoticeView")).html("");
+			if($("#noticePlatform option:selected",$("#dlg-NoticeView")).val()==2){
+				$(".wysiwyg-toolbar").hide();
+				$("#protoFileDiv").hide();
+			}else{
+				$(".wysiwyg-toolbar").show();
+				$("#protoFileDiv").show();
+			}
+		});
+		$("#noticeType").change(function(){
+			$("#noticeBodyEditor",$("#dlg-NoticeView")).html("");
+			if($("#noticeType option:selected",$("#dlg-NoticeView")).val()==1){
+				$(".wysiwyg-toolbar").hide();
+				$("#protoFileDiv").hide();
+			}else{
+				$(".wysiwyg-toolbar").show();
+				$("#protoFileDiv").show();
+			}
+		});
+	});
+
+	var type = $("#dlg-NoticeView").Dialog().pageParam.type;
+	if(type == 'edit'){
+		$("#noticePlatform",$("#dlg-NoticeView")).attr('disabled', 'disabled');
+		$("#noticeType",$("#dlg-NoticeView")).attr('disabled', 'disabled');
+		var time = setInterval(function(){
+			if($("#noticeId",$("#dlg-NoticeView")).val()!=''){
+				clearInterval(time);
+				initFileDiv();
+				$("#noticeBodyEditor",$("#dlg-NoticeView")).html($('#noticeBody',$("#dlg-NoticeView")).val());
+				if($("#noticePlatform option:selected",$("#dlg-NoticeView")).val()==2){
+					$(".wysiwyg-toolbar").hide();
+				}
+				if($("#noticeType option:selected",$("#dlg-NoticeView")).val()==1){
+					$(".wysiwyg-toolbar").hide();
+				}
+			}
+		},100);
+	}else if(type == 'view'){
+		$("#noticePlatform",$("#dlg-NoticeView")).attr('disabled', 'disabled');
+		$("#noticeType",$("#dlg-NoticeView")).attr('disabled', 'disabled');
+		$("#noticeTitle",$("#dlg-NoticeView")).attr('readonly', 'readonly');
+		$("#noticeBodyEditor").attr("contenteditable", "false");
+		$("#btn-save").remove();
+		var time = setInterval(function(){
+			if($("#noticeId",$("#dlg-NoticeView")).val()!=''){
+				clearInterval(time);
+				initFileDiv();
+				$("#noticeBodyEditor",$("#dlg-NoticeView")).html($('#noticeBody',$("#dlg-NoticeView")).val());
+				if($("#noticePlatform option:selected",$("#dlg-NoticeView")).val()==2){
+					$(".wysiwyg-toolbar").hide();
+				}
+				if($("#noticeType option:selected",$("#dlg-NoticeView")).val()==1){
+					$(".wysiwyg-toolbar").hide();
+				}
+			}
+		},100);
+	}
+	
+	function submitForm(obj){
+		// 设置附件ID
+		setAttachmentId();
+		if($("#noticePlatform option:selected",$("#dlg-NoticeView")).val()==2){
+			$("#noticeBody",$("#dlg-NoticeView")).val($('#noticeBodyEditor').text());
+		}else{
+			$("#noticeBody",$("#dlg-NoticeView")).val($('#noticeBodyEditor').html());
+		}
+		return validateCallback(obj,function(result){
+			if(result.rspcod== 200){
+				msg.alert("提示", result.rspmsg, 'correct');
+				$("#grid-table").trigger("reloadGrid");
+				dialog.close(obj);
+			}else{
+				msg.alert("错误", result.rspmsg, 'error');
+			}
+		});
+	}
+	
+	// 设置附件ID
+	function setAttachmentId(){
+		var attachmentId = "";
+		for(var i = 1; i < 6; i++){
+			if($("#fileId" + i).length > 0){
+				attachmentId = attachmentId + $("#fileId" + i).val() + '|';
+			}
+		}
+		attachmentId = attachmentId.substring(0,attachmentId.length-1);
+		$("#attachmentId").val(attachmentId);
+	}
+	
+	// 页面初始化时，添加已有的附件
+	function initFileDiv(){
+		$("#protoFileDiv").remove();
+		 $.ajax({
+			 type:"post",
+			 dataType:"json",
+			 url:"mpomng/attachment/list.do",
+			 data:{attachmentIds:$("#attachmentId").val()},
+			 success : function(result) {
+				 $.each(result.rows,function(index,obj){
+					 var fileCont = index + 1;
+					 var btnObj = "";
+					 var fileObj = "";
+					 var plusObj = "";
+					 // 注释“+”按钮
+// 					 if(fileCont == 1){
+// 						 plusObj = '<span onclick="addFile()" style="margin-left:10px;"><i class="fa fa-plus green"></i></span>';
+// 					 }else{
+// 						 plusObj = "";
+// 					 }
+						if(type == 'view'){
+							fileObj = '<div class="form-group" id="protoFileDiv">'+
+							'<label class="col-sm-2 control-label no-padding-right"'+
+							'for="form-field-1"> 附件：</label>'+
+								'<div class="col-sm-5" style="margin-top:5px;">'+
+								'<input value='+ obj.id +' type="hidden" id="fileId'+ fileCont +'" name="fileId'+ fileCont +'">'+
+								'<input value='+ obj.fjName +' class="col-xs-12 col-sm-8"  type="text" id="fileName' + fileCont +
+								'" name="fileName'+fileCont+'" readonly="readonly"/>'+
+								'</div></div>';
+						}else{
+							fileObj = '<div class="form-group">'+
+					 		'<label class="col-sm-2 control-label no-padding-right"'+
+							'for="form-field-1"> 附件： </label>'+
+							'<div class="col-sm-5">'+
+							'<input value='+ obj.id +' type="hidden" id="fileId'+ fileCont +'" name="fileId'+ fileCont +'">'+
+							'<input value='+ obj.fjName +' class="col-xs-12 col-sm-8"  type="text" id="fileName' + fileCont +
+							'" name="fileName'+fileCont+'" readonly="readonly"/>'+
+							'<span class="">'+ '<button class="btn btn-small btn-yellow" type="button" onclick="upload02(\'fileId'+
+							fileCont + '\',\'fileName' + fileCont+'\')">'+'选择文件</button></span>' +
+							plusObj + '</div></div>';
+						}
+						$("#addFileDiv").append(fileObj);
+					});
+				},
+			 error : function(XMLHttpRequest, textStatus) {
+				}
+		 });
+	}
+	
+	/*
+	 * 上传带回
+	 */
+	function upload02(fid,fname){
+		openFileUpload({
+			fileUploadDone:function(reslut){
+				$("#"+fid).val(reslut.map.fid);
+				$("#"+fname).val(reslut.map.fname);
+			}
+		});
+	}
+</script>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="tdweb">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/res_termmng"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="mpbase-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpbase/mpbase">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tdauth-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tdauth/tdauth">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpbean-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpbean/mpbean">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpamng-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpamng/mpamng">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpcoop-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpcoop/mpcoop">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpsms-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpsms/mpsms">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpomng-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpomng/mpomng">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mprcs-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mprcs/mprcs">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mpbatch-1.0-release.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mpbatch/mpbatch">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/tdweb/target/classes"/>
+        <property name="context-root" value="pay"/>
+    </wb-module>
+</project-modules>

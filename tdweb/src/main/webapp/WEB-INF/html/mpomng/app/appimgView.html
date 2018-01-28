@@ -1,0 +1,124 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpomng/app/saveAppimg.do" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<input type="hidden" id="id" name="id"/>
+	<input type="hidden" id="appimgId" name="appimgId"/>
+	<!-- #section:elements.form -->
+		
+	<div class="form-group" >
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 轮播图 路径： </label>
+		<div class="col-sm-6">
+				<input type="hidden" id="appimgPath" name="appimgPath"  />
+				<span class="block input-icon input-icon-right" >
+					<input type="text" id="appimgName" class="col-xs-12 col-sm-12" maxlength="245" name="appimgName" readonly="readonly"/>
+					<i class="ace-icon fa fa-star-o"></i>
+			</span>
+				<span class="">
+							<button class="btn btn-small btn-yellow" type="button" onclick="upload02('appimgPath','appimgName')">
+								选择文件
+							</button>
+							<button class="btn btn-small btn-info" type="button" onclick="agentPicView('appimgPath');">
+								预览
+							</button>
+						</span>
+				
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> APP 轮播图 描述： </label>
+		<div class="col-sm-9">
+				<textarea rows="5" cols="47" placeholder="请输入[APP 轮播图 描述]" datatype="word" id="appimgDesc" name="appimgDesc" maxlength="245"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 是否显示： </label>
+		<div class="col-sm-9">
+		<label>
+         <input name="appimgDisplay" id="appimgDisplay" class="ace ace-switch ace-switch-4 btn-empty" value="1" type="checkbox" />
+		<span class="lbl" data-lbl="是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否"></span>
+		</label>
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+
+  
+	
+});
+
+function submitForm(obj){
+	if($("#appimgName",$("#dlg-termComEdit")).val() == ''){
+		TDTips($("#appimgName",$("#dlg-termComEdit")),'APP 轮播图 路径 不能为空');
+		return false;
+	}
+	if($("#appimgDesc",$("#dlg-termComEdit")).val() == ''){
+		TDTips($("#appimgDesc",$("#dlg-termComEdit")),'APP轮播图描述不能为空');
+		return false;
+	}
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+/**
+ * 图片预览
+ */
+function agentPicView(id){
+	if($('#'+id).val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	
+	picview($('#'+id).val());
+}
+
+/*
+ * 上传带回
+ */
+
+function upload02(fid,fname){
+	openFileUpload({
+		fileUploadDone:function(reslut){
+			$("#"+fid).val(reslut.map.fid);
+			$("#"+fname).val(reslut.map.fname);
+		},
+		allowFile:EXT_PIC,
+		fileSize:1024
+	});
+}
+
+</script>

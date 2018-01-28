@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="mpbase/queryCnapsList.do" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">联行号:</label>
+							<div class="search_input">
+								<input id="search_cnapsCode" type="text" name="cnapsCode" placeholder="请输入联行号">
+							</div>
+						</div>
+					
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">银行名称:</label>
+							<div class="search_input">
+								<input id="search_bankName" type="text" name="bankName" placeholder="请输入银行名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">支行信息:</label>
+							<div class="search_input">
+								<input id="search_subBranch" type="text" name="subBranch" placeholder="请输入支行信息">
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">所在省:</label>
+							<div class="search_input">
+								<input id="search_bankPro" type="text" name="bankPro" placeholder="请输入所在省">
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">所在地市:</label>
+							<div class="search_input">
+								<input id="search_bankCity" type="text" name="bankCity" placeholder="请输入所在地市">
+							</div>
+						</div>
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" > 搜索 </button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="rowt">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+					<a auth="mpbase/addCnapsView.do" class="btn btn-small btn-add" onclick="addCnapsView();">新增</a> 
+					<a auth="mpbase/eidtCnapsView.do" class="btn btn-small btn-update" onclick="eidtCnapsView();"> 修改 </a> 
+					<!-- <a class="btn btn-small btn-delete" onclick="removeCnaps();">  删除 </a> -->
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+				url : "mpbase/queryCnapsList.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '联行号', '银行名称', '支行', '所在省', '所在市'],
+				colModel : [ {name : 'cnapsCode',      index : 'cnapsCode',      width : '100px' }, 
+				             {name : 'bankName',    index : 'bankName',    width : '200px' }, 
+				             {name : 'subBranch',      index : 'subBranch',    width : '500px' }, 
+				             {name : 'bankPro',    index : 'bankPro',    width : '100px' }, 
+				             {name : 'bankCity',    index : 'bankCity',    width : '100px' }
+				             ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			
+		});
+
+		function addCnapsView() {
+			openDialog({
+				dialogId : 'dlg-addCnapsView',
+				title : '新增联行号',
+				pageUrl : 'mpbase/addCnapsView.do',
+				width : '55%',
+			    height : '60%',
+			});
+		}
+		function eidtCnapsView () {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			var cnapsCode = $('#grid-table').jqGrid('getRowData',rows[0]).cnapsCode;
+			openDialog({
+				dialogId : 'dlg-eidtCnapsView',
+				title : '编辑联行号',
+				pageUrl : 'mpbase/eidtCnapsView.do',
+				dataUrl : 'mpbase/queryCnapsById.do',
+				width : '55%',
+			    height : '60%',
+			    dataParam : {
+			    	cnapsCode : cnapsCode
+				},
+				dataName : 'obj' //表单数据存储对象名称
+
+			});
+		}
+		
+		function removeCnaps() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				ids += "'" + $('#grid-table').jqGrid('getRowData',rows[i]).cnapsCode+ "'" + ",";
+			}
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			msg.confirm({title:'确认',position:'center',msg:'您确定要删除选中的数据吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpbase/removeCnaps.do?cnapsCode=" + ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+
+				}
+			}});
+			
+		}
+		
+	</script>

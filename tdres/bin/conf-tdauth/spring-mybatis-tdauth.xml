@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+ 	
+ 	<!-- 可单独配置数据源 -->
+ 	
+ 	<!-- MYBATIS文件配置，扫描所有MAPPER文件
+ 	
+ 	    name             ： bean自定义名称
+ 	    p:dataSource-ref ： 注入数据源dataSource
+ 	    p:configLocation : 注入MYBATIS配置文件
+ 	    p:mapperLocations: 注入MAPPER
+ 	    p:databaseIdProvider:多数据源标识
+ 	
+	<bean name="sqlSessionFactory-tdauth"
+	    class="org.mybatis.spring.SqlSessionFactoryBean"
+	    p:dataSource-ref="dataSource"
+	    p:databaseIdProvider-ref="dbProvider"
+	    p:configLocation="classpath:tdauth/conf-tdauth/mybatis-config-tdauth.xml"
+	    p:mapperLocations="classpath:tdauth/mapper-tdauth/AgentShieldMenuDao.xml"/>
+ 	 -->
+	<!-- SPRING与MYBATIS整合配置, 扫描指定DAO
+	     p:basePackage  : 指定DAO的路径
+	     p:sqlSessionFactoryBeanName ： 注入SessionFactory
+	 
+	<bean name="mapperScanner-tdauth" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+        p:basePackage="com.tangdi.production.tdauth.dao" 
+        p:sqlSessionFactoryBeanName="sqlSessionFactory-tdauth"/>
+	-->
+	
+	<bean name="sqlSessionFactory-tdauth-posm"
+	    class="org.mybatis.spring.SqlSessionFactoryBean"
+	    p:dataSource-ref="dataSourceOracle"
+	    p:databaseIdProvider-ref="dbProvider"
+	    p:configLocation="classpath:tdauth/conf-tdauth/mybatis-config-tdauth.xml"
+	    p:mapperLocations="classpath:tdauth/mapper-tdauth-posm/*.xml"/>
+ 	
+	<!-- SPRING与MYBATIS整合配置, 扫描指定DAO
+	     p:basePackage  : 指定DAO的路径
+	     p:sqlSessionFactoryBeanName ： 注入SessionFactory
+	 -->
+	<bean name="mapperScanner-tdauth-posm" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+        p:basePackage="com.tangdi.production.tdauth.dao" 
+        p:sqlSessionFactoryBeanName="sqlSessionFactory-tdauth-posm"/>
+	
+
+	
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.AgentShieldMenuDao">
+	<resultMap type="java.util.Map" id="AgentShieldMenuMap">
+		<result property="agentId" column="AGENT_ID" />
+		<result property="firstAgentId" column="FIRST_AGENT_ID" />
+		<result property="frozState" column="FROZ_STATE" />
+		<result property="agentDgr" column="AGENT_DGR" />
+		<result property="ageStatus" column="AGE_STATUS" />
+	</resultMap>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="AgentShieldMenuMap">
+		SELECT
+			FIRST_AGENT_ID,
+			AGENT_ID,
+			FROZ_STATE,
+			AGENT_DGR,
+			AGE_STATUS
+		FROM
+		MPAMNG_AGENT_INF WHERE
+		AGENT_ID=#{agentId}
+	</select>
+
+</mapper>

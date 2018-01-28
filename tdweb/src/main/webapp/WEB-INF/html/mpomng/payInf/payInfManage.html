@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+					<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">支付订单号:</label>
+							<div class="search_input">
+								<input id="payordno" type="text" name="payordno" placeholder="请输入支付订单号">
+							</div>
+						</div>
+					<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input id="custId" type="text" name="custId" placeholder="请输入发送内容">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户名称:</label>
+							<div class="search_input">
+								<input id="custName" type="text" name="custName" placeholder="请输入商户名称">
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">代理商编号:</label>
+							<div class="search_input">
+								<input id="agentId" type="text" name="agentId" placeholder="请输入商户名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">银行卡号:</label>
+							<div class="search_input">
+								<input id="bankpayacno" type="text" name="bankpayacno" placeholder="请输入银行卡号">
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">开户行:</label>
+							<div class="search_input">
+								<input id="bankcode" type="text" name="bankcode" placeholder="请输入开户行">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">订单状态:</label>
+							<div class="search_input">
+							<select 
+		rel="obj.PAYSTATUS"
+						location="local" 
+		 name="paystatus" 
+		 id="search_paystatus" 
+		  style="width: 120px;vertical-align:middle;">
+		  <option value="">---选择---<option>
+						 </select>
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">费率类型:</label>
+							<div class="search_input">
+							<select 
+		rel="obj.RATE"
+						location="local" 
+		 name="rate" 
+		 id="rearch_rate" 
+		  style="width: 120px;vertical-align:middle;">
+		  <option value="">---选择---<option>
+						 </select>
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px;margin-right: 15px;width: 280px;">
+						    <label class="label_search" for="userName">收款时间:</label>
+							<div class="input-daterange input-group">
+								<input type="text" class="input-sm form-control" name="sdate" placeholder="起始日期" />
+								<span class="input-group-addon">
+									<i class="fa fa-exchange"></i>
+								</span>
+								<input type="text" class="input-sm form-control" name="edate" placeholder="结束日期" />
+							</div>
+
+						</div>
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" onclick="searchCount()">
+								搜索
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="display: block;" class="widget-body " id="total">
+		
+	</div>
+	</form>
+	
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+			
+			<div style="margin-top: 10px">
+				 <span id="paging_bar" style="float: right"> </span>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+	var jqGrid;
+	jQuery(function($) {
+		var grid_selector = "#grid-table";
+		var pager_selector = "#grid-pager";
+
+		$(window).on(
+				'resize.jqGrid',
+				function() {
+					$(grid_selector).jqGrid('setGridWidth',$(".page-content").width());
+				})
+		var parent_column = $(grid_selector).closest('[class*="col-"]');
+		$(document).on(
+				'settings.ace.jqGrid',
+				function(ev, event_name, collapsed) {
+					if (event_name === 'sidebar_collapsed'|| event_name === 'main_container_fixed') {
+						setTimeout(function() {
+							$(grid_selector).jqGrid('setGridWidth',parent_column.width());
+						}, 0);
+					}
+				})
+		jQuery(grid_selector).jqGrid({
+			url : "mpomng/payInf/queryPayInfList.do",
+			datatype : "json",
+			height : '100%',
+			width : '100%',
+			colNames : [ '支付订单号','商户编号  ','商户名称','代理商编号','代理商名称','订单状态','支付订单类型','支付方式','订单金额','费率','手续费','实际金额','支付渠道编号','银行账号','银行名称','终端号','支付完整时间','最后更新时间','操作' ],
+			colModel : [   {name : 'payordno',        index : 'payordno',        width : '150px',sortable:false }, 
+						     {name : 'custId',        index : 'custId',        width : '150px',sortable:false }, 
+						     {name : 'custName',        index : 'custName',        width : '150px',sortable:false },
+						     {name : 'agentId',        index : 'agentId',        width : '100px',sortable:false },
+						     {name : 'agentName',        index : 'agentName',        width : '100px',sortable:false },
+						     {name : 'paystatus',        index : 'paystatus',        width : '100px',sortable:false ,ditcKey:'PAYSTATUS' ,formatter : gridFormatByDict}, 
+						     {name : 'payordtype',        index : 'payordtype',        width : '100px',sortable:false ,ditcKey:'PAYORDTYPE' ,formatter : gridFormatByDict}, 
+						     {name : 'paytype',        index : 'paytype',        width : '100px' ,sortable:false,ditcKey:'PAYTYPE' ,formatter : gridFormatByDict}, 
+						     {name : 'txamt',        index : 'txamt',        width : '100px',sortable:false }, 
+						     {name : 'rate',        index : 'rate',        width : '100px',hidden : true,sortable:false ,ditcKey:'RATE' ,formatter : gridFormatByDict}, 
+						     {name : 'fee',        index : 'fee',        width : '100px',sortable:false } ,
+						     {name : 'netrecamt',        index : 'netrecamt',        width : '100px',sortable:false } ,
+						     {name : 'payChannel',        index : 'payChannel',        width : '100px',sortable:false } ,
+						     {name : 'bankpayacno',        index : 'bankpayacno',        width : '100px',sortable:false } ,
+						     {name : 'bankcode',        index : 'bankcode',        width : '100px',sortable:false } ,
+						     {name : 'terminalSeq',        index : 'terminalSeq',  hidden:true,      width : '100px',sortable:false } ,
+						     {name : 'payordtime',        index : 'payordtime',        width : '100px',sortable:false,formatter : gridFormatByDate} ,
+						     {name : 'modifyTime',        index : 'modifyTime',        width : '100px',sortable:false ,formatter : gridFormatByDate}, 
+						     {name : '',        index : '',        width : '50px',formatter:operateEdit} 
+			            ],
+			viewrecords : true,
+			rowNum : 10,
+			rowList : [ 10, 20, 30 ],
+			altRows : true,
+
+			shrinkToFit : false,
+			multiselect : true,//设置行可多选的 
+			multiboxonly : true,//
+
+			loadComplete : function() {
+				var table = this;
+				setTimeout(function() {
+					//加载分页
+					initPagingBar(grid_selector);
+				}, 0);
+			},
+			beforeRequest : function() {//请求之前执行
+				jqGrid = this;
+			},
+		});
+		$(window).triggerHandler('resize.jqGrid');
+
+		$(document).one('ajaxloadstart.page', function(e) {
+			$(grid_selector).jqGrid('GridUnload');
+			$('.ui-jqdialog').remove();
+		});
+	
+		
+		
+	 	function operateEdit(cellvalue, options, rowObject){//定义button按钮
+			var button = "<div class=\"hidden-sm hidden-xs btn-group\">";  
+				button += "<button class='btn btn-xs btn-warning' onclick='selectPayInf(\""+rowObject["payordno"]+"\")'"   
+				 +"title='详细信息查看'>详细</button>";
+			return button;
+		};
+	});
+	
+	
+	function selectPayInf(payordno) {
+		 if(payordno.length<=0){
+			msg.alert("警告", "当前没有选择数据项！", "error");
+			return;
+		}
+		var scrWidth = document.body.scrollWidth;
+		openDialog({
+			dialogId : 'dlg-agentEdit',
+			title : '收款订单信息详情',
+			pageUrl :'mpomng/payInf/payInfDetailsView.do',
+			dataUrl : 'mpomng/payInf/queryPayInfDetails.do',
+			width : '80%',
+		    height:'80%',
+			dataParam : {
+				payordno : payordno
+			},
+			dataName : 'obj,map'//表单数据存储对象名称
+
+		}); 
+		
+	}
+	
+	
+	  $(document).ready(function(){
+		 searchCount();
+	
+	 });
+	
+	function searchCount(){
+		 $(document).ready(function(){
+			 $.ajax({
+					type : "post",
+					url : "mpomng/payInf/queryPayInfCountList.do",
+					data:$("form").serialize(),
+					dataType : 'json',
+					async:true,
+					success : function(result) {
+						if (result.rspcod != 200) {
+							msg.alert("错误", result.rspmsg, 'error');
+						} else {
+							var txamt="";
+							var fee="";
+							count=result.obj[0].count;
+							txamt+=result.obj[0].txamt;
+							fee+=result.obj[0].fee;
+							if(txamt=="undefined"){
+								txamt="0";
+							}
+							if(fee=="undefined"){
+								fee="0";
+							}
+							var html="";
+							html+="汇总笔数和金额:["+count+"]笔  |  [" +txamt+ "]元  "
+							html+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+							html+="手续费总额:["+fee+"]元";
+							$("#total").html(html);
+							
+						}
+					},
+					error : function(XMLHttpRequest, textStatus) {
+						msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+					}
+				});
+		
+
+	});
+		
+	}
+	
+	
+	
+	
+	
+	
+	</script>

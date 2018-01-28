@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="css/page/role.css" />
+<!-- 核心功能组件 -->
+<script type="text/javascript" src="js/core/core-1.0.js" charset="utf-8"></script>
+<div class="rowt">
+<div class="col-xs-12">
+<div class="tabbable" id="agent_form_div"  create-buttom="auto" check-form="true" create-to="formBtnBoxDiv" style="height: 100%">
+	<form id="custBankForm" class="form-horizontal required-validate"  role="form"  onsubmit="return validateCallback(this,dialogAjaxDone)">
+		<input type="hidden" id="bankcardFront"   name="bankcardFront" />
+		<input type="hidden" id="bankcardBack"   name="bankcardBack" />
+	
+	
+		<!-- 
+					 		 * 属性说明:
+							 * validate="true"  是否需要验证字段
+							 * msg="错误时提示信息"        
+							 * datatype="数据类型"
+						 -->
+		<div class="tab-content">
+			<div id="tabAgentInf" class="tab-pane fade in active">
+				<div class="form-group">
+					
+					<!--
+					<label class="col-sm-2 control-label no-padding-right">
+						银行卡编号： </label>
+					<div class="col-sm-3">
+						
+						<input type="text" id="bankCardId" name="bankCardId" placeholder="" 
+							class="col-xs-12 col-sm-12" value=""  readonly="readonly"/>
+					</div>-->
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						商户编号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="custId" name="custId" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" readonly="readonly"/>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						商户名称： </label>
+					<div class="col-sm-3">
+						<input type="text" id="custName" name="custName" placeholder="" 
+							class="col-xs-12 col-sm-12" value=""  readonly="readonly"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						银行卡类型： </label>
+					<div class="col-sm-3">
+							
+					<select 
+						 rel="obj.UNIONFIT_DCFLAG"
+			 			 location="local" 
+						 name="cardType" 
+			 			id="cardType" 
+			 			data-placeholder="请选择" style="width: 176px;vertical-align:middle;" readonly="readonly">
+					</select>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						银行卡号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="cardNo" name="cardNo" placeholder="银行卡号" 
+							class="col-xs-12 col-sm-12" value="" readonly="readonly"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						商户手机号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="usrMobile" name="usrMobile" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" readonly="readonly"/>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						绑定时间： </label>
+					<div class="col-sm-3">
+						<input type="text" id="bindingTime" name="bindingTime" placeholder="" 
+							class="col-xs-12 col-sm-12" value=""   init-format="dateFormat('{value}')"  readonly="readonly"/>
+					</div>
+					
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						联行号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="cnapsCode" name="cnapsCode" placeholder="" 
+							class="col-xs-12 col-sm-12" value=""  readonly="readonly"/>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						省市地址： </label>
+					<div class="col-sm-3">
+						<input type="text" id="address" name="address" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" readonly="readonly"/>
+					</div>
+				</div>
+				
+
+				<div class="form-group">
+					
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						支行名称： </label>
+					<div class="col-sm-3">
+					<textarea style="width: 511px; height: 52px;"  id="bankSubBranch" name="subBranch"  readonly="readonly"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						银行卡正面照片： </label>
+					<div class="col-sm-2">
+						<span class="">
+							<a id="front_a" href=""  class="lightbox"><img id="front_img" alt="" src="" width="200%">
+							查看原图</a>	
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						银行卡背面照片： </label>
+					<div class="col-sm-2">
+						<span class="">
+							<a id="back_a" href="" class="lightbox"><img id="back_img" alt="" src="" width="200%" >
+							查看原图</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+<div class="form-group"></div>
+				<div class="form-group"></div>
+				<div class="role-btn-box">
+				</div>
+				<div class="form-group"></div>
+				<div class="form-group"></div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="form-actions align-right  form-button-box" style="margin-top: 10px;display:none;" id="formBtnBoxDiv">
+	<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-agentEdit');">关闭</button>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	//图片预览空间加载
+	$(".lightbox").lightbox({
+        fitToScreen: true,
+        imageClickClose: false
+    });
+	
+	var h=document.documentElement.clientHeight;//可见区域高度
+	var formDiv = document.getElementById('agent_form_div');
+	formDiv.style.height=h*0.9+"px";
+	$('.date-picker').datepicker({
+		autoclose: true,
+		todayHighlight: true
+	})
+	//show datepicker when clicking on the icon
+	.next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
+	
+	$("#oemState").change(function() {
+		if($(this).val()=='on'||$(this).val()==1){
+			$("#oemDiv").hide();
+		}
+		if($(this).val()==0){
+			$("#oemDiv").show();
+		}
+	});
+	setTimeout(setType, 600);
+	setTimeout(setPic, 600);
+});
+
+function setPic(){
+	document.getElementById("front_a").href ="mpbase/pic/view2.do?picid="+$("#bankcardFront").val();
+	document.getElementById("front_img").src ="mpbase/pic/view2.do?picid="+$("#bankcardFront").val();
+	document.getElementById("back_a").href ="mpbase/pic/view2.do?picid="+$("#bankcardBack").val();
+	document.getElementById("back_img").src ="mpbase/pic/view2.do?picid="+$("#bankcardBack").val();
+}
+
+function bankcardFrontPicView(){
+	if($('#bankcardFront').val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#bankcardFront').val());
+}
+function bankcardBackPicView(){
+	if($('#bankcardBack').val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#bankcardBack').val());
+}
+
+function setType(){
+		$("#formBtnBoxDiv").show();
+}
+</script>

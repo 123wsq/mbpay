@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--pos 8583 报文接出 -->
+<channel name="STHDHX" log_level="INFO">
+	<transaction code="9991" desc="商户签到 ">     
+        <pack cache="true">
+        	<do func="pack8583">
+         	  <para name="Tpdu"  value="6000030000"/>
+         	  <!-- <para name="phead"  value="601000000000"/> -->
+         	  <para name="phead"  value="603100310000"/>
+         	  <para name="must_fields"  value="11|41|42|60|63"/>
+         	  <para name="opt_fields"   value="|"/>
+         	  <para name="CFG"  value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+         	  <para name="type_code"  value="0800"/>
+        	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9993" desc="余额查询">     
+        <pack cache="true">
+        	 <do func="pack8583">
+            <para name="Tpdu"         value="6000030000"/>
+            <!-- <para name="phead"        value="601000000000"/> -->
+            <para name="phead"  	  value="603100310000"/>
+            <para name="must_fields"  value="3|11|22|25|41|42|49|60|64|"/>
+            <para name="opt_fields"   value="2|14|23|26|35|36|52|53|55|62"/>
+            <para name="CFG"          value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+            <para name="type_code"    value="0200"/>
+         </do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9992" desc="消费">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <!-- <para name="phead"  value="601000000000"/> -->
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|22|25|41|42|49|60|64"/>
+          	 <para name="opt_fields"  value="2|14|23|26|35|36|52|53|55|62"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+          	 <para name="type_code"  value="0200"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9994" desc="冲正">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <!-- <para name="phead"  value="601000000000"/> -->
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|22|25|41|42|49|60|64"/>
+          	 <para name="opt_fields"  value="2|14|23|38|55|59"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+          	 <para name="type_code"  value="0400"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9995" desc="代付">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6029000000"/>
+          	 <!-- <para name="phead"  value="601000000000"/> -->
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|20|22|25|41|42|48|49|60|64"/>
+          	 <para name="opt_fields"  value="47"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+          	 <para name="type_code"  value="0200"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9996" desc="确认代付">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <!-- <para name="phead"  value="601000000000"/> -->
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="2|3|4|11|20|22|25|41|42|49|60|64"/>
+          	 <para name="opt_fields"  value="|"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+          	 <para name="type_code"  value="0220"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9997" desc="额度查询">
+		<pack cache="true">
+			<do func="pack8583">
+			 <para name="Tpdu" value="6000030000"/>	
+			 <!-- <para name="phead"  value="601000000000"/> -->
+          	 <para name="phead"  value="603100310000"/>
+          	 <para name="must_fields" value="3|11|25|41|42|49|64"/>
+          	 <para name="opt_fields" value="|"/>
+          	 <para name="CFG" value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"/>
+          	 <para name="type_code" value="0100"/>
+			</do>
+		</pack>
+	</transaction>
+	
+</channel>

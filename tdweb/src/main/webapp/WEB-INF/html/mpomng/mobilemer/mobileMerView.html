@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<!-- 核心功能组件
+<link rel="stylesheet" href="css/page/role.css" />
+<script type="text/javascript" src="js/core/core-1.0.js" charset="utf-8"></script> -->
+<!-- <div class="rowt">
+<div class="col-xs-12">-->
+
+<form id="merdetailForm" class="form-horizontal required-validate"  
+role="form" >
+		<br />
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						商户名称： </label>
+					<div class="col-sm-3">
+						<!-- 
+					 		 * 属性说明:
+							 * validate="true"  是否需要验证字段
+							 * msg="错误时提示信息"        
+							 * datatype="数据类型"
+						 -->
+						<input type="text" id="custName" name="custName" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						商户编号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="custId" name="custId" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+								交易状态： </label>
+					<div class="col-sm-3">
+							<select 
+					 		rel="obj.MERSTATUS"
+		 			 		location="local" 
+					 		name="custStatus" 
+		 					id="custStatus" 
+		 					data-placeholder="请选择类型" style="width: 130px;vertical-align:middle;" readonly="readonly">
+						</select>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+								登录状态： </label>
+					<div class="col-sm-3">
+							<select 
+					 		rel="obj.LOGINSTATUS"
+		 			 		location="local" 
+					 		name="isLoginFlag" 
+		 					id="isLoginFlag" 
+		 					data-placeholder="请选择类型" style="width: 130px;vertical-align:middle;" readonly="readonly">
+						</select>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+			
+							<label class="col-sm-2 control-label no-padding-right">
+								手机号： </label>
+							<div class="col-sm-3">
+								<input type="text" id="usrMobile" name="usrMobile"
+									placeholder="" class="col-xs-12 col-sm-12" value="" />
+							</div>
+							<label class="col-sm-2 control-label no-padding-right">
+								认证状态： </label>
+							<div class="col-sm-3">
+								<select 
+									 rel="obj.CUSTSTATUS"
+						 			 location="local" 
+									 name="authStatus" 
+						 			id="authStatus" 
+						 			data-placeholder="请选择类型" style="width: 130px;vertical-align:middle;" readonly="readonly">
+								</select>
+							</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						证件类型： </label>
+					<div class="col-sm-3">
+						<select 
+					 		rel="obj.CERTTYPE"
+		 			 		location="local" 
+					 		name="certificateType" 
+		 					id="certificateType" 
+		 					data-placeholder="请选择类型" style="width: 130px;vertical-align:middle;" readonly="readonly">
+						</select>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						证件号码： </label>
+					<div class="col-sm-3">
+						<input type="text" id="certificateNo" name="certificateNo" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+			
+			
+			
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						所属代理商： </label>
+					<div class="col-sm-3">
+						<input type="text" id="agentName" name="agentName" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						所属代理商编号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="agentId" name="agentId" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+				
+				
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+								注册时间： </label>
+					<div class="col-sm-3">
+							<input type="text" id="custRegDateTime" name="custRegDateTime" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" init-format="dateFormat('{value}')" />
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+								地址： </label>
+					<div class="col-sm-3">
+								<input type="text" id="address" name="address" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+								认证通过时间： </label>
+					<div class="col-sm-3">
+							<input type="text" id="identifyTime" name="identifyTime" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" init-format="dateFormat('{value}')" />
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+								上次登录时间： </label>
+					<div class="col-sm-3">
+								<input type="text" id="lastOperTime" name="lastOperTime" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" init-format="dateFormat('{value}')" />
+					</div>
+				</div>
+			
+		<div class="form-actions align-right  form-button-box" style="margin-top: 10px;" id="formBtnBoxDiv">
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">关闭</button>
+		</div>
+	</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	setInterval(setType, 100);
+	
+});
+
+function setType(){
+	$("#formBtnBoxDiv").show();
+	$("#merdetailForm .btn-yellow").attr("disabled","disabled");
+	$("#merdetailForm input[type=text]").attr("readonly","readonly");
+}
+
+
+
+
+
+</script>

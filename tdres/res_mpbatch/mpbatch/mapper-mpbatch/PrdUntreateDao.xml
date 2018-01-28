@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.PrdUntreateDao">
+
+	<insert id="insertPrdUntreate" parameterType="java.util.Map">
+		 <![CDATA[INSERT INTO MPOMNG_PAY_INF_UNTREATE 
+		SELECT * FROM MPOMNG_PAY_INF WHERE PAYSTATUS = '00' AND PAYORDTIME <= #{endTime} ]]>
+	</insert>
+</mapper>

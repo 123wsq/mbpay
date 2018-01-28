@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.AgentInfDao">
+	<resultMap type="java.util.Map"  id="agentMap">
+			<result property="agentName"               column="AGENT_NAME"/>
+		    <result property="agentId"               column="AGENT_ID"/>
+		    <result property="firstAgentId"               column="FIRST_AGENT_ID"/> 
+		    <result property="frozState"               column="FROZ_STATE"/> 
+		    <result property="ageStatus"               column="AGE_STATUS"/>  
+		    <result property="fathAgentId"               column="FATH_AGENT_ID"/>
+	</resultMap>
+	
+	<resultMap type="java.util.Map"  id="agentT0Map">
+			<result property="rateTCas"               column="RATE_TCAS"/>
+		    <result property="maxTCas"               column="MAX_TCAS"/>
+	</resultMap>
+	
+	<select id="selectEntityByAgentId" parameterType="java.lang.String" resultMap="agentMap">
+		SELECT 
+			*
+		FROM 
+			MPAMNG_AGENT_INF 
+		WHERE
+			AGENT_ID = #{agentId}
+	</select>
+	
+	<select id="selectListByFiled1" parameterType="java.lang.String" resultMap="agentMap">
+		SELECT 
+			*
+		FROM 
+			MPAMNG_AGENT_INF 
+		WHERE
+			FILED1 = #{filed1}
+	</select>
+	
+	<select id="selectAgentRate" parameterType="java.util.Map" resultMap="agentT0Map">
+		SELECT 
+			RATE_TCAS,MAX_TCAS
+		FROM 
+			MPAMNG_AGENT_INF A 
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF B ON A.AGENT_ID = B.AGE_ID 
+		WHERE
+			B.CUST_ID = #{custId}
+	</select>
+	
+</mapper>

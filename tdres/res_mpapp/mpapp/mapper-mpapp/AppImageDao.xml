@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.AppImageDao">
+	
+	<resultMap type="java.util.HashMap" id="appImageMap">
+		    <result property="appimgId"              	column="APPIMG_ID"      /> 
+		    <result property="appimgPath"               column="APPIMG_PATH"    /> 
+		    <result property="appimgDesc"               column="APPIMG_DESC"    /> 
+		    <result property="createUserId"             column="CREATE_USER_ID" /> 
+		    <result property="createDate"               column="CREATE_DATE"    /> 
+	</resultMap>
+	
+	<select id="selectList" parameterType="java.util.HashMap" resultMap="appImageMap" >
+		SELECT 
+		         T1.APPIMG_ID, 
+		         T2.FJPATH as APPIMG_PATH, 
+		         T1.APPIMG_DESC
+		FROM 
+		       MPOMNG_APPIMG_INF T1 LEFT JOIN 
+		       ATTACHMENT T2 ON(T1.APPIMG_PATH = T2.ID) 
+		<where>
+				APPIMG_DISPLAY = '0'
+		        <if test="appimgId!= null and appimgId!= ''">
+						AND APPIMG_ID   =  #{appimgId}
+				</if>
+		        <if test="appimgPath!= null and appimgPath!= ''">
+						AND APPIMG_PATH =  #{appimgPath}
+				</if>
+		        <if test="appimgDesc!= null and appimgDesc!= ''">
+						AND APPIMG_DESC = #{appimgDesc}
+				</if>
+		        
+		</where>
+		ORDER BY APPIMG_ID  
+	</select>
+	
+		
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.tdauth.dao.SystemDao">
+	<resultMap type="SysInf" id="sysMap">
+		<id property="id" column="SYS_ID" />
+		<result property="name" column="SYS_NAM" />
+		<result property="abbr" column="SYS_ABBR" />
+		<result property="state" column="SYS_STATE" />
+		<result property="desc" column="SYS_DESC" />
+		<result property="url"  column="SYS_URL" />
+		<result property="datetime" column="SYS_DATE" />
+	</resultMap>
+	
+	 <select id="selectEntity" parameterType="SysInf" resultMap="sysMap">
+		SELECT SYS_ID,SYS_NAM,SYS_ABBR,SYS_STATE,SYS_DESC,SYS_URL,SYS_DATE
+		FROM AUTH_SYS_INF
+		<where>
+			<if test="id != null and id != ''">
+				SYS_ID = #{id}
+			</if>
+			<if test="url != null and url != ''">
+				AND SYS_URL LIKE CONCAT(#{url},'%')
+			</if>
+		</where>
+	</select>
+	
+   <select id="selectList" parameterType="SysInf" resultMap="sysMap">
+		SELECT SYS_ID,SYS_NAM,SYS_ABBR,SYS_STATE,SYS_DESC,SYS_URL,SYS_DATE
+		FROM AUTH_SYS_INF
+		<where>
+			<if test="id != null and id != ''">
+				SYS_ID like concat ('%',#{id},'%')
+			</if>
+			<if test="name != null and name != ''">
+				AND SYS_NAM like concat ('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="countEntity" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) 
+		FROM AUTH_SYS_INF
+		<where>
+			<if test="id != null and id != ''">
+				SYS_ID like concat ('%',#{id},'%')
+			</if>
+			<if test="name != null and name != ''">
+				AND SYS_NAM like concat ('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectListOrc" parameterType="SysInf" resultMap="sysMap" databaseId="oracle">
+		 SELECT * FROM ( 
+		     SELECT PAGE_SUB.*,ROWNUM AS RN FROM ( 
+		        	SELECT * FROM ( 
+		        	    SELECT           
+                                T1.SYS_ID,
+                                T1.SYS_NAM,
+                                T1.SYS_ABBR,
+                                T1.SYS_STATE,
+                                T1.SYS_DESC,
+                                T1.SYS_URL,
+                                T1.SYS_DATE
+                         FROM 
+                                AUTH_SYS_INF T1 
+                         <where>
+							<if test="id != null and id != ''">
+								SYS_ID =#{id}
+							</if>
+							<if test="name != null and name != ''">
+								AND SYS_NAM LIKE ||#{name}||'%'
+							</if>
+						</where>
+		        	    ) ORDER BY SYS_ID
+		            )PAGE_SUB
+		        ) WHERE RN BETWEEN #{start} AND #{end} 
+	</select>
+	<select id="selectListMsql" parameterType="SysInf" resultMap="sysMap" databaseId="mysql">
+       	    SELECT           
+                             T1.SYS_ID,
+                             T1.SYS_NAM,
+                             T1.SYS_ABBR,
+                             T1.SYS_STATE,
+                             T1.SYS_DESC,
+                             T1.SYS_URL,
+                             T1.SYS_DATE
+                      FROM 
+                             AUTH_SYS_INF T1 
+                      <where>
+				<if test="id != null and id != ''">
+					SYS_ID =#{id}
+				</if>
+				<if test="name != null and name != ''">
+					AND SYS_NAM LIKE ||#{name}||'%'
+				</if>
+			</where>
+       	     ORDER BY SYS_ID LIMIT #{start},#{pageSize}
+	</select>
+	<update id="updateEntity" parameterType="SysInf">
+		UPDATE AUTH_SYS_INF
+		<set>
+			<if test="name != null">
+				SYS_NAM = #{name},
+			</if>
+			<if test="abbr != null">
+				SYS_ABBR = #{abbr},
+			</if>
+			<if test="state != null">
+				SYS_STATE = #{state},
+			</if>
+			<if test="desc != null">
+				SYS_DESC = #{desc},
+			</if>
+			<if test="url != null">
+				SYS_URL = #{url}
+			</if>
+		</set>
+		WHERE SYS_ID = #{id}
+	</update>
+	<update id="updateSysStatus" parameterType="java.util.HashMap">
+		UPDATE AUTH_SYS_INF SET SYS_STATE = #{state}
+		WHERE SYS_ID IN (${id})
+	</update>
+	
+</mapper>

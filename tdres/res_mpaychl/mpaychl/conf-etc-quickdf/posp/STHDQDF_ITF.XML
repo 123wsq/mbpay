@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--posp秒付接口 -->
+<channel name="STHDQDF" log_level="DEBUG" timeout="300">
+	<!-- 代付 -->
+	<transaction code="1001">
+		<pack>
+			<writeelement name="In">
+				<writeelement name="Head">
+					<writeelement name="TranCod" value="700001"/>
+					<writeelement name="OrgNo" expr="OrgNo"/>
+					<writeelement name="MercId" expr="TMercId"/>
+					<writeelement name="TermId" expr="TTermId"/>
+					<writeelement name="TranDateTime" expr="TranDateTime"/>
+					<writeelement name="TraceNo" expr="TraceNo"/>
+					<writeelement name="ErrCode" expr="ErrCode" required="false"/>
+				</writeelement>
+				<writeelement name="Body">
+					<writeelement name="TranDate" expr="TranDate"/>
+					<writeelement name="TranTime" expr="TranTime"/>
+					<writeelement name="RcvAcct" expr="RcvAcct"/>
+					<writeelement name="RcvAcctName" expr="RcvAcctName"/>
+					<writeelement name="TxnAmt" expr="TxnAmt"/>
+					<writeelement name="RcvBankCode" expr="RcvBankCode"/>
+					<writeelement name="RcvBankCodeName" expr="RcvBankCodeName"/>
+					<writeelement name="CertTp" expr="CertTp" required="false"/>
+					<writeelement name="CertId" expr="CertId" required="false"/>
+					<writeelement name="Res1" expr="Res1" required="false"/>
+					<writeelement name="Res2" expr="Res2" required="false"/>
+					<writeelement name="Res3" expr="Res3" required="false"/>
+				</writeelement>
+			</writeelement>
+		</pack>
+		<unpack>
+			<readelement name="Out">
+				<readelement name="Head">
+					<readelement name="TranCod" expr="TranCod"/>
+					<readelement name="OrgNo" expr="OrgNo"/>
+					<readelement name="MercId" expr="TMercId"/>
+					<readelement name="TermId" expr="TTermId"/>
+					<readelement name="TranDateTime" expr="TranDateTime"/>
+					<readelement name="TraceNo" expr="TraceNo"/>
+					<readelement name="ErrCode" expr="ErrCode"/>
+				</readelement>
+				<readelement name="Body">
+					<readelement name="ErrorCode" expr="ErrorCode"/>
+					<readelement name="ErrorInfo" expr="ErrorInfo"/>
+					<readelement name="TranDate" expr="TranDate"/>
+					<readelement name="TranTime" expr="TranTime"/>
+					<readelement name="SysLogNo" expr="SysLogNo"/>
+					<readelement name="SettDate" expr="SettDate"/>
+					<readelement name="RcvAcct" expr="RcvAcct"/>
+					<readelement name="RcvAcctName" expr="RcvAcctName"/>
+					<readelement name="TxnAmt" expr="TxnAmt"/>
+					<readelement name="CertTp" expr="CertTp"/>
+					<readelement name="CertId" expr="CertId"/>
+					<readelement name="Res1" expr="Res1"/>
+					<readelement name="Res2" expr="Res2"/>
+					<readelement name="Res3" expr="Res3"/>
+				</readelement>
+			</readelement>
+		</unpack>
+	</transaction>
+	<!-- 代付查询 -->
+	<transaction code="1002">
+		<pack>
+			<writeelement name="In">
+				<writeelement name="Head">
+					<writeelement name="TranCod" value="600002"/>
+					<writeelement name="OrgNo" expr="OrgNo"/>
+					<writeelement name="MercId" expr="TMercId"/>
+					<writeelement name="TermId" expr="TTermId"/>
+					<writeelement name="TranDateTime" expr="TranDateTime"/>
+					<writeelement name="TraceNo" expr="TraceNo"/>
+					<writeelement name="ErrCode" expr="ErrCode" required="false"/>
+				</writeelement>
+				<writeelement name="Body">
+					<writeelement name="TranDate" expr="TranDate"/>
+					<writeelement name="TranTime" expr="TranTime"/>
+					<writeelement name="OrgTranDate" expr="OrgTranDate"/>
+					<writeelement name="OrgTraceNo" expr="OrgTraceNo"/>
+					<writeelement name="Res1" expr="Res1" required="false"/>
+					<writeelement name="Res2" expr="Res2" required="false"/>
+					<writeelement name="Res3" expr="Res3" required="false"/>
+				</writeelement>
+			</writeelement>
+		</pack>
+		<unpack>
+			<readelement name="Out">
+				<readelement name="Head">
+					<readelement name="TranCod" expr="TranCod"/>
+					<readelement name="OrgNo" expr="OrgNo"/>
+					<readelement name="MercId" expr="TMercId"/>
+					<readelement name="TermId" expr="TTermId"/>
+					<readelement name="TranDateTime" expr="TranDateTime"/>
+					<readelement name="TraceNo" expr="TraceNo"/>
+					<readelement name="ErrCode" expr="ErrCode"/>
+				</readelement>
+				<readelement name="Body">
+					<readelement name="ErrorCode" expr="ErrorCode"/>
+					<readelement name="ErrorInfo" expr="ErrorInfo"/>
+					<readelement name="TranDate" expr="TranDate"/>
+					<readelement name="TranTime" expr="TranTime"/>
+					<readelement name="OrgErrorCode" expr="OrgErrorCode"/>
+					<readelement name="OrgErrorInfo" expr="OrgErrorInfo"/>
+					<readelement name="SysLogNo" expr="SysLogNo"/>
+					<readelement name="SettDate" expr="SettDate"/>
+					<readelement name="TxnAmt" expr="TxnAmt"/>
+					<readelement name="Res1" expr="Res1"/>
+					<readelement name="Res2" expr="Res2"/>
+					<readelement name="Res3" expr="Res3"/>
+				</readelement>
+			</readelement>
+		</unpack>
+	</transaction>
+	
+</channel>

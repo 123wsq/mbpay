@@ -1,0 +1,97 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<input type="hidden" id="appimgId" name="appimgId"/>
+	<!-- #section:elements.form -->
+		
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1" > APP轮播图 名称： </label>
+		<div class="col-sm-3" style="width: 220px;">
+		<input class="col-xs-6 col-sm-9" type="text" id="appimgName" name="appimgName" readonly="readonly" style="width: 130px;"/>
+		<input class="col-xs-6 col-sm-9" type="hidden" id="appimgPath" name="appimgPath" readonly="readonly"/>
+		<button class="btn btn-small btn-info" type="button" onclick="appImgPicView('appimgPath');">预览</button>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> APP 轮播图 描述： </label>
+		<div class="col-sm-3">
+<textarea rows="2" cols="26" id="appimgDesc" name="appimgDesc" disabled="disabled" ></textarea>
+			
+		</div>
+	</div>
+	
+	<div class="form-group" style="width: 820px;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 更新人： </label>
+		<div class="col-sm-3">
+		<input class="col-xs-12 col-sm-12" type="text" id="createUserId" name="createUserId" readonly="readonly"/>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 更新时间： </label>
+		<div class="col-sm-3">
+			<input type="text" id="createDate" name="createDate"   init-format="dateFormat('{value}')" disabled="disabled" 
+				class="col-xs-12 col-sm-12"  />
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 是否显示： </label>
+		<div class="col-sm-9">
+		<label>
+<input name="appimgDisplay" id="appimgDisplay" class="ace ace-switch ace-switch-4 btn-empty" value="0" type="checkbox" disabled="disabled"/>
+		<span class="lbl" data-lbl="是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否"></span>
+		</div>
+		<label>
+	</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+		
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+
+function submitForm(obj){
+	
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+/**
+ * 图片预览
+ */
+function appImgPicView(id){
+	if($('#'+id).val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#'+id).val());
+}
+
+</script>

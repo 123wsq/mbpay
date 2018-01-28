@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.ReportMerCountDao">
+	<resultMap type="ReportMerCountInf" id="ReportMerCountMap">
+		    <result property="cmonth"               column="CMONTH" /> 
+		    <result property="cnum"               column="CNUM" /> 
+		    <result property="year"               column="YEAR" /> 
+	</resultMap>
+	
+	
+	<resultMap type="java.util.Map"  id="reportMerLiveMap">
+			<result property="prdCount"               column="PRD_COUNT"/>
+		    <result property="prdDate"               column="PRDDATE"/>
+	</resultMap>
+
+	<select id="selectReportMerCount" parameterType="ReportMerCountInf" resultMap="ReportMerCountMap">
+	      SELECT
+				CMONTH,
+				CNUM,
+				YEAR
+          FROM
+	           REPORT_MERCOUNT_INF
+          WHERE
+	          CMONTH >= #{month1} 
+              <![CDATA[AND CMONTH <= #{month2} ]]>
+              AND YEAR= #{year}
+	
+	</select>
+	
+	
+	<select id="selectReportMerLiveCount" parameterType="java.util.Map" resultMap="reportMerLiveMap">
+	     SELECT COUNT(DISTINCT PRD.CUST_ID) PRD_COUNT,PRD.PRDDATE 
+	     FROM MPOMNG_PRD_INF PRD 
+	     <![CDATA[
+	    	 WHERE PRD.PRDDATE >=#{date} GROUP BY PRD.PRDDATE
+			]]>
+	
+	</select>
+	
+</mapper>

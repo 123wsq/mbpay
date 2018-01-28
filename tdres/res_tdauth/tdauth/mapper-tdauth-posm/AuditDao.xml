@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.tdauth.dao.AuditDao">
+	<insert id="insertAuditMenuRef" parameterType="java.util.HashMap">
+		insert into AUTH_AUDIT_MENU_REL_INF (MENU_ID,AUDIT_ID)
+		 SELECT MENU_ID,#{auditId} AS AUDIT_ID FROM AUTH_MENU_INF WHERE MENU_ID IN(${menuId})
+	</insert>
+	
+	<delete id="deleteMenuRefByAudit" parameterType="java.lang.String">
+		delete AUTH_AUDIT_MENU_REL_INF where AUDIT_ID =#{auditId}
+	</delete>
+</mapper>

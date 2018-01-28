@@ -1,0 +1,218 @@
+
+<meta charset="utf-8" />	
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 提现单号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="casOrdNo" name="casOrdNo" 
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 订单状态 ： </label>
+		<div class="col-sm-3">
+			<!-- casOrdStatus -->
+			 <input type="text" id="ordStatus" name="ordStatus" 
+				class="report" readonly="readonly" dict="CASORDSTATUS"/>
+		</div>
+	</div> 
+		<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 商户编号 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="custId" name="custId"
+				class="report" readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 商户名称 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="custName" name="custName" readonly="readonly"
+				class="report"  />
+		</div>
+		
+		
+	</div> 
+		
+	 <div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">订单金额： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="ordAmt" name="ordAmt"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">手续费： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="fee" name="fee" 
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	 <div class="form-group" style="margin-bottom: 8px !important;">
+	 	<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">T+1 ： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="t1Amt" name="t1Amt"
+				class="report"  readonly="readonly" init-format="cent2Yuan('{value}')"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">服务费： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="serviceFee" name="serviceFee" 
+				class="report" readonly="readonly"/>
+		</div>
+		
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">T+0 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="t0Amt" name="t0Amt" style="color: red"
+				class="report" readonly="readonly" init-format="cent2Yuan('{value}')" />
+		</div>
+		
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">实际到账金额 ： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="netrecAmt" name="netrecAmt"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	
+	
+	<div class="form-group" style="margin-bottom: 8px !important;">		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">提现银行账号： </label>
+		<div class="col-sm-3">
+			<input type="text" id="cardNo" name="cardNo" 
+				class="report"  readonly="readonly"/>	
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">开户行名称： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="issNam" name="issNam" 
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 提现类型 ： </label>
+		<div class="col-sm-3">
+			<input type="text" id="casType" name="casType"
+				class="report" readonly="readonly" dict="CASTYPE"/>
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">开户行代码： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="issno" name="issno" 
+				class="report"  readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">提现描述： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="casDesc" name="casDesc" 
+				class="report"  readonly="readonly" />
+		</div>
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">货币代码： </label>
+		<div class="col-sm-3">
+
+				<input type="text" id="txccy" name="txccy" 
+				class="report"  readonly="readonly" />
+				
+		</div>
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">审核状态： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="casAudit" name="casAudit" 
+				class="report"  readonly="readonly" dict="CASAUDIT"/>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">审核描述： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="auditDesc" name="auditDesc"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	<div class="form-group" style="margin-bottom: 8px !important;">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">订单时间： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="casDate" name="casDate" 
+				class="report" init-format="dateFormat('{value}')"  readonly="readonly"/>
+		</div>
+		
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">完成时间： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="sucDate" name="sucDate" init-format="dateFormat('{value}')"
+				class="report"  readonly="readonly"/>
+		</div>
+		
+	</div>
+	
+	
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+		</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	
+});
+
+function submitForm(obj){
+	
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg , 'error');
+		}
+	});
+}
+
+</script>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+
+
+	<!-- 模块spring mvc配置文件导入 start -->
+	<!-- prm web模块 -->
+	<import resource="classpath:tdprm/conf/spring-mvc.xml" />
+	<!-- tdbase 基础模块 -->
+	<import resource="classpath:tdbase/conf-tdbase/spring-mvc-tdbase.xml" />
+	<!-- tdcomm 通信模块 -->
+	<import resource="classpath:tdcomm/conf-tdcomm/spring-mvc-tdcomm.xml" />
+	<!-- mpbase 手机支付平台基础模块 -->
+	<import resource="classpath:mpbase/conf-mpbase/spring-mvc-mpbase.xml" />
+	<!-- tdauth 权限模块 -->
+	<import resource="classpath:tdauth/conf-tdauth/spring-mvc-tdauth.xml" />
+	<!--mpamng 代理商模块 -->
+	<import resource="classpath:mpamng/conf-mpamng/spring-mvc-mpamng.xml" />
+	<!--mpamng 商户模块 -->
+	<import resource="classpath:mpomng/conf-mpomng/spring-mvc-mpomng.xml" />
+</beans>

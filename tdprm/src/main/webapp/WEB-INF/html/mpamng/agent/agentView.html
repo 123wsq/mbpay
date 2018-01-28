@@ -1,0 +1,1120 @@
+<!--  -->
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="css/page/role.css" />
+<!-- 核心功能组件 -->
+<div class="rowt">
+<div class="col-xs-12">
+<form id="agentForm" class="form-horizontal required-validate"  role="form"  onsubmit="return validateCallback(this,dialogAjaxDone)">
+<div class="tabbable" id="agent_form_div"  create-buttom="auto" check-form="true" create-to="formBtnBoxDiv" style="height: 100%">
+	<ul class="nav nav-tabs" id="myAgentTab">
+		<li class="active">
+			<a data-toggle="tab" href="#tabAgentInf"> 
+				<i class="green ace-icon fa fa-home bigger-120"></i> 代理商基本信息
+			</a>
+		</li>
+		<li><a data-toggle="tab" href="#tabAgentBankInf">代理商结算账户</a></li>
+		<li><a data-toggle="tab" href="#tabAgentFeeInf"> 代理商费率说明</a></li>
+		<li><a data-toggle="tab" href="#tabProfitSectionInf"> 分润区间信息</a></li>
+		<li><a data-toggle="tab" href="#tabAgentRemarkInf"> 代理商说明信息 </a></li>
+		<li><a data-toggle="tab" href="#tabAgentContactInf"> 代理商联系信息 </a></li>
+	</ul>
+	
+ 		<input type="hidden" id="type" name="type" />
+		<input type="hidden" id="agentIdTemp" name="agentId"/>
+		<input type="hidden" id="agentDgr" name="agentDgr"/>
+		<input type="hidden" id="fathAgentId" name="fathAgentId"/>
+		<input type="hidden" id="firstAgentId" name="firstAgentId"/>
+	    <input type="hidden" id="feeCode"   name="feeCode" />
+	    <input type="hidden" id="agentCode"   name="agentCode" />
+	    <input type="hidden" id="fatherCode"   name="fatherCode" />
+	    <input type="hidden" id="createDate"   name="createDate" />
+	    <input type="hidden" id="createUserId"   name="createUserId" />
+	    <input type="hidden" id="editDate"   name="editDate" />
+	    <input type="hidden" id="editUserId"   name="editUserId" />
+	    <input type="hidden" id="auditStatus"   name="auditStatus" />
+	    <input type="hidden" id="auditFailReason"   name="auditFailReason" />
+	    
+		<div class="tab-content">
+			<div id="tabAgentInf" class="tab-pane fade in active">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">代理商登录账户： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="logonName1" name="logonName" placeholder="登录账户" validate="true" datatype="lenv1"  maxlength="14"  class="col-xs-12 col-sm-12" value=""/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">代理商名称： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="agentName" name="agentName" placeholder="代理商名称" validate="true" datatype="word" maxlength="10"   class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">法人姓名： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="legalName" name="legalName" placeholder="法人姓名" validate="true" datatype="word" class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					   
+					<label class="col-sm-2 control-label no-padding-right">税务登记号： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="taxNo" name="taxNo" onblur="checkTLNO('taxNo')" placeholder="税务登记号"  datatype="number" class="col-xs-12 col-sm-12" value="" maxlength="35" />
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right"> 法人身份证号码： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="legalIdentityNo"  name="legalIdentityNo" placeholder="法人身份证号码" validate="true" datatype="idcard"  class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">法人营业执照号： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="licNo" name="licNo"  onblur="checkTLNO('licNo')" placeholder="法人营业执照号"  datatype="number" class="col-xs-12 col-sm-12" value="" />
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">保证金： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="margin" name="margin" placeholder="保证金" validate="true" class="col-xs-12 col-sm-12" value="" datatype="money" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">保证金账号： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="bondCardNo" name="bondCardNo" placeholder="保证金账号" validate="true" class="col-xs-12 col-sm-12" value="" datatype="bankcard" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">保证金开户名： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="bondCardName" name="bondCardName" placeholder="保证金开户名" validate="true" class="col-xs-12 col-sm-12" value="" datatype="word" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">保证金开户行： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="bondBankCode" name="bondBankCode" placeholder="保证金开户行" validate="true" class="col-xs-12 col-sm-12" value="" datatype="word"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">联系电话： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="tel" name="tel" placeholder="区号-号码" validate="true" datatype="phone"  class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">手机号码： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="moblieNo" name="moblieNo" placeholder="手机号码" validate="true" class="col-xs-12 col-sm-12" value=""  datatype="mobile"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+				
+					<label class="col-sm-2 control-label no-padding-right">邮箱： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="email" name="email" placeholder="邮箱" validate="true" class="col-xs-12 col-sm-12" value="" datatype="email"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						所属城市： </label>
+					<div class="col-sm-4">
+						<select  rel="obj.options"
+						 location="mpamng/selectoption/getProvince.do" 
+						 name="province"
+						 valName="value"
+						 textName="text"
+						 ref="cityId"
+						 refUrl="mpamng/selectoption/getCity.do?id={value}"
+						 refBox="tabAgentInf"
+						 data-placeholder="请选择所在省份" style="width: 125px;vertical-align:middle;">
+						</select>
+						
+						<select 
+						 id="cityId"
+						 rel="obj.options"
+						 name="city"
+						 valName="value"
+						 textName="text"
+						 data-placeholder="请选择所在城市" style="width: 125px;vertical-align:middle;">
+						</select>
+					</div>
+					
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right"> 联系地址： </label>
+					<div class="col-sm-8">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="address" name="address" placeholder="联系地址" validate="true" datatype="word"  class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+					 	合同开始日期： </label>
+					<div class="col-sm-3">
+						<div class="input-group  col-xs-12 col-sm-12">
+							<input class="form-control date-picker" id="contractStrDate" name="contractStrDate"  type="text" placeholder="合同开始日期" validate="true" data-date-format="yyyymmdd" readonly="readonly"/>
+							<span class="input-group-addon">
+								<i class="fa fa-calendar bigger-110"></i>
+							</span>
+						</div>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+					 	合同结束日期： </label>
+					<div class="col-sm-3">
+						<div class="input-group  col-xs-12 col-sm-12">
+							<input class="form-control date-picker" id="contractEndDate" name="contractEndDate"  type="text" placeholder="合同结束日期" validate="true" data-date-format="yyyymmdd" readonly="readonly"/>
+							<span class="input-group-addon">
+								<i class="fa fa-calendar bigger-110"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						T0提现： </label>
+					<div class="col-sm-3">
+						<label>
+							<input name="tiflg" id="tiflg" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" value="0"/>
+							<span class="lbl" data-lbl="启用 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;停用"></span>
+						</label>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right"> OEM标识： </label>
+					<div class="col-sm-3">
+						<label>
+							<input name="oemState" id="oemState" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" value="1"/>
+							<span class="lbl" data-lbl="是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否" ></span>
+						</label>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						登录状态： </label>
+					<div class="col-sm-3">
+						<label>
+							<input name="agentStatus" id="agentStatus" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" value="0"/>
+							<span class="lbl" data-lbl="启用 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;停用"></span>
+						</label>
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						交易状态： </label>
+					<div class="col-sm-3">
+						<label>
+							<input name="frozState" readonly="readonly" id="frozState" class="ace ace-switch ace-switch-4 btn-empty" type="checkbox" value="0" />
+							<span class="lbl" data-lbl="启用 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;停用"></span>
+						</label>
+					</div>
+				</div>	
+			</div>
+			<div id="tabAgentBankInf" class="tab-pane fade">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">开户名称： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" name="bankpayusernm" id="bankpayusernm" placeholder="请输入开户名称" validate="true" datatype="word" maxlength="50" class="col-xs-12 col-sm-12" value="" />
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">银行账号： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" name="bankpayacno" id="bankpayacno" placeholder="银行账号" validate="true"  datatype="bankcard" class="col-xs-12 col-sm-12" value=""/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				 
+ 				<div class="form-group"> 
+					<label class="col-sm-3 control-label no-padding-right"> 
+ 						开户行： </label> 
+					
+						<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" name="bankcode" id="bankcode" placeholder="请输入开户行" validate="true" datatype="word" maxlength="50" class="col-xs-12 col-sm-12" value=""/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+ 				</div> 
+ 				
+ 				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">
+						所属城市： </label>
+					<div class="col-sm-5">
+						 <select  rel="obj.options"
+						 location="mpamng/selectoption/getProvince.do" 
+						 name="bankProvince"
+						 valName="value"
+						 textName="text"
+						 ref="bankCityId"
+						 refUrl="mpamng/selectoption/getCity.do?id={value}"
+						 refBox="tabAgentBankInf"
+						 data-placeholder="请选择所在省份" style="width: 125px;vertical-align:middle;">
+						</select>
+						
+						<select 
+						 id="bankCityId"
+						 rel="obj.options"
+						 name="bankCity"
+						 valName="value"
+						 textName="text"
+						 data-placeholder="请选择所在城市" style="width: 125px;vertical-align:middle;">
+						</select>
+					</div>
+					
+					
+				</div>
+				<div class="form-group">
+					 <label class="col-sm-3 control-label no-padding-right">
+						支行名称： </label>
+						<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" name="subBranch" id="subBranch" placeholder="请输入支行名称" validate="true" datatype="word" maxlength="50" class="col-xs-12 col-sm-12" value=""/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div id="tabAgentFeeInf" class="tab-pane fade">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						T0提现(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateTCas" name="rateTCas" placeholder="T0提现(0.6%)" 
+								class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" maxlength="4" />
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						T0提现单笔收费： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="maxTCas" name="maxTCas" placeholder="T0提现单笔收费(单位元)" 
+							class="col-xs-12 col-sm-12 feecheck" datatype="money" maxlength="8" value="0"/>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						民生类(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateLivelihood" name="rateLivelihood" placeholder="民生类(0.38%)" 
+								class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" maxlength="4" judge="agentRate" readonly/>
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						一般类(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateGeneral" name="rateGeneral" placeholder="一般类(0.78%)" 
+								class="col-xs-12 col-sm-12 feecheck" value="" maxlength="4" datatype="Dnumber" judge="agentRate" readonly/>
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						餐娱类(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateEntertain" name="rateEntertain" placeholder="餐娱类(1.25%)" 
+								class="col-xs-12 col-sm-12 feecheck" value=""  maxlength="4" datatype="Dnumber" judge="agentRate" readonly/>
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						批发类(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateGeneralTop" name="rateGeneralTop" placeholder="批发类(0.78%)" 
+								class="col-xs-12 col-sm-12 feecheck" datatype="Dnumber" maxlength="4" judge="agentRate" readonly/>
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						批发类封顶(元)： </label>
+					<div class="col-sm-3">
+						<input type="text" id="rateGeneralMaximun" name="rateGeneralMaximun" placeholder="批发类封顶(0.78%，单位元)" 
+							class="col-xs-12 col-sm-12 feecheck" datatype="money" maxlength="8" judge="agentRate" judge-ref="rateGeneralTop" readonly/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						房产类(%)： </label>
+					<div class="col-sm-3">
+						<span class="block input-icon input-icon-right" >
+							<input type="text" id="rateEntertainTop" name="rateEntertainTop" placeholder="房产类封顶(1.25%)" 
+								class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" maxlength="4" judge="agentRate" readonly/>
+							<i class="ace-icon">%</i>
+						</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						房产类封顶(元)： </label>
+					<div class="col-sm-3">
+						<input type="text" id="rateEntertainMaximun" name="rateEntertainMaximun" placeholder="房产类封顶(1.25%，单位元)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" datatype="money"  maxlength="8" judge="agentRate" judge-ref="rateEntertainTop" readonly/>
+					</div>
+				</div>
+			</div>
+			<div id="tabProfitSectionInf" class="tab-pane fade">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						一档（万元）： </label>
+					<div class="col-sm-2">
+						<input type="text" id="grade_1_start" name="grade_1_start" placeholder="一档起始金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="0" readonly="readonly" judge="grade"/>
+					</div>
+					<div class="col-sm-1">
+						<span class="input-group-addon">
+							<i class="fa fa-long-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="grade_1_end" name="grade_1_end" placeholder="一档结束金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" validate="true" datatype="money" judge="grade" onkeyup="setGradeValue(this);"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					<label class="col-sm-1 control-label no-padding-right">
+						分润比例： </label>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input class="col-xs-12 col-sm-12 feecheck" type="text" id="profitRatio_1" name="profitRatio_1" placeholder="一档分润比例(十分之几)" validate="true" datatype="number" judge="agentRate"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						二档（万元）： </label>
+					<div class="col-sm-2">
+						<input type="text" id="grade_2_start" name="grade_2_start" placeholder="二档起始金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="grade" readonly="readonly"/>
+					</div>
+					<div class="col-sm-1">
+						<span class="input-group-addon">
+							<i class="fa fa-long-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="grade_2_end" name="grade_2_end" placeholder="二档结束金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" validate="true" datatype="money" judge="grade" onkeyup="setGradeValue(this);"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					<label class="col-sm-1 control-label no-padding-right">
+						分润比例： </label>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input class="col-xs-12 col-sm-12 feecheck" type="text" id="profitRatio_2" name="profitRatio_2" placeholder="二档分润比例(十分之几)" validate="true" datatype="number" judge="agentRate"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						三档（万元）： </label>
+					<div class="col-sm-2">
+						<input type="text" id="grade_3_start" name="grade_3_start" placeholder="三档起始金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="grade" readonly="readonly"/>
+					</div>
+					<div class="col-sm-1">
+						<span class="input-group-addon">
+							<i class="fa fa-long-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="grade_3_end" name="grade_3_end" placeholder="三档结束金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="grade" validate="true" datatype="money" onkeyup="setGradeValue(this);"/>
+							<i class="ace-icon fa fa-star-o"></i>
+						</span>
+					</div>
+					<label class="col-sm-1 control-label no-padding-right">
+						分润比例： </label>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input class="col-xs-12 col-sm-12 feecheck" type="text" id="profitRatio_3" name="profitRatio_3" placeholder="三档分润比例(十分之几)" validate="true" datatype="number" judge="agentRate"/>
+						<i class="ace-icon fa fa-star-o"></i>
+					</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						四档（万元）： </label>
+					<div class="col-sm-2">
+						<input type="text" id="grade_4_start" name="grade_4_start" placeholder="四档起始金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="grade" readonly="readonly"/>
+					</div>
+					<div class="col-sm-1">
+						<span class="input-group-addon">
+							<i class="fa fa-long-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm-2">
+						<input type="text" id="grade_4_end" name="grade_4_end" placeholder="四档结束金额" 
+							class="col-xs-12 col-sm-12 feecheck" value="∞" readonly="readonly" judge="grade"/>
+					</div>
+					<label class="col-sm-1 control-label no-padding-right">
+						分润比例： </label>
+					<div class="col-sm-2">
+					<span class="block input-icon input-icon-right" >
+						<input class="col-xs-12 col-sm-12 feecheck" type="text" id="profitRatio_4" name="profitRatio_4" placeholder="四档分润比例(十分之几)" validate="true" datatype="number" judge="agentRate"/>
+						<i class="ace-icon fa fa-star-o"></i>
+					</span>
+					</div>
+				</div>
+			</div>
+            <div id="tabAgentRemarkInf" class="tab-pane fade">
+            	<div class="form-group" style="display:none;" id="oemDiv">
+					<label class="col-sm-3 control-label no-padding-right">
+						代理商LOGO： </label>
+					<div class="col-sm-9">
+					<span class="block input-icon input-icon" >
+						<input class="col-xs-10 col-sm-7" type="hidden" id="oemPicId" name="oemPicId" />
+						<input class="col-xs-10 col-sm-5" type="text"  id="oemPicName" name="oemPicName" readonly="readonly"/>
+						<!--<i class="ace-icon fa fa-star-o"></i>-->
+					</span>
+						<span class="">
+							<button class="btn btn-small btn-yellow" type="button" onclick="upload02('oemPicId','oemPicName')">
+								选择文件
+							</button>
+							<button class="btn btn-small btn-info" type="button" onclick="agentPicView('oemPicId');">
+								预览
+							</button>
+						</span>
+					</div>
+				</div>
+            	
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">
+						营业执照： </label>
+					<div class="col-sm-9">
+					<span class="block input-icon input-icon" >
+						<input class="col-xs-10 col-sm-7" type="hidden" id="businessLicensePicId" name="businessLicensePicId" />
+						<input class="col-xs-10 col-sm-5" type="text"  id="businessLicensePicName" name="businessLicensePicName" readonly="readonly"/>
+						<!--<i class="ace-icon fa fa-star-o"></i>-->
+					</span>
+						<span class="">
+							<button class="btn btn-small btn-yellow" type="button" onclick="upload02('businessLicensePicId','businessLicensePicName')">
+								选择文件
+							</button>
+							<button class="btn btn-small btn-info" type="button" onclick="agentPicView('businessLicensePicId');">
+								预览
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">
+						法人身份证： </label>
+					<div class="col-sm-9">
+					<span class="block input-icon input-icon" >
+						<input class="col-xs-10 col-sm-7" type="hidden" id="legalIdentityPicId" name="legalIdentityPicId" />
+						<input class="col-xs-10 col-sm-5" type="text" id="legalIdentityPicName" name="legalIdentityPicName" readonly="readonly"/>
+						<!--<i class="ace-icon fa fa-star-o"></i>-->
+					</span>
+						<span class="">
+							<button class="btn btn-small btn-yellow" type="button" onclick="upload02('legalIdentityPicId','legalIdentityPicName')">
+								选择文件
+							</button>
+							<button class="btn btn-small btn-info" type="button" onclick="agentPicView('legalIdentityPicId');">
+								预览
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">
+						税务登记证： </label>
+					<div class="col-sm-9">
+					<span class="block input-icon input-icon" >
+						<input class="col-xs-10 col-sm-7" type="hidden" id="taxNoPicId" name="taxNoPicId" />
+						<input class="col-xs-10 col-sm-5" type="text"  id="taxNoPicName" name="taxNoPicName" readonly="readonly"/>
+						<!--<i class="ace-icon fa fa-star-o"></i>-->
+					</span>
+						<span class="">
+							<button class="btn btn-small btn-yellow" type="button" onclick="upload02('taxNoPicId','taxNoPicName')">
+								选择文件
+							</button>
+							<button class="btn btn-small btn-info" type="button" onclick="agentPicView('taxNoPicId');">
+								预览
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right">
+						代理商说明信息： </label>
+					<div class="col-sm-9">
+						<textarea id="remark" name="remark" class="col-xs-10 col-sm-7" class="form-control limited" datatype="word"  maxlength="200"></textarea>
+					</div>
+				</div>
+			</div>
+            <div id="tabAgentContactInf" class="tab-pane fade">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						技术联系人： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" > 
+						<input type="text" name="techcontact" placeholder="技术联系人" 
+							class="col-xs-12 col-sm-12" value="" datatype="word" maxlength="28"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						技术联系邮箱： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" name="techemail" placeholder="技术联系邮箱" 
+							class="col-xs-12 col-sm-12" value="" datatype="email" maxlength="50"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						技术联系手机： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="techmobno" name="techmobno" placeholder="技术联系手机" 
+							class="col-xs-12 col-sm-12" value="" datatype="mobile" maxlength="11"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						技术联系电话： </label>
+					<div class="col-sm-3">  
+					<span class="block input-icon input-icon-right" >
+						<input type="text" name="techtelno" id="techtelno" placeholder="技术联系电话" 
+							class="col-xs-12 col-sm-12" value="" maxlength="14" />
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						业务联系人： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" name="bizcontact" placeholder="业务联系人"
+							class="col-xs-12 col-sm-12" value="" datatype="word" maxlength="55"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						业务联系手机： </label>
+					<div class="col-sm-3"> 
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="bizmobno" name="bizmobno" placeholder="业务联系手机" 
+							class="col-xs-12 col-sm-12" value="" datatype="mobile" maxlength="11"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						客服联系人： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" name="servcontact" placeholder="客服联系人" 
+							class="col-xs-12 col-sm-12" value="" datatype="word" maxlength="55" />
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">
+						客服联系手机： </label>
+					<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" name="servmobno" iid="servmobno" placeholder="客服联系手机" 
+							class="col-xs-12 col-sm-12" value="" datatype="mobile" maxlength="11"/>
+							<!--<i class="ace-icon fa fa-star-o"></i> validate="true"-->
+							</span>
+					</div>
+				</div>
+				<div class="role-btn-box">
+				</div>
+			</div>
+		</div>
+</div>
+</form>
+</div>
+</div>
+<div class="align-right" style="margin-top: 10px;" id="formBtnBoxDiv">
+	<button class="btn btn-info no-hidden"  onclick="agentAuditSubmit('1')" id="agreeBtn">通过</button>
+	<button class="btn btn-info no-hidden"   onclick="agentAuditSubmit('0')" id="disAgreeBtn">拒绝</button>
+	<button auth="mpamng/agent/addAgent.do" class="btn btn-submit no-hidden" onclick="agentInfSubmit()" id="saveBtn">保存</button>
+</div>
+<script type="text/javascript">
+var agentInf;
+$(document).ready(function() {
+	$("#span_tabAgentBankInf").click(function(event) {
+		if(tabSwitch('tabAgentInf','tabAgentBankInf')==false){
+			return false;
+		}
+	});
+	
+	$('.date-picker').datepicker({
+		autoclose: true,
+		todayHighlight: true
+	})
+	.next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
+
+	setType();
+	var time = setInterval(function(){
+		if($("#agentIdTemp").val()!=''){
+			clearInterval(time);
+			initProfitData();
+		}
+	},100);
+	
+	function checkTLNO(id){
+	var nam = $("#"+id).val();
+	alert(1);
+	 $.ajax({
+			type : "post",
+			url : "mpamng/agent/getValiTaxNo.do",
+			dataType : 'json',
+			data:{TaxNo:nam},
+			success : function(result) {
+				$.each(result.rows,function(index,obj){
+					 var index = index + 1;
+					 $('#grade_'+index+'_start').val(obj.beginNum);
+					 if(index != 4){
+					     $('#grade_'+index+'_end').val(obj.endNum);
+					 }
+					 $('#profitRatio_'+index).val(obj.rates); 
+				});
+			},
+			error : function(XMLHttpRequest, textStatus) {
+			}
+		});	 
+	}
+	
+});
+
+function initProfitData(){
+	var agentId = $("#agentIdTemp").val();
+	 $.ajax({
+			type : "post",
+			url : "mpamng/agent/queryGrade.do",
+			dataType : 'json',
+			data:{agentId:agentId},
+			success : function(result) {
+				$.each(result.rows,function(index,obj){
+					 var index = index + 1;
+					 $('#grade_'+index+'_start').val(obj.beginNum);
+					 if(index != 4){
+					     $('#grade_'+index+'_end').val(obj.endNum);
+					 }
+					 $('#profitRatio_'+index).val(obj.rates); 
+				});
+			},
+			error : function(XMLHttpRequest, textStatus) {
+			}
+		});	 
+}
+function setType(){
+	var times=setInterval(function(){
+		 clearInterval(times);
+		 $("#oemState").change(function() {
+			 if($(this).val()=='on'||$(this).val()==1){
+					$("#oemDiv").hide();
+				}
+				if($(this).val()==0){
+					$("#oemDiv").show();
+				}
+			});
+		 var oem=$("#oemState").val();
+			if(oem=='on'||oem==1){
+				$("#oemDiv").hide();
+			}
+			if(oem==0){
+				$("#oemDiv").show();
+			}
+	 },100);
+	var dialog=$("#dlg-agentEdit").Dialog();
+	if (dialog==null||undefined==dialog){
+		$("div[name='nextDiv']").show();
+		$("#agreeBtn").remove();
+		$("#disAgreeBtn").remove();
+		$("#agentForm").attr("action","mpamng/agent/addAgent.do");
+	}else if(dialog.pageParam.type=='view'){
+		$("#formBtnBoxDiv").show();
+		$("#saveBtn").remove();
+		$("#agreeBtn").remove();
+		$("#disAgreeBtn").remove();
+		$("#agentForm .btn-yellow").remove();
+		$("#agentForm input[type=text]").attr("readonly","readonly");
+		$("#agentForm input[type=checkbox]").attr("disabled","disabled");
+		$("#agentForm select").attr("disabled", "disabled");
+		$("#remark").attr("readonly","readonly");
+		$("#agentForm input[type=text]").attr("placeholder","");
+	} else if(dialog.pageParam.type=='edit') {
+		$("#formBtnBoxDiv").show();
+		$("#agreeBtn").remove();
+		$("#disAgreeBtn").remove();
+		$("#agentForm").attr("action","mpamng/agent/eidtAgent.do");
+		$("#logonName1").attr("readonly","readonly");
+	} else if(dialog.pageParam.type=='audit') {
+		$("#formBtnBoxDiv").show();
+		if(dialog.pageParam.auditStatus==2) {//审核拒绝，禁止再审核，可以修改后重新提交
+			$("#agreeBtn").remove();
+			$("#disAgreeBtn").remove();
+			$("#agentForm").attr("action","mpamng/agent/eidtAgent.do");
+			$("#logonName1").attr("readonly","readonly");
+		} else if(dialog.pageParam.auditStatus==1){//审核通过，禁止再操作
+			$("#saveBtn").remove();
+			$("#agreeBtn").remove();
+			$("#disAgreeBtn").remove();
+			$("#agentForm .btn-yellow").remove();
+			$("#agentForm input[type=text]").attr("readonly","readonly");
+			$("#agentForm input[type=checkbox]").attr("disabled","disabled");
+			$("#agentForm select").attr("disabled", "disabled");
+			$("#remark").attr("readonly","readonly");
+		} else {
+			$("#saveBtn").remove();
+			$("#agentForm").attr("action","mpamng/agent/agentTempReply.do");
+			$("#agentForm .btn-yellow").remove();
+			$("#agentForm input[type=text]").attr("readonly","readonly");
+			$("#agentForm input[type=checkbox]").attr("disabled","disabled");
+			$("#agentForm select").attr("disabled", "disabled");
+			$("#remark").attr("readonly","readonly");
+		}
+	}
+	
+	// 异步加载代理商费率参数
+	msg_Title="当前代理商";
+	$.ajax({
+		type : "post",
+		url : "mpamng/agent/outOfRate.do",
+		dataType : 'json',
+		success : function(result) {
+			if (result.rspcod != 200) {
+				msg.alert("错误", result.rspmsg, 'error');
+			} else {
+				agentInf=result.obj;
+			}
+		},
+		error : function(XMLHttpRequest, textStatus) {
+			msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+		}
+	});
+	
+}
+/**上一步下一步切换*/
+function tabSwitch(current,next){
+	//如果表单验证不通过，不能进入下一步
+	var v = TDValidateForm($("#"+current));
+	if(v === false){
+		return false;
+	}
+	$('a[href*="'+next+'"]').trigger('click');
+}
+function validMobile()
+{var mil=	$("#moblieNo").val();
+ var tec=	$("#techmobno").val();
+ var teh=	$("#techtelno").val();
+ var biz=	$("#bizmobno").val();
+ var ser=	$("#servmobno").val();
+ if(mil==tec||tec==teh||teh==biz||biz==ser||ser==mil){
+	 msg.alert("警告", "联系方式不能相同，请重新修改！", "warn");
+	 return false;
+ }
+}
+//代理商开户保存
+function agentInfSubmit(){
+// 	validMobile();//验证手机号是否重复
+	$("#frozState").val($("#frozState").val());
+	$("#oemState").val($("#oemState").val());
+	$("#tiflg").val($("#tiflg").val());
+	$("#slttyp").val($("#slttyp").val());   
+	$("#agentStatus").val($("#agentStatus").val());
+	var $form = $('#agentForm');
+	var bool = TDValidateForm($form);
+	if(!bool){
+		return false;
+	}
+	$form.submit();
+} 
+
+$("#contractStrDate").on("changeDate", function () {
+    if ($("#contractEndDate").val() !='' && $("#contractStrDate").val() > $("#contractEndDate").val()) {
+    	TDTips($("#contractStrDate"),"合同开始日期  应小于等于  合同结束日期！");
+    	$("#contractStrDate").val("");
+        return false;
+    }
+});
+
+$("#contractEndDate").on("changeDate", function () {
+	    if ($("#contractStrDate").val() !='' && $("#contractEndDate").val() < $("#contractStrDate").val()) {
+    	TDTips($("#contractEndDate"),"合同结束日期  应大于  合同开始日期！");
+    	$("#contractEndDate").val("");
+        return false;
+	    }
+	});
+
+function dialogAjaxDone(result){
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		if($("#type").val()=='edit'||$("#type").val()=='audit'){
+			$("#grid-table").trigger("reloadGrid");
+			dialog.closeById('dlg-agentEdit');
+		} else {
+			location.href=$.getBaseHerf()+"auth/mainPanel.do#mpamng/agent/agentListView.do";
+			return false;
+		}
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+
+function upload02(fid,fname){
+	openFileUpload({
+		fileUploadDone:function(reslut){
+			$("#"+fid).val(reslut.map.fid);
+			$("#"+fname).val(reslut.map.fname);
+		},
+		allowFile:EXT_PIC,
+		fileSize:1024
+	});
+}
+
+/** 审核提交 1通过0拒绝**/
+function agentAuditSubmit(approved){
+	var agentId=$("#agentIdTemp").val();
+	var editUserId=$("#editUserId").val();
+	if(approved=='0'){
+		var scrWidth = document.body.scrollWidth;
+		openDialog({
+			dialogId : 'dlg-agentAudit',
+			title : '代理商审核意见',
+			pageUrl : 'mpamng/agent/agentAuditSubmit.do',
+			width :  '40%',
+			height : '40%' , //
+			dataParam : {
+				agentId:agentId,
+				approved:approved,
+				editUserId:editUserId
+			},
+			pageParam: {
+				agentId:agentId,
+				approved:approved,
+				editUserId:editUserId
+			},
+			dataName : 'obj,map' //表单数据存储对象名称
+		});
+	}else{
+		$.ajax({
+			type : "post",
+			url : "mpamng/agent/agentTempReply.do",
+			data:{agentId:agentId,approved:approved,editUserId:editUserId,auditFailReason:null},
+			dataType : 'json',
+			success : function(result) {
+				if(result.rspcod== 200){
+					msg.alert("提示",result.rspmsg,'correct');
+					$("#grid-table").trigger("reloadGrid");
+					dialog.closeById('dlg-agentEdit');
+					location.href=$.getBaseHerf()+"auth/mainPanel.do#mpamng/agent/agentListView.do";
+				}else{
+					msg.alert("错误",result.rspmsg,'error');
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		}); 
+		
+	}
+	 
+}
+/**
+ * 图片预览
+ */
+function agentPicView(id){
+	if($('#'+id).val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#'+id).val());
+}
+
+function setGradeValue(obj){
+	if(isNaN($(obj).val()) || $.trim($(obj).val()) == ''){
+		$(obj).val('');
+	}
+	var id = parseInt($(obj).attr("id").split('_')[1]) + 1;
+	$('#grade_' + id +'_start').val($(obj).val())
+}
+
+$(function(){
+	getPAgentInfo();
+});
+
+//异步加载上级代理商费率参数
+function getPAgentInfo(){
+	var agentid_temp1 = '';
+	var dialog1=$("#dlg-agentEdit").Dialog();
+	if(!dialog1){
+// 		$('#rateLivelihood').removeAttr("readonly");
+// 		$('#rateGeneral').removeAttr("readonly");
+// 		$('#rateEntertain').removeAttr("readonly");
+// 		$('#rateGeneralTop').removeAttr("readonly");
+// 		$('#rateGeneralMaximun').removeAttr("readonly");
+// 		$('#rateEntertainTop').removeAttr("readonly");
+// 		$('#rateEntertainMaximun').removeAttr("readonly");
+// 		return;
+		
+		$.ajax({
+			type : "post",
+			url : "auth/uid/query.do",
+			async: false,
+			dataType : 'json',
+			data : {
+			},		
+			success : function(result) {
+				if (result.rspcod != 200) {
+					msg.alert("错误", result.rspmsg, 'error');
+				} else {
+					//根据传入的值判断是否启用编辑
+					agentid_temp1 = result.obj.agentId;
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		});
+		
+	}else{
+		if(dialog1.dataParam.type!='edit'){
+			return;
+		}
+		if(dialog1.dataParam.fathAgentId == dialog1.dataParam.agentId ){
+			$('#rateLivelihood').removeAttr("readonly");
+			$('#rateGeneral').removeAttr("readonly");
+			$('#rateEntertain').removeAttr("readonly");
+			$('#rateGeneralTop').removeAttr("readonly");
+			$('#rateGeneralMaximun').removeAttr("readonly");
+			$('#rateEntertainTop').removeAttr("readonly");
+			$('#rateEntertainMaximun').removeAttr("readonly");
+			return;
+		}
+		agentid_temp1 = dialog1.dataParam.fathAgentId;
+	}
+	var fatheragentId = agentid_temp1;
+	$.ajax({
+		type : "post",
+		url : "mpamng/agent/queryAgentById.do",
+		dataType : 'json',
+		data : {
+			agentId : fatheragentId
+		},		
+		success : function(result) {
+			if (result.rspcod != 200) {
+				msg.alert("错误", result.rspmsg, 'error');
+			} else {
+				//根据传入的值判断是否启用编辑
+				var p_rateLivelihood = result.obj.rateLivelihood;//民生类
+				var p_rateGeneral = result.obj.rateGeneral;//一般类
+				var p_rateEntertain = result.obj.rateEntertain;//餐娱类
+				var p_rateGeneralTop = result.obj.rateGeneralTop;//批发类
+				var p_rateGeneralMaximun = result.obj.rateGeneralMaximun;//批发类封顶
+				var p_rateEntertainTop = result.obj.rateEntertainTop;//房产类
+				var p_rateEntertainMaximun = result.obj.rateEntertainMaximun;//房产类封顶
+				
+				if(p_rateLivelihood != null && p_rateLivelihood != ''){
+					$('#rateLivelihood').removeAttr("readonly");
+				}
+				if(p_rateGeneral != null && p_rateGeneral != ''){
+					$('#rateGeneral').removeAttr("readonly");
+				}
+				if(p_rateEntertain != null && p_rateEntertain != ''){
+					$('#rateEntertain').removeAttr("readonly");
+				}
+				if(p_rateGeneralTop != null && p_rateGeneralTop != ''){
+					$('#rateGeneralTop').removeAttr("readonly");
+					$('#rateGeneralMaximun').removeAttr("readonly");
+				}
+				if(p_rateEntertainTop != null && p_rateEntertainTop != ''){
+					$('#rateEntertainTop').removeAttr("readonly");
+					$('#rateEntertainMaximun').removeAttr("readonly");
+				}
+			}
+		},
+		error : function(XMLHttpRequest, textStatus) {
+			msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+		}
+	});
+}
+
+</script>

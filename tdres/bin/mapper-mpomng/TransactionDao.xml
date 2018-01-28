@@ -1,0 +1,1067 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.TransactionDao">
+	<resultMap  type="TranSerialRecordInf" id="TransactionMap">
+		<result property="recId" column="REC_ID" />
+		<result property="busType" column="BUS_TYPE" />
+		<result property="subBus" column="SUB_BUS" />
+		<result property="payWay" column="PAY_WAY" />
+		<result property="agentId" column="AGENT_ID" />
+		<result property="agentName" column="AGENT_NAME"/>
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="terId" column="TER_ID" />
+		<result property="bankCardNo" column="BANK_CARD_NO" />
+		<result property="cardType" column="CARD_TYPE" />
+		<result property="tranAmt" column="TRAN_AMT" />
+		<result property="tarnYear" column="TRAN_YEAR" />
+		<result property="tarnMonth" column="TRAN_MONTH" />
+		<result property="tarnDay" column="TRAN_DAY" />
+		<result property="tarnTime" column="TRAN_TIME" />
+		<result property="tranCode" column="TRAN_CODE" />
+		<result property="tranState" column="TRAN_STATE" />
+		<result property="cooporgNo" column="COOPORG_NO" />
+		<result property="merType" column="M_TYPE" />
+		<result property="merId" column="M_ID" />
+		<result property="merNo" column="MER_NO" />
+		<result property="merName" column="MER_NAME" />
+		<result property="terNo" column="TER_NO" />
+		<result property="merRateType" column="MER_RATE_TYPE" />
+		<result property="merRate" column="MER_RATE" />
+		<result property="merRateTop" column="MER_RATE_TOP" />
+		<result property="tranRateType" column="TRAN_RATE_TYPE" />
+		<result property="tranRate" column="TRAN_RATE" />
+		<result property="tranRateTop" column="TRAN_RATE_TOP" />
+		<result property="thirdTranDate" column="THIRD_TRAN_DATE" />
+		<result property="thirdTranTime" column="THIRD_TRAN_TIME" />
+		<result property="merFee" column="MER_FEE" />
+		<result property="merSettleAmt" column="MER_SETTLE_AMT" />
+		<result property="tranFee" column="TRAN_FEE" />
+		<result property="traSettleAmt" column="TRAN_SETTLE_AMT" />
+		<result property="prdOrdType" column="PRDORDTYPE" />
+		<result property="province" column="PROVINCE" />
+		<result property="city" column="CITY" />
+		<result property="cnapsCode" column="CNAPS_CODE" />
+		<result property="issnam" column="ISSNAM" />
+		<result property="subBranch" column="SUB_BRANCH" />
+		<result property="bankCustName" column="CUST_NAME" />
+		<result property="prdno" column="PRDNO" />
+		<result property="refno" column="REFNO" />
+		<result property="rateGeneralTop" column="RATE_GENERAL_TOP" />
+		<result property="rateGeneralMaximun" column="RATE_GENERAL_MAXIMUN" />
+		<result property="prddate" column="PRDDATE" />
+		<result property="firstAgentId" column="FIRST_AGENT_ID"/>
+		<result property="firstAgentName" column="FIRST_AGENT_NAME"/>
+		<result property="terminalNO" column="TERMINAL_NO"/>
+		<result property="ordStatus" column="ORDSTATUS"/>
+		<result property="payStatus" column="PAYSTATUS"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payName" column="PAY_NAME"/>
+		<result property="rate" column="RATE"/>
+		<result property="bizType" column="BIZTYPE"/>
+		<result property="acType" column="AC_TYPE"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="txAmt" column="TXAMT"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+		<result property="txDate" column="TXDATE"/>
+		<result property="casType" column="CAS_TYPE"/>
+	</resultMap>
+	
+	<!-- 业务报表  交易查询-->
+	<resultMap type="TransactionTemplate" id="TransactionReportMap">
+		<result property="recId" column="REC_ID" />
+		<result property="busType" column="BUS_TYPE" />
+		<result property="subBus" column="SUB_BUS" />
+		<result property="payWay" column="PAY_WAY" />
+		<result property="agentId" column="AGENT_ID" />
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="terId" column="TER_ID" />
+		<result property="bankCardNo" column="BANK_CARD_NO" />
+		<result property="cardType" column="CARD_TYPE" />
+		<result property="tranAmt" column="TRAN_AMT" />
+		<result property="tarnYear" column="TRAN_YEAR" />
+		<result property="tarnMonth" column="TRAN_MONTH" />
+		<result property="tarnDay" column="TRAN_DAY" />
+		<result property="tarnTime" column="TRAN_TIME" />
+		<result property="tranCode" column="TRAN_CODE" />
+		<result property="tranState" column="TRAN_STATE" />
+		<result property="cooporgNo" column="COOPORG_NO" />
+		<result property="merType" column="M_TYPE" />
+		<result property="merId" column="M_ID" />
+		<result property="merNo" column="MER_NO" />
+		<result property="merName" column="MER_NAME" />
+		<result property="terNo" column="TER_NO" />
+		<result property="merRateType" column="MER_RATE_TYPE" />
+		<result property="merRate" column="MER_RATE" />
+		<result property="merRateTop" column="MER_RATE_TOP" />
+		<result property="tranRateType" column="TRAN_RATE_TYPE" />
+		<result property="tranRate" column="TRAN_RATE" />
+		<result property="tranRateTop" column="TRAN_RATE_TOP" />
+		<result property="thirdTranDate" column="THIRD_TRAN_DATE" />
+		<result property="thirdTranTime" column="THIRD_TRAN_TIME" />
+		<result property="merFee" column="MER_FEE" />
+		<result property="merSettleAmt" column="MER_SETTLE_AMT" />
+		<result property="tranFee" column="TRAN_FEE" />
+		<result property="traSettleAmt" column="TRAN_SETTLE_AMT" />
+		<result property="prdOrdType" column="PRDORDTYPE" />
+		<result property="bankCustName" column="CUST_NAME" />
+	</resultMap>
+	
+	<!--交易报表 查询下载  -->
+	<resultMap type="TransTemplate" id="TransReportMap">
+		<result property="prddate" column="PRDDATE" />
+		<result property="firstAgentId" column="FIRST_AGENT_ID"/>
+		<result property="firstAgentName" column="FIRST_AGENT_NAME"/>
+		<result property="agentId" column="AGENT_ID"/>
+		<result property="agentName" column="AGENT_NAME"/>
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="terminalNO" column="TERMINAL_NO"/>
+		<result property="ordStatus" column="ORDSTATUS"/>
+		<result property="payStatus" column="PAYSTATUS"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payName" column="PAY_NAME"/>
+		<result property="rate" column="RATE"/>
+		<result property="rateType" column="RATE_TYPE"/>
+		<result property="txAmt" column="TXAMT"/>
+		<result property="fee" column="FEE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+	</resultMap>
+	
+	<!-- 提现报表 查询下载 -->
+	<resultMap type="WithdrawTemplate" id="WithdrawReportMap">
+		<result property="txDate" column="TXDATE" />
+		<result property="firstAgentId" column="FIRST_AGENT_ID"/>
+		<result property="firstAgentName" column="FIRST_AGENT_NAME"/>
+		<result property="agentId" column="AGENT_ID"/>
+		<result property="agentName" column="AGENT_NAME"/>
+		<result property="custId" column="CUST_ID" />
+		<result property="custName" column="CUST_NAME" />
+		<result property="terminalNO" column="TERMINAL_NO"/>
+		<result property="payChannel" column="PAY_CHANNEL"/>
+		<result property="payName" column="PAY_NAME"/>
+		<result property="rate" column="RATE"/>
+		<result property="casType" column="CAS_TYPE"/>
+		<result property="txAmt" column="TXAMT"/>
+		<result property="fee" column="FEE"/>
+		<result property="acType" column="AC_TYPE"/>
+		<result property="netrecAmt" column="NETRECAMT"/>
+	</resultMap>
+	<select id="selectList" parameterType="TranSerialRecordInf" resultMap="TransactionMap" databaseId="mysql">
+			SELECT
+				M1.REC_ID,
+				M1.BUS_TYPE,
+				M1.SUB_BUS,
+				M1.PAY_WAY,
+				M1.AGENT_ID,
+				M1.CUST_ID,
+				M1.CUST_NAME,
+				M1.TER_ID,
+				M1.BANK_CARD_NO,
+				M1.CARD_TYPE,
+				M1.TRAN_AMT,
+				M1.TRAN_YEAR,
+				M1.TRAN_MONTH,
+				M1.TRAN_DAY,
+				M1.TRAN_TIME,
+				M1.TRAN_CODE,
+				M1.TRAN_STATE,
+				M1.COOPORG_NO,
+				M1.M_ID,
+				M1.M_TYPE,
+				M1.MER_NO,
+			    M2.MER_NAME,
+				M1.TER_NO,
+				M1.MER_RATE_TYPE,
+				M1.MER_RATE,
+				M1.MER_RATE_TOP,
+				M1.TRAN_RATE_TYPE,
+				M1.TRAN_RATE,
+				TER.RATE_GENERAL_TOP, 
+				TER.RATE_GENERAL_MAXIMUN,
+				M1.TRAN_RATE_TOP,
+				M1.THIRD_TRAN_DATE,
+				M1.THIRD_TRAN_TIME,
+				M1.MER_FEE,
+				M1.MER_SETTLE_AMT,
+				M1.TRAN_FEE,
+				M1.TRAN_SETTLE_AMT,
+				M1.REFNO,
+				M1.PRDNO,
+				'01' AS PRDORDTYPE
+			
+		FROM
+				MPRCS_TRAN_SERIAL_RECORD_INF M1
+				LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+				LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = M1.TER_ID 
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = M1.CUST_ID AND AC.TERMINAL_ID=TER.TERMINAL_ID
+		<where>
+				 M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID LIKE CONCAT  ('%',#{custId},'%')
+				</if>
+				<if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME LIKE CONCAT  ('%',#{custName},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  LIKE CONCAT ('%',#{prdno},'%')
+				</if>
+				<if test="bankCardNo != null and bankCardNo != ''">
+						AND M1.BANK_CARD_NO LIKE CONCAT ('%',#{bankCardNo},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO LIKE CONCAT ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		</where>
+		ORDER BY REC_ID  DESC  LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="TranSerialRecordInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPRCS_TRAN_SERIAL_RECORD_INF M1
+		<where>
+					M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+				<if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+				
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="bankCardNo != null and bankCardNo != ''">
+						AND M1.BANK_CARD_NO LIKE CONCAT ('%',#{bankCardNo},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		</where>
+	</select>
+	
+	<select id="getHistorytranListPage" parameterType="TranSerialRecordInf" resultMap="TransactionMap" databaseId="mysql">
+			SELECT
+			M1.REC_ID,
+			M1.BUS_TYPE,
+			M1.SUB_BUS,
+			M1.PAY_WAY,
+			M1.AGENT_ID,
+			M1.CUST_ID,
+			M1.CUST_NAME,
+			M1.TER_ID,
+			M1.BANK_CARD_NO,
+			M1.CARD_TYPE,
+			M1.TRAN_AMT,
+			M1.TRAN_YEAR,
+			M1.TRAN_MONTH,
+			M1.TRAN_DAY,
+			M1.TRAN_TIME,
+			M1.TRAN_CODE,
+			M1.TRAN_STATE,
+			M1.COOPORG_NO,
+			M1.M_ID,
+			M1.M_TYPE,
+			M1.MER_NO,
+		    M2.MER_NAME,
+			M1.TER_NO,
+			M1.MER_RATE_TYPE,
+			M1.MER_RATE,
+			M1.MER_RATE_TOP,
+			M1.TRAN_RATE_TYPE,
+			M1.TRAN_RATE,
+			TER.RATE_GENERAL_TOP, 
+		    TER.RATE_GENERAL_MAXIMUN,
+			M1.TRAN_RATE_TOP,
+			M1.THIRD_TRAN_DATE,
+			M1.THIRD_TRAN_TIME,
+			M1.MER_FEE,
+			M1.MER_SETTLE_AMT,
+			M1.TRAN_FEE,
+			M1.TRAN_SETTLE_AMT,
+			M1.REFNO,
+			M1.PRDNO,
+			'01' AS PRDORDTYPE
+			FROM
+					MPRCS_TRAN_SERIAL_RECORD_INF M1
+					LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+					LEFT JOIN MPAMNG_TERMINAL_INF TER ON TER.TERMINAL_ID = M1.TER_ID 
+					LEFT JOIN MPOMNG_AGE_CUST_REF_INF AC ON AC.CUST_ID = M1.CUST_ID AND AC.TERMINAL_ID=TER.TERMINAL_ID
+		<where>
+				M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		       <if test="bankCardNo != null and bankCardNo != ''">
+						AND M1.BANK_CARD_NO LIKE CONCAT ('%',#{bankCardNo},'%')
+				</if>
+				<if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY) <= #{etime}]]>
+				</if> 
+				
+		</where>
+	ORDER BY REC_ID  DESC  LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="getHistorytranCount" parameterType="TranSerialRecordInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(M1.REC_ID)
+		FROM 
+				MPRCS_TRAN_SERIAL_RECORD_INF M1
+			<where>
+						M1.TRAN_STATE='1' 
+		    	 <if test="bankCardNo != null and bankCardNo != ''">
+						AND M1.BANK_CARD_NO LIKE CONCAT ('%',#{bankCardNo},'%')
+				</if>
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		        
+		</where>
+	</select>
+	
+	<select id="selectReport" parameterType="java.util.Map" resultMap="TransactionReportMap">
+	SELECT
+			 M2.MER_NAME,
+			 M1.M_ID,
+			 M1.M_TYPE,
+			 M1.MER_RATE,
+			 M1.PAY_WAY,
+			M1.MER_RATE_TOP,
+			 M1.CUST_ID,
+			M1.CUST_NAME,
+			 M1.TRAN_RATE,
+			M1.TRAN_RATE_TOP,
+			 M1.THIRD_TRAN_DATE,
+			M1.THIRD_TRAN_TIME,
+			 '01' AS PRDORDTYPE,
+			 M1.TRAN_AMT,
+			 M1.TRAN_STATE,
+			 M1.MER_FEE,
+			 M1.MER_SETTLE_AMT,
+			M1.TRAN_FEE,
+			 M1.TRAN_SETTLE_AMT,
+			 M1.CARD_TYPE,
+			 M4.PROVINCE_NAME AS PROVINCE,
+			M5.CITY_NAME AS CITY,
+			M3.CNAPS_CODE,
+			 M3.SUB_BRANCH,
+			 M1.BANK_CARD_NO
+			
+		FROM
+		MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+	
+		
+		<where>	
+				 M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+				<if test="payWay !=null and payWay !=''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		</where>
+	ORDER BY REC_ID
+	</select>
+	
+	<select id="selectHistoryReport" parameterType="java.util.Map" resultMap="TransactionReportMap">
+	SELECT
+			 M2.MER_NAME,
+			 M1.M_ID,
+			 M1.M_TYPE,
+			 M1.MER_RATE,
+			 M1.PAY_WAY,
+			M1.MER_RATE_TOP,
+			 M1.CUST_ID,
+			M1.CUST_NAME,
+			 M1.TRAN_RATE,
+			M1.TRAN_RATE_TOP,
+			 M1.THIRD_TRAN_DATE,
+			M1.THIRD_TRAN_TIME,
+			 '01' AS PRDORDTYPE,
+			 M1.TRAN_AMT,
+			 M1.TRAN_STATE,
+			 M1.MER_FEE,
+			 M1.MER_SETTLE_AMT,
+			M1.TRAN_FEE,
+			 M1.TRAN_SETTLE_AMT,
+			 M1.CARD_TYPE,
+			 M4.PROVINCE_NAME AS PROVINCE,
+			M5.CITY_NAME AS CITY,
+			M3.CNAPS_CODE,
+			 M3.SUB_BRANCH,
+			 M1.BANK_CARD_NO
+			
+		FROM
+		MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+		<where>
+				M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+				<if test="payWay != null and payWay !=''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+				
+		</where>
+	ORDER BY REC_ID
+	</select>
+	
+	<select id="transactionCount" parameterType="Map" resultType="Map">
+		SELECT 
+			count(1) AS cntNum,
+			SUM(M1.TRAN_AMT) AS cntTranAmt,
+			SUM(M1.TRAN_FEE) AS cntTranFee,
+			SUM(M1.MER_SETTLE_AMT) AS merSettleAmt,
+			SUM(M1.TRAN_SETTLE_AMT) AS traSettleAmt
+		FROM 
+			MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+		<where>
+					M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="payWay != null and payWay != ''">
+						AND  M1.PAY_WAY = #{payWay}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		        
+		</where>
+	</select>
+	<select id="historyTransactionCount" parameterType="Map" resultType="Map">
+		SELECT 
+			count(1) AS cntNum,
+			SUM(M1.TRAN_AMT) AS cntTranAmt,
+			SUM(M1.TRAN_FEE) AS cntTranFee,
+			SUM(M1.MER_SETTLE_AMT) AS merSettleAmt,
+			SUM(M1.TRAN_SETTLE_AMT) AS traSettleAmt
+		FROM 
+			MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+		<where>
+				M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		        <if test="payWay != null and payWay != ''">
+						AND M1.PAY_WAY = #{payWay}
+				</if>
+		</where>
+	</select>
+	
+	<select id="gettransCount" parameterType="TranSerialRecordInf" resultType="java.lang.Integer" databaseId="mysql">
+	   SELECT
+		count(*) 
+		FROM
+			MPOMNG_PRD_INF PRD
+		LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+		LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+		<where>
+  		AND (JNL.TXN_TYPE IS NULL OR JNL.TXN_TYPE='01')
+  			<if test="stime != null and stime != ''">
+						AND CONCAT(PRD.PRDDATE) >= #{stime}
+			</if>
+			<if test="etime != null and etime != ''">
+					<![CDATA[ AND CONCAT(PRD.PRDDATE) <= #{etime}]]></if>
+			
+			<if test="bizType != null and bizType != '' and bizType == '02' ">
+					AND (PRD.BIZTYPE = 01 or PRD.BIZTYPE = 02 or PRD.BIZTYPE IS NULL)
+			</if>
+			<if test="bizType != null and bizType != '' and bizType !='02' ">
+					AND PRD.BIZTYPE = #{bizType}
+			</if>
+  		</where>
+		ORDER BY
+			PAY.CUST_ID DESC;
+	</select>
+	
+	<select id="gettransListPage" parameterType="TranSerialRecordInf" resultMap="TransactionMap" databaseId="mysql">
+	   SELECT
+		PRD.PRDDATE,
+		(CASE WHEN PRD.BIZTYPE IS NULL OR PRD.BIZTYPE = '01' THEN '02' ELSE PRD.BIZTYPE END) AS BIZTYPE,
+		AGENT.FIRST_AGENT_ID ,
+		(
+			SELECT
+				AGE.AGENT_NAME
+			FROM
+				MPAMNG_AGENT_INF AGE
+			WHERE
+				AGE.AGENT_ID = AGENT.FIRST_AGENT_ID
+		)  AS FIRST_AGENT_NAME,
+		AGENT.AGENT_ID ,
+		AGENT.AGENT_NAME ,
+		MER.CUST_ID ,
+		MER.CUST_NAME ,
+		TERM.TERMINAL_NO ,
+		PRD.ORDSTATUS,
+ 		PAY.PAYSTATUS,
+ 		PAY.PAY_CHANNEL ,
+ 	CASE PAY.PAY_CHANNEL
+	WHEN 'STHDHX' THEN
+		'华势'
+	WHEN 'STHDZL' THEN
+		'中联'
+	WHEN 'PSTHDYSHB' THEN
+	'银生宝'
+	WHEN 'PSTHDYSHT' THEN
+	'银视通'	
+	ELSE
+		PAY.PAY_CHANNEL
+	END PAY_NAME,
+	 CASE PAY.RATE_TYPE
+	WHEN '4' THEN
+		concat(
+			TERM.RATE_GENERAL_TOP,
+			'%-',
+			PAY.RATE
+		)
+	ELSE
+		concat(PAY.RATE, '%')
+	END RATE,
+ 	RATE_TYPE,
+ 	PAY.TXAMT AS TXAMT,
+	 PAY.FEE AS FEE,
+	 PAY.NETRECAMT AS NETRECAMT 
+			FROM
+				MPOMNG_PRD_INF PRD
+			LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+			LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+			<where>
+				(JNL.TXN_TYPE IS NULL OR JNL.TXN_TYPE='01')
+  				<if test="stime != null and stime != ''">
+							AND CONCAT(PRD.PRDDATE) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(PRD.PRDDATE) <= #{etime}]]></if>
+						
+				<if test="bizType != null and bizType != '' and bizType == '02' ">
+					AND (PRD.BIZTYPE = 01 or PRD.BIZTYPE = 02 or PRD.BIZTYPE IS NULL)
+			</if>
+			<if test="bizType != null and bizType != '' and bizType !='02' ">
+					AND PRD.BIZTYPE = #{bizType}
+			</if>
+				
+  			</where>
+			ORDER BY
+				PAY.CUST_ID DESC LIMIT #{start},#{pageSize};
+		</select>
+	
+		<select id="TransCount" parameterType="Map" resultType="Map">
+		SELECT 
+			count(1) AS cntNum,
+			SUM(M1.TRAN_AMT) AS cntTranAmt,
+			SUM(M1.TRAN_FEE) AS cntTranFee,
+			SUM(M1.MER_SETTLE_AMT) AS merSettleAmt,
+			SUM(M1.TRAN_SETTLE_AMT) AS traSettleAmt
+		FROM 
+			MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+		<where>
+				M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+					
+				<if test="bizType != null and bizType != ''">
+						AND M1.PAY_WAY = #{bizType}
+				</if>
+				
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		        
+		</where>
+	</select>
+	
+	<select id="selectTransReport" parameterType="java.util.Map" resultMap="TransReportMap">
+	 SELECT
+		PRD.PRDDATE,
+		AGENT.FIRST_AGENT_ID ,
+		(
+			SELECT
+				AGE.AGENT_NAME
+			FROM
+				MPAMNG_AGENT_INF AGE
+			WHERE
+				AGE.AGENT_ID = AGENT.FIRST_AGENT_ID
+		)  AS FIRST_AGENT_NAME,
+		AGENT.AGENT_ID ,
+		AGENT.AGENT_NAME ,
+		MER.CUST_ID ,
+		MER.CUST_NAME ,
+		TERM.TERMINAL_NO ,
+		CASE PRD.ORDSTATUS
+		WHEN '00' THEN
+			'未交易'
+		WHEN '01' THEN 
+			'成功'	
+		WHEN '02' THEN
+			'失败'
+		WHEN '03' THEN 
+			'可疑'
+		WHEN '04' THEN
+			'处理中'
+		WHEN '05' THEN
+			'已取消'
+		WHEN '06' THEN
+			'未支付'	
+		WHEN '07' THEN
+			'已退货'
+		WHEN '08' THEN
+			'退货中'
+		WHEN '09' THEN
+			'部分退货'							
+		END ORDSTATUS,
+ 	CASE PAY.PAYSTATUS
+ 		WHEN '00' THEN
+ 			'未支付'
+ 		WHEN '01' THEN
+ 			'支付处理中'
+ 		WHEN '02' THEN
+ 			'成功'
+ 		WHEN '03' THEN
+ 			'失败'
+ 		WHEN '36' THEN
+ 			'已支付，未取货'
+ 		WHEN '98' THEN
+ 			'超时'
+ 		WHEN 'E' THEN
+ 			'冲正失败'
+ 		WHEN 'D' THEN
+ 			'未支付'						
+ 		END PAYSTATUS,
+ 		PAY.PAY_CHANNEL ,
+ 	CASE PAY.PAY_CHANNEL
+	WHEN 'STHDHX' THEN
+		'华势'
+	WHEN 'STHDZL' THEN
+		'中联'
+	WHEN 'PSTHDYSHB' THEN
+	'银生宝'
+	WHEN 'PSTHDYSHT' THEN
+	'银视通'	
+	ELSE
+		PAY.PAY_CHANNEL
+	END PAY_NAME,
+	 CASE PAY.RATE_TYPE
+	WHEN '4' THEN
+		concat(
+			TERM.RATE_GENERAL_TOP,
+			'%-',
+			PAY.RATE
+		)
+	ELSE
+		concat(PAY.RATE, '%')
+	END RATE,
+ 	RATE_TYPE,
+ 	PAY.TXAMT / 100.0 AS TXAMT,
+	 PAY.FEE / 100.0 AS FEE,
+	 PAY.NETRECAMT / 100.0 AS NETRECAMT ,
+	 (CASE WHEN PRD.BIZTYPE IS NULL OR PRD.BIZTYPE= '01' THEN '02' ELSE PRD.BIZTYPE END) AS BIZTYPE
+			FROM
+				MPOMNG_PRD_INF PRD
+			LEFT JOIN MPOMNG_PAY_INF PAY ON PRD.PAYORDNO = PAY.PAYORDNO
+			LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = PRD.CUST_ID
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+			LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			LEFT OUTER JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+			<where>
+  			 (JNL.TXN_TYPE IS NULL OR JNL.TXN_TYPE='01')
+  				<if test="stime != null and stime != ''">
+							AND CONCAT(PRD.PRDDATE) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(PRD.PRDDATE) <= #{etime}]]></if>
+						
+				<if test="bizType != null and bizType != '' and bizType =='02' ">
+						AND (PRD.BIZTYPE IS NULL OR PRD.BIZTYPE = 01 OR PRD.BIZTYPE = 02)
+				</if>
+				<if test="bizType != null and bizType != '' and bizType != '02'">
+						AND PRD.BIZTYPE = #{bizType}
+				</if>
+  			</where>
+			ORDER BY
+				PAY.CUST_ID DESC;
+		</select>
+		
+		<select id="getWithdrawCount" parameterType="TranSerialRecordInf" resultType="java.lang.Integer" databaseId="mysql">
+	  SELECT
+		count(*)
+		FROM
+			MPOMNG_CAS_INF CAS
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = CAS.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			<where>
+				CAS.ORDSTATUS = '07'
+  				<if test="stime != null and stime != ''">
+							AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) <= #{etime}]]></if>
+				
+				<if test="acType != null and acType != ''">
+						AND CAS.AC_TYPE =#{acType}
+				</if>
+  			</where>
+			ORDER BY
+				CAS.CUST_ID DESC;
+	</select>
+	
+		<select id="getWithdrawListPage" parameterType="TranSerialRecordInf" resultMap="TransactionMap" databaseId="mysql">
+	   SELECT
+		SUBSTR(CAS.SUC_DATE, 1, 8) AS TXDATE,
+ 		 AGENT.FIRST_AGENT_ID ,
+  		(SELECT AGE.AGENT_NAME FROM MPAMNG_AGENT_INF AGE 
+  		WHERE AGE.AGENT_ID=AGENT.FIRST_AGENT_ID) AS FIRST_AGENT_NAME,
+		AGENT.AGENT_ID ,
+		AGENT.AGENT_NAME ,
+		MER.CUST_ID ,
+		MER.CUST_NAME ,
+		TERM.TERMINAL_NO ,
+ 		CAS.FILED3 AS PAY_CHANNEL,
+		CASE CAS.FILED3
+		WHEN 'GD_02' THEN
+		'光大银行'
+		ELSE 
+		CAS.FILED3
+ 		END PAY_NAME,
+		CAS.CAS_TYPE,
+ 		CAS.RATE ,
+ 		CAS.TXAMT AS TXAMT,
+		 CAS.FEE AS FEE,
+		 IFNULL(CAS.AC_TYPE, '02') AS AC_TYPE,
+ 		CAS.NETRECAMT AS NETRECAMT
+		FROM
+			MPOMNG_CAS_INF CAS
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = CAS.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			<where>
+				CAS.ORDSTATUS = '07'
+  				<if test="stime != null and stime != ''">
+							AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) <= #{etime}]]></if>
+				<if test="acType != null and acType !=''">
+						AND CAS.AC_TYPE = #{acType}
+				</if>
+  			</where>
+			ORDER BY
+				CAS.CUST_ID DESC LIMIT #{start},#{pageSize};
+		</select>
+		
+		<select id="withdrawCount" parameterType="Map" resultType="Map">
+		SELECT 
+			count(1) AS cntNum,
+			SUM(M1.TRAN_AMT) AS cntTranAmt,
+			SUM(M1.TRAN_FEE) AS cntTranFee,
+			SUM(M1.MER_SETTLE_AMT) AS merSettleAmt,
+			SUM(M1.TRAN_SETTLE_AMT) AS traSettleAmt
+		FROM 
+			MPRCS_TRAN_SERIAL_RECORD_INF M1
+		LEFT JOIN MPCOOP_COOPORG_MER_INF M2 ON M1.MER_NO=M2.MER_NO
+		LEFT JOIN MPOMNG_CUST_BANK_INF  M3 ON M3.CUST_ID=M1.CUST_ID
+		LEFT OUTER JOIN  PROVINCE M4 ON(M3.PROVINCE_ID=M4.PROVINCE_ID) 
+		LEFT OUTER JOIN  CITY M5 ON(M3.CITY_ID=M5.CITY_ID)
+		<where>
+				M1.TRAN_STATE='1' 
+		     
+		        <if test="custId != null and custId != ''">
+						AND M1.CUST_ID like concat  ('%',#{custId},'%')
+				</if>
+				<if test="acType !=null and acType != ''">
+						AND M1.PAY_WAY = #{acType}
+				</if>
+		        <if test="custName != null and custName != ''">
+						AND M1.CUST_NAME like concat  ('%',#{custName},'%')
+				</if>
+		        <if test="issnam != null and issnam != ''">
+						AND M3.ISSNAM like concat  ('%',#{issnam},'%')
+				</if>
+		        <if test="cardType != null and cardType != ''">
+						AND M1.CARD_TYPE =  #{cardType}
+				</if>
+				<if test="prdno != null and prdno != ''">
+						AND M1.PRDNO  like concat ('%',#{prdno},'%')
+				</if>
+				<if test="refno != null and refno != ''">
+						AND M1.REFNO like concat ('%',#{refno},'%')
+				</if>
+				<if test="stime != null and stime != ''">
+						AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(M1.TRAN_YEAR,M1.TRAN_MONTH,M1.TRAN_DAY,M1.TRAN_TIME) <= #{etime}]]>
+				</if> 
+		        
+		</where>
+	</select>
+	
+	<select id="selectWithdrawReport" parameterType="java.util.Map" resultMap="WithdrawReportMap">
+	 SELECT
+		SUBSTR(CAS.SUC_DATE, 1, 8) AS TXDATE,
+ 		 AGENT.FIRST_AGENT_ID ,
+  		(SELECT AGE.AGENT_NAME FROM MPAMNG_AGENT_INF AGE 
+  		WHERE AGE.AGENT_ID=AGENT.FIRST_AGENT_ID) AS FIRST_AGENT_NAME,
+		AGENT.AGENT_ID ,
+		AGENT.AGENT_NAME ,
+		MER.CUST_ID ,
+		MER.CUST_NAME ,
+		TERM.TERMINAL_NO ,
+ 		CAS.FILED3 AS PAY_CHANNEL,
+		CASE CAS.FILED3
+		WHEN 'GD_02' THEN
+		'光大银行'
+		ELSE 
+		CAS.FILED3
+ 		END PAY_NAME,
+		CASE CAS.CAS_TYPE
+		WHEN '00' THEN
+		'T0'
+		WHEN '01' THEN
+		'T1'
+		WHEN '02' THEN
+		'T2'
+		WHEN '03' THEN
+		'T1自动'
+		ELSE
+		'未知'
+		END CAS_TYPE,
+ 		CAS.RATE ,
+ 		CAS.TXAMT/100.0 AS TXAMT,
+		 CAS.FEE/100.0 AS FEE,
+ 		CAS.NETRECAMT/100.0 AS NETRECAMT,
+ 		IFNULL(CAS.AC_TYPE, "02") AS AC_TYPE
+		FROM
+			MPOMNG_CAS_INF CAS
+		LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = CAS.CUST_ID
+		LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID = MER.CUST_ID
+		LEFT JOIN MPAMNG_TERMINAL_INF TERM ON TERM.TERMINAL_ID = REF.TERMINAL_ID
+		LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID
+			<where>
+				CAS.ORDSTATUS = '07'
+  				<if test="stime != null and stime != ''">
+							AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) >= #{stime}
+				</if>
+				<if test="etime != null and etime != ''">
+						<![CDATA[ AND CONCAT(SUBSTR(CAS.SUC_DATE, 1, 8)) <= #{etime}]]>
+						</if>
+						
+						<if test="acType != null and acType !='' and acType =='02' ">
+							AND   (CAS.AC_TYPE IS NULL OR CAS.AC_TYPE = 02)
+						</if>
+						<if test="acType != null and acType !='' and acType !='02' ">
+							AND   CAS.AC_TYPE = #{acType}
+						</if>
+  			</where>
+			ORDER BY
+				CAS.CUST_ID DESC;
+		</select>
+</mapper>

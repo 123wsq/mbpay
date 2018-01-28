@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form">
+ 
+ 
+ 	<ul class="nav nav-tabs" id="myCustFeeTab">
+ 	<!-- 
+		<li class="active">
+			<a data-toggle="tab" href="#tabCustFeeInf" onclick="getCurPage('01')"> 
+				<i class="green ace-icon fa fa-home bigger-120" ></i> 支付账户费率
+			</a>
+		</li>
+		<li><a data-toggle="tab" href="#tabCustFeeInf"   onclick="getCurPage('02')">终端费率</a></li>
+	-->
+		<li><a data-toggle="tab" href="#tabCustFeeInf" onclick="getCurPage('03')"> 快捷费率</a></li>
+		<li><a data-toggle="tab" href="#tabCustFeeInf"  onclick="getCurPage('04')">扫码费率</a></li>
+	</ul>
+ 	
+	<!-- #section:elements.form -->
+	<br/>
+	
+	
+	<div class="tab-content">
+		<!-- 支付账户费率 -->
+		<div id="tabCustFeeInf" class="tab-pane fade in active">
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					T0提现(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateTCas" name="rateTCas" placeholder="T0提现(0.6%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" maxlength="4"/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+				<label class="col-sm-2 control-label no-padding-right">
+					T0提现单笔收费： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="maxTCas" name="maxTCas" placeholder="T0提现单笔收费(单位元)" 
+						class="col-xs-12 col-sm-12 feecheck" datatype="money" maxlength="8" value="0"/>
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					民生类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateLivelihood" name="rateLivelihood" placeholder="民生类(0.38%)"
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="agentRate" maxlength="4" datatype="Dnumber"/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					一般类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateGeneral" name="rateGeneral" placeholder="一般类(0.78%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="agentRate" maxlength="4" datatype="Dnumber"/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					餐娱类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateEntertain" name="rateEntertain" placeholder="餐娱类(1.25%)"
+							class="col-xs-12 col-sm-12 feecheck" value="" datatype="Dnumber" judge="agentRate" maxlength="4"/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					批发类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateGeneralTop" name="rateGeneralTop" placeholder="批发类(0.78%)"
+							class="col-xs-12 col-sm-12 feecheck" value="" judge="agentRate" maxlength="4" datatype="Dnumber" />
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+				<label class="col-sm-2 control-label no-padding-right">
+					批发类封顶(元)： </label>
+				<div class="col-sm-3">
+					<input type="text" id="rateGeneralMaximun" name="rateGeneralMaximun" placeholder="批发类封顶(0.78%，单位元)" init-format="cent2Yuan('{value}',false)"
+						class="col-xs-12 col-sm-12 feecheck" value="" datatype="money" judge="agentRate" judge-ref="rateGeneralTop" maxlength="12"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">
+					房产类(%)： </label>
+				<div class="col-sm-3">
+					<span class="block input-icon input-icon-right" >
+						<input type="text" id="rateEntertainTop" name="rateEntertainTop" placeholder="房产类封顶(1.25%)" 
+							class="col-xs-12 col-sm-12 feecheck" value="" datatype="money" judge="agentRate" maxlength="4" datatype="Dnumber"/>
+						<i class="ace-icon">%</i>
+					</span>
+				</div>
+				<label class="col-sm-2 control-label no-padding-right">
+					房产类封顶(元)： </label>
+				<div class="col-sm-3">
+					<input type="text" id="rateEntertainMaximun" name="rateEntertainMaximun" placeholder="房产类封顶(1.25%，单位元)" init-format="cent2Yuan('{value}',false)"
+						class="col-xs-12 col-sm-12 feecheck" value="" datatype="money" judge="agentRate" judge-ref="rateGeneralTop" maxlength="12"/>
+				</div>
+			</div>
+		</div>
+		
+		
+	
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+		<button id="save" class="btn btn-info" type="button" onclick="setFee();">保存</button>
+		
+	</div>
+	
+</form>
+<script type="text/javascript">
+
+	var agentId ='';
+	var payType = '03';
+	var map = new Map();
+	
+	$(document).ready(function() {
+		
+		map.put("01","支付账户费率");
+		map.put("02","终端费率");
+		map.put("03","快捷费率");
+		map.put("04","扫码费率");
+		
+		getAgentId();
+	});
+	//获取当前系统登录的代理商
+	function getAgentId(){
+		
+		$.ajax({
+			type : "post",
+			url : "auth/uid/query.do",
+			async: false,
+			dataType : 'json',
+			data : {
+			},		
+			success : function(result) {
+				if (result.rspcod != 200) {
+					msg.alert("错误", result.rspmsg, 'error');
+				} else {
+					agentId= result.obj.agentId;
+					getCurPage('01');
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		});
+		
+	}
+	
+	
+	function getCurPage(id){
+		payType = id;
+		
+		/* if(payType=='01' || payType=='02'){
+			
+			$('#rateTCas').removeAttr("readonly");
+			$('#maxTCas').removeAttr("readonly");
+			$('#rateLivelihood').removeAttr("readonly");
+			$('#rateGeneral').removeAttr("readonly");
+			$('#rateEntertain').removeAttr("readonly");
+			$('#rateGeneralMaximun').removeAttr("readonly");
+			$('#rateEntertainTop').removeAttr("readonly");
+			$('#rateEntertainMaximun').removeAttr("readonly");
+		}else{ */
+			$("#rateTCas").attr("readonly","readonly");
+			$("#maxTCas").attr("readonly","readonly");
+			$("#rateLivelihood").attr("readonly","readonly");
+			$("#rateGeneral").attr("readonly","readonly");
+			$("#rateEntertain").attr("readonly","readonly");
+			$("#rateGeneralMaximun").attr("readonly","readonly");
+			$("#rateEntertainTop").attr("readonly","readonly");
+			$("#rateEntertainMaximun").attr("readonly","readonly");
+			
+		//}
+		
+		getFee(payType);
+	}
+	//获取费率
+	function getFee(pType){
+		//获取数据之前 ，清除输入框中缓存在数据
+		$("#rateTCas").val("");
+		$("#maxTCas").val("");
+		$("#rateLivelihood").val("");
+		$("#rateGeneral").val("");
+		$("#rateEntertain").val("");
+		$("#rateGeneralTop").val("");
+		$("#rateGeneralMaximun").val("");
+		$("#rateEntertainTop").val("");
+		$("#rateEntertainMaximun").val("");
+		 $.ajax({
+			type:"post",
+			url:"mpamng/agent/getAgentShareFee.do",
+			dataType:"json",
+			data:{
+				"rateCode":"00",
+				"rateType":payType,
+				"agentId": agentId,
+			},
+			success:function(result){
+				if (result.rspcod != 200) {
+					msg.alert("错误", result.rspmsg, 'error');
+					
+				} else {
+					var obj = result.obj;
+					
+			/* 		if(payType=='01' || payType=='02'){
+						
+						$("#rateTCas").val(obj.rateTCas);
+						$("#maxTCas").val(obj.maxTCas);
+						$("#rateLivelihood").val(obj.rateLivelihood);
+						$("#rateGeneral").val(obj.rateGeneral);
+						$("#rateEntertain").val(obj.rateEntertain);
+						$("#rateGeneralTop").val(obj.rateGeneralTop);
+						$("#rateGeneralMaximun").val(obj.rateGeneralMaximun);
+						$("#rateEntertainTop").val(obj.rateEntertainTop);
+						$("#rateEntertainMaximun").val(obj.rateEntertainMaximun);
+					}else{ */
+						
+						$("#rateGeneralTop").val(obj.rateGeneralTop);
+						
+					//}
+					
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		}); 
+		
+	}
+	
+	
+	function setFee(){
+		
+/* 		var  rateTCas = $("#rateTCas").val();  //T0提现费率
+		var maxTCas = $("#maxTCas").val();    //T0单笔提现费率
+		var rateLivelihood = $("#rateLivelihood").val(); //民生类
+		var rateGeneral = $("#rateGeneral").val(); //一般类
+		var rateEntertain = $("#rateEntertain").val();  //餐娱类 */
+		var rateGeneralTop = $("#rateGeneralTop").val();  //批发类封顶
+//		var rateGeneralMaximun = $("#rateGeneralMaximun").val();  //批发类封顶金额
+		/* var rateEntertainTop = $("#rateEntertainTop").val();  //房产类封顶
+		var rateEntertainMaximun = $("#rateEntertainMaximun").val(); //房产类封顶金额*/
+		$.ajax({
+			type:'post',
+			url:'mpamng/agent/setAgentShareFee.do',
+			dataType:'json',
+			data:{
+				"rateCode":"00",
+				"agentId" :agentId,
+				"rateType":payType,
+				"rateGeneralTop": rateGeneralTop
+//				"rateGeneralMaximun": rateGeneralMaximun,
+				
+			},
+			success:function(result){
+
+				if(result.rspcod==200){
+					//alert("修改成功");
+					msg.alert("成功", map.get(payType)+", 修改成功", 'correct');
+				}else{
+					if(result.rspmsg ==null || result.rspmsg == ''){
+						msg.alert("失败", map.get(payType)+", 修改失败", 'error');
+					}else{
+						msg.alert("失败",  map.get(payType)+", "+result.rspmsg, 'error');
+					}
+					
+				}
+				
+			},
+		}); 
+		
+	}
+	
+	
+	
+</script>

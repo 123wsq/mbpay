@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.TranErrorCodeDao">
+
+	<resultMap type="TranErrorCodeInf" id="TranErrorCodeMap">
+		<result property="sid"     column="MSG_SYS_ID"   />
+		<result property="tid"     column="MSG_THIRD_ID" />
+		<result property="orgno"   column="MSG_ORG_ID"   />
+	</resultMap>
+	
+	
+	<select id="selectAll"  resultMap="TranErrorCodeMap">
+		SELECT
+			MSG_SYS_ID,
+			MSG_THIRD_ID,
+			MSG_ORG_ID
+		FROM
+			TRAN_ERROR_CODE
+	</select>
+</mapper>

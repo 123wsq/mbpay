@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpsms/message/editMessage.do" id="termCom_form">
+	<!-- #section:elements.form -->
+	<br/>
+	<!-- 用户  -->
+	<input type="hidden" name="id" />
+	<input type="hidden" name="smsId" />
+	
+	<div class="form-group">
+	
+		<label class="col-sm-3 control-label no-pEditing-right"
+			for="form-field-1">短信类型： </label>
+
+		<div class="col-sm-9">
+		 <select 
+									 rel="obj.MESSAGECODE"
+						 			 location="local" 
+									 name="smsType" 
+						 			 id="smsType" 
+						 			 data-placeholder="请选择短信类型" style="width: 289px;vertical-align:middle;">
+									<option value='' >----请选择----</option>
+								</select>
+			
+		</div>
+	</div>
+	<div class="form-group">
+	
+		<label class="col-sm-3 control-label no-pEditing-right"
+			for="form-field-1"> 发送手机号： </label>
+
+		<div class="col-sm-9">
+			<input type="text" id="smsMoblie" name="smsMoblie" validate="true" datatype="mobile" placeholder="输入手机号码"
+				class="col-xs-10 col-sm-10" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-pEditing-right"
+			for="form-field-1-1"> 发送内容： </label>
+
+		<div class="col-sm-9">
+				<textarea rows="7" cols="66"  id="smsBody" name="smsBody" placeholder="输入发送内容"></textarea>
+		</div>
+	</div>
+
+	
+	<br/><br/>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+		<button class="btn btn-info" type="submit">保存</button>
+		&nbsp; 
+		<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-termComEdit');">关闭</button>
+	</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	
+});
+
+
+function submitForm(obj){
+	return validateCallback(obj,editUserDone);
+}
+
+function editUserDone(result){
+	dialogAjaxDone(result);
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		$("#grid-table").trigger("reloadGrid");
+		dialog.closeById('dlg-termComEdit');
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+
+</script>

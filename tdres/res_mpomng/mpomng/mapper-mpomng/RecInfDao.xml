@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.RecInfDao">
+	<resultMap type="RecInf" id="RecInfMap">
+		<result property="bkcode" column="BK_CODE" />
+		<result property="merno" column="MER_NO" />
+		<result property="terno" column="TER_NO" />
+		<result property="trantime" column="TRAN_TIME" />
+		<result property="locpayno" column="LOC_PAY_NO" />
+		<result property="transeq" column="TRAN_SEQ" />
+		<result property="cardno" column="CARD_NO" />
+		<result property="payno" column="PAY_NO" />
+		<result property="payamt" column="PAY_AMT" />
+		<result property="incamt" column="INC_AMT" />
+		<result property="settledt" column="SETTLE_DT" />
+		<result property="refno" column="REF_NO" />
+		<result property="trantype" column="TRAN_TYPE" />
+		<result property="ckdoubttype" column="CK_DOUBTTYPE" />
+		<result property="cknum" column="CK_NUM" />
+		<result property="ckdt" column="CK_DT" />
+	</resultMap>
+	
+	<resultMap type="RecInfoTemplate" id="RecInfTemplateMap">
+		<result property="bkcode" column="BK_CODE" />
+		<result property="merno" column="MER_NO" />
+		<result property="terno" column="TER_NO" />
+		<result property="trantime" column="TRAN_TIME" />
+		<result property="locpayno" column="LOC_PAY_NO" />
+		<result property="transeq" column="TRAN_SEQ" />
+		<result property="cardno" column="CARD_NO" />
+		<result property="payno" column="PAY_NO" />
+		<result property="payamt" column="PAY_AMT" />
+		<result property="incamt" column="INC_AMT" />
+		<result property="settledt" column="SETTLE_DT" />
+		<result property="refno" column="REF_NO" />
+		<result property="trantype" column="TRAN_TYPE" />
+		<result property="ckdoubttype" column="CK_DOUBTTYPE" />
+		<result property="ckdt" column="CK_DT" />
+	</resultMap>
+	
+	
+	<!-- 对账  成功 -->
+	<select id="countEntity" parameterType="PrdInf" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_INF
+		UNION
+		SELECT *
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_INF
+		)AS inf
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+			</where>
+	</select>
+	<!-- 对账  错账 -->
+	<select id="countEntity02" parameterType="PrdInf" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_ERROR_INF
+		UNION
+		SELECT *
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_ERROR_INF
+		)AS er
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+	</select>
+	<!-- 对账  疑账 -->
+	<select id="countEntity03" parameterType="PrdInf" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		(
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		SELECT *
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		(
+		SELECT 
+		BK_CODE,
+		MER_NO,
+		NULL,
+		TRAN_TIME,
+		NULL,
+		NULL,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		NULL,
+		NULL,
+		NULL,
+		TRAN_TYPE,
+		NULL,
+		CK_NUM,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_THD_INF
+		)) AS doub
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 对账  成功 -->
+	<select id="selectList" parameterType="RecInf" resultMap="RecInfMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_INF
+		UNION
+		(
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_INF
+		)
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+		ORDER BY CK_DT DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="selectListTemplate01" parameterType="java.util.Map" resultMap="RecInfTemplateMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_INF
+		UNION
+		(
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_INF
+		)
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 对账  错账 -->
+	<select id="selectList02" parameterType="RecInf" resultMap="RecInfMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_ERROR_INF
+		UNION
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		LOC_PAY_NO,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_ERROR_INF
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+		ORDER BY CK_DT DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="selectListTemplate02" parameterType="java.util.Map" resultMap="RecInfTemplateMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_ERROR_INF
+		UNION
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		LOC_PAY_NO,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_ERROR_INF
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+	</select>
+	<!-- 对账  疑帐 -->
+	<select id="selectList03" parameterType="RecInf" resultMap="RecInfMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		SELECT
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		LOC_PAY_NO,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		'02' AS CK_DOUBTTYPE,
+		CK_NUM,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		(
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		NULL,
+		DATE_FORMAT(TRAN_TIME,'%Y%m%d%k%i%s') AS TRAN_TIME,
+		NULL,
+		NULL,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		NULL,
+		NULL,
+		NULL,
+		TRAN_TYPE,
+		'01' AS CK_DOUBTTYPE,
+		CK_NUM,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_THD_INF
+		)
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+		ORDER BY CK_DT DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="selectListTemplate03" parameterType="java.util.Map" resultMap="RecInfTemplateMap">
+		SELECT *
+		FROM
+		MPBATCH_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		SELECT
+		'02' AS BK_CODE,
+		MER_NO,
+		TER_NO,
+		TRAN_TIME,
+		LOC_PAY_NO,
+		TRAN_SEQ,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		INC_AMT,
+		SETTLE_DT,
+		REF_NO,
+		TRAN_TYPE,
+		'02' AS CK_DOUBTTYPE,
+		CK_NUM,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_INF
+		UNION
+		(
+		SELECT 
+		'02' AS BK_CODE,
+		MER_NO,
+		NULL,
+		DATE_FORMAT(TRAN_TIME,'%Y%m%d%k%i%s') AS TRAN_TIME,
+		NULL,
+		NULL,
+		CARD_NO,
+		PAY_NO,
+		PAY_AMT,
+		NULL,
+		NULL,
+		NULL,
+		TRAN_TYPE,
+		'02' AS CK_DOUBTTYPE,
+		CK_NUM,
+		CK_DT
+		FROM
+		MPBATCH_ZL_VERIFIACCOUNT_DOUBT_THD_INF
+		)
+		<where>
+			<if test="ckdt != null and ckdt != ''">
+				AND CK_DT = #{ckdt}
+			</if>
+			<if test="trantype != null and trantype != ''">
+				AND TRAN_TYPE = #{trantype}
+			</if>
+			<if test="bkcode != null and bkcode != ''">
+				AND BK_CODE = #{bkcode}
+			</if>
+		</where>
+	</select>
+</mapper>

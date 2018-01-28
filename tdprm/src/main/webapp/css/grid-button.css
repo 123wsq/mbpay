@@ -1,0 +1,988 @@
+.jt-btn {
+	display: inline-block;
+	padding: 0 12px 1px;
+	line-height: 32px;
+	color: #FFF !important;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+	font-size: 14px;
+	background-image: none !important;
+	background-color: #abbac3 !important;
+	border: 5px solid #abbac3;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	-moz-transition: all .1s ease-in-out;
+	-webkit-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+	cursor: pointer;
+	vertical-align: middle;
+	margin: 0;
+	position: relative;
+	width:27px;
+	height:20px;
+	text-decoration:none
+}
+
+.jt-btn-large {
+	padding: 0 14px 1px;
+	line-height: 38px;
+	border-width: 6px;
+	font-size: 16px
+}
+
+.jt-btn-small {
+	padding: 0 8px;
+	line-height: 24px;
+	border-width: 4px;
+	font-size: 13px
+}
+
+.jt-btn-mini {
+	padding: 0 5px;
+	line-height: 18px;
+	border-width: 2px;
+	font-size: 12px
+}
+
+.jt-btn-minier {
+	padding: 0 4px;
+	line-height: 18px;
+	border-width: 1px;
+	font-size: 11px
+}
+
+button.jt-btn:active {
+	top: 1px;
+	left: 1px
+}
+
+.jt-btn-default {
+	background-color: #abbac3 !important;
+	border-color: #abbac3
+}
+
+.jt-btn:hover,.jt-btn-default:hover {
+	background-color: #8b9aa3 !important
+}
+
+.jt-btn.active,.jt-btn-default.active {
+	background-color: #91a0a5 !important;
+	border-color: #8796a0
+}
+
+.jt-btn.disabled,.jt-btn-default.disabled,.jt-btn[disabled],.jt-btn-default[disabled]
+	{
+	background-color: #abbac3 !important
+}
+
+.jt-btn-primary {
+	background-color: #2283c5 !important;
+	border-color: #2283c5
+}
+
+.jt-btn-primary:hover {
+	background-color: #045e9f !important
+}
+
+.jt-btn-primary.active {
+	background-color: #1a76b7 !important;
+	border-color: #106eaf
+}
+
+.jt-btn-primary.disabled,.jt-btn-primary[disabled] {
+	background-color: #2283c5 !important
+}
+
+.jt-btn-info {
+	background-color: #6fb3e0 !important;
+	border-color: #6fb3e0
+}
+
+.jt-btn-info:hover {
+	background-color: #4f99c6 !important
+}
+
+.jt-btn-info.active {
+	background-color: #5ca3d0 !important;
+	border-color: #4f99c6
+}
+
+.jt-btn-info.disabled,.jt-btn-info[disabled] {
+	background-color: #6fb3e0 !important
+}
+
+.jt-btn-success {
+	background-color: #87b87f !important;
+	border-color: #87b87f
+}
+
+.jt-btn-success:hover,.jt-btn-success.active {
+	background-color: #629b58 !important
+}
+
+.jt-btn-success.active {
+	background-color: #68a563 !important;
+	border-color: #629b58
+}
+
+.jt-btn-success.disabled,.jt-btn-success[disabled] {
+	background-color: #87b87f !important
+}
+
+.jt-btn-warning {
+	background-color: #ffb752 !important;
+	border-color: #ffb752
+}
+
+.jt-btn-warning:hover {
+	background-color: #e59729 !important
+}
+
+.jt-btn-warning.active {
+	background-color: #ea9e33 !important;
+	border-color: #e59729
+}
+
+.jt-btn-warning.disabled,.jt-btn-warning[disabled] {
+	background-color: #ffb752 !important
+}
+
+.jt-btn-danger {
+	background-color: #d15b47 !important;
+	border-color: #d15b47
+}
+
+.jt-btn-danger:hover {
+	background-color: #b74635 !important
+}
+
+.jt-btn-danger.active {
+	background-color: #bf4e3d !important;
+	border-color: #b74635
+}
+
+.jt-btn-danger.disabled,.jt-btn-danger[disabled] {
+	background-color: #d15b47 !important
+}
+
+.jt-btn-inverse {
+	background-color: #555 !important;
+	border-color: #555
+}
+
+.jt-btn-inverse:hover {
+	background-color: #303030 !important
+}
+
+.jt-btn-inverse.active {
+	background-color: #3e3e3e !important;
+	border-color: #303030
+}
+
+.jt-btn-inverse.disabled,.jt-btn-inverse[disabled] {
+	background-color: #555 !important
+}
+
+.jt-btn-pink {
+	background-color: #d6487e !important;
+	border-color: #d6487e
+}
+
+.jt-btn-pink:hover {
+	background-color: #b73766 !important
+}
+
+.jt-btn-pink.active {
+	background-color: #c0406f !important;
+	border-color: #b73766
+}
+
+.jt-btn-pink.disabled,.jt-btn-pink[disabled] {
+	background-color: #d6487e !important
+}
+
+.jt-btn-purple {
+	background-color: #9585bf !important;
+	border-color: #9585bf
+}
+
+.jt-btn-purple:hover {
+	background-color: #7461aa !important
+}
+
+.jt-btn-purple.active {
+	background-color: #7e6ab2 !important;
+	border-color: #7461aa
+}
+
+.jt-btn-purple.disabled,.jt-btn-purple[disabled] {
+	background-color: #9585bf !important
+}
+
+.jt-btn-yellow {
+	background-color: #fee188 !important;
+	border-color: #fee188;
+	color: #963 !important;
+	text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.4) !important
+}
+
+.jt-btn-yellow:hover {
+	background-color: #f7d05b !important
+}
+
+.jt-btn.jt-btn-yellow.active {
+	background-color: #f9d570 !important;
+	border-color: #edcc71
+}
+
+.jt-btn.jt-btn-yellow.active:after {
+	border-bottom-color: #c96338
+}
+
+.jt-btn-yellow.disabled,.jt-btn-yellow[disabled] {
+	background-color: #fee188 !important
+}
+
+.jt-btn-light {
+	color: #888 !important;
+	background-color: #e7e7e7 !important;
+	border-color: #e7e7e7;
+	text-shadow: 0 -1px 0 rgba(250, 250, 250, 0.25) !important
+}
+
+.jt-btn-light:hover {
+	background-color: #d9d9d9 !important
+}
+
+.jt-btn.jt-btn-light.active {
+	background-color: #dfdfdf !important;
+	border-color: #d5d5d5;
+	color: #515151
+}
+
+.jt-btn.jt-btn-light.active:after {
+	border-bottom-color: #aaa
+}
+
+.jt-btn-light.disabled,.jt-btn-light[disabled] {
+	background-color: #e7e7e7 !important
+}
+
+.jt-btn-light.jt-btn-mini:after {
+	left: -2px;
+	right: -2px;
+	top: -2px;
+	bottom: -2px
+}
+
+.jt-btn-light.jt-btn-small:after {
+	left: -4px;
+	right: -4px;
+	top: -4px;
+	bottom: -4px
+}
+
+.jt-btn-light.jt-btn-large:after {
+	left: -6px;
+	right: -6px;
+	top: -6px;
+	bottom: -6px
+}
+
+.jt-btn-grey {
+	background-color: #a0a0a0 !important;
+	border-color: #a0a0a0
+}
+
+.jt-btn-grey:hover {
+	background-color: #888 !important
+}
+
+.jt-btn-grey.active {
+	background-color: #929292 !important;
+	border-color: #888
+}
+
+.jt-btn-grey.disabled,.jt-btn-grey[disabled] {
+	background-color: #a0a0a0 !important
+}
+
+.jt-btn-white {
+	background-color: #f7f7f7 !important;
+	border-color: #d7d7d7;
+	text-shadow: none !important
+}
+
+.jt-btn-white:hover {
+	background-color: #EEE !important
+}
+
+.jt-btn-white.active {
+	background-color: #f1f1f1 !important;
+	border-color: #999
+}
+
+.jt-btn-white.disabled,.jt-btn-white[disabled] {
+	background-color: #f7f7f7 !important
+}
+
+.jt-btn.disabled.active,.jt-btn.disabled:focus,.jt-btn[disabled]:active,.jt-btn[disabled].active,.jt-btn[disabled]:focus
+	{
+	outline: 0
+}
+
+.jt-btn.disabled:active,.jt-btn[disabled]:active {
+	top: 0;
+	left: 0
+}
+
+.jt-btn.active {
+	color: #efe5b5
+}
+
+.jt-btn.active:after {
+	display: inline-block;
+	content: "";
+	position: absolute;
+	border-bottom: 1px solid #efe5b5;
+	left: -4px;
+	right: -4px;
+	bottom: -4px
+}
+
+.jt-btn-small.active:after {
+	left: -3px;
+	right: -3px;
+	bottom: -3px;
+	border-bottom-width: 1px
+}
+
+.jt-btn-large.active:after {
+	left: -5px;
+	right: -5px;
+	bottom: -5px;
+	border-bottom-width: 1px
+}
+
+.jt-btn-mini.active:after {
+	left: -1px;
+	right: -1px;
+	bottom: -1px;
+	border-bottom-width: 1px
+}
+
+.jt-btn>[class*="icon-"] {
+	margin-right: 4px;
+	font-size: 110%;
+	display: inline;
+	min-width: 12px
+}
+
+.jt-btn-large>[class*="icon-"] {
+	margin-right: 6px;
+	font-size: 100%
+}
+
+.jt-btn-small>[class*="icon-"] {
+	margin-right: 3px;
+	font-size: 100%
+}
+
+.jt-btn-mini>[class*="icon-"] {
+	margin-right: 2px;
+	font-size: 100%
+}
+
+.jt-btn>.icon-round {
+	padding: 1px 2px;
+	border: 2px solid #FFF;
+	border-radius: 16px
+}
+
+.jt-btn>.icon-on-right[class*="icon-"] {
+	margin-right: 0;
+	margin-left: 4px
+}
+
+.jt-btn-large>.icon-on-right[class*="icon-"] {
+	margin-left: 6px;
+	margin-right: 0
+}
+
+.jt-btn-small>.icon-on-right[class*="icon-"] {
+	margin-left: 3px;
+	margin-right: 0
+}
+
+.jt-btn-mini>.icon-on-right[class*="icon-"] {
+	margin-left: 2px;
+	margin-right: 0
+}
+
+.jt-btn>.icon-only {
+	margin: 0;
+	vertical-align: middle;
+	text-align: center;
+	padding: 0;
+	width: 24px
+}
+
+.jt-btn-link {
+	border: none !important;
+	background-color: transparent;
+	color: #08c !important;
+	text-shadow: none !important;
+	padding: 4px 12px !important;
+	line-height: 20px !important
+}
+
+.jt-btn-link:hover {
+	background: none !important;
+	text-shadow: none !important
+}
+
+.jt-btn-link.active {
+	background: none !important;
+	text-decoration: underline;
+	color: #07b !important
+}
+
+.jt-btn-link.active:after {
+	display: none
+}
+
+.jt-btn-link.disabled,.jt-btn-link[disabled] {
+	background: 0;
+	opacity: .65
+}
+
+.jt-btn-link.disabled:hover {
+	background: none !important;
+	text-decoration: none !important
+}
+
+.jt-btn-group>.jt-btn:first-child,.jt-btn-group>.jt-btn:last-child {
+	border-radius: 0
+}
+
+.jt-btn-group>.jt-btn+.jt-btn,.jt-btn-group+.jt-btn {
+	margin: 0 1px 0 0
+}
+
+.jt-btn-group>.jt-btn:first-child {
+	margin: 0 1px 0 0
+}
+
+.jt-btn-group>.jt-btn,.jt-btn-group+.jt-btn {
+	margin: 0 1px 0 0;
+	border-width: 3px !important
+}
+
+.jt-btn-group>.jt-btn-large,.jt-btn-group+.jt-btn-large {
+	border-width: 4px !important
+}
+
+.jt-btn-group>.jt-btn-small,.jt-btn-group+.jt-btn-small {
+	border-width: 2px !important
+}
+
+.jt-btn-group>.jt-btn-mini,.jt-btn-group+.jt-btn-mini {
+	border-width: 1px !important
+}
+
+.jt-btn-group-vertical>.jt-btn,.jt-btn-group-vertical>.jt-btn+.jt-btn {
+	margin: 1px 0 0
+}
+
+.jt-btn-group>.jt-btn:after,.jt-btn-group+.jt-btn:after {
+	left: -2px;
+	right: -2px;
+	bottom: -2px;
+	border-bottom-width: 1px
+}
+
+.jt-btn-group>.jt-btn-small:after,.jt-btn-group+.jt-btn-small:after {
+	left: -1px;
+	right: -1px;
+	bottom: -1px;
+	border-bottom-width: 1px
+}
+
+.jt-btn-group>.jt-btn-large:after,.jt-btn-group+.jt-btn-large:after {
+	left: -3px;
+	right: -3px;
+	bottom: -3px;
+	border-bottom-width: 1px
+}
+
+.jt-btn-group>.jt-btn-mini:after,.jt-btn-group+.jt-btn-mini:after {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-bottom-width: 1px
+}
+
+.jt-btn-group>.jt-btn+.jt-btn.dropdown-toggle {
+	padding-right: 3px;
+	padding-left: 3px
+}
+
+.jt-btn-group>.jt-btn+.jt-btn-large.dropdown-toggle {
+	padding-right: 4px;
+	padding-left: 4px
+}
+
+.jt-btn>.caret {
+	margin-top: 15px;
+	margin-left: 1px;
+	border-width: 5px;
+	border-top-color: #FFF
+}
+
+.jt-btn-small>.caret {
+	margin-top: 10px;
+	border-width: 4px
+}
+
+.jt-btn-mini>.caret {
+	margin-top: 9px;
+	border-width: 4px
+}
+
+.jt-btn-large>.caret {
+	margin-top: 18px;
+	border-width: 6px
+}
+
+.jt-btn-group>.dropdown-toggle {
+	border-radius: 0
+}
+
+.jt-btn.jt-btn-app {
+	display: inline-block;
+	width: 100px;
+	margin: 2px;
+	position: relative;
+	font-size: 18px;
+	font-weight: normal;
+	color: #FFF;
+	text-align: center;
+	text-shadow: 0 -1px -1px rgba(0, 0, 0, 0.2) !important;
+	border: 0;
+	border-radius: 12px !important;
+	padding: 12px 0 8px;
+	background: #b3c1cb !important;
+	background: -moz-linear-gradient(top, #bcc9d5 0, #abbac3 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcc9d5),
+		color-stop(100%, #abbac3)) !important;
+	background: -webkit-linear-gradient(top, #bcc9d5 0, #abbac3 100%)
+		!important;
+	background: -o-linear-gradient(top, #bcc9d5 0, #abbac3 100%) !important;
+	background: -ms-linear-gradient(top, #bcc9d5 0, #abbac3 100%) !important;
+	background: linear-gradient(to bottom, #bcc9d5 0, #abbac3 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BCC9D5',
+		endColorstr='#ABBAC3', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-primary {
+	background: #298acb !important;
+	background: -moz-linear-gradient(top, #3b98d6 0, #197ec1 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3b98d6),
+		color-stop(100%, #197ec1)) !important;
+	background: -webkit-linear-gradient(top, #3b98d6 0, #197ec1 100%)
+		!important;
+	background: -o-linear-gradient(top, #3b98d6 0, #197ec1 100%) !important;
+	background: -ms-linear-gradient(top, #3b98d6 0, #197ec1 100%) !important;
+	background: linear-gradient(to bottom, #3b98d6 0, #197ec1 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3B98D6',
+		endColorstr='#197EC1', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-info {
+	background: #78bc43 !important;
+	background: -moz-linear-gradient(top, #75b5e6 0, #5ba4d5 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #75b5e6),
+		color-stop(100%, #5ba4d5)) !important;
+	background: -webkit-linear-gradient(top, #75b5e6 0, #5ba4d5 100%)
+		!important;
+	background: -o-linear-gradient(top, #75b5e6 0, #5ba4d5 100%) !important;
+	background: -ms-linear-gradient(top, #75b5e6 0, #5ba4d5 100%) !important;
+	background: linear-gradient(to bottom, #75b5e6 0, #5ba4d5 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#75B5E6',
+		endColorstr='#5BA4D5', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-success {
+	background: #84b357 !important;
+	background: -moz-linear-gradient(top, #8ebf60 0, #7daa50 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8ebf60),
+		color-stop(100%, #7daa50)) !important;
+	background: -webkit-linear-gradient(top, #8ebf60 0, #7daa50 100%)
+		!important;
+	background: -o-linear-gradient(top, #8ebf60 0, #7daa50 100%) !important;
+	background: -ms-linear-gradient(top, #8ebf60 0, #7daa50 100%) !important;
+	background: linear-gradient(to bottom, #8ebf60 0, #7daa50 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8EBF60',
+		endColorstr='#7DAA50', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-danger {
+	background: #d23e37 !important;
+	background: -moz-linear-gradient(top, #d55b52 0, #d12723 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d55b52),
+		color-stop(100%, #d12723)) !important;
+	background: -webkit-linear-gradient(top, #d55b52 0, #d12723 100%)
+		!important;
+	background: -o-linear-gradient(top, #d55b52 0, #d12723 100%) !important;
+	background: -ms-linear-gradient(top, #d55b52 0, #d12723 100%) !important;
+	background: linear-gradient(to bottom, #d55b52 0, #d12723 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D55B52',
+		endColorstr='#D12723', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-warning {
+	background: #ffb752 !important;
+	background: -moz-linear-gradient(top, #ffbf66 0, #ffa830 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffbf66),
+		color-stop(100%, #ffa830)) !important;
+	background: -webkit-linear-gradient(top, #ffbf66 0, #ffa830 100%)
+		!important;
+	background: -o-linear-gradient(top, #ffbf66 0, #ffa830 100%) !important;
+	background: -ms-linear-gradient(top, #ffbf66 0, #ffa830 100%) !important;
+	background: linear-gradient(to bottom, #ffbf66 0, #ffa830 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFBF66',
+		endColorstr='#FFA830', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-purple {
+	background: #9182bb !important;
+	background: -moz-linear-gradient(top, #9b8ac5 0, #8a7cb4 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9b8ac5),
+		color-stop(100%, #8a7cb4)) !important;
+	background: -webkit-linear-gradient(top, #9b8ac5 0, #8a7cb4 100%)
+		!important;
+	background: -o-linear-gradient(top, #9b8ac5 0, #8a7cb4 100%) !important;
+	background: -ms-linear-gradient(top, #9b8ac5 0, #8a7cb4 100%) !important;
+	background: linear-gradient(to bottom, #9b8ac5 0, #8a7cb4 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9B8AC5',
+		endColorstr='#8A7CB4', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-pink {
+	background: #d6487e !important;
+	background: -moz-linear-gradient(top, #db5e8c 0, #ce3970 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #db5e8c),
+		color-stop(100%, #ce3970)) !important;
+	background: -webkit-linear-gradient(top, #db5e8c 0, #ce3970 100%)
+		!important;
+	background: -o-linear-gradient(top, #db5e8c 0, #ce3970 100%) !important;
+	background: -ms-linear-gradient(top, #db5e8c 0, #ce3970 100%) !important;
+	background: linear-gradient(to bottom, #db5e8c 0, #ce3970 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DB5E8C',
+		endColorstr='#CE3970', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-inverse {
+	background: #393939 !important;
+	background: -moz-linear-gradient(top, #494949 0, #303030 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #494949),
+		color-stop(100%, #303030)) !important;
+	background: -webkit-linear-gradient(top, #494949 0, #303030 100%)
+		!important;
+	background: -o-linear-gradient(top, #494949 0, #303030 100%) !important;
+	background: -ms-linear-gradient(top, #494949 0, #303030 100%) !important;
+	background: linear-gradient(to bottom, #494949 0, #303030 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#494949',
+		endColorstr='#303030', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-grey {
+	background: #888 !important;
+	background: -moz-linear-gradient(top, #848484 0, #707070 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #848484),
+		color-stop(100%, #707070)) !important;
+	background: -webkit-linear-gradient(top, #848484 0, #707070 100%)
+		!important;
+	background: -o-linear-gradient(top, #848484 0, #707070 100%) !important;
+	background: -ms-linear-gradient(top, #848484 0, #707070 100%) !important;
+	background: linear-gradient(to bottom, #848484 0, #707070 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#848484',
+		endColorstr='#707070', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-light {
+	color: #5a5a5a !important;
+	text-shadow: 0 1px 1px #EEE !important;
+	border: 2px solid #DDD;
+	background: #EEE !important;
+	background: -moz-linear-gradient(top, #f4f4f4 0, #e6e6e6 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4),
+		color-stop(100%, #e6e6e6)) !important;
+	background: -webkit-linear-gradient(top, #f4f4f4 0, #e6e6e6 100%)
+		!important;
+	background: -o-linear-gradient(top, #f4f4f4 0, #e6e6e6 100%) !important;
+	background: -ms-linear-gradient(top, #f4f4f4 0, #e6e6e6 100%) !important;
+	background: linear-gradient(to bottom, #f4f4f4 0, #e6e6e6 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F4F4F4',
+		endColorstr='#E6E6E6', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-yellow {
+	color: #963 !important;
+	text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.4) !important;
+	border: 2px solid #fee188;
+	background: #fee188 !important;
+	background: -moz-linear-gradient(top, #ffe8a5 0, #fcd76a 100%)
+		!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffe8a5),
+		color-stop(100%, #fcd76a)) !important;
+	background: -webkit-linear-gradient(top, #ffe8a5 0, #fcd76a 100%)
+		!important;
+	background: -o-linear-gradient(top, #ffe8a5 0, #fcd76a 100%) !important;
+	background: -ms-linear-gradient(top, #ffe8a5 0, #fcd76a 100%) !important;
+	background: linear-gradient(to bottom, #ffe8a5 0, #fcd76a 100%)
+		!important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE8A5',
+		endColorstr='#FCD76A', GradientType=0) !important
+}
+
+.jt-btn-app.jt-btn-yellow.active {
+	border-color: #fee188
+}
+
+.jt-btn.jt-btn-app>[class*=icon] {
+	display: block;
+	font-size: 42px;
+	margin: 0 0 4px;
+	line-height: 36px;
+	min-width: 0;
+	padding: 0
+}
+
+.jt-btn.jt-btn-app.jt-btn-small {
+	width: 80px;
+	font-size: 16px;
+	border-radius: 10px !important;
+	padding-bottom: 9px
+}
+
+.jt-btn.jt-btn-app.jt-btn-small>[class*=icon] {
+	display: block;
+	font-size: 32px;
+	line-height: 30px;
+	margin: 0 0 3px
+}
+
+.jt-btn.jt-btn-app.jt-btn-mini {
+	width: 64px;
+	font-size: 15px;
+	border-radius: 8px !important;
+	padding-bottom: 7px;
+	padding-top: 8px
+}
+
+.jt-btn.jt-btn-app.jt-btn-mini>[class*=icon] {
+	display: block;
+	font-size: 24px;
+	line-height: 24px;
+	margin: 0
+}
+
+.jt-btn.jt-btn-app.jt-btn-mini.jt-btn-light {
+	width: 64px;
+	padding-bottom: 6px
+}
+
+.jt-btn.jt-btn-app.no-radius {
+	border-radius: 0 !important
+}
+
+.jt-btn.jt-btn-app.radius-4 {
+	border-radius: 4px !important
+}
+
+.jt-btn-app>.badge,.jt-btn-app>.label {
+	position: absolute !important;
+	top: -2px;
+	right: -2px;
+	padding: 1px 3px;
+	text-align: center;
+	font-size: 12px
+}
+
+.jt-btn-app>.label {
+	padding: 1px 6px 3px;
+	font-size: 13px
+}
+
+.jt-btn.jt-btn-app.radius-4>.badge,.jt-btn.jt-btn-app.no-radius>.badge {
+	border-radius: 3px
+}
+
+.jt-btn-app>.badge-right,.jt-btn-app>.label-right {
+	right: auto;
+	left: -2px
+}
+
+.jt-btn.jt-btn-app.radius-4>.badge.no-radius,.jt-btn.jt-btn-app.no-radius>.badge.no-radius
+	{
+	border-radius: 0
+}
+
+.jt-btn.jt-btn-app.active {
+	color: #FFF
+}
+
+.jt-btn.jt-btn-app.active:after {
+	display: none
+}
+
+.jt-btn.jt-btn-app.jt-btn-yellow.active {
+	color: #963
+}
+
+.jt-btn.jt-btn-app.jt-btn-light.active {
+	color: #515151
+}
+
+
+.jt-btn.jt-btn-app > .ace-icon {
+  opacity: 0.88;
+}
+.jt-btn.jt-btn-app:hover > .ace-icon {
+  opacity: 1;
+}
+.jt-btn.jt-btn-app.jt-btn-sm {
+  width: 80px;
+  font-size: 16px;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+.jt-btn.jt-btn-app.jt-btn-xs {
+  width: 64px;
+  font-size: 15px;
+  border-radius: 8px;
+  padding-bottom: 7px;
+  padding-top: 8px;
+  line-height: 1.45;
+}
+.jt-btn.jt-btn-app > .ace-icon {
+  display: block;
+  font-size: 42px;
+  margin: 0 0 4px;
+  line-height: 36px;
+  min-width: 0;
+  padding: 0;
+}
+.jt-btn.jt-btn-app.jt-btn-sm > .ace-icon {
+  display: block;
+  font-size: 32px;
+  line-height: 30px;
+  margin: 0 0 3px;
+}
+.jt-btn.jt-btn-app.jt-btn-xs > .ace-icon {
+  display: block;
+  font-size: 24px;
+  line-height: 24px;
+  margin: 0;
+}
+.jt-btn.jt-btn-app.no-radius {
+  border-radius: 0;
+}
+.jt-btn.jt-btn-app.radius-4 {
+  border-radius: 4px;
+}
+.jt-btn.jt-btn-app > .badge,
+.jt-btn.jt-btn-app > .label {
+  position: absolute !important;
+  top: -2px;
+  right: -2px;
+  padding: 1px 3px;
+  text-align: center;
+  font-size: 12px;
+  color: #FFF;
+}
+.jt-btn.jt-btn-app > .badge.badge-left,
+.jt-btn.jt-btn-app > .label.badge-left,
+.jt-btn.jt-btn-app > .badge.label-left,
+.jt-btn.jt-btn-app > .label.label-left {
+  right: auto;
+  left: -2px;
+}
+.jt-btn.jt-btn-app > .label {
+  padding: 1px 6px 3px;
+  font-size: 13px;
+}
+.jt-btn.jt-btn-app.radius-4 > .badge,
+.jt-btn.jt-btn-app.no-radius > .badge {
+  border-radius: 3px;
+}
+.jt-btn.jt-btn-app.radius-4 > .badge.no-radius,
+.jt-btn.jt-btn-app.no-radius > .badge.no-radius {
+  border-radius: 0;
+}
+.jt-btn.jt-btn-app.active {
+  color: #ffffff;
+}
+.jt-btn.jt-btn-app.active:after {
+  display: none;
+}
+.jt-btn.jt-btn-app.active.jt-btn-yellow {
+  color: #996633;
+  border-color: #fee188;
+}
+.jt-btn.jt-btn-app.active.jt-btn-light {
+  color: #515151;
+}
+.jt-btn-group > .jt-btn-app:first-child:not(:last-child):not(.dropdown-toggle) {
+  margin-right: 24px;
+}
+.jt-btn-group > .jt-btn-app + .jt-btn-app.dropdown-toggle {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-left: -23px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  right: 0;
+}
+.jt-btn.jt-btn-app.jt-btn-light,
+.jt-btn.jt-btn-app.jt-btn-yellow {
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset !important;
+}
+.label {
+  border-radius: 0;
+  text-shadow: none;
+  font-weight: normal;
+  display: inline-block;
+  background-color: #abbac3 !important;
+}
+.label[class*="col-"][class*="arrow"] {
+  min-height: 0;
+}

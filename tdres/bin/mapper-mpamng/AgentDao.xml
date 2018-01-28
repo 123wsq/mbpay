@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentDao">
+	<resultMap type="AgentInf" id="AgentMap">
+		<id property="agentId" column="AGENT_ID" />
+		<result property="logonName"     column="LOGON_NAME" />
+		<result property="agentDgr"     column="AGENT_DGR" />
+		<result property="fathAgentId"    column="FATH_AGENT_ID" />
+		<result property="firstAgentId"      column="FIRST_AGENT_ID" />
+		<result property="agentName" column="AGENT_NAME" />
+		<result property="legalName"   column="LEGAL_NAME" />
+		<result property="legalIdentityNo"  column="LEGAL_IDENTITY_NO" />
+		<result property="licNo" column="LIC_NO" />
+		<result property="taxNo" column="TAX_NO" />
+		<result property="address" column="ADDRESS" />
+		<result property="tel" column="TEL" />
+		<result property="moblieNo" column="MOBLIE_NO" />
+		<result property="email" column="EMAIL" />
+		<result property="frozState" column="FROZ_STATE" />
+		<result property="margin" column="MARGIN" />
+		<result property="contractStrDate" column="CONTRACT_STR_DATE" />
+		<result property="contractEndDate" column="CONTRACT_END_DATE" />
+		<result property="agentStatus" column="AGE_STATUS" />
+		<result property="remark" column="REMARK" />
+		<result property="filed1" column="FILED1" />
+		<result property="filed2" column="FILED2" />
+		<result property="techcontact" column="TECHCONTACT" />
+		<result property="techtelno" column="TECHTELNO" />
+		<result property="techemail" column="TECHEMAIL" />
+		<result property="techmobno" column="TECHMOBNO" />
+		<result property="city" column="CITY" />
+		<result property="province" column="PROVINCE" />
+		<result property="bizcontact" column="BIZCONTACT" />
+		<result property="bizmobno" column="BIZMOBNO" />
+		<result property="servcontact" column="SERVCONTACT" />
+		<result property="servmobno" column="SERVMOBNO" />
+		<result property="oemState" column="OEM_STATE" />
+		<result property="slttyp" column="SLTTYP" />
+		<result property="efftim" column="EFFTIM" />
+		<result property="tiflg" column="TIFLG" />
+		<result property="bankpayacno" column="BANKPAYACNO" />
+		<result property="bankpayusernm" column="BANKPAYUSERNM" />
+		<result property="bankcode" column="BANKCODE" />
+		<result property="bondCardNo" column="BONDCARDNO" />
+		<result property="bondCardName" column="BONDCARDNAME" />
+		<result property="bondBankCode" column="BONDBANKCODE" />
+		<result property="bankCity" column="BANK_CITY" />
+		<result property="bankProvince" column="BANK_PROVINCE" />
+		<result property="subBranch" column="SUB_BRANCH" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="editDate" column="EDIT_DATE" />
+		<result property="editUserId" column="EDIT_USER_ID" />
+		<result property="agentCode" column="AGENT_CODE" />
+		<result property="fatherCode" column="FATHER_CODE" />
+		<result property="applyAgentId" column="APPLY_AGENT_ID" />
+		<result property="auditAgentid" column="AUDIT_AGENTID" />
+		<result property="profitRatio" column="PROFIT_RATIO" />
+		<result property="oemPicId" column="OEM_PIC_ID" />
+		<result property="openingLicensePicId" column="OPENING_LICENSE_PIC_ID" />
+		<result property="businessLicensePicId" column="BUSINESS_LICENSE_PIC_ID" />
+		<result property="legalIdentityPicId" column="LEGAL_IDENTITY_PIC_ID" />
+		<result property="taxNoPicId" column="TAX_NO_PIC_ID" />
+		
+		<result property="rateTCas" column="RATE_TCAS" />
+		<result property="rateLivelihood" column="RATE_LIVELIHOOD" />
+		<result property="rateGeneral" column="RATE_GENERAL" />
+		<result property="rateGeneralTop" column="RATE_GENERAL_TOP" />
+		<result property="rateGeneralMaximun" column="RATE_GENERAL_MAXIMUN" />
+		<result property="rateEntertain" column="RATE_ENTERTAIN" />
+		<result property="rateEntertainTop" column="RATE_ENTERTAIN_TOP" />
+		<result property="rateEntertainMaximun" column="RATE_ENTERTAIN_MAXIMUN" />
+		
+		<result property="auditStatus" column="AUDIT_STATUS" />
+		<result property="auditFailReason" column="AUDIT_FAIL_REASON" />
+		
+		<result property="maxTCas" column="MAX_TCAS" />
+		
+		<result property="custId" column="CUST_ID"/>
+		
+	</resultMap>
+	
+	<resultMap type="CityInf" id="cityMap">
+		<result property="cityId" column="CITY_ID" />
+		<result property="cityName" column="CITY_NAME" />
+		<result property="provinceId" column="PROVINCE_ID" />
+	</resultMap>
+	
+	<resultMap type="ProvinceInf" id="provinceMap">
+		<result property="provinceId" column="PROVINCE_ID" />
+		<result property="provinceName" column="PROVINCE_NAME" />
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="platformParameterMap">
+		    <result property="paraCode"               column="PARA_CODE" /> 
+		    <result property="paraName"               column="PARA_NAME" /> 
+		    <result property="paraType"               column="PARA_TYPE" /> 
+		    <result property="paraVal"               column="PARA_VAL" /> 
+		    <result property="paraMaxmoney"               column="PARA_MAXMONEY" /> 
+		    <result property="paraValType"               column="PARA_VAL_TYPE" /> 
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="agentShareMap">
+		<result property="rateCode" 					column="RATE_CODE"/>
+		<result property="custId" 						column="RATE_ID"/>
+		<result property="rateType" 					column="RATE_TYPE"/>
+		<result property="rateTCas" 					column="RATE_TCAS"/>
+		<result property="rateTCasMax" 					column="RATE_TCAS_MAX"/>
+		<result property="maxTCas" 						column="MAX_TCAS"/>
+		<result property="rateLivelihood" 				column="RATE_LIVELIHOOD"/>
+		<result property="rateGeneral" 					column="RATE_GENERAL"/>
+		<result property="rateEntertain" 				column="RATE_ENTERTAIN"/>
+		<result property="rateGeneralTop" 				column="RATE_GENERAL_TOP"/>
+		<result property="rateGeneralMaximun" 			column="RATE_GENERAL_MAXIMUN"/>
+		<result property="rateEntertainTop" 			column="RATE_ENTERTAIN_TOP"/>
+		<result property="rateEntertainMaximun" 		column="RATE_ENTERTAIN_MAXIMUN"/>
+		<result property="shareRate" 					column="SHARE_RATE"/>
+		<result property="insertTime" 					column="INS_TIM"/>
+		<result property="updateTime" 					column="IPD_TIM"/>
+	</resultMap>
+
+	<insert id="insertEntity" parameterType="AgentInf">
+		INSERT INTO MPAMNG_AGENT_INF (AGENT_ID, LOGON_NAME, AGENT_DGR,
+		FATH_AGENT_ID, FIRST_AGENT_ID, AGENT_NAME, LEGAL_NAME,
+		LEGAL_IDENTITY_NO,
+		LIC_NO, TAX_NO, ADDRESS, TEL, MOBLIE_NO, EMAIL, FROZ_STATE, MARGIN,
+		CONTRACT_STR_DATE, CONTRACT_END_DATE, AGE_STATUS,
+		REMARK, FILED1, FILED2, TECHCONTACT, TECHTELNO, TECHEMAIL, TECHMOBNO, CITY,
+		PROVINCE, BIZCONTACT,
+		BIZMOBNO, SERVCONTACT, SERVMOBNO, OEM_STATE, SLTTYP, EFFTIM, TIFLG,
+		BANKPAYACNO, BANKPAYUSERNM,
+		BANKCODE,BONDCARDNO,BONDCARDNAME,BONDBANKCODE,BANK_CITY,BANK_PROVINCE,SUB_BRANCH,
+		CREATE_DATE, CREATE_USER_ID, EDIT_DATE,EDIT_USER_ID,
+		AGENT_CODE, FATHER_CODE, AUDIT_AGENTID, PROFIT_RATIO,
+		OEM_PIC_ID, OPENING_LICENSE_PIC_ID, BUSINESS_LICENSE_PIC_ID,
+		LEGAL_IDENTITY_PIC_ID, TAX_NO_PIC_ID,
+		RATE_TCAS,RATE_LIVELIHOOD, RATE_GENERAL, RATE_GENERAL_TOP,RATE_GENERAL_MAXIMUN, RATE_ENTERTAIN,
+		RATE_ENTERTAIN_TOP,RATE_ENTERTAIN_MAXIMUN,MAX_TCAS
+		)
+		VALUES (#{agentId}, #{logonName}, #{agentDgr}, #{fathAgentId},
+		#{firstAgentId}, #{agentName}, #{legalName}, #{legalIdentityNo},
+		#{licNo}, #{taxNo}, #{address}, #{tel}, #{moblieNo}, #{email},
+		#{frozState}, #{margin}, #{contractStrDate}, #{contractEndDate},
+		#{agentStatus},
+		#{remark}, #{filed1}, #{filed2}, #{techcontact}, #{techtelno}, #{techemail},
+		#{techmobno}, #{city}, #{province}, #{bizcontact},
+		#{bizmobno}, #{servcontact}, #{servmobno}, #{oemState}, #{slttyp}, #{efftim},
+		#{tiflg},
+		#{bankpayacno}, #{bankpayusernm},
+		#{bankcode},#{bondCardNo},#{bondCardName},#{bondBankCode},#{bankCity},#{bankProvince},#{subBranch},
+		#{createDate}, #{createUserId}, #{editDate}, #{editUserId},
+		#{agentCode}, #{fatherCode}, #{auditAgentid}, #{profitRatio},
+		#{oemPicId}, #{openingLicensePicId}, #{businessLicensePicId},
+		#{legalIdentityPicId}, #{taxNoPicId},
+		#{rateTCas},#{rateLivelihood}, #{rateGeneral}, #{rateGeneralTop},#{rateGeneralMaximun},
+		#{rateEntertain},
+		#{rateEntertainTop},#{rateEntertainMaximun},#{maxTCas}
+		)
+	</insert>
+
+	<update id="updateEntity" parameterType="AgentInf">
+		UPDATE MPAMNG_AGENT_INF
+		<set>
+			<if test="logonName != null and logonName != ''">
+				LOGON_NAME = #{logonName},
+			</if>
+			<if test="agentDgr != null and agentDgr != ''">
+				AGENT_DGR = #{agentDgr},
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				FATH_AGENT_ID = #{fathAgentId},
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				FIRST_AGENT_ID = #{firstAgentId},
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AGENT_NAME = #{agentName},
+			</if>
+			<if test="legalName != null and legalName != ''">
+				LEGAL_NAME = #{legalName},
+			</if>
+			<if test="legalIdentityNo != null and legalIdentityNo != ''">
+				LEGAL_IDENTITY_NO = #{legalIdentityNo},
+			</if>
+			<if test="licNo != null and licNo != ''">
+				LIC_NO = #{licNo},
+			</if>
+			<if test="taxNo != null and taxNo != ''">
+				TAX_NO = #{taxNo},
+			</if>
+			<if test="address != null and address != ''">
+				ADDRESS = #{address},
+			</if>
+			<if test="tel != null and tel != ''">
+				TEL = #{tel},
+			</if>
+			<if test="moblieNo != null and moblieNo != ''">
+				MOBLIE_NO = #{moblieNo},
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email},
+			</if>
+			<if test="frozState != null and frozState != ''">
+				FROZ_STATE = #{frozState},
+			</if>
+			<if test="margin != null and margin != ''">
+				MARGIN = #{margin},
+			</if>
+			<if test="contractStrDate != null and contractStrDate != ''">
+				CONTRACT_STR_DATE = #{contractStrDate},
+			</if>
+			<if test="contractEndDate != null and contractEndDate != ''">
+				CONTRACT_END_DATE = #{contractEndDate},
+			</if>
+			<if test="agentStatus != null and agentStatus != ''">
+				AGE_STATUS = #{agentStatus},
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK = #{remark},
+			</if>
+			<if test="filed1 != null and filed1 != ''">
+				FILED1 = #{filed1},
+			</if>
+			<if test="filed2 != null and filed2 != ''">
+				FILED2 = #{filed2},
+			</if>
+			<if test="techcontact != null and techcontact != ''">
+				TECHCONTACT = #{techcontact},
+			</if>
+			<if test="techtelno != null and techtelno != ''">
+				TECHTELNO = #{techtelno},
+			</if>
+			<if test="techemail != null and techemail != ''">
+				TECHEMAIL = #{techemail},
+			</if>
+			<if test="techmobno != null and techmobno != ''">
+				TECHMOBNO = #{techmobno},
+			</if>
+			<if test="city != null and city != ''">
+				CITY = #{city},
+			</if>
+			<if test="province != null and province != ''">
+				PROVINCE = #{province},
+			</if>
+			<if test="bizcontact != null and bizcontact != ''">
+				BIZCONTACT = #{bizcontact},
+			</if>
+			<if test="bizmobno != null and bizmobno != ''">
+				BIZMOBNO = #{bizmobno},
+			</if>
+			<if test="servcontact != null and servcontact != ''">
+				SERVCONTACT = #{servcontact},
+			</if>
+			<if test="servmobno != null and servmobno != ''">
+				SERVMOBNO = #{servmobno},
+			</if>
+			<if test="oemState != null and oemState != ''">
+				OEM_STATE = #{oemState},
+			</if>
+			<if test="slttyp != null and slttyp != ''">
+				SLTTYP = #{slttyp},
+			</if>
+			<if test="efftim != null and efftim != ''">
+				EFFTIM = #{efftim},
+			</if>
+			<if test="tiflg != null and tiflg != ''">
+				TIFLG = #{tiflg},
+			</if>
+			<if test="bankpayacno != null and bankpayacno != ''">
+				BANKPAYACNO = #{bankpayacno},
+			</if>
+			<if test="bankpayusernm != null and bankpayusernm != ''">
+				BANKPAYUSERNM = #{bankpayusernm},
+			</if>
+			
+			<if test="bankcode != null and bankcode != ''">
+				BANKCODE = #{bankcode},
+			</if>
+			<if test="bondCardNo != null and bondCardNo != ''">
+				BONDCARDNO = #{bondCardNo},
+			</if>
+			<if test="bondCardName != null and bondCardName != ''">
+				BONDCARDNAME = #{bondCardName},
+			</if>
+			<if test="bondBankCode != null and bondBankCode != ''">
+				BONDBANKCODE = #{bondBankCode},
+			</if>
+			<if test="bankCity != null and bankCity != ''">
+				BANK_CITY = #{bankCity},
+			</if>
+			<if test="bankProvince != null and bankProvince != ''">
+				BANK_PROVINCE = #{bankProvince},
+			</if>
+			<if test="subBranch != null and subBranch != ''">
+				SUB_BRANCH = #{subBranch},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				CREATE_DATE = #{createDate},
+			</if>
+			<if test="createUserId != null and createUserId != ''">
+				CREATE_USER_ID = #{createUserId},
+			</if>
+			<if test="editDate != null and editDate != ''">
+				EDIT_DATE = #{editDate},
+			</if>
+			<if test="editUserId != null and editUserId != ''">
+				EDIT_USER_ID = #{editUserId},
+			</if>
+			<if test="agentCode != null and agentCode != ''">
+				AGENT_CODE = #{agentCode},
+			</if>
+			<if test="fatherCode != null and fatherCode != ''">
+				FATHER_CODE = #{fatherCode},
+			</if>
+			<if test="auditAgentid != null and auditAgentid != ''">
+				AUDIT_AGENTID = #{auditAgentid},
+			</if>
+			<if test="profitRatio != null and profitRatio != ''">
+				PROFIT_RATIO = #{profitRatio},
+			</if>
+			<if test="oemPicId != null and oemPicId != ''">
+				OEM_PIC_ID = #{oemPicId},
+			</if>
+			<if test="openingLicensePicId != null and openingLicensePicId != ''">
+				OPENING_LICENSE_PIC_ID = #{openingLicensePicId},
+			</if>
+			<if test="businessLicensePicId != null and businessLicensePicId != ''">
+				BUSINESS_LICENSE_PIC_ID = #{businessLicensePicId},
+			</if>
+			<if test="legalIdentityPicId != null and legalIdentityPicId != ''">
+				LEGAL_IDENTITY_PIC_ID = #{legalIdentityPicId},
+			</if>
+			<if test="taxNoPicId != null and taxNoPicId != ''">
+				TAX_NO_PIC_ID = #{taxNoPicId},
+			</if>
+			<if test="rateTCas != null and rateTCas != ''">
+				RATE_TCAS = #{rateTCas},
+			</if>
+			<if test="rateLivelihood != null">
+				RATE_LIVELIHOOD = #{rateLivelihood},
+			</if>
+			<if test="rateGeneral != null">
+				RATE_GENERAL = #{rateGeneral},
+			</if>
+			<if test="rateGeneralTop != null"  >
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+			</if>
+			<if test="rateEntertain != null">
+				RATE_ENTERTAIN = #{rateEntertain},
+			</if>
+			<if test="rateEntertainTop != null">
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			</if>
+			<if test="rateGeneralMaximun != null">
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			</if>
+			<if test="rateEntertainMaximun != null">
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			</if>
+			
+			<if test="maxTCas != null">
+				MAX_TCAS = #{maxTCas},
+			</if>
+		</set>
+		WHERE
+			 AGENT_ID = #{agentId}
+	</update>
+
+	<delete id="deleteEntity" parameterType="AgentInf">
+		DELETE FROM MPAMNG_AGENT_INF WHERE AGENT_ID = #{agentId}
+	</delete>
+
+	
+	<select id="selectEntity" parameterType="AgentInf" resultMap="AgentMap">
+		SELECT AGENT_ID, LOGON_NAME, AGENT_DGR, FATH_AGENT_ID, FIRST_AGENT_ID, AGENT_NAME,
+			LEGAL_NAME, LEGAL_IDENTITY_NO, LIC_NO, TAX_NO, ADDRESS, TEL, MOBLIE_NO,
+			EMAIL, FROZ_STATE, MARGIN, CONTRACT_STR_DATE, CONTRACT_END_DATE, AGE_STATUS,
+			REMARK, FILED1, FILED2, TECHCONTACT, TECHTELNO, TECHEMAIL, TECHMOBNO, CITY,
+			PROVINCE, BIZCONTACT, BIZMOBNO, SERVCONTACT, SERVMOBNO, OEM_STATE, SLTTYP,
+			EFFTIM, TIFLG, BANKPAYACNO, BANKPAYUSERNM, BANKCODE,BONDCARDNO,BONDCARDNAME,BONDBANKCODE,BANK_CITY,BANK_PROVINCE,SUB_BRANCH, CREATE_DATE, CREATE_USER_ID,
+			EDIT_DATE, EDIT_USER_ID, AGENT_CODE, FATHER_CODE, AUDIT_AGENTID, PROFIT_RATIO,
+			OEM_PIC_ID, OPENING_LICENSE_PIC_ID, BUSINESS_LICENSE_PIC_ID, LEGAL_IDENTITY_PIC_ID,
+			TAX_NO_PIC_ID, RATE_TCAS,RATE_LIVELIHOOD, RATE_GENERAL, RATE_GENERAL_TOP, RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP, 
+			RATE_GENERAL_MAXIMUN,
+		 	RATE_ENTERTAIN_MAXIMUN,
+		 	MAX_TCAS
+			FROM
+				MPAMNG_AGENT_INF
+			WHERE
+				AGENT_ID = #{agentId}
+	</select>
+
+	
+	<select id="countEntity" parameterType="AgentInf" resultType="java.lang.Integer">
+		SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF
+		<where>
+		    <if test="oemState != null and oemState != ''">
+				and OEM_STATE =#{oemState}
+			</if>
+			<if test="agentStatus != null and agentStatus != ''">
+				and AGE_STATUS =#{agentStatus}
+			</if>
+			<if test="frozState != null and frozState != ''">
+				and FROZ_STATE =#{frozState}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%') 
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				and FATH_AGENT_ID LIKE CONCAT('%',#{fathAgentId},'%') 
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				and FIRST_AGENT_ID LIKE CONCAT('%',#{firstAgentId},'%') 
+			</if>
+			<if test="logonName != null and logonName != ''">
+				and LOGON_NAME LIKE CONCAT('%',#{logonName},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				and AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+			</if>
+			<if test="agentDgr != null and agentDgr != ''">
+				and AGENT_DGR = #{agentDgr}
+			</if>
+			<if test="legalName != null and legalName != ''">
+				and LEGAL_NAME LIKE CONCAT('%',#{legalName},'%')
+			</if>
+			<if test="agentCode != null and agentCode != ''">
+				and AGENT_CODE LIKE CONCAT('%',#{agentCode},'%') and AGENT_CODE != #{agentCode}
+			</if>
+			
+		</where>
+	</select>
+	
+	<select id="selectList" parameterType="AgentInf" resultMap="AgentMap" databaseId="mysql">
+						SELECT
+								AGENT_ID,
+								LOGON_NAME,
+								AGENT_NAME,
+								FATH_AGENT_ID,
+								FIRST_AGENT_ID,
+								MARGIN,
+								AGE_STATUS,
+								CREATE_DATE,
+								AGENT_DGR,
+								LEGAL_NAME,
+								AGENT_CODE,
+								OEM_STATE,
+								AGE_STATUS,
+								FROZ_STATE,
+					            RATE_LIVELIHOOD,
+								RATE_GENERAL,
+								RATE_GENERAL_TOP,
+								RATE_GENERAL_MAXIMUN,
+								RATE_ENTERTAIN,
+								RATE_ENTERTAIN_TOP,
+								RATE_ENTERTAIN_MAXIMUN,
+								FILED1,
+								RATE_TCAS,
+								MAX_TCAS	
+						FROM MPAMNG_AGENT_INF
+		<where>
+		   <if test="oemState != null and oemState != ''">
+				and OEM_STATE =#{oemState}
+			</if>
+			<if test="agentStatus != null and agentStatus != ''">
+				and AGE_STATUS =#{agentStatus}
+			</if>
+			<if test="frozState != null and frozState != ''">
+				and FROZ_STATE =#{frozState}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%') 
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				and FATH_AGENT_ID LIKE CONCAT('%',#{fathAgentId},'%') 
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				and FIRST_AGENT_ID LIKE CONCAT('%',#{firstAgentId},'%') 
+			</if>
+			<if test="logonName != null and logonName != ''">
+				and LOGON_NAME LIKE CONCAT('%',#{logonName},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				and AGENT_NAME LIKE CONCAT('%',#{agentName},'%')
+			</if>
+			<if test="agentDgr != null and agentDgr != ''">
+				and AGENT_DGR = #{agentDgr}
+			</if>
+			<if test="legalName != null and legalName != ''">
+				and LEGAL_NAME LIKE CONCAT('%',#{legalName},'%')
+			</if>
+			<if test="agentCode != null and agentCode != ''">
+				and AGENT_CODE LIKE CONCAT('%',#{agentCode},'%') and AGENT_CODE != #{agentCode}
+			</if>
+			<if test="filed1 != null and filed1 != ''">
+				and FILED1 =#{filed1}
+			</if>
+		</where>
+		ORDER BY AGENT_ID DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="countTempEntity" parameterType="AgentInf" resultType="java.lang.Integer">
+		SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF_TEMP
+		<where>
+			<if test="agentDgr != null and agentDgr != ''">
+				and AGENT_DGR = #{agentDgr}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				and FATH_AGENT_ID LIKE CONCAT('%',#{fathAgentId},'%') 
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				and FIRST_AGENT_ID LIKE CONCAT('%',#{firstAgentId},'%') 
+			</if>
+			<if test="logonName != null and logonName != ''">
+				and LOGON_NAME LIKE CONCAT('%',#{logonName},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				and AGENT_NAME LIKE CONCAT('%',#{agentName},'%') 
+			</if>
+			<if test="legalName != null and legalName != ''">
+				and LEGAL_NAME LIKE CONCAT('%',#{legalName},'%') 
+			</if>
+			<if test="auditAgentid != null and auditAgentid != ''">
+				and AUDIT_AGENTID =#{auditAgentid}
+			</if>
+			<if test="applyAgentId != null and applyAgentId != ''">
+				or APPLY_AGENT_ID =#{applyAgentId}
+			</if>
+			<if test="auditStatus != null and auditStatus != ''">
+				or AUDIT_STATUS =#{auditStatus}
+			</if>
+		</where>
+	</select>
+	
+	<select id="countStatus" parameterType="AgentInf" resultType="java.lang.Integer">
+		SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF_TEMP
+		<where>
+			<if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+			</if>
+			<if test="auditStatus != null and auditStatus != ''">
+				and AUDIT_STATUS =#{auditStatus}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertTempEntity" parameterType="AgentInf">
+		INSERT INTO MPAMNG_AGENT_INF_TEMP (AGENT_ID, LOGON_NAME, AGENT_DGR, FATH_AGENT_ID, FIRST_AGENT_ID, AGENT_NAME, LEGAL_NAME, LEGAL_IDENTITY_NO,
+			LIC_NO, TAX_NO, ADDRESS, TEL, MOBLIE_NO, EMAIL, FROZ_STATE, MARGIN, CONTRACT_STR_DATE, CONTRACT_END_DATE, AGE_STATUS,
+			REMARK, FILED1, FILED2, TECHCONTACT, TECHTELNO, TECHEMAIL, TECHMOBNO, CITY, PROVINCE, BIZCONTACT,
+			BIZMOBNO, SERVCONTACT, SERVMOBNO, OEM_STATE, SLTTYP, EFFTIM, TIFLG,
+			BANKPAYACNO, BANKPAYUSERNM, BANKCODE,BONDCARDNO,BONDCARDNAME,BONDBANKCODE,BANK_CITY,BANK_PROVINCE,SUB_BRANCH, CREATE_DATE, CREATE_USER_ID, EDIT_DATE,EDIT_USER_ID,
+			AGENT_CODE, FATHER_CODE, APPLY_AGENT_ID, AUDIT_AGENTID, PROFIT_RATIO, 
+			OEM_PIC_ID, OPENING_LICENSE_PIC_ID, BUSINESS_LICENSE_PIC_ID, LEGAL_IDENTITY_PIC_ID, TAX_NO_PIC_ID,
+			RATE_TCAS,RATE_LIVELIHOOD, RATE_GENERAL, RATE_GENERAL_TOP,RATE_GENERAL_MAXIMUN, RATE_ENTERTAIN, RATE_ENTERTAIN_TOP, RATE_ENTERTAIN_MAXIMUN,
+			AUDIT_STATUS, AUDIT_FAIL_REASON,MAX_TCAS
+			)
+		VALUES (#{agentId}, #{logonName}, #{agentDgr}, #{fathAgentId}, #{firstAgentId}, #{agentName}, #{legalName}, #{legalIdentityNo},
+			#{licNo}, #{taxNo}, #{address}, #{tel}, #{moblieNo}, #{email}, #{frozState}, #{margin}, #{contractStrDate}, #{contractEndDate}, #{agentStatus},
+			#{remark}, #{filed1}, #{filed2}, #{techcontact}, #{techtelno}, #{techemail}, #{techmobno}, #{city}, #{province}, #{bizcontact},
+			#{bizmobno}, #{servcontact}, #{servmobno}, #{oemState}, #{slttyp}, #{efftim}, #{tiflg},
+			#{bankpayacno}, #{bankpayusernm}, #{bankcode},#{bondCardNo},#{bondCardName},#{bondBankCode},#{bankCity},#{bankProvince},#{subBranch}, #{createDate}, #{createUserId}, #{editDate}, #{editUserId},
+			#{agentCode}, #{fatherCode}, #{applyAgentId}, #{auditAgentid}, #{profitRatio}, 
+			#{oemPicId}, #{openingLicensePicId}, #{businessLicensePicId}, #{legalIdentityPicId}, #{taxNoPicId},
+			#{rateTCas},#{rateLivelihood}, #{rateGeneral}, #{rateGeneralTop},#{rateGeneralMaximun},#{rateEntertain}, #{rateEntertainTop},#{rateEntertainMaximun},
+			#{auditStatus}, #{auditFailReason},#{maxTCas}
+			)
+	</insert>
+	
+	<update id="updateAuditStatus" parameterType="AgentInf">
+		UPDATE MPAMNG_AGENT_INF_TEMP
+		<set>
+			<if test="auditStatus != null and auditStatus != ''">
+				AUDIT_STATUS = #{auditStatus},
+			</if>
+			<if test="auditFailReason != null and auditFailReason != ''">
+				AUDIT_FAIL_REASON = #{auditFailReason},
+			</if>
+		</set>
+		WHERE
+			AGENT_ID = #{agentId}
+	</update>
+	<update id="updateTempEntity" parameterType="AgentInf">
+		UPDATE MPAMNG_AGENT_INF_TEMP
+		<set>
+			<if test="logonName != null and logonName != ''">
+				LOGON_NAME = #{logonName},
+			</if>
+			<if test="agentDgr != null and agentDgr != ''">
+				AGENT_DGR = #{agentDgr},
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				FATH_AGENT_ID = #{fathAgentId},
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				FIRST_AGENT_ID = #{firstAgentId},
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AGENT_NAME = #{agentName},
+			</if>
+			<if test="legalName != null and legalName != ''">
+				LEGAL_NAME = #{legalName},
+			</if>
+			<if test="legalIdentityNo != null and legalIdentityNo != ''">
+				LEGAL_IDENTITY_NO = #{legalIdentityNo},
+			</if>
+			<if test="licNo != null and licNo != ''">
+				LIC_NO = #{licNo},
+			</if>
+			<if test="taxNo != null and taxNo != ''">
+				TAX_NO = #{taxNo},
+			</if>
+			<if test="address != null and address != ''">
+				ADDRESS = #{address},
+			</if>
+			<if test="tel != null and tel != ''">
+				TEL = #{tel},
+			</if>
+			<if test="moblieNo != null and moblieNo != ''">
+				MOBLIE_NO = #{moblieNo},
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email},
+			</if>
+			<if test="frozState != null and frozState != ''">
+				FROZ_STATE = #{frozState},
+			</if>
+			<if test="margin != null and margin != ''">
+				MARGIN = #{margin},
+			</if>
+			<if test="contractStrDate != null and contractStrDate != ''">
+				CONTRACT_STR_DATE = #{contractStrDate},
+			</if>
+			<if test="contractEndDate != null and contractEndDate != ''">
+				CONTRACT_END_DATE = #{contractEndDate},
+			</if>
+			<if test="agentStatus != null and agentStatus != ''">
+				AGE_STATUS = #{agentStatus},
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK = #{remark},
+			</if>
+			<if test="filed1 != null and filed1 != ''">
+				FILED1 = #{filed1},
+			</if>
+			<if test="filed2 != null and filed2 != ''">
+				FILED2 = #{filed2},
+			</if>
+			<if test="techcontact != null and techcontact != ''">
+				TECHCONTACT = #{techcontact},
+			</if>
+			<if test="techtelno != null and techtelno != ''">
+				TECHTELNO = #{techtelno},
+			</if>
+			<if test="techemail != null and techemail != ''">
+				TECHEMAIL = #{techemail},
+			</if>
+			<if test="techmobno != null and techmobno != ''">
+				TECHMOBNO = #{techmobno},
+			</if>
+			<if test="city != null and city != ''">
+				CITY = #{city},
+			</if>
+			<if test="province != null and province != ''">
+				PROVINCE = #{province},
+			</if>
+			<if test="bizcontact != null and bizcontact != ''">
+				BIZCONTACT = #{bizcontact},
+			</if>
+			<if test="bizmobno != null and bizmobno != ''">
+				BIZMOBNO = #{bizmobno},
+			</if>
+			<if test="servcontact != null and servcontact != ''">
+				SERVCONTACT = #{servcontact},
+			</if>
+			<if test="servmobno != null and servmobno != ''">
+				SERVMOBNO = #{servmobno},
+			</if>
+			<if test="oemState != null and oemState != ''">
+				OEM_STATE = #{oemState},
+			</if>
+			<if test="slttyp != null and slttyp != ''">
+				SLTTYP = #{slttyp},
+			</if>
+			<if test="efftim != null and efftim != ''">
+				EFFTIM = #{efftim},
+			</if>
+			<if test="tiflg != null and tiflg != ''">
+				TIFLG = #{tiflg},
+			</if>
+			<if test="bankpayacno != null and bankpayacno != ''">
+				BANKPAYACNO = #{bankpayacno},
+			</if>
+			<if test="bankpayusernm != null and bankpayusernm != ''">
+				BANKPAYUSERNM = #{bankpayusernm},
+			</if>
+			<if test="bankcode != null and bankcode != ''">
+				BANKCODE = #{bankcode},
+			</if>
+			<if test="bondCardNo != null and bondCardNo != ''">
+				BONDCARDNO = #{bondCardNo},
+			</if>
+			<if test="bondCardName != null and bondCardName != ''">
+				BONDCARDNAME = #{bondCardName},
+			</if>
+			<if test="bondBankCode != null and bondBankCode != ''">
+				BONDBANKCODE = #{bondBankCode},
+			</if>
+			<if test="bankCity != null and bankCity != ''">
+				BANK_CITY = #{bankCity},
+			</if>
+			<if test="bankProvince != null and bankProvince != ''">
+				BANK_PROVINCE = #{bankProvince},
+			</if>
+			<if test="subBranch != null and subBranch != ''">
+				SUB_BRANCH = #{subBranch},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				CREATE_DATE = #{createDate},
+			</if>
+			<if test="createUserId != null and createUserId != ''">
+				CREATE_USER_ID = #{createUserId},
+			</if>
+			<if test="editDate != null and editDate != ''">
+				EDIT_DATE = #{editDate},
+			</if>
+			<if test="editUserId != null and editUserId != ''">
+				EDIT_USER_ID = #{editUserId},
+			</if>
+			<if test="agentCode != null and agentCode != ''">
+				AGENT_CODE = #{agentCode},
+			</if>
+			<if test="fatherCode != null and fatherCode != ''">
+				FATHER_CODE = #{fatherCode},
+			</if>
+			<if test="applyAgentId != null and applyAgentId != ''">
+				APPLY_AGENT_ID = #{applyAgentId},
+			</if>
+			<if test="auditAgentid != null and auditAgentid != ''">
+				AUDIT_AGENTID = #{auditAgentid},
+			</if>
+			<if test="profitRatio != null and profitRatio != ''">
+				PROFIT_RATIO = #{profitRatio},
+			</if>
+			<if test="oemPicId != null and oemPicId != ''">
+				OEM_PIC_ID = #{oemPicId},
+			</if>
+			<if test="openingLicensePicId != null and openingLicensePicId != ''">
+				OPENING_LICENSE_PIC_ID = #{openingLicensePicId},
+			</if>
+			<if test="businessLicensePicId != null and businessLicensePicId != ''">
+				BUSINESS_LICENSE_PIC_ID = #{businessLicensePicId},
+			</if>
+			<if test="legalIdentityPicId != null and legalIdentityPicId != ''">
+				LEGAL_IDENTITY_PIC_ID = #{legalIdentityPicId},
+			</if>
+			<if test="taxNoPicId != null and taxNoPicId != ''">
+				TAX_NO_PIC_ID = #{taxNoPicId},
+			</if>
+			<if test="rateTCas != null and rateTCas != ''">
+				RATE_TCAS = #{rateTCas},
+			</if>
+			<if test="rateLivelihood != null and rateLivelihood != ''">
+				RATE_LIVELIHOOD = #{rateLivelihood},
+			</if>
+			<if test="rateGeneral != null and rateGeneral != ''">
+				RATE_GENERAL = #{rateGeneral},
+			</if>
+			<if test="rateGeneralTop != null and rateGeneralTop != ''">
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+			</if>
+			<if test="rateEntertain != null and rateEntertain != ''">
+				RATE_ENTERTAIN = #{rateEntertain},
+			</if>
+			<if test="rateEntertainTop != null and rateEntertainTop != ''">
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			</if>
+			<if test="auditStatus != null and auditStatus != ''">
+				AUDIT_STATUS = #{auditStatus},
+			</if>
+			<if test="auditFailReason != null and auditFailReason != ''">
+				AUDIT_FAIL_REASON = #{auditFailReason},
+			</if>
+			<if test="rateGeneralMaximun != null and rateGeneralMaximun != ''">
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			</if>
+			<if test="rateEntertainMaximun != null and rateEntertainMaximun != ''">
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			</if>
+			<if test="maxTCas != null and maxTCas != ''">
+				MAX_TCAS = #{maxTCas},
+			</if>
+		</set>
+		WHERE
+			AGENT_ID = #{agentId}
+	</update>
+	
+	<delete id="deleteTempEntity" parameterType="AgentInf">
+		DELETE FROM MPAMNG_AGENT_INF_TEMP WHERE AGENT_ID = #{agentId}
+	</delete>
+	
+	<select id="selectTempEntity" parameterType="AgentInf" resultMap="AgentMap">
+		SELECT 
+				AGENT_ID,
+				LOGON_NAME,
+				AGENT_DGR,
+				FATH_AGENT_ID,
+				FIRST_AGENT_ID,
+				AGENT_NAME,
+				LEGAL_NAME,
+				LEGAL_IDENTITY_NO,
+				LIC_NO,
+				TAX_NO,
+				ADDRESS,
+				TEL,
+				MOBLIE_NO,
+				EMAIL,
+				FROZ_STATE,
+				MARGIN,
+				CONTRACT_STR_DATE,
+				CONTRACT_END_DATE,
+				AGE_STATUS,
+				REMARK,
+				FILED1,
+				FILED2,
+				TECHCONTACT,
+				TECHTELNO,
+				TECHEMAIL,
+				TECHMOBNO,
+				CITY,
+				PROVINCE,
+				BIZCONTACT,
+				BIZMOBNO,
+				SERVCONTACT,
+				SERVMOBNO,
+				OEM_STATE,
+				SLTTYP,
+				EFFTIM,
+				TIFLG,
+				BANKPAYACNO,
+				BANKPAYUSERNM,
+				BANKCODE,
+				BONDCARDNO,
+				BONDCARDNAME,
+				BONDBANKCODE,
+				BANK_CITY,
+				BANK_PROVINCE,
+				SUB_BRANCH,
+				CREATE_DATE,
+				CREATE_USER_ID,
+				EDIT_DATE,
+				EDIT_USER_ID,
+				AGENT_CODE,
+				FATHER_CODE,
+				AUDIT_AGENTID,
+				PROFIT_RATIO,
+				OEM_PIC_ID,
+				OPENING_LICENSE_PIC_ID,
+				BUSINESS_LICENSE_PIC_ID,
+				LEGAL_IDENTITY_PIC_ID,
+				TAX_NO_PIC_ID,
+				RATE_TCAS,
+				RATE_LIVELIHOOD,
+				RATE_GENERAL,
+				RATE_GENERAL_TOP,
+				RATE_ENTERTAIN,
+				RATE_ENTERTAIN_TOP,
+				AUDIT_STATUS,
+				AUDIT_FAIL_REASON,
+				RATE_GENERAL_MAXIMUN,
+				RATE_ENTERTAIN_MAXIMUN,
+				MAX_TCAS
+		 FROM MPAMNG_AGENT_INF_TEMP WHERE  AGENT_ID =#{agentId}
+	</select>
+	
+	<select id="selectTempList" parameterType="AgentInf" resultMap="AgentMap" databaseId="mysql">
+		SELECT *
+		FROM MPAMNG_AGENT_INF_TEMP
+		<where>
+			<if test="agentDgr != null and agentDgr != ''">
+				and AGENT_DGR = #{agentDgr}
+			</if>
+			<if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+			</if>
+			<if test="fathAgentId != null and fathAgentId != ''">
+				and FATH_AGENT_ID LIKE CONCAT('%',#{fathAgentId},'%') 
+			</if>
+			<if test="firstAgentId != null and firstAgentId != ''">
+				and FIRST_AGENT_ID LIKE CONCAT('%',#{firstAgentId},'%') 
+			</if>
+			<if test="logonName != null and logonName != ''">
+				and LOGON_NAME LIKE CONCAT('%',#{logonName},'%')
+			</if>
+			<if test="agentName != null and agentName != ''">
+				and AGENT_NAME LIKE CONCAT('%',#{agentName},'%') 
+			</if>
+			<if test="legalName != null and legalName != ''">
+				and LEGAL_NAME LIKE CONCAT('%',#{legalName},'%') 
+			</if>
+			<if test="auditAgentid != null and auditAgentid != ''">
+				and AUDIT_AGENTID =#{auditAgentid}
+			</if>
+			<if test="applyAgentId != null and applyAgentId != ''">
+				or APPLY_AGENT_ID =#{applyAgentId}
+			</if>
+			<if test="auditStatus != null and auditStatus != ''">
+				or AUDIT_STATUS =#{auditStatus}
+			</if>
+		</where>
+		ORDER BY EDIT_DATE DESC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="getCityList" parameterType="CityInf" resultMap="cityMap">
+		SELECT CITY_ID, CITY_NAME, PROVINCE_ID FROM CITY 
+		<where>
+			<if test="provinceId != null and provinceId != ''">
+				and PROVINCE_ID = #{provinceId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getProvinceList" parameterType="ProvinceInf" resultMap="provinceMap">
+		SELECT PROVINCE_ID, PROVINCE_NAME FROM PROVINCE 
+	</select>
+	
+	<select id="queryOem" parameterType="java.util.Map" resultType ="java.lang.String">
+		SELECT OEM_PIC_ID FROM MPAMNG_AGENT_INF  WHERE  AGENT_ID=#{agentId}  AND OEM_STATE='0'
+	</select>
+
+	<select id="countLoNTempEntity" parameterType="AgentInf" resultType="java.lang.Integer">
+	  SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF_TEMP WHERE LOGON_NAME = #{logonName} AND FATH_AGENT_ID = #{fathAgentId} AND AUDIT_STATUS ='0'
+	</select>
+	
+	<select id="countAgeNTempEntity" parameterType="AgentInf" resultType="java.lang.Integer">
+	  SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF_TEMP WHERE AGENT_NAME=#{agentName} AND AUDIT_STATUS ='0'
+	</select>
+	
+	<select id="countAgeNEntity" parameterType="AgentInf" resultType="java.lang.Integer">
+	  SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF WHERE AGENT_NAME=#{agentName}
+	</select>
+	
+	<select id="selectAgentById"  parameterType="AgentInf" resultMap="AgentMap">
+	    SELECT AGENT_DGR,FIRST_AGENT_ID FROM  MPAMNG_AGENT_INF  WHERE AGENT_ID = #{agentId}
+	</select> 
+	
+	<select id="queryplatform"   parameterType="java.util.Map" resultMap="platformParameterMap">
+	     SELECT 
+		         PARA_CODE, 
+		         PARA_NAME, 
+		         PARA_TYPE, 
+		         PARA_VAL, 
+		         PARA_MAXMONEY, 
+		         PARA_VAL_TYPE 
+		FROM 
+		        MPOMNG_PLATFORM_PARAMETER_INF
+	</select>
+	
+	<select id="queryagentrate"  parameterType="AgentInf" resultMap="AgentMap">
+	       SELECT
+	       		AGENT_ID,
+	       		AGENT_NAME,
+				RATE_LIVELIHOOD,
+				RATE_GENERAL,
+				RATE_GENERAL_TOP,
+				RATE_GENERAL_MAXIMUN,
+				RATE_ENTERTAIN,
+				RATE_ENTERTAIN_TOP,
+				RATE_ENTERTAIN_MAXIMUN,
+				PROFIT_RATIO
+			FROM
+				MPAMNG_AGENT_INF
+			WHERE
+				<if test="agentId != null and agentId != ''">
+					 AGENT_ID = #{agentId}
+				</if>
+	</select>
+	
+	<update id="updateAgentStatus" parameterType="AgentInf">
+		UPDATE MPAMNG_AGENT_INF
+		<set>
+			<if test="agentStatus != null and agentStatus != ''">
+				AGE_STATUS = #{agentStatus},
+			</if>
+			<if test="frozState != null and frozState != ''">
+				FROZ_STATE = #{frozState}
+			</if>
+		</set>
+		<where>
+			 AGENT_ID IN (#{ids}) 
+		</where>
+	</update>
+	
+	
+	<select id="queryNextAgent" parameterType="java.util.HashMap" resultType="java.lang.String">
+		SELECT AGENT_ID  FROM MPAMNG_AGENT_INF 
+		WHERE AGENT_CODE LIKE CONCAT('%',(SELECT AGENT_CODE FROM MPAMNG_AGENT_INF WHERE AGENT_ID=#{agentId}),'%')
+	</select>
+	
+	<select id="getAgentList" parameterType="java.util.HashMap" resultMap="AgentMap">
+		SELECT AGENT_ID FROM MPAMNG_AGENT_INF
+		<where>
+			<if test="fathAgentId !=null and fathAgentId !=''">
+				FATH_AGENT_ID=#{fathAgentId}
+			</if>
+			<if test="fathAgentId !=null and fathAgentId !=''">
+				AND AGENT_ID != #{fathAgentId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getListAget" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(AGENT_ID)  FROM MPAMNG_AGENT_INF 
+	 <where>
+		<if test="licNo != null and licNo != ''">
+	 	AND  LIC_NO=#{licNo}
+	 	</if>
+		 <if test="taxNo != null and taxNo != ''">
+	 	AND TAX_NO=#{taxNo}
+	 	</if>
+	 </where>		
+	</select>
+	
+	<update id="updateTerminal" parameterType="AgentInf">
+		UPDATE MPAMNG_TERMINAL_INF aa
+		<set>
+			<if test="rateLivelihood != null ">
+				RATE_LIVELIHOOD = #{rateLivelihood},
+			</if>
+			<if test="rateGeneral != null ">
+				RATE_GENERAL = #{rateGeneral},
+			</if>
+			<if test="rateGeneralTop != null ">
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+			</if>
+			<if test="rateGeneralMaximun != null">
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			</if>
+			<if test="rateEntertain != null">
+				RATE_ENTERTAIN = #{rateEntertain},
+			</if>
+			<if test="rateEntertainTop != null">
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			</if>
+			<if test="rateEntertainMaximun != null">
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			</if>
+			<if test="maxTCas != null and maxTCas != ''">
+				 MAX_TCAS =#{maxTCas},
+			</if>
+			<if test="rateTCas != null and rateTCas != ''">
+				 RATE_TCAS  =#{rateTCas}
+			</if>
+		</set>
+		WHERE
+	EXISTS (select  TERMINAL_ID from( SELECT t.TERMINAL_ID FROM MPAMNG_TERMINAL_INF t
+		LEFT JOIN  MPOMNG_AGE_CUST_REF_INF y ON t.TERMINAL_ID = y.TERMINAL_ID 
+		WHERE AGE_ID = #{agentId} 
+		AND <![CDATA[IFNULL(t.MAX_TCAS,0)<#{terminalMaxTCas}]]> )as tmp WHERE
+			tmp.TERMINAL_ID = aa.TERMINAL_ID)
+				     
+	</update>
+	
+	<select id="checkAgentInfFeeEx" parameterType="AgentInf"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM HX_RATES_INF
+		
+		<where>
+			<if test="rateCode != null and rateCode != '' ">
+				AND RATE_CODE=#{rateCode}
+			</if>
+			<if test="agentId != null and agentId != '' ">
+				AND RATE_ID=#{agentId}
+			</if>
+			<if test="rateType != null and rateType != '' ">
+				AND RATE_TYPE=#{rateType}
+			</if>
+		</where>
+	</select>
+	
+	<select id="checkAgentInfFee" parameterType="AgentInf" resultType="java.lang.Integer">
+		SELECT COUNT(AGENT_ID) FROM MPAMNG_AGENT_INF
+		<where>
+		    <if test="agentId != null and agentId != ''">
+				and AGENT_ID LIKE CONCAT('%',#{agentId},'%')
+			</if>
+			<if test="rateTCas != null and rateTCas != ''">
+				and RATE_TCAS  =#{rateTCas}
+			</if>
+			<if test="rateLivelihood != null and rateLivelihood != ''">
+				and RATE_LIVELIHOOD =#{rateLivelihood}
+			</if>
+			<if test="rateGeneral != null and rateGeneral != ''">
+				and RATE_GENERAL =#{rateGeneral}
+			</if>
+			<if test="rateGeneralTop != null and rateGeneralTop != ''">
+				and RATE_GENERAL_TOP =#{rateGeneralTop}
+			</if>
+			<if test="rateEntertain != null and rateEntertain != ''">
+				and RATE_ENTERTAIN =#{rateEntertain}
+			</if>
+			<if test="rateEntertainTop != null and rateEntertainTop != ''">
+				and RATE_ENTERTAIN_TOP =#{rateEntertainTop}
+			</if>
+			<if test="maxTCas != null and maxTCas != ''">
+				and MAX_TCAS =#{maxTCas}
+			</if>
+			
+		</where>
+	</select>
+	
+	<update id="updateTerminalSum" parameterType="AgentInf">
+		UPDATE MPAMNG_TERMINAL_INF aa
+		<set>
+			<if test="rateLivelihood != null ">
+				RATE_LIVELIHOOD = #{rateLivelihood},
+			</if>
+			<if test="rateGeneral != null ">
+				RATE_GENERAL = #{rateGeneral},
+			</if>
+			<if test="rateGeneralTop != null ">
+				RATE_GENERAL_TOP = #{rateGeneralTop},
+			</if>
+			<if test="rateGeneralMaximun != null">
+				RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			</if>
+			<if test="rateEntertain != null">
+				RATE_ENTERTAIN = #{rateEntertain},
+			</if>
+			<if test="rateEntertainTop != null">
+				RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			</if>
+			<if test="rateEntertainMaximun != null">
+				RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun},
+			</if>
+			<if test="maxTCas != null and maxTCas != ''">
+				 MAX_TCAS =#{maxTCas},
+			</if>
+			<if test="rateTCas != null and rateTCas != ''">
+				 RATE_TCAS  =#{rateTCas}
+			</if>
+		</set>
+		WHERE
+		
+			 EXISTS (select  TERMINAL_ID from(
+					 SELECT t.TERMINAL_ID FROM MPAMNG_TERMINAL_INF t
+				LEFT JOIN  MPOMNG_AGE_CUST_REF_INF y ON t.TERMINAL_ID = y.TERMINAL_ID 
+				WHERE AGE_ID = #{agentId} 
+				AND <![CDATA[(IFNULL(t.RATE_LIVELIHOOD,0)+IFNULL(t.RATE_GENERAL,0)+IFNULL(t.RATE_GENERAL_TOP,0)+IFNULL(t.RATE_ENTERTAIN,0)+IFNULL(t.RATE_TCAS,0)+IFNULL(t.RATE_ENTERTAIN_TOP,0))<#{terminalSum}]]>
+				 ) as tmp WHERE
+			tmp.TERMINAL_ID = aa.TERMINAL_ID)			     
+	</update>
+	
+	<update id="agentRateAdjust" parameterType="java.util.HashMap">
+		UPDATE MPAMNG_AGENT_INF 
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100.0*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_GENERAL = FORMAT(#{rateAjst}/100.0*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100.0*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS = FORMAT(#{rateAjst}/100.0*RATE_TCAS,2)
+			</if>
+		</set>
+		<where>
+		    <if test="fathAgentId != null and fathAgentId != ''">
+				AGENT_ID =#{fathAgentId}
+			</if>
+			
+		</where>
+	</update>
+	
+	<update id="_agentRateAdjust" parameterType="java.util.HashMap">
+		UPDATE HX_RATES_INF 
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100.0*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_GENERAL = FORMAT(#{rateAjst}/100.0*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100.0*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS = FORMAT(#{rateAjst}/100.0*RATE_TCAS,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				SHARE_RATE = FORMAT(#{rateAjst}/100.0*SHARE_RATE,2)
+			</if>
+		</set>
+		<where>
+		    <if test="fathAgentId != null and fathAgentId != ''">
+				RATE_ID =#{fathAgentId}
+			</if>
+				AND RATE_CODE='00'
+			
+		</where>
+	</update>
+	
+	<update id="termRateAdjust" parameterType="java.util.HashMap">
+		UPDATE MPAMNG_TERMINAL_INF aa
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL = FORMAT(#{rateAjst}/100*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100*RATE_ENTERTAIN_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_TCAS = FORMAT(#{rateAjst}/100*RATE_TCAS,2)
+			</if>	
+		</set>
+		WHERE
+			 EXISTS (select TERMINAL_ID from(
+					 SELECT t.TERMINAL_ID FROM MPAMNG_TERMINAL_INF t
+				LEFT JOIN  MPOMNG_AGE_CUST_REF_INF y ON t.TERMINAL_ID = y.TERMINAL_ID 
+				WHERE AGE_ID = #{fathAgentId} 
+				 ) as tmp WHERE
+			tmp.TERMINAL_ID = aa.TERMINAL_ID)		
+	</update>
+	
+	<update id="custRateAdjust" parameterType="java.util.HashMap">
+		UPDATE MPOMNG_MOBILE_MER_INF
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS= FORMAT(#{rateAjst}/100*RATE_TCAS,2)
+			</if>	
+		</set>
+		<where>
+			<if test="custId !=null and custId !=''">
+				CUST_ID = #{custId}
+			</if>
+		</where>
+	</update>
+	
+	<update id="_custRateAdjust" parameterType="java.util.HashMap">
+		UPDATE HX_RATES_INF 
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100.0*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_GENERAL = FORMAT(#{rateAjst}/100.0*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100.0*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS = FORMAT(#{rateAjst}/100.0*RATE_TCAS,2)
+			</if>
+		</set>
+		<where>
+		    <if test="custId !=null and custId !=''">
+				RATE_ID =#{custId}
+			</if>
+				AND RATE_CODE='01'
+			
+		</where>
+	</update>
+	
+	<select id="queryCust" parameterType="java.util.HashMap" resultMap="AgentMap">
+		SELECT CUST_ID FROM MPOMNG_AGE_CUST_REF_INF
+		<where>
+			<if test="fathAgentId !=null and fathAgentId !=''">
+				AGE_ID=#{fathAgentId}
+			</if>
+			<if test="fathAgentId !=null and fathAgentId !=''">
+				AND CUST_ID != #{fathAgentId}
+			</if>
+			AND CUST_ID != ' '
+		</where>
+	</select>
+	
+	<update id="agentRateAdjustAll" parameterType="java.util.HashMap">
+		UPDATE MPAMNG_AGENT_INF
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_GENERAL = FORMAT(#{rateAjst}/100*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100*RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS = FORMAT(#{rateAjst}/100*RATE_TCAS,2)
+			</if>
+		</set>
+		<where>
+			<if test="agentDgr !=null and agentDgr !=''">
+				AGENT_DGR=#{agentDgr}
+			</if>
+		</where>
+	</update>
+	
+	<update id="_agentRateAdjustAll" parameterType="java.util.HashMap">
+		UPDATE HX_RATES_INF a,MPAMNG_AGENT_INF b
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100*a.RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_GENERAL = FORMAT(#{rateAjst}/100*a.RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100*a.RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_ENTERTAIN = FORMAT(#{rateAjst}/100*a.RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100*a.RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_TCAS = FORMAT(#{rateAjst}/100*a.RATE_TCAS,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				SHARE_RATE = FORMAT(#{rateAjst}/100.0*SHARE_RATE,2)
+			</if>
+		</set>
+		<where>
+			<if test="agentDgr !=null and agentDgr !=''">
+				b.AGENT_DGR=#{agentDgr}
+			</if>
+				AND a.RATE_ID=b.AGENT_ID
+				AND a.RATE_CODE='00'
+		</where>
+	</update>
+	
+	<update id="termRateAdjustAll" parameterType="java.util.HashMap">
+		UPDATE MPAMNG_TERMINAL_INF aa
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100.0*RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL = FORMAT(#{rateAjst}/100.0*RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100.0*RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100.0*RATE_ENTERTAIN_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				RATE_TCAS = FORMAT(#{rateAjst}/100.0*RATE_TCAS,2)
+			</if>	
+		</set>
+		WHERE
+			 EXISTS (select TERMINAL_ID from(
+					 SELECT t.TERMINAL_ID FROM MPAMNG_TERMINAL_INF t
+				LEFT JOIN  MPOMNG_AGE_CUST_REF_INF y ON t.TERMINAL_ID = y.TERMINAL_ID 
+				LEFT JOIN  MPAMNG_AGENT_INF age ON y.AGE_ID = age.AGENT_ID
+				WHERE age.AGENT_DGR = #{agentDgr} 
+				 ) as tmp WHERE
+			tmp.TERMINAL_ID = aa.TERMINAL_ID)
+	</update>
+	
+	<update id="custRateAdjustAll" parameterType="java.util.HashMap">
+		UPDATE MPOMNG_MOBILE_MER_INF aa
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				RATE_TCAS= FORMAT(#{rateAjst}/100*RATE_TCAS,2)
+			</if>	
+		</set>
+		WHERE
+			EXISTS(SELECT CUST_ID FROM(
+					SELECT m.CUST_ID FROM MPOMNG_MOBILE_MER_INF m
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF a ON m.CUST_ID = a.CUST_ID
+				LEFT JOIN  MPAMNG_AGENT_INF age ON a.AGE_ID = age.AGENT_ID	
+				WHERE age.AGENT_DGR = #{agentDgr} 
+				) AS tmp WHERE
+			tmp.CUST_ID = aa.CUST_ID)
+	</update>
+	
+	<update id="_custRateAdjustAll" parameterType="java.util.HashMap">
+		UPDATE HX_RATES_INF aa
+		<set>
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_LIVELIHOOD = FORMAT(#{rateAjst}/100*a.RATE_LIVELIHOOD,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_GENERAL = FORMAT(#{rateAjst}/100*a.RATE_GENERAL,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_GENERAL_TOP = FORMAT(#{rateAjst}/100*a.RATE_GENERAL_TOP,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_ENTERTAIN = FORMAT(#{rateAjst}/100*a.RATE_ENTERTAIN,2),
+			</if>
+			<if test="rateAjst !=null and rateAjst !=''">	
+				a.RATE_ENTERTAIN_TOP = FORMAT(#{rateAjst}/100*a.RATE_ENTERTAIN_TOP,2),
+			</if>	
+			<if test="rateAjst !=null and rateAjst !=''">
+				a.RATE_TCAS = FORMAT(#{rateAjst}/100*a.RATE_TCAS,2)
+			</if>
+		</set>
+			WHERE
+			EXISTS(SELECT CUST_ID FROM(
+					SELECT m.CUST_ID FROM MPOMNG_MOBILE_MER_INF m
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF a ON m.CUST_ID = a.CUST_ID
+				LEFT JOIN  MPAMNG_AGENT_INF age ON a.AGE_ID = age.AGENT_ID	
+				WHERE age.AGENT_DGR = #{agentDgr} 
+				) AS tmp WHERE
+			tmp.CUST_ID = aa.RATE_ID)
+				AND aa.RATE_CODE='01'
+	</update>
+	
+	<select id="queryAgentShareFee" parameterType="java.util.Map" resultMap="agentShareMap">
+		
+			SELECT
+				*
+			FROM
+				HX_RATES_INF
+			<where>
+				<if test="agentId != null and agentId !=''">
+					AND RATE_ID= #{agentId}
+				</if>
+				<if test="rateType != null and rateType !=''">
+					AND RATE_TYPE = #{rateType}
+				</if>
+				<if test="rateCode != null and rateCode != ''">
+					AND RATE_CODE = #{rateCode}
+				</if>
+			</where>	
+			
+	</select>
+	<update id="updateAgentShareFee">
+		UPDATE 
+			HX_RATES_INF
+		<set>
+			<if test="rateGeneralTop != null and rateGeneralTop !=''">
+				SHARE_RATE = #{rateGeneralTop},
+			</if>
+		</set>
+		<where>
+				<if test="agentId != null and agentId !=''">
+					AND RATE_ID= #{agentId}
+				</if>
+				<if test="rateType != null and rateType !=''">
+					AND RATE_TYPE = #{rateType}
+				</if>
+				<if test="rateCode != null and rateCode != ''">
+					AND RATE_CODE = #{rateCode}
+				</if>
+		</where>
+	</update>
+</mapper>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.CustLimitDao">
+	<resultMap type="CustLimitInf" id="custLimitMap">
+		    <result property="limitId"               column="LIMIT_ID" /> 
+		     <result property="limitType"               column="LIMIT_TYPE" /> 
+		    <result property="limitCustLevel"               column="LIMIT_CUST_LEVEL" /> 
+		    <result property="limitCustId"               column="LIMIT_CUST_ID" /> 
+		    <result property="custName"               column="CUST_NAME" /> 
+		    <result property="limitBusType"               column="LIMIT_BUS_TYPE" /> 
+		    <result property="limitSubBus"               column="LIMIT_SUB_BUS" /> 
+		    <result property="limitPayWay"               column="LIMIT_PAY_WAY" /> 
+		    <result property="limitMinAmt"               column="LIMIT_MIN_AMT" /> 
+		    <result property="limitMaxAmt"               column="LIMIT_MAX_AMT" /> 
+		    <result property="limitDayTimes"               column="LIMIT_DAY_TIMES" /> 
+		    <result property="limitDayAmt"               column="LIMIT_DAY_AMT" /> 
+		    <result property="limitMonthTimes"               column="LIMIT_MONTH_TIMES" /> 
+		    <result property="limitMonthAmt"               column="LIMIT_MONTH_AMT" /> 
+		    <result property="limitYearTimes"               column="LIMIT_YEAR_TIMES" /> 
+		    <result property="limitYearAmt"               column="LIMIT_YEAR_AMT" /> 
+		    <result property="limitStartDate"               column="LIMIT_START_DATE" /> 
+		    <result property="limitEndDate"               column="LIMIT_END_DATE" /> 
+		    <result property="limitDesc"               column="LIMIT_DESC" /> 
+		    <result property="isUse"               column="IS_USE" /> 
+		    <result property="createName"               column="CREATE_NAME" /> 
+		    <result property="createDate"               column="CREATE_DATE" /> 
+		    <result property="createDatetime"               column="CREATE_DATETIME" /> 
+		    <result property="updateName"               column="UPDATE_NAME" /> 
+		    <result property="updateDate"               column="UPDATE_DATE" /> 
+		    <result property="updateDatetime"               column="UPDATE_DATETIME" />
+		    <result property="limitAgentId"               column="LIMIT_AGENT_ID" />
+		    <result property="agentName"                  column="AGENT_NAME"/>
+	</resultMap>
+	
+	
+	<update id="updateEntity" parameterType="CustLimitInf">
+		UPDATE 
+				MPRCS_USER_LIMIT_INF
+		<set>
+		        
+		        <if test="limitCustLevel!= null and limitCustLevel!= ''">
+						LIMIT_CUST_LEVEL =  #{limitCustLevel},
+				</if>
+				<if test="limitType!= null and limitType!= ''">
+					 LIMIT_TYPE =  #{limitType},
+				</if>
+		        <if test="limitCustId!= null and limitCustId!= ''">
+						LIMIT_CUST_ID =  #{limitCustId},
+				</if>
+		        <if test="limitBusType!= null and limitBusType!= ''">
+						LIMIT_BUS_TYPE =  #{limitBusType},
+				</if>
+		        <if test="limitSubBus!= null and limitSubBus!= ''">
+						LIMIT_SUB_BUS =  #{limitSubBus},
+				</if>
+		        <if test="limitPayWay!= null and limitPayWay!= ''">
+						LIMIT_PAY_WAY =  #{limitPayWay},
+				</if>
+		        <if test="limitMinAmt!= null and limitMinAmt!= ''">
+						LIMIT_MIN_AMT =  #{limitMinAmt},
+				</if>
+		        <if test="limitMaxAmt!= null and limitMaxAmt!= ''">
+						LIMIT_MAX_AMT =  #{limitMaxAmt},
+				</if>
+		        <if test="limitDayTimes!= null and limitDayTimes!= ''">
+						LIMIT_DAY_TIMES =  #{limitDayTimes},
+				</if>
+		        <if test="limitDayAmt!= null and limitDayAmt!= ''">
+						LIMIT_DAY_AMT =  #{limitDayAmt},
+				</if>
+		        <if test="limitMonthTimes!= null and limitMonthTimes!= ''">
+						LIMIT_MONTH_TIMES =  #{limitMonthTimes},
+				</if>
+		        <if test="limitMonthAmt!= null and limitMonthAmt!= ''">
+						LIMIT_MONTH_AMT =  #{limitMonthAmt},
+				</if>
+		        <if test="limitYearTimes!= null and limitYearTimes!= ''">
+						LIMIT_YEAR_TIMES =  #{limitYearTimes},
+				</if>
+		        <if test="limitYearAmt!= null and limitYearAmt!= ''">
+						LIMIT_YEAR_AMT =  #{limitYearAmt},
+				</if>
+		        <if test="limitStartDate!= null and limitStartDate!= ''">
+						LIMIT_START_DATE =  #{limitStartDate},
+				</if>
+		        <if test="limitEndDate!= null and limitEndDate!= ''">
+						LIMIT_END_DATE =  #{limitEndDate},
+				</if>
+		        <if test="limitDesc!= null and limitDesc!= ''">
+						LIMIT_DESC =  #{limitDesc},
+				</if>
+		        <if test="isUse!= null and isUse!= ''">
+						IS_USE =  #{isUse},
+				</if>
+		        <if test="createName!= null and createName!= ''">
+						CREATE_NAME =  #{createName},
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						CREATE_DATE =  #{createDate},
+				</if>
+		        <if test="createDatetime!= null and createDatetime!= ''">
+						CREATE_DATETIME =  #{createDatetime},
+				</if>
+		        <if test="updateName!= null and updateName!= ''">
+						UPDATE_NAME =  #{updateName},
+				</if>
+		        <if test="updateDate!= null and updateDate!= ''">
+						UPDATE_DATE =  #{updateDate},
+				</if>
+		        <if test="updateDatetime!= null and updateDatetime!= ''">
+						UPDATE_DATETIME =  #{updateDatetime}
+				</if>
+		</set>
+		<where>
+						LIMIT_ID =  #{limitId}
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="CustLimitInf" resultMap="custLimitMap">
+		SELECT 
+		         T.LIMIT_ID, 
+		         T.LIMIT_TYPE,
+		         T.LIMIT_CUST_LEVEL, 
+		         T.LIMIT_CUST_ID, 
+		         T2. CUST_NAME,
+		         T.LIMIT_BUS_TYPE, 
+		         T.LIMIT_SUB_BUS, 
+		         T.LIMIT_PAY_WAY, 
+		         T.LIMIT_MIN_AMT,
+		         T.LIMIT_MAX_AMT,
+		         T.LIMIT_DAY_TIMES, 
+		         T.LIMIT_DAY_AMT,
+		         T.LIMIT_MONTH_TIMES, 
+		         T.LIMIT_MONTH_AMT,
+		         T.LIMIT_YEAR_TIMES, 
+		         T.LIMIT_YEAR_AMT,
+		         T.LIMIT_START_DATE, 
+		         T.LIMIT_END_DATE, 
+		         T.LIMIT_DESC, 
+		         T.IS_USE, 
+		         T.CREATE_NAME, 
+		         T.CREATE_DATE, 
+		         T.CREATE_DATETIME, 
+		         T.UPDATE_NAME, 
+		         T.UPDATE_DATE, 
+		         T.UPDATE_DATETIME,
+		         T.LIMIT_AGENT_ID,
+		         T3.AGENT_NAME
+		FROM 
+		         MPRCS_USER_LIMIT_INF T
+		       LEFT JOIN MPOMNG_MOBILE_MER_INF T2 ON T.LIMIT_CUST_ID=T2.CUST_ID
+		       LEFT JOIN MPRCS_CUST_LEVEL_INF T1 ON T.LIMIT_CUST_LEVEL = T1.LEVEL
+		       LEFT JOIN MPAMNG_AGENT_INF T3 ON T.LIMIT_AGENT_ID=T3.AGENT_ID
+		<where>
+		        <if test="limitId!= null and limitId!= ''">
+						AND LIMIT_ID =  #{limitId}
+				</if>
+				<if test="limitType!= null and limitType!= ''">
+						AND LIMIT_TYPE =  #{limitType}
+				</if>
+		        <if test="limitCustLevel!= null and limitCustLevel!= ''">
+						AND LIMIT_CUST_LEVEL =  #{limitCustLevel}
+				</if>
+		        <if test="limitCustId!= null and limitCustId!= ''">
+						AND LIMIT_CUST_ID =  #{limitCustId}
+				</if>
+				<if test="limitAgentId!= null and limitAgentId!= ''">
+						AND LIMIT_AGENT_ID =  #{limitAgentId}
+				</if>
+		        <if test="limitBusType!= null and limitBusType!= ''">
+						AND LIMIT_BUS_TYPE =  #{limitBusType}
+				</if>
+		        <if test="limitSubBus!= null and limitSubBus!= ''">
+						AND LIMIT_SUB_BUS =  #{limitSubBus}
+				</if>
+		        <if test="limitPayWay!= null and limitPayWay!= ''">
+						AND LIMIT_PAY_WAY =  #{limitPayWay}
+				</if>
+		        <if test="isUse!= null and isUse!= ''">
+						AND IS_USE =  #{isUse}
+				</if>
+		</where>
+	</select>
+	
+	<select id="validate" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+		         COUNT(LIMIT_ID)
+		FROM 
+		         MPRCS_USER_LIMIT_INF 
+		WHERE
+				LIMIT_TYPE    =  #{limitType} AND 
+				LIMIT_BUS_TYPE=  #{limitBusType} AND 
+				LIMIT_PAY_WAY =  #{limitPayWay}	AND
+				LIMIT_CUST_ID =  #{limitCustId}   
+	</select>
+	
+	<select id="validateAgent" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+		         COUNT(LIMIT_ID)
+		FROM 
+		         MPRCS_USER_LIMIT_INF 
+		WHERE
+				LIMIT_TYPE    =  #{limitType} AND 
+				LIMIT_BUS_TYPE=  #{limitBusType} AND 
+				LIMIT_PAY_WAY =  #{limitPayWay}	AND
+			    LIMIT_AGENT_ID =  #{limitAgentId}  
+	</select>
+	
+	<select id="selectCust" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		         CUST_NAME
+		FROM 
+		         MPOMNG_MOBILE_MER_INF 
+		WHERE
+				CUST_ID    =  #{custId}
+	</select>
+	
+	<select id="selectAgent" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+		         AGENT_NAME
+		FROM 
+		         MPAMNG_AGENT_INF 
+		WHERE
+				AGENT_ID    =  #{agentId}
+	</select>
+
+	<select id="selectList" parameterType="CustLimitInf" resultMap="custLimitMap" databaseId="mysql">
+		SELECT 
+		         T.LIMIT_ID, 
+		         T.LIMIT_TYPE,
+		         T1.LEVEL_NAME AS LIMIT_CUST_LEVEL, 
+		         T.LIMIT_CUST_ID,
+		         T2. CUST_NAME,
+		         T.LIMIT_BUS_TYPE, 
+		         T.LIMIT_SUB_BUS, 
+		         T.LIMIT_PAY_WAY, 
+		         T.LIMIT_MIN_AMT, 
+		         T.LIMIT_MAX_AMT, 
+		         T.LIMIT_DAY_TIMES, 
+		         T.LIMIT_DAY_AMT, 
+		         T.LIMIT_MONTH_TIMES, 
+		         T.LIMIT_MONTH_AMT, 
+		         T.LIMIT_YEAR_TIMES, 
+		         T.LIMIT_YEAR_AMT, 
+		         T.LIMIT_START_DATE, 
+		         T.LIMIT_END_DATE, 
+		         T.LIMIT_DESC, 
+		         T.IS_USE, 
+		         T.CREATE_NAME, 
+		         T.CREATE_DATE, 
+		         T.CREATE_DATETIME, 
+		         T.UPDATE_NAME, 
+		         T.UPDATE_DATE, 
+		         T.UPDATE_DATETIME, 
+				 T.LIMIT_AGENT_ID,
+				 T3.AGENT_NAME
+		FROM 
+		       MPRCS_USER_LIMIT_INF T
+               LEFT JOIN MPRCS_CUST_LEVEL_INF T1 ON T.LIMIT_CUST_LEVEL = T1.`LEVEL`
+		       LEFT JOIN MPOMNG_MOBILE_MER_INF T2 ON T.LIMIT_CUST_ID=T2.CUST_ID
+			   LEFT JOIN MPAMNG_AGENT_INF T3 ON T.LIMIT_AGENT_ID=T3.AGENT_ID
+		<where>
+		     
+		        <if test="limitId!= null and limitId!= ''">
+						AND LIMIT_ID =  #{limitId}
+				</if>
+				<if test="limitType!= null and limitType!= ''">
+						AND LIMIT_TYPE =  #{limitType}
+				</if>
+		        <if test="limitCustLevel!= null and limitCustLevel!= ''">
+						AND LIMIT_CUST_LEVEL =  #{limitCustLevel}
+				</if>
+		        <if test="limitCustId!= null and limitCustId!= ''">
+						AND LIMIT_CUST_ID like concat ('%',#{limitCustId},'%')  
+				</if>
+		        <if test="limitBusType!= null and limitBusType!= ''">
+						AND LIMIT_BUS_TYPE =  #{limitBusType}
+				</if>
+		        <if test="limitSubBus!= null and limitSubBus!= ''">
+						AND LIMIT_SUB_BUS =  #{limitSubBus}
+				</if>
+		        <if test="limitPayWay!= null and limitPayWay!= ''">
+						AND LIMIT_PAY_WAY =  #{limitPayWay}
+				</if>
+		      
+		        <if test="isUse!= null and isUse!= ''">
+						AND IS_USE =  #{isUse}
+				</if>
+				<if test="limitAgentId!= null and limitAgentId!= ''">
+						AND LIMIT_AGENT_ID like concat ('%',#{limitAgentId},'%')  
+				</if>
+		</where>
+		ORDER BY LIMIT_ID  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CustLimitInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+		    MPRCS_USER_LIMIT_INF T
+		       LEFT JOIN MPOMNG_MOBILE_MER_INF T2 ON T.LIMIT_CUST_ID=T2.CUST_ID
+		       LEFT JOIN MPRCS_CUST_LEVEL_INF T1 ON T.LIMIT_CUST_LEVEL = T1.`LEVEL`
+		<where>
+		     
+		        <if test="limitId!= null and limitId!= ''">
+						AND LIMIT_ID =  #{limitId}
+				</if>
+				<if test="limitType!= null and limitType!= ''">
+						AND LIMIT_TYPE =  #{limitType}
+				</if>
+		        <if test="limitCustLevel!= null and limitCustLevel!= ''">
+						AND LIMIT_CUST_LEVEL =  #{limitCustLevel}
+				</if>
+		        <if test="limitCustId!= null and limitCustId!= ''">
+						AND LIMIT_CUST_ID like concat ('%',#{limitCustId},'%')  
+				</if>
+		        <if test="limitBusType!= null and limitBusType!= ''">
+						AND LIMIT_BUS_TYPE =  #{limitBusType}
+				</if>
+		        <if test="limitSubBus!= null and limitSubBus!= ''">
+						AND LIMIT_SUB_BUS =  #{limitSubBus}
+				</if>
+		        <if test="limitPayWay!= null and limitPayWay!= ''">
+						AND LIMIT_PAY_WAY =  #{limitPayWay}
+				</if>
+		      
+		        <if test="limitStartDate!= null and limitStartDate!= ''">
+						AND LIMIT_START_DATE =  #{limitStartDate}
+				</if>
+		        <if test="limitEndDate!= null and limitEndDate!= ''">
+						AND LIMIT_END_DATE =  #{limitEndDate}
+				</if>
+
+		        <if test="isUse!= null and isUse!= ''">
+						AND IS_USE =  #{isUse}
+				</if>
+		</where>
+	</select>
+
+	<insert id="insertEntity" parameterType="CustLimitInf">
+		INSERT INTO MPRCS_USER_LIMIT_INF  (
+		         LIMIT_ID, 
+		         LIMIT_TYPE,
+		         LIMIT_CUST_LEVEL, 
+		         LIMIT_CUST_ID, 
+		         LIMIT_AGENT_ID,
+		         LIMIT_BUS_TYPE, 
+		         LIMIT_SUB_BUS, 
+		         LIMIT_PAY_WAY, 
+		         LIMIT_MIN_AMT, 
+		         LIMIT_MAX_AMT, 
+		         LIMIT_DAY_TIMES, 
+		         LIMIT_DAY_AMT, 
+		         LIMIT_MONTH_TIMES, 
+		         LIMIT_MONTH_AMT, 
+		         LIMIT_YEAR_TIMES, 
+		         LIMIT_YEAR_AMT, 
+		         LIMIT_START_DATE, 
+		         LIMIT_END_DATE, 
+		         LIMIT_DESC, 
+		         IS_USE, 
+		         CREATE_NAME, 
+		         CREATE_DATE, 
+		         CREATE_DATETIME, 
+		         UPDATE_NAME, 
+		         UPDATE_DATE, 
+		         UPDATE_DATETIME
+				)
+		VALUES (
+		          #{limitId}, 
+		          #{limitType}, 
+		          #{limitCustLevel}, 
+		          #{limitCustId}, 
+		          #{limitAgentId},
+		          #{limitBusType}, 
+		          #{limitSubBus}, 
+		          #{limitPayWay}, 
+		          #{limitMinAmt}, 
+		          #{limitMaxAmt}, 
+		          #{limitDayTimes}, 
+		          #{limitDayAmt}, 
+		          #{limitMonthTimes}, 
+		          #{limitMonthAmt}, 
+		          #{limitYearTimes}, 
+		          #{limitYearAmt}, 
+		          #{limitStartDate}, 
+		          #{limitEndDate}, 
+		          #{limitDesc}, 
+		          #{isUse}, 
+		          #{createName}, 
+		          #{createDate}, 
+		          #{createDatetime}, 
+		          #{updateName}, 
+		          #{updateDate}, 
+		          #{updateDatetime}
+		      )
+	</insert>
+	
+	<update id="modifyUserLimitManageStatus" parameterType="java.util.HashMap">
+		UPDATE MPRCS_USER_LIMIT_INF 
+			<set>
+				<if test="limitCustLevel!= null and limitCustLevel!= ''">
+						LIMIT_CUST_LEVEL =  #{limitCustLevel},
+				</if>
+		        <if test="limitCustId!= null and limitCustId!= ''">
+						LIMIT_CUST_ID =  #{limitCustId},
+				</if>
+		        <if test="limitBusType!= null and limitBusType!= ''">
+						LIMIT_BUS_TYPE =  #{limitBusType},
+				</if>
+		        <if test="limitSubBus!= null and limitSubBus!= ''">
+						LIMIT_SUB_BUS =  #{limitSubBus},
+				</if>
+		        <if test="limitPayWay!= null and limitPayWay!= ''">
+						LIMIT_PAY_WAY =  #{limitPayWay},
+				</if>
+		        <if test="limitMinAmt!= null and limitMinAmt!= ''">
+						LIMIT_MIN_AMT =  #{limitMinAmt},
+				</if>
+		        <if test="limitMaxAmt!= null and limitMaxAmt!= ''">
+						LIMIT_MAX_AMT =  #{limitMaxAmt},
+				</if>
+		        <if test="isUse!= null and isUse!= ''">
+						IS_USE =  #{isUse},
+				</if>
+		      
+			</set>
+		WHERE LIMIT_ID IN (${ids})
+	</update>
+	
+
+	<delete id="deleteEntity" parameterType="CustLimitInf">
+		DELETE FROM MPRCS_USER_LIMIT_INF
+		WHERE LIMIT_ID = #{limitId}
+			 
+	</delete>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.ESignDao">
+	
+	<insert id="insertESign" parameterType="java.util.Map">
+		INSERT INTO MPAPP_ESIGN_INF_TEMP  (
+		         PRDORDNO, 
+		         ESIGN_ID
+				)
+		VALUES (
+		          #{prdordNo,jdbcType=VARCHAR}, 
+		          #{esign,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="selectESign" parameterType="String" resultType="String">
+		SELECT 
+		        ESIGN_ID
+		FROM 
+		        MPAPP_ESIGN_INF_TEMP
+		WHERE
+				PRDORDNO =  #{prdordNo}
+	</select>
+	
+	
+
+</mapper>

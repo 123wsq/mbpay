@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.NoticeDao">
+
+	<resultMap type="java.util.HashMap" id="noticeMap">
+		<result property="noticeId" column="NOTICE_ID" />
+		<result property="noticePlatform" column="NOTICE_PLATFORM" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="noticeBody" column="NOTICE_BODY" />
+		<result property="noticeIssue" column="NOTICE_ISSUE" />
+		<result property="noticeIssueDate" column="NOTICE_ISSUE_DATE" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="noticeType" column="NOTICE_TYPE"/>
+		<result property="id" column="ID" />
+	</resultMap>
+	
+	<select id="selectNotice" parameterType="java.util.HashMap"
+		resultMap="noticeMap">
+		SELECT
+				NOTICE_ID,
+				NOTICE_PLATFORM,
+				NOTICE_TITLE,
+				NOTICE_BODY,
+				NOTICE_ISSUE,
+				NOTICE_ISSUE_DATE,
+				CREATE_USER_ID,
+				CREATE_DATE,
+				NOTICE_TYPE
+		FROM
+				MPOMNG_NOTICE_INF
+		WHERE
+				NOTICE_PLATFORM = '2'
+		ORDER BY CREATE_DATE DESC  LIMIT ${start},${pageSize}
+	</select>
+
+	<select id="selectEntity" parameterType="java.util.HashMap"
+		resultMap="noticeMap">
+		SELECT
+				NOTICE_ID,
+				NOTICE_PLATFORM,
+				NOTICE_TITLE,
+				NOTICE_BODY,
+				NOTICE_ISSUE,
+				NOTICE_ISSUE_DATE,
+				CREATE_USER_ID,
+				CREATE_DATE,
+				NOTICE_TYPE
+		FROM
+				MPOMNG_NOTICE_INF
+		WHERE
+				NOTICE_PLATFORM = '2'
+		  AND   CREATE_DATE = (SELECT MAX(CREATE_DATE) FROM MPOMNG_NOTICE_INF)
+		ORDER BY CREATE_DATE DESC  LIMIT ${start},${pageSize}
+	</select>
+	
+	<insert id="saveType" parameterType="java.util.HashMap">
+		INSERT INTO MPOMNG_NOTICE_TYPE  (ID, NOTICE_ID)VALUES ( #{id}, #{noticeId})
+	</insert>
+	
+	<select id="getNoticeType" parameterType="java.util.HashMap" resultMap="noticeMap">
+		SELECT * FROM  MPOMNG_NOTICE_TYPE WHERE ID = #{id} AND NOTICE_ID = #{noticeId}
+	</select>
+	
+	
+</mapper>

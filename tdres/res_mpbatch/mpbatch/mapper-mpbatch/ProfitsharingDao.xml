@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.ProfitsharingDao">
+	<resultMap type="java.util.Map" id="profitsharingMap">
+		    <result property="sharDate"              column="SHAR_DATE" /> 
+		    <result property="agentId"               column="AGENT_ID" /> 
+		    <result property="payno"                 column="PAYNO" /> 
+		    <result property="payamt"                column="PAYAMT" /> 
+		    <result property="payRate"               column="PAY_RATE" /> 
+		    <result property="payFee"                column="PAY_FEE" /> 
+		    <result property="fathAgentId"           column="FATH_AGENT_ID" /> 
+		    <result property="agentDgr"              column="AGENT_DGR" /> 
+		    <result property="agentRate"             column="AGENT_RATE" /> 
+		    <result property="agentFee"              column="AGENT_FEE" /> 
+		    <result property="sharProfitRatio"       column="SHAR_PROFIT_RATIO" /> 
+		    <result property="sharamt"               column="SHARAMT" /> 
+		    <result property="sharStatus"            column="SHAR_STATUS" /> 
+		    <result property="sharTime"              column="SHAR_TIME" /> 
+		    <result property="firstAgentId"          column="FIRST_AGENT_ID" /> 
+		    <result property="sharAmtReal"           column="SHAR_AMT_REAL" />
+		    <result property="rate"                  column="RATE" />
+		    <result property="payType"               column="PAY_TYPE" />
+	</resultMap>
+	
+		<resultMap type="java.util.Map" id="agentProfitMap">
+		    <result property="agentId"                column="AGENT_ID" /> 
+		    <result property="rates"                  column="RATES" /> 
+		    <result property="beginNum"               column="BEGIN_NUM" /> 
+		    <result property="endNum"                 column="END_NUM" /> 
+		    <result property="showNum"                column="SHOW_NUM" /> 
+		    <result property="status"                 column="STATUS" /> 
+		    <result property="remark"                 column="REMARK" /> 
+		    <result property="fild1"                  column="FILD_1" /> 
+		    <result property="fild2"                  column="FILD_2" />
+		    <result property="rateType"               column="RATE_TYPE" /> 
+	</resultMap>
+
+	<select id="selectSum" parameterType="java.util.Map" resultMap="profitsharingMap">
+		SELECT 
+			SUM(SHARAMT) AS SHARAMT,
+			SUM(PAYAMT)  AS PAYAMT,
+			AGENT_ID 
+			FROM MPBATCH_PROFITSHARING_INF 
+			WHERE AGENT_DGR =#{agentDgr} AND SHAR_DATE LIKE CONCAT(#{date},'%')
+			GROUP BY AGENT_ID
+	</select>
+	
+	<select id="selectStage" parameterType="java.util.Map" resultMap="agentProfitMap">
+			SELECT 
+			         AGENT_ID, 
+			         RATES, 
+			         BEGIN_NUM, 
+			         END_NUM, 
+			         SHOW_NUM, 
+			         STATUS, 
+			         REMARK, 
+			         FILD_1, 
+			         FILD_2,
+			         RATE_TYPE
+			FROM 
+			        MPAMNG_AGENT_PROFIT_INF
+			<where>
+					AGENT_ID=#{agentId} AND RATE_TYPE=#{rateType}
+					AND 
+					#{payAmt}  BETWEEN BEGIN_NUM AND END_NUM
+			</where>
+	</select>
+	
+	<select id="countProfitMonthLog" parameterType="java.util.Map" resultType="java.lang.Integer">
+			SELECT
+				COUNT(*)
+			FROM
+				MPBATCH_PROFITSHARING_MONTHLOG_INF
+			WHERE
+					AGENT_ID=#{agentId}
+					AND 
+					SHAR_DATE=#{sharDate}
+			
+	</select>
+	
+	<insert id="insertMonthLog" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_PROFITSHARING_MONTHLOG_INF  (
+		         AGENT_ID, 
+		         SHAR_DATE, 
+		         SHAR_AMT,
+		         SHAR_PROFIT_RATIO,
+		         SHAR_OUT_AMT, 
+		         PAY_AMT, 
+		         PAY_FEE,
+		         AGENT_FEE, 
+		         AGENT_DGR, 
+		         FATH_AGENT_ID, 
+		         FIRST_AGENT_ID, 
+		         STATUS, 
+		         AUDIT_USER, 
+		         UPDATE_TIME,
+		         PAY_TYPE
+				)
+		VALUES (
+		          #{agentId}, 
+		          #{sharDate}, 
+		          #{sharAmt}, 
+		          #{sharProfitRatio},
+		          #{sharOutAmt},
+		          #{payAmt}, 
+		          #{payFee},
+		          #{agentFee}, 
+		          #{agentDgr}, 
+		          #{fathAgentId}, 
+		          #{firstAgentId}, 
+		          #{status}, 
+		          #{auditUser}, 
+		          #{updateTime},
+		          #{payType} 
+		      )
+	</insert>
+	<delete id="deleteProfitMonthLog" parameterType="java.util.Map">
+		DELETE 
+		FROM  
+			MPBATCH_PROFITSHARING_MONTHLOG_INF
+		WHERE 
+			 SHAR_DATE=#{date}
+	</delete>
+	
+	<delete id="deleteSharingLog" parameterType="java.util.Map">
+		DELETE 
+		FROM  
+			MPBATCH_AGENT_PROFIT_LOG_INF
+		WHERE 
+			 SHAR_DATE LIKE CONCAT(#{date},'%')
+	</delete>
+	
+	
+	<insert id="insertDayLog" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_PROFITSHARING_DAYLOG_INF(
+		         AGENT_ID, 
+		         SHAR_DATE, 
+		         SHAR_AMT,
+		         PAY_AMT, 
+		         PAY_FEE,
+		         AGENT_FEE, 
+		         AGENT_DGR, 
+		         FATH_AGENT_ID, 
+		         FIRST_AGENT_ID, 
+		         AUDIT_USER, 
+		         UPDATE_TIME,
+		         SHAR_AMT_REAL,
+		         RATE,
+		         PAY_TYPE
+				)
+		VALUES (
+		          #{agentId}, 
+		          #{sharDate}, 
+		          #{sharAmt}, 
+		          #{payAmt}, 
+		          #{payFee},
+		          #{agentFee}, 
+		          #{agentDgr}, 
+		          #{fathAgentId}, 
+		          #{firstAgentId}, 
+		          #{auditUser}, 
+		          #{updateTime},
+		          #{sharAmtReal},
+		          #{rate},
+		          #{payType}
+		           
+		      )    
+	</insert>
+	<insert id="copyDayLog" parameterType="java.util.Map">
+		INSERT INTO 
+			MPBATCH_PROFITSHARING_DAYLOG_INF_COPY 
+		SELECT * FROM
+			MPBATCH_PROFITSHARING_DAYLOG_INF
+	</insert>
+	<delete id="deleteCopyDayLog" parameterType="java.util.Map">
+		DELETE 
+		FROM  
+			MPBATCH_PROFITSHARING_DAYLOG_INF_COPY
+	</delete>
+	<delete id="deleteDayLog" parameterType="java.util.Map">
+		DELETE 
+		FROM 
+			 MPBATCH_PROFITSHARING_DAYLOG_INF  
+		WHERE SHAR_DATE=#{date}
+	</delete>
+	<select id="selectDayLog" parameterType="java.util.Map" resultMap="profitsharingMap">
+	    SELECT
+		      AGENT_ID,
+		      PAY_TYPE,
+		      SHAR_DATE,
+		      SUM(SHARAMT) AS SHARAMT,
+		      SUM(PAYAMT) AS PAYAMT,
+		      SUM(PAY_FEE) AS PAY_FEE,
+		      SUM(AGENT_FEE) AS AGENT_FEE,
+		      AGENT_DGR,
+		      FATH_AGENT_ID,
+		      FIRST_AGENT_ID,
+		      '',
+		      ''
+		      
+		FROM 
+		     MPBATCH_PROFITSHARING_INF
+		WHERE
+		     SHAR_DATE = #{date}
+		     GROUP BY AGENT_ID,PAY_TYPE
+	</select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.AgentProfitMonthLogDao">
+	<resultMap type="java.util.Map" id="agentProfitMonthLogMap">
+		 <result property="agentId"               column="AGENT_ID" />
+		 <result property="sharDate"              column="SHAR_DATE" />
+		 <result property="sharamt"               column="SHARAMT" /> 
+		 <result property="payamt"                column="PAYAMT" /> 
+		 <result property="sharProfitRatio"       column="SHAR_PROFIT_RATIO" />
+		 <result property="status"                column="STATUS" />
+		 <result property="updateTime"            column="AUDIT_USER" /> 
+		 <result property="updateTime"            column="UPDATE_TIME" /> 
+		 <result property="sharDate"              column="PAY_FEE" /> 
+	     <result property="agentId"               column="AGENT_DGR" /> 
+	     <result property="fathAgentId"           column="FATH_AGENT_ID" /> 
+	     <result property="firstAgentId"          column="FIRST_AGENT_ID" /> 
+	</resultMap>
+	<insert id="insertLog" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_AGENT_PROFIT_LOG_INF  (
+		         AGENT_ID, 
+		         SHAR_DATE, 
+		         SHARAMT, 
+		         PAYAMT, 
+		         SHAR_PROFIT_RATIO, 
+		         STATUS, 
+		         UPDATE_TIME, 
+		         AUDIT_USER,
+		         PAY_FEE,
+		         AGENT_DGR,
+		         FATH_AGENT_ID,
+		         FIRST_AGENT_ID
+				)
+		VALUES (
+		          #{agentId}, 
+		          #{sharDate}, 
+		          #{sharamt}, 
+		          #{payamt}, 
+		          #{sharProfitRatio}, 
+		          #{status}, 
+		          #{updateTime}, 
+		          #{auditUser},
+		          #{payFee},
+		          #{agentDgr},
+		          #{fathAgentId},
+		          #{firstAgentId}
+		      )
+	</insert>
+</mapper>

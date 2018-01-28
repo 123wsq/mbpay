@@ -1,0 +1,64 @@
+
+<meta charset="utf-8" />	
+<form id="form1" class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="" >
+ <br/>
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<!-- #section:elements.form -->
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">审核意见： </label>
+		<div class="col-sm-9">
+			 <textarea placeholder="请输入审核意见" id="auditFailReason" name="auditFailReason" style="width: 371px; height: 116px;" /> 
+		</div>
+	</div>
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<a class="btn btn-info" onclick="submitAgentAudit(this)">
+				保存
+			</a>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				取消
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+function submitAgentAudit(obj){
+	var dialog=$("#dlg-agentAudit").Dialog();
+	var agentId=dialog.pageParam.agentId;
+	var editUserId=dialog.pageParam.editUserId;
+	var approved=dialog.pageParam.approved;
+	var auditFailReason=$("#form1 textarea").val();
+	if(auditFailReason==""){
+		msg.alert("警告", "审核意见不能为空！", "warn");
+		return false;
+	}
+	$.ajax({
+		type : "post",
+		url : "mpamng/agent/agentTempReply.do",
+		data:{agentId:agentId,approved:approved,editUserId:editUserId,auditFailReason:auditFailReason},
+		dataType : 'json',
+		success : function(result) {
+			if(result.rspcod== 200){
+				msg.alert("提示",result.rspmsg,'correct');
+				$("#grid-table").trigger("reloadGrid");
+				dialog.closeById('dlg-agentAudit'); 
+				dialog.closeById('dlg-agentEdit');
+			}else{
+				msg.alert("错误",result.rspmsg,'error');
+			}
+		},
+		error : function(XMLHttpRequest, textStatus) {
+			msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+		}
+	}); 
+	
+}
+</script>

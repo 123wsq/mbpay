@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.GenOrgSettleReportDao">
+	<resultMap type="OrgSettleReportInf" id="settleInfMap">
+		    <result property="agentId"               column="AGE_ID" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="terminalNo"               column="TER_NO" /> 
+		    <result property="payCardno"               column="PAY_CARDNO" /> 
+		    <result property="txAmt"               column="TXAMT" /> 
+		    <result property="netrecamt"               column="NETRECAMT" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="prdordNo"               column="PRDORDNO" /> 
+		    <result property="txnDate"               column="TXN_DATE" /> 
+		    <result property="txnTime"               column="TXN_TIME" /> 
+		    <result property="paymentId"               column="PAYMENT_ID" /> 
+		    <result property="txnType"               column="TXN_TYPE" />
+	</resultMap>
+	
+	<select id="selectOrgSettleCount" parameterType="java.util.Map" resultMap="settleInfMap">
+		SELECT 
+		        REF.AGE_ID,
+	            PAY.CUST_ID, 
+				PAY.TER_NO,
+	   			PAY.PAY_CARDNO,
+				PAY.TXAMT,
+				PAY.NETRECAMT,
+  				PAY.FEE,
+				PRD.PRDORDNO,
+  				JNL.TXN_DATE,
+  				JNL.TXN_TIME,
+  				JNL.PAYMENT_ID
+		FROM 
+		        MPOMNG_PAY_INF PAY
+		        LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID=PAY.CUST_ID
+				LEFT JOIN MPOMNG_PRD_INF PRD ON PRD.PAYORDNO = PAY.PAYORDNO
+				LEFT JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+		<where>
+		        PAY.PAYSTATUS='02' AND PRD.ORDSTATUS='01' AND JNL.TXN_STATUS='S' AND JNL.TXN_TYPE='01'
+		        <if test="agentId!= null and agentId!= ''">
+						AND REF.AGE_ID = #{agentId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND PAY.CUST_ID =  #{custId}
+				</if>
+		        <if test="terminalNo!= null and terminalNo!= ''">
+						AND PAY.TER_NO =  #{terminalNo}
+				</if>
+		        <if test="txnDate!= null and txnDate!= ''">
+						AND JNL.TXN_DATE =  #{txnDate}
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectOrgSettleCountSum" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+		        IFNULL(SUM(PAY.TXAMT),0)
+		FROM 
+		        MPOMNG_PAY_INF PAY
+		        LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID=PAY.CUST_ID
+				LEFT JOIN MPOMNG_PRD_INF PRD ON PRD.PAYORDNO = PAY.PAYORDNO
+				LEFT JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+		<where>
+		        PAY.PAYSTATUS='02' AND PRD.ORDSTATUS='01' AND JNL.TXN_STATUS='S' AND JNL.TXN_TYPE='01'
+		        <if test="agentId!= null and agentId!= ''">
+						AND REF.AGE_ID = #{agentId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND PAY.CUST_ID =  #{custId}
+				</if>
+		        <if test="terminalNo!= null and terminalNo!= ''">
+						AND PAY.TER_NO =  #{terminalNo}
+				</if>
+		        <if test="txnDate!= null and txnDate!= ''">
+						AND JNL.TXN_DATE =  #{txnDate}
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectOrgSettleCountNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+		        count(1)
+		FROM 
+		        MPOMNG_PAY_INF PAY
+		        LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.CUST_ID=PAY.CUST_ID
+				LEFT JOIN MPOMNG_PRD_INF PRD ON PRD.PAYORDNO = PAY.PAYORDNO
+				LEFT JOIN MPOMNG_PAYMENT_JOURNAL_INF JNL ON JNL.PAYORDNO=PAY.PAYORDNO
+		<where>
+		        PAY.PAYSTATUS='02' AND PRD.ORDSTATUS='01' AND JNL.TXN_STATUS='S' AND JNL.TXN_TYPE='01'
+		        <if test="agentId!= null and agentId!= ''">
+						AND REF.AGE_ID = #{agentId}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND PAY.CUST_ID =  #{custId}
+				</if>
+		        <if test="terminalNo!= null and terminalNo!= ''">
+						AND PAY.TER_NO =  #{terminalNo}
+				</if>
+		        <if test="txnDate!= null and txnDate!= ''">
+						AND JNL.TXN_DATE =  #{txnDate}
+				</if>
+		</where>
+	</select>
+	
+</mapper>

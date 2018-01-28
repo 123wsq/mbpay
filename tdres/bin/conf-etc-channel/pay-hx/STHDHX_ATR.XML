@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    
+	<!-- STHDHX 汇鑫华势接入 start -->
+
+	<bean id="STHDHX" class="com.tangdi.production.tdcomm.engine.TcpOutChannel"
+		init-method="start" destroy-method="stop">
+		<property name="name" value="STHDHX"></property><!-- 渠道名称 -->
+		<property name="interceptor"><!-- 拦截器 -->
+			<bean class="com.tangdi.production.tdcomm.tdcomm.ext.TdHZTcpConnector">
+<!-- 				<property name="host" value="54.98.1.114"></property>第三方系统IP -->
+				<property name="host" value="172.16.1.114"></property><!-- 第三方系统IP -->
+				<property name="port" value="10002"></property><!-- 第三方端口 10001-->
+				<property name="timeOut" value="100"></property><!-- 连接超时时间 -->
+				<property name="preLen" value="2"></property><!-- 前置长度 -->
+				<property name="preLenType" value="bin"></property><!-- 前置长度类型 -->
+			</bean>
+		</property>
+		<property name="afterprocess">
+			<bean class="com.tangdi.production.mpaychl.trans.process.TcpHXPayOutAfterProcess">
+				<property name="unpack"><!-- 解包 -->
+					<bean class="com.tangdi.production.tdcomm.iso8583.Unpack8583">
+						<property name="CFG" value="mpaychl/conf-etc-channel/pay-hx/HX8583_CFG.XML"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+
+		<property name="outprocess"><!-- 接出流程 默认先调用这个process 然后走connector 再走 afterprocess -->
+			<bean class="com.tangdi.production.mpaychl.trans.process.TcpHXPayOutProcess">
+				<property name="pack"><!-- 组包 -->
+					<bean class="com.tangdi.production.tdcomm.itf.PackImpl">
+						<property name="ITF" value="mpaychl/conf-etc-channel/pay-hx/STHDHX_ITF.XML"></property>
+						<property name="charset" value="GBK"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 汇鑫华势接入 stop -->
+
+</beans>

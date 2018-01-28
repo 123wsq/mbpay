@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.TermStepDao">
+
+	<resultMap type="java.util.Map" id="termStepMap">
+		<result property="termNo"   column="TERM_NO" />
+		<result property="termStep" column="TERM_STEP" />
+		<result property="termDesc" column="TERM_DESC" />
+		<result property="termOper" column="TERM_OPER" />
+		<result property="termDate" column="TERM_DATE" />
+	</resultMap>
+
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPAMNG_TREMINAL_STEP_INF (
+			TERM_NO,
+			TERM_STEP,
+			TERM_DESC,
+			TERM_OPER,
+			TERM_DATE
+		)
+		VALUES
+		(
+			#{termNo,jdbcType=VARCHAR},
+			#{termStep,jdbcType=VARCHAR},
+			#{termDesc,jdbcType=VARCHAR},
+			#{termOper,jdbcType=VARCHAR},
+			#{termDate,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<select id="countEntity" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(1) FROM MPAMNG_TREMINAL_STEP_INF WHERE TERM_NO = #{termNo}
+	</select>
+
+	<select id="selectList" parameterType="java.util.Map" resultMap="termStepMap" databaseId="mysql">
+		SELECT
+			TERM_NO,
+			TERM_STEP,
+			TERM_DESC,
+			TERM_OPER,
+			TERM_DATE
+		FROM
+			MPAMNG_TREMINAL_STEP_INF
+		WHERE TERM_NO = #{termNo}
+		ORDER BY
+			TERM_DATE ASC
+		LIMIT #{start},#{pageSize}
+	</select>
+
+</mapper>

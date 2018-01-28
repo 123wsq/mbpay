@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 命名空间 -->
+    <typeAliases>
+    	
+   		<!-- BEAN别名 -->
+    	<typeAlias alias="FileDownloadInf"   type="com.tangdi.production.mpbase.bean.FileDownloadInf" />
+    	<typeAlias alias="PayRateInf"        type="com.tangdi.production.mpbase.bean.PayRateInf" />
+    	<typeAlias alias="FileInf"           type="com.tangdi.production.mpbase.bean.FileInf" />
+    	<typeAlias alias="CnapsInf"   		 type="com.tangdi.production.mpbase.bean.CnapsInf"/>
+    	<typeAlias alias="UnionfitInf"       type="com.tangdi.production.mpbase.bean.UnionfitInf"/>
+    	<typeAlias alias="MsgCodeInf"        type="com.tangdi.production.mpbase.bean.MsgCodeInf"/>
+    	<typeAlias alias="HolidayRuleInf"    type="com.tangdi.production.mpomng.bean.HolidayRuleInf"/>
+    	<typeAlias alias="TranErrorCodeInf"  type="com.tangdi.production.mpbase.bean.TranErrorCodeInf"/>
+    </typeAliases>
+</configuration>

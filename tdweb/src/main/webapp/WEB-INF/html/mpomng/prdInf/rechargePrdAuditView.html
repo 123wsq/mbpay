@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="css/page/role.css" />
+<!-- 核心功能组件 -->
+<script type="text/javascript" src="js/core/core-1.0.js" charset="utf-8"></script>
+<div class="rowt">
+<div class="col-xs-12">
+<form id="custBankForm" class="form-horizontal required-validate"
+	role="form" onsubmit="return validateCallback(this,dialogAjaxDone)">
+	<div class="form-group">
+		<br/>
+		<label class="col-sm-3 control-label no-padding-right">
+						银行卡号： </label>
+		<div class="col-sm-9">
+			<input class="col-xs-10 col-sm-5" id="payCardNo" name="payCardNo" readonly="readonly"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right">
+						上传照片： </label>
+		<div class="col-sm-2">
+			<span class="">
+				<a id="hand_a" href="" class="lightbox"> 
+					<img id="hand_img" alt="" src="" width="200%" >
+					查看原图
+				</a>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<br/>
+		<label class="col-sm-3 control-label no-padding-right">
+			审核照片： </label>
+		<div class="col-sm-9">
+		<span class="block input-icon input-icon" >
+			<input class="col-xs-10 col-sm-7" type="hidden" id="cardSignPic" name="cardSignPic" />
+			<input class="col-xs-10 col-sm-5" type="text"  id="cardSignPicPicName" name="cardSignPicPicName" readonly="readonly"/>
+			<!--<i class="ace-icon fa fa-star-o"></i>-->
+		</span>
+			<span class="">
+				<button class="btn btn-small btn-yellow" type="button" onclick="upload02('cardSignPic','cardSignPicPicName')">
+					选择文件
+				</button>
+				<button class="btn btn-small btn-info" type="button" onclick="agentPicView('cardSignPic');">
+					预览
+				</button>
+			</span>
+		</div>
+	</div>	
+	<div class="form-group">
+	
+		<input type="hidden" id="payordno" name="payordno" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />  
+		<input type="hidden" id="rg_netrecamt" name="netrecAmt" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />  
+		<input type="hidden" id="checkAudita" name="checkAudit0" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />  
+		<input type="hidden" id="rg_custId" name="custId" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />
+		<input type="hidden" id="rg_payType" name="payType" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />
+		<input type="hidden" id="rg_payDate" name="payDate" placeholder=""
+				class="col-sm-25 col-md-59" value="" style="" />
+				
+		<label class="col-sm-3 control-label no-padding-right"> 审核意见：
+		</label>
+		<div class="col-sm-9">
+			<input type="text" id="auditIdea" name="auditIdea" placeholder=""
+				class="col-xs-10 col-sm-9" value="" validate="true" />
+		</div>
+	</div>			
+	
+</form>
+</div>
+<div class="form-actions align-right  form-button-box" style="margin-top: 10px;" id="formBtnBoxDiv">
+	<button id="agreeBtn" class="btn btn-small btn_search" type="button" onclick="rechargePrdAuditSubmit('1');">通过</button>
+	<button id="disAgreeBtn" class="btn btn-small  btn-delete " type="button" onclick="rechargePrdAuditSubmit('2');">拒绝</button>
+	<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-rechargeAudit');">关闭</button>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	//图片预览空间加载
+	$(".lightbox").lightbox({
+        fitToScreen: true,
+        imageClickClose: false
+    });
+	setInterval(setPic, 600);
+});
+
+function setPic(){
+	document.getElementById("hand_a").href ="mpbase/pic/view2.do?picid="+$("#cardSignPic").val();
+	document.getElementById("hand_img").src ="mpbase/pic/view2.do?picid="+$("#cardSignPic").val();
+}
+
+function rechargePrdAuditSubmit(auditStatus){
+	var param = dialog.getById('dlg-rechargeAudit');
+	var auditIdea=$("#auditIdea").val();
+	var payordno=$("#payordno").val();
+	var custId=$("#rg_custId").val();
+	var cardSignPic=$("#cardSignPic").val();
+	var netrecamt=$("#rg_netrecamt").val();
+	var paytype=$("#rg_payType").val();
+	var payDate=$("#rg_payDate").val();
+	
+	var checkAudit=param.dataParam.checkAudit;
+	
+	var tmsg = "审核拒绝吗？";
+	if(auditStatus == '1'){
+		tmsg = "审核通过吗？";
+	}
+	
+	msg.confirm({title:'确认',position:'center',msg:tmsg,call:function(ok){
+		if(ok){
+			$.ajax({
+				type : "post",
+				url : "mpomng/prdInf/rechargeAudit.do",
+				data:{"checkAudit":checkAudit,"auditIdea":auditIdea,"auditStatus":auditStatus,"payordno":payordno,"cardSignPic":cardSignPic,"custId":custId,"netrecamt":netrecamt,"paytype":paytype,"payDate":payDate},
+				dataType : 'json',
+				success : function(result) {
+					if(result.rspcod== 200){
+						msg.alert("提示",result.rspmsg,'correct');
+						$("#grid-table").trigger("reloadGrid");
+						dialog.closeById('dlg-rechargeAudit');
+					}else{
+						msg.alert("错误",result.rspmsg,'error');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+			});
+		}else{
+			dialog.closeById('dlg-rechargeAudit');
+		}
+	}});
+}
+
+function upload02(fid,fname){
+	openFileUpload({
+		fileUploadDone:function(reslut){
+			$("#"+fid).val(reslut.map.fid);
+			$("#"+fname).val(reslut.map.fname);
+		},
+		allowFile:EXT_PIC,
+		fileSize:1024
+	});
+}
+
+function agentPicView(id){
+	if($('#'+id).val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#'+id).val());
+}
+</script>

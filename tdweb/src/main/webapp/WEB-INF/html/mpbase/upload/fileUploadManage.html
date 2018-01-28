@@ -1,0 +1,126 @@
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form" id="file_form" enctype="multipart/form-data">
+	<!-- #section:elements.form -->
+						<div style="margin-right: 10px;margin-left: 10px;margin-top: 8px">
+								<div class="form-group" style="height: 25px;">
+									<div class="col-xs-12">
+										<input multiple="" type="file" id="id-input-file-3" onchange="TDFileSelectedPre()" />
+
+										<!-- /section:custom/file-input -->
+									</div>
+								</div>
+									
+
+							<!--	<div id="progressNumber"></div>-->
+					
+								<div  id="progress-bar-0"  class="progress pos-rel" data-percent="0%" style="margin-bottom: 0px !important">
+									<div id="progress-bar-1" class="progress-bar" style="width:0%;"></div>
+								</div>
+								<div id="fileInf" style="text-align: right;"></div>
+					
+								<!-- /section:custom/file-input.filter -->
+</div>
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button id="TdUploadFile" class="btn btn-info" type="button" onclick="TDUploadFile()">
+			保存
+			</button>
+
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+<!--
+
+//-->
+
+$(document).ready(function() {
+	$("#TdUploadFile").attr("disabled","disabled");
+});
+
+function TDFileSelectedPre(){
+	//校验
+	var param = dialog.getById(TdFileUploadDialogId);
+	var allowExtFile = param.dataParam.allowExt;
+	var allows = allowExtFile.split(",");
+	
+	var fsExt=param.dataParam.fileSize==undefined?"":param.dataParam.fileSize;
+	//上传
+	var rv = TDFileSelected(allows,fsExt);
+	if(rv == 1){
+		$("#TdUploadFile").removeAttr("disabled","disabled");
+	}
+}
+
+/**
+ * 文件上传处理完成后该方法被调用
+ */
+function TDUploadCallback(result){
+	var result =	eval("(" + result + ")");
+	if(result.rspcod== 200){
+		msg.alert("成功", result.rspmsg, 'correct');
+		
+	}else{
+		msg.alert("错误", result.rspmsg, 'error');
+	}
+	var d = dialog.getFileUploadDialog();
+	
+	if(d && typeof d.fileUploadDone === 'function'){
+		var r = d.fileUploadDone(result);
+		if(r === true || r === 'true'){
+			d.close();
+		}
+	}
+	
+	d.close();
+}
+
+
+
+
+/**
+ * 文件上传控件渲染
+ */
+$('#id-file-format').removeAttr('checked').on('change', function() {
+	var whitelist_ext, whitelist_mime;
+	var btn_choose
+	var no_icon
+	if(this.checked) {
+		btn_choose = "将文件拖入或单击选择";
+		no_icon = "ace-icon fa fa-picture-o";
+
+		whitelist_ext = ["jpeg", "jpg", "png", "gif" , "bmp"];
+		whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
+	}
+	else {
+		btn_choose = "将文件拖入或单击选择";
+		no_icon = "ace-icon fa fa-cloud-upload";
+		
+		whitelist_ext = null;//all extensions are acceptable
+		whitelist_mime = null;//all mimes are acceptable
+	}
+	var file_input = $('#id-input-file-3');
+	file_input
+	.ace_file_input('update_settings',
+	{
+		'btn_choose': btn_choose,
+		'no_icon': no_icon,
+		'allowExt': whitelist_ext,
+		'allowMime': whitelist_mime
+	})
+	file_input.ace_file_input('reset_input');
+	
+	file_input
+	.off('file.error.ace')
+	.on('file.error.ace', function(e, info) {
+	});
+
+});
+
+
+</script>

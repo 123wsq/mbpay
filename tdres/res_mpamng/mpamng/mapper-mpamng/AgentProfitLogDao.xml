@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpamng.dao.AgentProfitLogDao">
+	<resultMap type="AgentProfitLogInf" id="agentProfitLogMap">
+		    <result property="agentId"               column="AGENT_ID" /> 
+		    <result property="sharDate"               column="SHAR_DATE" /> 
+		    <result property="sharAmt"               column="SHARAMT" /> 
+		    <result property="payAmt"               column="PAYAMT" /> 
+		    <result property="rate"               column="RATE" /> 
+		    <result property="status"               column="STATUS" /> 
+		    <result property="updateTime"               column="UPDATE_TIME" /> 
+		    <result property="audituser"               column="AUDIT_USER" /> 
+		    <result property="agentName"               column="AGENT_NAME" /> 
+   		    <result property="payFee"               column="PAY_FEE" /> 
+		    <result property="agentDgr"               column="AGENT_DGR" /> 
+	</resultMap>
+
+	<select id="selectList" parameterType="java.util.Map" resultMap="agentProfitLogMap">
+		SELECT
+			apl.AGENT_ID,apl.SHAR_DATE,
+			CAST(CAST(apl.SHARAMT as decimal(20,2))/100 as decimal(20,2)) as SHARAMT,
+			CAST(CAST(apl.PAYAMT as decimal(20,2))/100 as decimal(20,2)) as PAYAMT,
+			CAST(CAST(apl.RATE as decimal(20,2))/10 as decimal(20,2)) as RATE, 
+			apl.STATUS,apl.UPDATE_TIME,apl.AUDIT_USER,
+			CAST(CAST(apl.PAY_FEE as decimal(20,2))/100 as decimal(20,2)) as PAY_FEE,
+			apl.AGENT_DGR,ai.AGENT_NAME
+		FROM
+			MPBATCH_AGENT_PROFIT_LOG_INF apl
+		LEFT JOIN MPAMNG_AGENT_INF ai ON ai.AGENT_ID = apl.AGENT_ID
+		<where>
+			<if test="fathAgentId!= null and fathAgentId!= ''">
+				ai.AGENT_CODE LIKE CONCAT(
+					(
+						SELECT
+							AGENT_CODE
+						FROM
+							MPAMNG_AGENT_INF
+						WHERE
+							AGENT_ID = #{fathAgentId}
+					),
+					'%'
+				)
+			</if>
+			<if test="agentName!= null and agentName!= ''">
+				AGENT_NAME = #{agentName}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				AND SHAR_DATE >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND SHAR_DATE <=#{endTime}]]>
+			</if>
+		</where>
+		ORDER BY apl.AGENT_ID ASC,apl.UPDATE_TIME DESC
+		LIMIT #{start},#{pageSize}
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM 
+			MPBATCH_AGENT_PROFIT_LOG_INF apl
+			LEFT JOIN MPAMNG_AGENT_INF ai ON ai.AGENT_ID = apl.AGENT_ID
+		<where>
+		        <if test="agentId!= null and agentId!= ''">
+						AND apl.AGENT_ID like concat('%',#{agentId},'%') 
+				</if>
+				 <if test="agentName!= null and agentName!= ''">
+						AND ai.AGENT_NAME  like concat('%',  #{agentName},'%') 
+				</if>
+				 <if test="status != null and status != ''">
+						AND apl.STATUS =  #{status}
+				</if>
+				<if test="sTime != null and sTime != ''">
+			            AND apl.SHAR_DATE >= #{sTime}
+		        </if>
+		        <if test="eTime != null and eTime != ''">
+				        <![CDATA[ AND apl.SHAR_DATE <= #{eTime} ]]>
+		        </if>
+		       
+		</where>
+	</select>
+</mapper>

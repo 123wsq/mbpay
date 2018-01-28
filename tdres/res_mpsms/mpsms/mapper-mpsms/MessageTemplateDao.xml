@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpsms.dao.MessageTemplateDao">
+	<resultMap type="MessageTemplateInf" id="messageTemplateMap">
+		    <result property="messageCode"               column="MESSAGE_CODE"    /> 
+		    <result property="messageContent"            column="MESSAGE_CONTENT" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="MessageTemplateInf">
+		UPDATE 
+				MPSMS_MESSAGE_TEMPLATE_INF
+		<set>
+		        <if test="messageContent!= null and messageContent!= ''">
+						MESSAGE_CONTENT =  #{messageContent}
+				</if>
+		</set>
+		WHERE
+			    MESSAGE_CODE =  #{messageCode}
+		
+	</update>
+
+	<select id="selectEntity" parameterType="MessageTemplateInf" resultMap="messageTemplateMap">
+		SELECT 
+		         MESSAGE_CODE, 
+		         MESSAGE_CONTENT
+		FROM 
+		         MPSMS_MESSAGE_TEMPLATE_INF
+
+				
+		WHERE	
+				 MESSAGE_CODE =  #{messageCode}
+			
+	</select>
+
+	<select id="selectList" parameterType="MessageTemplateInf" resultMap="messageTemplateMap" databaseId="mysql">
+		SELECT 
+		         MESSAGE_CODE, 
+		         MESSAGE_CONTENT 
+		FROM 
+		       MPSMS_MESSAGE_TEMPLATE_INF
+		<where>
+		        <if test="messageCode!= null and messageCode!= ''">
+						AND MESSAGE_CODE =  #{messageCode}
+				</if>
+		        <if test="messageContent!= null and messageContent!= ''">
+						AND MESSAGE_CONTENT =  #{messageContent}
+				</if>
+		</where>
+		ORDER BY MESSAGE_CODE DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="MessageTemplateInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				MPSMS_MESSAGE_TEMPLATE_INF
+		<where>
+		        <if test="messageCode!= null and messageCode!= ''">
+						AND MESSAGE_CODE   =  #{messageCode}
+				</if>
+		        <if test="messageContent!= null and messageContent!= ''">
+						AND MESSAGE_CONTENT =  #{messageContent}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="MessageTemplateInf">
+		INSERT INTO MPSMS_MESSAGE_TEMPLATE_INF  
+			   (
+		         MESSAGE_CODE, 
+		         MESSAGE_CONTENT
+				)
+		VALUES (
+		          #{messageCode}, 
+		          #{messageContent}
+		       )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="MessageTemplateInf">
+		DELETE FROM MPSMS_MESSAGE_TEMPLATE_INF
+		WHERE
+			MESSAGE_CODE IN (${messageCode}) 
+	</delete>
+
+</mapper>

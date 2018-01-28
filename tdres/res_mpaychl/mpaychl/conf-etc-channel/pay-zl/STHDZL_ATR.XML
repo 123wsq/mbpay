@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!--中联支付业务 -->
+	<bean id="STHDZL" class="com.tangdi.production.tdcomm.engine.TcpOutChannel" init-method="start" destroy-method="stop">
+		<property name="name" value="STHDZL"></property><!-- 渠道名 -->
+		<property name="outprocess"><!-- 接出流程 默认先调用这个process -->
+			<bean class="com.tangdi.production.mpaychl.trans.process.HttpsZLOutProcess">
+				<property name="requestPath"    value="https://payment.kklpay.com" />
+				<property name="canelRequestPath"    value="https://spayment.kklpay.com/payserver/revocation.do" />
+				<property name="signAction"    value="/verify/verify.do" />
+				<property name="createOrderAction"    value="/order/createOrder.do" />
+				<property name="payAction"    value="/pos/pay.do" />
+				<property name="httpsRequestClient" ref="httpsRequestClient_ZL" />
+				<property name="unpack"><!-- 解包 -->
+					<bean class="com.tangdi.production.tdcomm.itf.Unpackimpl">
+						<property name="ITF" value="mpaychl/conf-etc-channel/pay-zl/STHDZL_ITF.XML"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- HttpRequest Client对象 -->
+	<bean id="httpsRequestClient_ZL" class="com.tangdi.production.mpbase.http.client.ZLHttpsRequestClient">
+		<!-- 一次接收数据的容量 -->
+		<property name="byteSize" value="1024" />
+		<!-- 缓冲区大小 -->
+		<property name="byteBufferSize" value="102400" />
+	</bean>
+
+</beans>

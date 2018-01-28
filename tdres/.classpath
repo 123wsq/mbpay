@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="res_tdbase/tdbase"/>
+	<classpathentry kind="src" path="res_tdweb/tdweb"/>
+	<classpathentry kind="src" path="res_tdauth/tdauth"/>
+	<classpathentry kind="src" path="res_tdcomm/tdcomm"/>
+	<classpathentry kind="src" path="res_sql"/>
+	<classpathentry kind="src" path="res_mpaychl/mpaychl"/>
+	<classpathentry kind="src" path="res_mpbase/mpbase"/>
+	<classpathentry kind="src" path="res_mpcctp/mpcctp"/>
+	<classpathentry kind="src" path="res_mpomng/mpomng"/>
+	<classpathentry kind="src" path="res_mpamng/mpamng"/>
+	<classpathentry kind="src" path="res_mprcs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

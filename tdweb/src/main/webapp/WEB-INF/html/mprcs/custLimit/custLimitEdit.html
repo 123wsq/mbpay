@@ -1,0 +1,332 @@
+
+<meta charset="utf-8" />
+<form  id="userLimitForm" class="form-horizontal" role="form" onsubmit="return submitForm(this);"  >
+	<!-- #section:elements.form -->
+	<br />
+	<!-- 
+	 * Input属性说明:
+	 * validate="true"  是否需要验证字段
+	 * msg="错误时提示信息"        
+	 * datatype="数据类型"
+	-->
+	<input type="hidden" name="limitId" id="limitId" /><!-- 
+	<div class="form-group" id="limitTypeDiv">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">限额类型： </label>
+		<div class="col-sm-3">
+			<select rel="obj.LIMIT_TYPE" location="local" name="limitType"
+				id="limitType" data-placeholder="请选择限额类型 "
+				style="width: 200px; vertical-align: middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group" id="CustLevel">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商户级别：</label>
+
+		<div class="col-sm-3">
+			<select rel="obj.options" valName="" textName=""
+				location="mprcs/selectoption/custLevel.do" name="limitCustLevel"
+				id="limitCustLevel" data-placeholder="请选择商户级别"
+				style="width: 200px; vertical-align: middle;">
+			</select>
+		</div>
+	</div>-->
+	
+	<div class="form-group" id="limit" style="display:none">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商户编号： </label>
+		<div class="col-sm-3">
+			<input type="text" id="add_limitCustId" name="limitCustId"  maxlength="20" validate="true" datatype="number"
+				placeholder="请输入[用户编号]" class="col-xs-10 col-sm-12" onblur="valiteCust(this)"/>
+
+		</div>
+	</div>
+	<div class="form-group" id="limitName">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1">商户名称： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="add_custName" name="custName"
+				placeholder="商户名称为只读" class="col-xs-10 col-sm-12" readonly="readonly"/>
+
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 业务类型 ： </label>
+		<div class="col-sm-3">
+			<select rel="obj.LIMIT_BUS_TYPE" location="local" name="limitBusType"
+				id="limitBusType" data-placeholder="请选择业务类型  "
+				style="width: 200px; vertical-align: middle;" >
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 支付方式： </label>
+		<div class="col-sm-3">
+			<select rel="obj.LIMIT_PAY_WAY" location="local" name="limitPayWay"
+				id="limitPayWay" data-placeholder="请选择支付方式"
+				style="width: 200px; vertical-align: middle;">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最小金额(元)： </label>
+		<div class="col-sm-3">
+			<input type="text" id="limitMinAmt" name="limitMinAmt"   maxlength="12"   datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[单笔最小金额]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 单笔最大金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMaxAmt" name="limitMaxAmt"   maxlength="12"   datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[单笔最大金额]" class="col-xs-10 col-sm-12" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 日交易次数： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitDayTimes" name="limitDayTimes"  maxlength="8"  datatype="number"
+				placeholder="请输入[日交易次数]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 日总金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitDayAmt" name="limitDayAmt"  maxlength="12"  datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[日总金额]" class="col-xs-10 col-sm-12" />
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 月交易次数： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMonthTimes" name="limitMonthTimes"  maxlength="8"  datatype="number" 
+				placeholder="请输入[月交易次数]" class="col-xs-10 col-sm-12" />
+		</div>
+
+		<label class="col-sm-2 control-label no-padding-right"
+			for="form-field-1"> 月总金额(元)： </label>
+		<div class="col-sm-3">
+
+			<input type="text" id="limitMonthAmt" name="limitMonthAmt"  maxlength="12"  datatype="money" init-format="cent2Yuan('{value}')"
+				placeholder="请输入[月总金额]" class="col-xs-10 col-sm-12" />
+		</div>
+	</div>
+	<!-- 
+	  <div class="form-group">
+		<label class="col-sm-2 control-label no-padding-right ">
+			生效开始日期： </label>
+		<div class="col-sm-3">
+			<div class="input-group">
+				<input class="form-control date-picker" id="id-date-picker-1"  validate="true"
+				name="limitStartDate" type="text" placeholder="请输入[生效开始日期]"  data-date-format="yyyy-mm-dd" />
+				<span class="input-group-addon">
+					<i class="fa fa-calendar bigger-110"></i>
+				</span>
+			</div>
+			
+		</div>
+
+
+		<label class="col-sm-2 control-label no-padding-right">
+			生效结束日期： </label>
+		<div class="col-sm-3">
+			<div class="input-group">
+				<input class="form-control date-picker" id="id-date-picker-2" validate="true"
+				name="limitEndDate" type="text" placeholder="请输入[生效结束日期]" data-date-format="yyyy-mm-dd" />
+				<span class="input-group-addon">
+					<i class="fa fa-calendar bigger-110"></i>
+				</span>
+			</div>
+		</div>
+	</div>  
+	
+	-->
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+		<button class="btn btn-info"   type="submit">保存</button>
+		&nbsp;
+		<button class="btn" type="button"
+			onclick="javascript:dialog.close(this);">关闭</button>
+	</div>
+
+</form>
+<script type="text/javascript">
+	function submitForm(obj) {
+	    //交易金额大小控制
+	    var limitMinAmt = $("#limitMinAmt").val();
+	    var limitMaxAmt = $("#limitMaxAmt").val();
+	    var limitDayAmt = $("#limitDayAmt").val();
+	    var limitMonthAmt = $("#limitMonthAmt").val();
+	    //交易次数大小限制
+	    var limitDayTimes = $("#limitDayTimes").val();
+	    var limitMonthTimes = $("#limitMonthTimes").val();
+	    //金额输入格式验证
+	    var reg = /^[\d]*(.[\d]{1,2})?$/;
+	    if (!reg.test(limitMinAmt) || !reg.test(limitMaxAmt) || !reg.test(limitDayAmt) || !reg.test(limitMonthAmt)) {
+	        msg.alert("警告", "输入金额格式不正确,请重新输入!", "warn");
+	        return false;
+	    }
+	    //数字验证
+	    var number = /^([0-9]*)$/;
+	    if (!number.test(limitDayTimes) || !number.test(limitMonthTimes)) {
+	        msg.alert("警告", "只能输入数字,请重新输入!", "warn");
+	        return false;
+	    }
+	  //string类型转换
+	    limitMinAmt=parseFloat(limitMinAmt);
+	    limitMaxAmt=parseFloat(limitMaxAmt);
+	    limitDayAmt=parseFloat(limitDayAmt);
+	    limitMonthAmt=parseFloat(limitMonthAmt);
+	    
+	    limitDayTimes=parseFloat(limitDayTimes);
+	    limitMonthTimes=parseFloat(limitMonthTimes);
+	    
+	    
+	    //日交易次数
+	    if (limitDayTimes != '' && limitMonthTimes != '' && limitDayTimes > limitMonthTimes) {
+	        msg.alert("警告", "日交易次数  应小于等于  月交易次数！", "warn");
+	        return false;
+	    }
+	    //单笔最小
+	    if (limitMinAmt != '' && limitMaxAmt != '' && limitMinAmt > limitMaxAmt) {
+	        msg.alert("警告", "单笔最小 应小于等于  单笔最大！", "warn");
+	        return false;
+	    }
+	    if (limitMinAmt != '' && limitDayAmt != '' && limitMinAmt > limitDayAmt) {
+	        msg.alert("警告", "单笔最小 应小于等于  日总金额！", "warn");
+	        return false;
+	    }
+	    if (limitMinAmt != '' && limitMonthAmt != '' && limitMinAmt > limitMonthAmt) {
+	        msg.alert("警告", "单笔最小 应小于等于   月总金额！", "warn");
+	        return false;
+	    }
+	    //单笔最大
+	    if (limitMaxAmt != '' && limitDayAmt != '' && limitMaxAmt > limitDayAmt) {
+	        msg.alert("警告", "单笔最大应 小于等于 日总金额！", "warn");
+	        return false;
+	    }
+	    if (limitMaxAmt != '' && limitMonthAmt != '' && limitMaxAmt > limitMonthAmt) {
+	        msg.alert("警告", "单笔最大 应 小于等于  月总金额！", "warn");
+	        return false;
+	    }
+	    //日总金额
+	    if (limitDayAmt != '' && limitMonthAmt != '' && limitDayAmt > limitMonthAmt) {
+	        msg.alert("警告", "日总金额  应小于等于  月总金额！", "warn");
+	        return false;
+	    }
+	    
+	    //日期判断
+	    var now = new Date();
+	    var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var clock = year + "-";
+        if(month < 10)
+            clock += "0";
+        clock += month + "-";
+        if(day < 10)
+            clock += "0";
+        clock += day;//日期格式：yyyy-mm-dd
+	    var start = $("#id-date-picker-1").val();
+	    var end = $("#id-date-picker-2").val();
+	    if(end != '' && clock>=end){
+	    	msg.alert("警告", "生效结束时间  应大于  当前系统时间！", "warn");
+		    return false;
+	    }
+	    if(start != '' && end != '' && start>end){
+	    	 msg.alert("警告", "生效开始时间  应小于等于  生效结束时间！", "warn");
+		     return false;
+	    }
+	    
+	   // return false;
+	    //自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	    return validateCallback(obj,
+		    function(result) {
+		        if (result.rspcod == 200) {
+		            msg.alert("提示", '修改商户限额成功!', 'correct');
+		            $("#grid-table").trigger("reloadGrid");
+		            dialog.close(obj);
+		        } else {
+		            msg.alert("错误", result.rspmsg, 'error');
+		        }
+		    });
+	}
+	
+	function valiteCust(obj){
+		var limitCustId=$(obj).val();
+		$.ajax({
+			type : "post",
+			url : "mpomng/mobileMerManage/queryCustId.do",
+			data:{limitCustId:limitCustId},
+			dataType : 'json',
+			async:true,
+			success : function(result) {
+				if (result.rspcod != 200){
+					TDTips($(obj),'商户编号不存在！');
+					$(obj).focus();
+				}
+			},
+			error : function(XMLHttpRequest, textStatus) {
+				msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+			}
+		});	
+		
+	}
+	
+	$(document).ready(function() {
+		var dialog=$("#dlg-editUserLimit").Dialog();
+		var type = dialog.pageParam.type;
+		if(type == 'Edit'){
+			$('#limitBusType').attr("disabled","disabled");
+			$('#limitPayWay').attr("disabled","disabled");
+			$('#add_limitCustId').attr("readonly","readonly");
+			$("#limitName").show();
+			$("#limit").show();
+		}else{
+			$("#limitTypeDiv").hide();
+			$("#limit").show();
+			$("#limitName").hide();
+			$('#limitBusType').removeAttr("disabled");
+			$('#limitPayWay').removeAttr("disabled");
+			
+		}
+		validateLimit();
+		$('#limitType').change(function() {
+			var limitType = $(this).children('option:selected').val();
+			
+		})
+		setType(type);
+	});
+	
+	function setType(type){
+		
+		if (type == 'Edit'){
+     	   $("#userLimitForm").attr("action","mprcs/userLimitEdit/edit.do");
+		}else{
+		   $("#userLimitForm").attr("action","mprcs/userLimitAdd/add.do");
+		}
+	}
+	function validateLimit(){
+		
+		
+	}
+	
+	
+	
+	
+	
+</script>

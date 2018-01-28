@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.RouteDao">
+	<!-- 通道路由信息结果集 -->
+	<resultMap type="java.util.Map" id="CooporgRouteMap">
+		<result property="TMercId" column="MER_NO" />
+		<result property="TMercNAME" column="MER_NAME" />
+		<result property="TTermId" column="TER_NO" />
+		<result property="batchNo" column="BATCH_NO" />
+		<result property="merStatus" column="MER_STATUS" />
+		<result property="merPIK" column="PINKEY" />
+		<result property="MACKEY" column="MACKEY" />
+		<result property="TDKEY" column="TDKEY" />
+		<result property="rtrsvr" column="RTRSVR" />
+		<result property="rtrcod" column="RTRCOD" />
+		<result property="status" column="STATUS" />
+		<result property="orgNo" column="COOPORG_NO" />
+		<result property="merKey" column="MER_KEY" />
+	</resultMap>
+	
+	<select id="selectRoute" parameterType="java.util.Map" resultMap="CooporgRouteMap">
+		SELECT
+			T1.COOPORG_NO,
+			T1.MER_NAME,
+			T1.MER_NO,
+			T1.TER_NO,
+			T1.BATCH_NO,
+			T1.MER_STATUS,
+			T3.PINKEY,
+			T3.MACKEY,
+			T3.TDKEY,
+			T4.RTRSVR,
+			T4.RTRCOD,
+			T4. STATUS,
+			T1.MER_KEY
+		FROM
+			MPCOOP_COOPORG_MER_INF T1,
+			MPAMNG_AGENT_ORG_INF T2,
+			MPCOOP_COOPORG_TERMKEY_INF T3,
+			MPCOOP_COOPORG_ROUTE_INF T4
+		WHERE
+			T1.COOPORG_NO = T2.COOPORG_NO
+		AND T1.MER_NO = T2.MER_NO
+		AND T3.COOPORG_NO = T1.COOPORG_NO
+		AND T3.MER_NO = T1.MER_NO
+		AND T4.COOPORG_NO = T1.COOPORG_NO
+		<if test="rtrType!= null and rtrType!= ''">
+			AND T4.RTRTYPE = #{rtrType}
+		</if>
+			AND T2.AGENT_ID = #{agentId}
+		<if test="cooporgNo!= null and cooporgNo!= ''">
+			AND T1.COOPORG_NO=#{cooporgNo}
+		</if>
+		<if test="merNo!= null and merNo!= ''">
+			AND T1.MER_NO=#{merNo}
+		</if>
+		<if test="terNo!= null and terNo!= ''">
+			AND T1.TER_NO=#{terNo}
+		</if>
+		LIMIT 1
+	</select>
+	
+	<select id="selectLmtRoute" parameterType="java.util.Map" resultMap="CooporgRouteMap">
+		SELECT
+			T1.COOPORG_NO,
+			T1.MER_NAME,
+			T1.MER_NO,
+			T1.TER_NO,
+			T1.BATCH_NO,
+			T1.MER_STATUS,
+			T3.PINKEY,
+			T3.MACKEY,
+			T3.TDKEY,
+			T4.RTRSVR,
+			T4.RTRCOD,
+			T4. STATUS,
+			T1.MER_KEY
+		FROM
+			MPCOOP_COOPORG_MER_INF T1,
+			MPAMNG_AGENT_ORG_INF T2,
+			MPCOOP_COOPORG_TERMKEY_INF T3,
+			MPCOOP_COOPORG_ROUTE_INF T4
+		WHERE
+			T1.COOPORG_NO = T2.COOPORG_NO
+		AND T1.MER_NO = T2.MER_NO
+		AND T3.COOPORG_NO = T1.COOPORG_NO
+		AND T3.MER_NO = T1.MER_NO
+		AND T4.COOPORG_NO = T1.COOPORG_NO
+		
+		<if test="agentId!= null and agentId!= ''">
+			AND T2.AGENT_ID = #{agentId}
+		</if>
+		<if test="cooporgNo!= null and cooporgNo!= ''">
+			AND T1.COOPORG_NO=#{cooporgNo}
+		</if>
+		<if test="merNo!= null and merNo!= ''">
+			AND T1.MER_NO=#{merNo}
+		</if>
+		<if test="terNo!= null and terNo!= ''">
+			AND T1.TER_NO=#{terNo}
+		</if>
+		LIMIT 1
+	</select>
+	
+	<select id="selectDaiRoute" parameterType="java.util.Map" resultMap="CooporgRouteMap">
+		SELECT
+			T1.COOPORG_NO,
+			T1.MER_NAME,
+			T1.MER_NO,
+			T1.TER_NO,
+			T1.BATCH_NO,
+			T1.MER_STATUS,
+			T3.PINKEY,
+			T3.MACKEY,
+			T3.TDKEY,
+			T4.RTRSVR,
+			T4.RTRCOD,
+			T4. STATUS,
+			T1.MER_KEY
+		FROM
+			MPCOOP_COOPORG_MER_INF T1,
+			MPAMNG_AGENT_ORG_INF T2,
+			MPCOOP_COOPORG_TERMKEY_INF T3,
+			MPCOOP_COOPORG_ROUTE_INF T4
+		WHERE
+			T1.COOPORG_NO = T2.COOPORG_NO
+		AND T1.MER_NO = T2.MER_NO
+		AND T3.COOPORG_NO = T1.COOPORG_NO
+		AND T3.MER_NO = T1.MER_NO
+		AND T4.COOPORG_NO = T1.COOPORG_NO
+		<if test="agentId!= null and agentId!= ''">
+			AND T2.AGENT_ID = #{agentId}
+		</if>
+		<if test="rtrType!= null and rtrType!= ''">
+			AND T4.RTRTYPE = #{rtrType}
+		</if>
+		<if test="cooporgNo!= null and cooporgNo!= ''">
+			AND T1.COOPORG_NO=#{cooporgNo}
+		</if>
+		<if test="merNo!= null and merNo!= ''">
+			AND T1.MER_NO=#{merNo}
+		</if>
+		<if test="terNo!= null and terNo!= ''">
+			AND T1.TER_NO=#{terNo}
+		</if>
+		LIMIT 1
+	</select>
+	
+</mapper>

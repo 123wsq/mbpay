@@ -1,0 +1,8 @@
+<meta charset="utf-8" />
+
+
+<button class="btn" onclick="alertMsg.info({title:'提示',msg:'信息提示！'})">信息提示框</button>
+<button class="btn" onclick="alertMsg.error({title:'错误',msg:'错误提示！'})">错误提示框</button>
+<button class="btn" onclick="alertMsg.warn({title:'警告',msg:'警告提示！'})">警告示框</button>
+<button class="btn" onclick="alertMsg.correct({title:'成功',msg:'操作成功！'})">成功提示框</button>
+<button class="btn" onclick="alertMsg.confirm({title:'确认',msg:'您确定要删除吗？',okCall:function(){alert('确定')},cancelCall:function(){alert('取消')}})">确定/取消</button>

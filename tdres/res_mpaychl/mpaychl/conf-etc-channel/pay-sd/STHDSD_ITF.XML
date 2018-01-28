@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--pos 8583 报文接出 -->
+<channel name="STHDSD" log_level="INFO">
+	
+	<transaction code="9992" desc="消费">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|22|25|41|42|49|60"/>
+          	 <para name="opt_fields"  value="2|14|23|26|35|36|52|53|55|62|64"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-sd/SD8583_CFG.XML"/>
+          	 <para name="type_code"  value="0200"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9993" desc="微信扫码">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|25|32|34|41|42|49|59"/>
+          	 <para name="opt_fields"  value="62|64"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-sd/SD8583_CFG.XML"/>
+          	 <para name="type_code"  value="0700"/>
+         	</do>
+      	</pack>
+	</transaction>
+	
+	<transaction code="9994" desc="微信扫码查询">     
+        <pack cache="true">
+        	<do func="pack8583">
+             <para name="Tpdu"  value="6000030000"/>
+          	 <para name="phead"  value="603100310000"/>
+             <para name="must_fields"  value="3|4|11|25|32|34|41|42|49"/>
+          	 <para name="opt_fields"  value="62|64"/>
+          	 <para name="CFG"  value="mpaychl/conf-etc-channel/pay-sd/SD8583_CFG.XML"/>
+          	 <para name="type_code"  value="0700"/>
+         	</do>
+      	</pack>
+	</transaction>
+</channel>

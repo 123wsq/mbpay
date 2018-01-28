@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 命名空间 -->
+    <typeAliases>
+    	<typeAlias alias="Msg"         type="com.tangdi.production.tdbase.domain.Message"/>
+    	<typeAlias alias="Attachment"  type="com.tangdi.production.tdbase.domain.Attachment"/>
+    	<typeAlias alias="Dict"   	   type="com.tangdi.production.tdbase.domain.Dict"/>
+    </typeAliases>
+</configuration>

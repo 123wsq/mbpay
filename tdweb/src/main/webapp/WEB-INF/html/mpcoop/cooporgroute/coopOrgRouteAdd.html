@@ -1,0 +1,146 @@
+
+<meta charset="utf-8" />	
+
+ <br/>
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="mpcoop/cooporgroute/coopOrgRouteManage/add.do" >
+	
+	<input type="hidden" name="id" />
+	<input type="hidden" name="rtrid" />
+	<!-- <div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1">路由编号： </label>
+		<div class="col-sm-9">
+			<input type="text" id="rtrid" name="rtrid" placeholder=""
+				class="col-xs-10 col-sm-7"  validate="true" />
+		</div>
+	</div> -->
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1">合作结构编号： </label>
+		<div class="col-sm-9">
+		         <label>
+					<div class="search_input" style="padding-top: 5px;">
+						 <select  name="cooporgNo" id="cooporgNo" data-placeholder="请选择合作机构编号"  style="width: 258px;vertical-align:middle;">
+							
+						 </select>
+					</div>
+				</label>
+			<!-- <input type="text" id="cooporgNo" name="cooporgNo" placeholder=""
+				class="col-xs-10 col-sm-7"  validate="true" /> -->
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1"> 路由类别： </label>
+		<div class="col-sm-9">
+			<select 
+				rel="obj.RTRTYPE"
+				location="local" 
+				name="rtrType" 
+				id="rtrType" 
+				data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+				<option value='' >--请选择--</option>
+			</select>						
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right tooltip-error"
+			for="form-field-1"> 交易码： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+					<input type="text" id="txncd" name="txncd" placeholder="" class="col-xs-12 col-sm-12" validate="true"  datatype="number" maxlength="4"/>
+					<i class="ace-icon fa fa-star-o"></i>
+			</span>
+			
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1"> 路由服务名： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="rtrsvr" name="rtrsvr" placeholder=""
+					class="col-xs-12 col-sm-12"  validate="true" datatype="word"  maxlength="8"/>
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>	
+		</div>
+	</div>
+	<div class="form-group">	
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1"> 路由交易码： </label>
+		<div class="col-sm-6">
+			<span class="block input-icon input-icon-right" >
+				<input type="text" id="rtrcod" name="rtrcod" placeholder=""
+					class="col-xs-12 col-sm-12"  datatype="number" maxlength="4"  />
+				<i class="ace-icon fa fa-star-o"></i>
+			</span>	
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1-1"> 路由状态： </label>
+		<div class="col-sm-9">
+			<select 
+				rel="obj.RTRSTATUS"
+				location="local" 
+				name="status" 
+				id="status" 
+				data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+				<option value='' >--请选择--</option>
+			</select>						
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 路由描述： </label>
+		<div class="col-sm-9">
+			<input type="text" id="rtrDesc" name="rtrDesc"  
+				class="col-xs-10 col-sm-7" />
+		</div>
+	</div>
+	
+
+	<input type="hidden" id="editUserId" name="editUserId" />
+	
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+/**
+ * 	初始化下拉框
+ */
+$(document).ready(function() {
+	 loadOption("cooporgNo","","0","mpcoop/selectoption/cooporgNo.do");
+
+	 var p = dialog.getById('dlg-coopOrgRouteAdd');
+		//设置页面初始值
+		$("#editUserId").attr("value",p.dataParam.editUserId);
+		$("#editUserName").attr("value",p.dataParam.editUserName);
+	
+});
+
+function submitForm(obj){
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close('dlg-coopOrgRouteAdd');
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+</script>

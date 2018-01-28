@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpcoop.dao.CooporgRouteDao">
+	<resultMap type="CooporgRouteInf" id="cooporgRouteMap">
+		    <result property="rtrid"               column="RTRID" /> 
+		    <result property="cooporgNo"               column="COOPORG_NO" /> 
+		    <result property="txncd"               column="TXNCD" /> 
+		    <result property="rtrsvr"               column="RTRSVR" /> 
+		    <result property="rtrcod"               column="RTRCOD" /> 
+		    <result property="status"               column="STATUS" /> 
+		    <result property="editDate"              column="EDIT_DATE" /> 
+		    <result property="editUserId"            column="EDIT_USER_ID" /> 
+		    <result property="rtrType"               column="RTRTYPE" /> 
+		    <result property="rtrDesc"               column="RTRDESC" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="CooporgRouteInf">
+		UPDATE 
+				MPCOOP_COOPORG_ROUTE_INF
+		<set>
+		        <if test="rtrid!= null and rtrid!= ''">
+						RTRID =  #{rtrid},
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						COOPORG_NO =  #{cooporgNo},
+				</if>
+		        <if test="txncd!= null and txncd!= ''">
+						TXNCD =  #{txncd},
+				</if>
+		        <if test="rtrsvr!= null and rtrsvr!= ''">
+						RTRSVR =  #{rtrsvr},
+				</if>
+		        <if test="rtrcod!= null and rtrcod!= ''">
+						RTRCOD =  #{rtrcod},
+				</if>
+		        <if test="status!= null and status!= ''">
+						STATUS =  #{status},
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						EDIT_DATE =  #{editDate},
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						EDIT_USER_ID =  #{editUserId},
+				</if>
+		</set>
+		<where>
+			<if test="rtrid!= null and rtrid!= ''">
+				RTRID =  #{rtrid}
+			</if>
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="CooporgRouteInf" resultMap="cooporgRouteMap">
+		SELECT 
+		         RTRID, 
+		         COOPORG_NO, 
+		         TXNCD, 
+		         RTRSVR, 
+		         RTRCOD, 
+		         STATUS, 
+		         RTRTYPE,
+		         RTRDESC,
+		         DATE_FORMAT(EDIT_DATE, '%Y-%m-%d %H:%i:%s') as EDIT_DATE, 
+		         EDIT_USER_ID
+		FROM 
+		        MPCOOP_COOPORG_ROUTE_INF
+		<where>
+		        <if test="rtrid!= null and rtrid!= ''">
+						AND RTRID =  #{rtrid}
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO =  #{cooporgNo}
+				</if>
+		        <if test="txncd!= null and txncd!= ''">
+						AND TXNCD =  #{txncd}
+				</if>
+		        <if test="rtrsvr!= null and rtrsvr!= ''">
+						AND RTRSVR =  #{rtrsvr}
+				</if>
+		        <if test="rtrcod!= null and rtrcod!= ''">
+						AND RTRCOD =  #{rtrcod}
+				</if>
+		        <if test="status!= null and status!= ''">
+						AND STATUS =  #{status}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="CooporgRouteInf" resultMap="cooporgRouteMap" databaseId="mysql">
+		SELECT 
+		         RTRID, 
+		         COOPORG_NO, 
+		         TXNCD, 
+		         RTRSVR, 
+		         RTRCOD, 
+		         STATUS, 
+		         RTRTYPE,
+		         RTRDESC,
+		         EDIT_DATE, 
+		         EDIT_USER_ID
+		FROM 
+		       MPCOOP_COOPORG_ROUTE_INF
+		<where>
+		    1 = 1 
+		        <if test="rtrid!= null and rtrid!= ''">
+						AND RTRID =  #{rtrid}
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO LIKE CONCAT('%',#{cooporgNo},'%')
+				</if>
+		        <if test="txncd!= null and txncd!= ''">
+						AND TXNCD  LIKE CONCAT('%',#{txncd},'%')
+				</if>
+		        <if test="rtrsvr!= null and rtrsvr!= ''">
+						AND RTRSVR =  #{rtrsvr}
+				</if>
+		        <if test="rtrcod!= null and rtrcod!= ''">
+						AND RTRCOD LIKE CONCAT('%',#{rtrcod},'%')
+				</if>
+		        <if test="status!= null and status!= ''">
+						AND STATUS =  #{status}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		</where>
+		ORDER BY COOPORG_NO DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="CooporgRouteInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPCOOP_COOPORG_ROUTE_INF
+		<where>
+			 1 = 1 
+		        <if test="rtrid!= null and rtrid!= ''">
+						AND RTRID =  #{rtrid}
+				</if>
+		        <if test="cooporgNo!= null and cooporgNo!= ''">
+						AND COOPORG_NO LIKE CONCAT('%',#{cooporgNo},'%')
+				</if>
+		        <if test="txncd!= null and txncd!= ''">
+						AND TXNCD  LIKE CONCAT('%',#{txncd},'%')
+				</if>
+		        <if test="rtrsvr!= null and rtrsvr!= ''">
+						AND RTRSVR =  #{rtrsvr}
+				</if>
+		        <if test="rtrcod!= null and rtrcod!= ''">
+						AND RTRCOD LIKE CONCAT('%',#{rtrcod},'%')
+				</if>
+		        <if test="status!= null and status!= ''">
+						AND STATUS =  #{status}
+				</if>
+		        <if test="editDate!= null and editDate!= ''">
+						AND EDIT_DATE =  #{editDate}
+				</if>
+		        <if test="editUserId!= null and editUserId!= ''">
+						AND EDIT_USER_ID =  #{editUserId}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="CooporgRouteInf">
+		INSERT INTO MPCOOP_COOPORG_ROUTE_INF  (
+		         RTRID, 
+		         COOPORG_NO, 
+		         TXNCD, 
+		         RTRSVR, 
+		         RTRCOD, 
+		         STATUS, 
+		         RTRTYPE,
+		         RTRDESC,
+		         EDIT_DATE, 
+		         EDIT_USER_ID
+				)
+		VALUES (
+		          #{rtrid}, 
+		          #{cooporgNo}, 
+		          #{txncd}, 
+		          #{rtrsvr}, 
+		          #{rtrcod}, 
+		          #{status},
+		          #{rtrType},
+		          #{rtrDesc}, 
+		          #{editDate}, 
+		          #{editUserId}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="CooporgRouteInf">
+		DELETE FROM MPCOOP_COOPORG_ROUTE_INF
+		WHERE  RTRID =  #{rtrid}
+	</delete>
+
+</mapper>

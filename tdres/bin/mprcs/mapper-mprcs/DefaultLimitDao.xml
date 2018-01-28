@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mprcs.dao.DefaultLimitDao">
+	<resultMap type="DefaultLimitInf" id="defaultLimitMap">
+		    <result property="limitId"               column="LIMIT_ID" /> 
+		    <result property="limitType"               column="LIMIT_TYPE" /> 
+		    <result property="limitCustLevel"               column="LIMIT_CUST_LEVEL" /> 
+		    <result property="limitMinAmtTp"               column="LIMIT_MIN_AMT_TP" /> 
+		    <result property="limitMaxAmtTp"               column="LIMIT_MAX_AMT_TP" /> 
+		    <result property="limitDayTimesTp"               column="LIMIT_DAY_TIMES_TP" /> 
+		    <result property="limitDayAmtTp"               column="LIMIT_DAY_AMT_TP" /> 
+		    <result property="limitMonthTimesTp"               column="LIMIT_MONTH_TIMES_TP" /> 
+		    <result property="limitMonthAmtTp"               column="LIMIT_MONTH_AMT_TP" /> 
+		    <result property="limitMinAmtTc"               column="LIMIT_MIN_AMT_TC" /> 
+		    <result property="limitMaxAmtTc"               column="LIMIT_MAX_AMT_TC" /> 
+		    <result property="limitDayTimesTc"               column="LIMIT_DAY_TIMES_TC" /> 
+		    <result property="limitDayAmtTc"               column="LIMIT_DAY_AMT_TC" /> 
+		    <result property="limitMonthTimesTc"               column="LIMIT_MONTH_TIMES_TC" /> 
+		    <result property="limitMonthAmtTc"               column="LIMIT_MONTH_AMT_TC" /> 
+		    <result property="limitMinAmtOp"               column="LIMIT_MIN_AMT_OP" /> 
+		    <result property="limitMaxAmtOp"               column="LIMIT_MAX_AMT_OP" /> 
+		    <result property="limitDayTimesOp"               column="LIMIT_DAY_TIMES_OP" /> 
+		    <result property="limitDayAmtOp"               column="LIMIT_DAY_AMT_OP" /> 
+		    <result property="limitMonthTimesOp"               column="LIMIT_MONTH_TIMES_OP" /> 
+		    <result property="limitMonthAmtOp"               column="LIMIT_MONTH_AMT_OP" /> 
+		    <result property="limitMinAmtOc"               column="LIMIT_MIN_AMT_OC" /> 
+		    <result property="limitMaxAmtOc"               column="LIMIT_MAX_AMT_OC" /> 
+		    <result property="limitDayTimesOc"               column="LIMIT_DAY_TIMES_OC" /> 
+		    <result property="limitDayAmtOc"               column="LIMIT_DAY_AMT_OC" /> 
+		    <result property="limitMonthTimesOc"               column="LIMIT_MONTH_TIMES_OC" /> 
+		    <result property="limitMonthAmtOc"               column="LIMIT_MONTH_AMT_OC" /> 
+		    <result property="limitMinAmtSp"               column="LIMIT_MIN_AMT_SP" /> 
+		    <result property="limitMaxAmtSp"               column="LIMIT_MAX_AMT_SP" /> 
+		    <result property="limitDayTimesSp"               column="LIMIT_DAY_TIMES_SP" /> 
+		    <result property="limitDayAmtSp"               column="LIMIT_DAY_AMT_SP" /> 
+		    <result property="limitMonthTimesSp"               column="LIMIT_MONTH_TIMES_SP" /> 
+		    <result property="limitMonthAmtSp"               column="LIMIT_MONTH_AMT_SP" /> 
+		    <result property="limitMinAmtSc"               column="LIMIT_MIN_AMT_SC" /> 
+		    <result property="limitMaxAmtSc"               column="LIMIT_MAX_AMT_SC" /> 
+		    <result property="limitDayTimesSc"               column="LIMIT_DAY_TIMES_SC" /> 
+		    <result property="limitDayAmtSc"               column="LIMIT_DAY_AMT_SC" /> 
+		    <result property="limitMonthTimesSc"               column="LIMIT_MONTH_TIMES_SC" /> 
+		    <result property="limitMonthAmtSc"               column="LIMIT_MONTH_AMT_SC" /> 
+		    <result property="limitStartDate"               column="LIMIT_START_DATE" /> 
+		    <result property="limitEndDate"               column="LIMIT_END_DATE" /> 
+		    <result property="isUse"               column="IS_USE" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="DefaultLimitInf">
+		UPDATE 
+				MPRCS_DEFAULT_LIMIT_INF
+		<set>
+		        <if test="limitMinAmtTp!= null and limitMinAmtTp!= ''">
+						LIMIT_MIN_AMT_TP =  #{limitMinAmtTp},
+				</if>
+		        <if test="limitMaxAmtTp!= null and limitMaxAmtTp!= ''">
+						LIMIT_MAX_AMT_TP =  #{limitMaxAmtTp},
+				</if>
+		        <if test="limitDayTimesTp!= null and limitDayTimesTp!= ''">
+						LIMIT_DAY_TIMES_TP =  #{limitDayTimesTp},
+				</if>
+		        <if test="limitDayAmtTp!= null and limitDayAmtTp!= ''">
+						LIMIT_DAY_AMT_TP =  #{limitDayAmtTp},
+				</if>
+		        <if test="limitMonthTimesTp!= null and limitMonthTimesTp!= ''">
+						LIMIT_MONTH_TIMES_TP =  #{limitMonthTimesTp},
+				</if>
+		        <if test="limitMonthAmtTp!= null and limitMonthAmtTp!= ''">
+						LIMIT_MONTH_AMT_TP =  #{limitMonthAmtTp},
+				</if>
+		        <if test="limitMinAmtTc!= null and limitMinAmtTc!= ''">
+						LIMIT_MIN_AMT_TC =  #{limitMinAmtTc},
+				</if>
+		        <if test="limitMaxAmtTc!= null and limitMaxAmtTc!= ''">
+						LIMIT_MAX_AMT_TC =  #{limitMaxAmtTc},
+				</if>
+		        <if test="limitDayTimesTc!= null and limitDayTimesTc!= ''">
+						LIMIT_DAY_TIMES_TC =  #{limitDayTimesTc},
+				</if>
+		        <if test="limitDayAmtTc!= null and limitDayAmtTc!= ''">
+						LIMIT_DAY_AMT_TC =  #{limitDayAmtTc},
+				</if>
+		        <if test="limitMonthTimesTc!= null and limitMonthTimesTc!= ''">
+						LIMIT_MONTH_TIMES_TC =  #{limitMonthTimesTc},
+				</if>
+		        <if test="limitMonthAmtTc!= null and limitMonthAmtTc!= ''">
+						LIMIT_MONTH_AMT_TC =  #{limitMonthAmtTc},
+				</if>
+		        <if test="limitMinAmtOp!= null and limitMinAmtOp!= ''">
+						LIMIT_MIN_AMT_OP =  #{limitMinAmtOp},
+				</if>
+		        <if test="limitMaxAmtOp!= null and limitMaxAmtOp!= ''">
+						LIMIT_MAX_AMT_OP =  #{limitMaxAmtOp},
+				</if>
+		        <if test="limitDayTimesOp!= null and limitDayTimesOp!= ''">
+						LIMIT_DAY_TIMES_OP =  #{limitDayTimesOp},
+				</if>
+		        <if test="limitDayAmtOp!= null and limitDayAmtOp!= ''">
+						LIMIT_DAY_AMT_OP =  #{limitDayAmtOp},
+				</if>
+		        <if test="limitMonthTimesOp!= null and limitMonthTimesOp!= ''">
+						LIMIT_MONTH_TIMES_OP =  #{limitMonthTimesOp},
+				</if>
+		        <if test="limitMonthAmtOp!= null and limitMonthAmtOp!= ''">
+						LIMIT_MONTH_AMT_OP =  #{limitMonthAmtOp},
+				</if>
+		        <if test="limitMinAmtOc!= null and limitMinAmtOc!= ''">
+						LIMIT_MIN_AMT_OC =  #{limitMinAmtOc},
+				</if>
+		        <if test="limitMaxAmtOc!= null and limitMaxAmtOc!= ''">
+						LIMIT_MAX_AMT_OC =  #{limitMaxAmtOc},
+				</if>
+		        <if test="limitDayTimesOc!= null and limitDayTimesOc!= ''">
+						LIMIT_DAY_TIMES_OC =  #{limitDayTimesOc},
+				</if>
+		        <if test="limitDayAmtOc!= null and limitDayAmtOc!= ''">
+						LIMIT_DAY_AMT_OC =  #{limitDayAmtOc},
+				</if>
+		        <if test="limitMonthTimesOc!= null and limitMonthTimesOc!= ''">
+						LIMIT_MONTH_TIMES_OC =  #{limitMonthTimesOc},
+				</if>
+		        <if test="limitMonthAmtOc!= null and limitMonthAmtOc!= ''">
+						LIMIT_MONTH_AMT_OC =  #{limitMonthAmtOc},
+				</if>
+		        <if test="limitMinAmtSp!= null and limitMinAmtSp!= ''">
+						LIMIT_MIN_AMT_SP =  #{limitMinAmtSp},
+				</if>
+		        <if test="limitMaxAmtSp!= null and limitMaxAmtSp!= ''">
+						LIMIT_MAX_AMT_SP =  #{limitMaxAmtSp},
+				</if>
+		        <if test="limitDayTimesSp!= null and limitDayTimesSp!= ''">
+						LIMIT_DAY_TIMES_SP =  #{limitDayTimesSp},
+				</if>
+		        <if test="limitDayAmtSp!= null and limitDayAmtSp!= ''">
+						LIMIT_DAY_AMT_SP =  #{limitDayAmtSp},
+				</if>
+		        <if test="limitMonthTimesSp!= null and limitMonthTimesSp!= ''">
+						LIMIT_MONTH_TIMES_SP =  #{limitMonthTimesSp},
+				</if>
+		        <if test="limitMonthAmtSp!= null and limitMonthAmtSp!= ''">
+						LIMIT_MONTH_AMT_SP =  #{limitMonthAmtSp},
+				</if>
+		        <if test="limitMinAmtSc!= null and limitMinAmtSc!= ''">
+						LIMIT_MIN_AMT_SC =  #{limitMinAmtSc},
+				</if>
+		        <if test="limitMaxAmtSc!= null and limitMaxAmtSc!= ''">
+						LIMIT_MAX_AMT_SC =  #{limitMaxAmtSc},
+				</if>
+		        <if test="limitDayTimesSc!= null and limitDayTimesSc!= ''">
+						LIMIT_DAY_TIMES_SC =  #{limitDayTimesSc},
+				</if>
+		        <if test="limitDayAmtSc!= null and limitDayAmtSc!= ''">
+						LIMIT_DAY_AMT_SC =  #{limitDayAmtSc},
+				</if>
+		        <if test="limitMonthTimesSc!= null and limitMonthTimesSc!= ''">
+						LIMIT_MONTH_TIMES_SC =  #{limitMonthTimesSc},
+				</if>
+		        <if test="limitMonthAmtSc!= null and limitMonthAmtSc!= ''">
+						LIMIT_MONTH_AMT_SC =  #{limitMonthAmtSc},
+				</if>
+		        <if test="limitStartDate!= null and limitStartDate!= ''">
+						LIMIT_START_DATE =  #{limitStartDate},
+				</if>
+		        <if test="limitEndDate!= null and limitEndDate!= ''">
+						LIMIT_END_DATE =  #{limitEndDate},
+				</if>
+		        <if test="isUse!= null and isUse!= ''">
+						IS_USE =  #{isUse},
+				</if>
+		        <if test="createName!= null and createName!= ''">
+						CREATE_NAME =  #{createName},
+				</if>
+		        <if test="createDate!= null and createDate!= ''">
+						CREATE_DATE =  #{createDate},
+				</if>
+		        <if test="createDatetime!= null and createDatetime!= ''">
+						CREATE_DATETIME =  #{createDatetime},
+				</if>
+		        <if test="updateName!= null and updateName!= ''">
+						UPDATE_NAME =  #{updateName},
+				</if>
+		        <if test="updateDate!= null and updateDate!= ''">
+						UPDATE_DATE =  #{updateDate},
+				</if>
+		        <if test="updateDatetime!= null and updateDatetime!= ''">
+						UPDATE_DATETIME =  #{updateDatetime},
+				</if>
+		</set>
+		WHERE 
+				LIMIT_ID =  #{limitId}
+	</update>
+
+	<select id="selectDefaultLimit" parameterType="DefaultLimitInf" resultMap="defaultLimitMap">
+		SELECT 
+		         LIMIT_ID, 
+		         LIMIT_TYPE, 
+		         LIMIT_CUST_LEVEL, 
+		         LIMIT_MIN_AMT_TP, 
+		         LIMIT_MAX_AMT_TP, 
+		         LIMIT_DAY_TIMES_TP, 
+		         LIMIT_DAY_AMT_TP, 
+		         LIMIT_MONTH_TIMES_TP, 
+		         LIMIT_MONTH_AMT_TP, 
+		         LIMIT_MIN_AMT_TC, 
+		         LIMIT_MAX_AMT_TC, 
+		         LIMIT_DAY_TIMES_TC, 
+		         LIMIT_DAY_AMT_TC, 
+		         LIMIT_MONTH_TIMES_TC, 
+		         LIMIT_MONTH_AMT_TC, 
+		         LIMIT_MIN_AMT_OP, 
+		         LIMIT_MAX_AMT_OP, 
+		         LIMIT_DAY_TIMES_OP, 
+		         LIMIT_DAY_AMT_OP, 
+		         LIMIT_MONTH_TIMES_OP, 
+		         LIMIT_MONTH_AMT_OP, 
+		         LIMIT_MIN_AMT_OC, 
+		         LIMIT_MAX_AMT_OC, 
+		         LIMIT_DAY_TIMES_OC, 
+		         LIMIT_DAY_AMT_OC, 
+		         LIMIT_MONTH_TIMES_OC, 
+		         LIMIT_MONTH_AMT_OC, 
+		         LIMIT_MIN_AMT_SP, 
+		         LIMIT_MAX_AMT_SP, 
+		         LIMIT_DAY_TIMES_SP, 
+		         LIMIT_DAY_AMT_SP, 
+		         LIMIT_MONTH_TIMES_SP, 
+		         LIMIT_MONTH_AMT_SP, 
+		         LIMIT_MIN_AMT_SC, 
+		         LIMIT_MAX_AMT_SC, 
+		         LIMIT_DAY_TIMES_SC, 
+		         LIMIT_DAY_AMT_SC, 
+		         LIMIT_MONTH_TIMES_SC, 
+		         LIMIT_MONTH_AMT_SC, 
+		         LIMIT_START_DATE, 
+		         LIMIT_END_DATE, 
+		         IS_USE, 
+		         CREATE_NAME, 
+		         CREATE_DATE, 
+		         CREATE_DATETIME, 
+		         UPDATE_NAME, 
+		         UPDATE_DATE, 
+		         UPDATE_DATETIME
+		FROM 
+		        MPRCS_DEFAULT_LIMIT_INF
+		LIMIT 1
+	</select>
+</mapper>

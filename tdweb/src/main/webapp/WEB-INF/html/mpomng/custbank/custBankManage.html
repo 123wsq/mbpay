@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+
+<div class="search_panel">
+<form action="" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户名称:</label>
+							<div class="search_input">
+								<input id="custName" type="text" name="custName"
+									placeholder="请输入商户名称">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input id="custId" type="text" name="custId"
+									placeholder="请输入商户编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户手机:</label>
+							<div class="search_input">
+								<input id="usrMobile" type="text" name="usrMobile"
+									placeholder="请输入商户手机" maxlength="11">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">银行卡号:</label>
+							<div class="search_input">
+								<input id="cardNo" type="text" name="cardNo"
+									placeholder="请输入银行卡号" >
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px;margin-right: 15px;width: 280px;">
+						    <label class="label_search" for="userName">绑定时间:</label>
+							<div class="input-group">
+									<input type="text" class="form-control date-picker" name="startTime"  placeholder="起始日期"  data-date-format="yyyy-mm-dd" />
+									<span class="input-group-addon">
+										<i class="fa fa-exchange"></i>
+									</span>
+									<input type="text" class="form-control date-picker" name="endTime"  placeholder="结束日期"  data-date-format="yyyy-mm-dd"/>
+							  </div>
+						</div>
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >
+								搜索
+							</button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+				<a auth="mpomng/custBankInfManage/view.do" class='btn btn-small btn-add' 
+					onclick="selectCustBank();">详细
+				</a>
+					<a auth="mpomng/custBankInfManage/view.do" class='btn btn-small btn-warning'
+					onclick="updateCustBank();">修改
+				</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+				url : "mpomng/custBankInfManage/query.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '银行卡记录编号','商户编号','商户名称','商户手机号', '银行卡号','银行卡类型', '绑定时间','发卡行名称','省市','支行名称'],
+				colModel : [
+                            {name : 'bankCardId',     index : 'bankCardId',   hidden:true,  width : '150px' },
+				            {name : 'custId',     index : 'custId',     width : '150px' }, 
+				             {name : 'custName',     index : 'custName',     width : '150px' }, 
+				            // {name : 'custType',     index : 'custType',     width : '80px',ditcKey:'CUSTTYPE', formatter : gridFormatByDict }, 
+				             {name : 'usrMobile',     index : 'usrMobile',     width : '100px' }, 
+				             {name : 'cardNo',       index : 'cardNo',       width : '200px' }, 
+				             {name : 'cardType',     index : 'cardType',     width : '80px' , ditcKey:'UNIONFIT_DCFLAG', formatter : gridFormatByDict},
+				             //{name : 'cardState',    index : 'cardState',    width : '100px' , ditcKey:'CARDSTATUS', formatter : gridFormatByDict}, 
+				             //{name : 'mobileNo',   index : 'custStatus',   width : '120px'}, 
+				             {name : 'bindingTime',  index : 'bindingTime',   width : '150px',formatter : gridFormatByDate}, 
+				             {name : 'issnam',   index : 'issnam',   width : '150px' },
+				             {name : 'address',   index : 'address',   width : '150px' },
+				             {name : 'subBranch',   index : 'subBranch',   width : '300px' }
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+
+				shrinkToFit : false,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+
+			//格式化日期
+			function dateFormat(cellvalue, options, rowObject){
+				return getDateFormat(rowObject["bindingTime"]);
+			}
+		});
+
+		function selectCustBank() {
+           var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			var ids = $('#grid-table').jqGrid('getRowData',rows[0]).bankCardId;
+			
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-agentEdit',
+				title : '商户银行卡信息详情',
+				pageUrl :'mpomng/custBankInfManage/view.do',
+				dataUrl : 'mpomng/custBankInfManage/queryById.do',
+				width : '60%',
+				height:'90%',
+				dataParam : {
+					bankCardId : ids
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			});
+		}
+		
+		function updateCustBank(){
+           var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			var ids = $('#grid-table').jqGrid('getRowData',rows[0]).bankCardId;
+			
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-custBankEdit',
+				title : '商户银行卡信息修改',
+				pageUrl :'mpomng/custBankInfManage/custBankEdit.do',
+				dataUrl : 'mpomng/custBankInfManage/queryById.do',
+				width : '60%',
+				height:'90%',
+				dataParam : {
+					bankCardId : ids
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			});
+			
+			
+		}
+		
+	
+	</script>

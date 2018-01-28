@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.TranSerialRecordDao">
+
+	<resultMap type="java.util.Map" id="TranCountMap">
+		    <result property="cmonth"               column="CMONTH" /> 
+		    <result property="year"               column="YEAR" /> 
+		    <result property="amt"               column="AMT" /> 
+		    <result property="ordType"               column="ORDTYPE" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+	</resultMap>
+
+	<select id="selectTranCountByDate" parameterType="java.util.Map" resultMap="TranCountMap">
+		SELECT
+				TRAN_MONTH AS CMONTH,
+				SUM(TRAN_AMT) AS AMT,
+				BUS_TYPE AS ORDTYPE,
+				TRAN_YEAR AS YEAR,
+				CUST_ID
+        FROM
+	            MPRCS_TRAN_SERIAL_RECORD_INF
+		WHERE 
+				TRAN_YEAR=#{year}
+				AND TRAN_MONTH in(#{cmonth})
+				AND BUS_TYPE='01'
+				GROUP BY YEAR , CMONTH,CUST_ID
+	</select>
+</mapper>

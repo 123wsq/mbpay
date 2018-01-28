@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.AccountBalanceDao">
+	<resultMap type="java.util.Map" id="accountBalanceMap">
+		    <result property="accountLogId"               column="ACCOUNT_LOG_ID" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="account"               column="ACCOUNT" /> 
+		    <result property="acType"               column="AC_TYPE" /> 
+		    <result property="ccy"               column="CCY" /> 
+		    <result property="oldAcBal"               column="OLD_AC_BAL" /> 
+		    <result property="oldAcT0"               column="OLD_AC_T0" /> 
+		    <result property="oldAcT1"               column="OLD_AC_T1" /> 
+		    <result property="oldAcT1Y"               column="OLD_AC_T1_Y" /> 
+		    <result property="acBal"               column="AC_BAL" /> 
+		    <result property="acT0"               column="AC_T0" /> 
+		    <result property="acT1"               column="AC_T1" /> 
+		    <result property="acT1Y"               column="AC_T1_Y" /> 
+		    <result property="frozBalance"               column="FROZ_BALANCE" /> 
+		    <result property="oldFrozBalance"               column="OLD_FROZ_BALANCE" /> 
+		    <result property="lstTxDatetime"               column="LST_TX_DATETIME" /> 
+		    <result property="changeType"               column="CHANGE_TYPE" /> 
+		    <result property="changeDesc"               column="CHANGE_DESC" /> 
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="settleaccountsMap">
+		    <result property="sedate"               column="SEDATE" /> 
+		    <result property="sestatus"               column="SESTATUS" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="bankName"               column="BANK_NAME" /> 
+		    <result property="cnapsCode"               column="CNAPS_CODE" /> 
+		    <result property="cardNo"               column="CARD_NO" /> 
+		    <result property="amt"               column="AMT" /> 
+	</resultMap>
+	
+	<insert id="settleAccounts" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_SETTLEACCOUNTS_INF (
+			SEDATE,
+			SESTATUS,
+			CUST_ID,
+			BANK_NAME,
+			CNAPS_CODE,
+			CARD_NO,
+			AMT
+		) SELECT
+			#{sedate},
+			#{sestatus},
+			mer.CUST_ID,
+			bank.ISSNAM,
+			bank.CNAPS_CODE,
+			bank.CARD_NO,
+			acc.AC_BAL
+		FROM
+			MPOMNG_MOBILE_MER_INF mer,
+			MPOMNG_CUST_BANK_INF bank,
+			MPOMNG_CUST_ACCOUNT_INF acc
+		WHERE
+			mer.CUST_ID = bank.CUST_ID
+		AND mer.CUST_ID = acc.CUST_ID
+		AND mer.CUST_STATUS = #{custStatus}
+		AND mer.CUST_TYPE = #{custType}
+	</insert>
+	
+	<update id="updateAccounts"  parameterType="java.util.Map" databaseId="mysql">
+		  UPDATE MPOMNG_CUST_ACCOUNT_INF acc
+			SET acc.AC_T1_Y = 0,
+			 acc.AC_BAL = 0
+			WHERE
+				acc.CUST_ID IN (
+					SELECT
+						mer.CUST_ID
+					FROM
+						MPOMNG_MOBILE_MER_INF mer
+					WHERE
+						mer.CUST_STATUS = #{custStatus}
+					AND mer.CUST_TYPE = #{custType}
+				) 
+	</update>
+	
+	
+	<update id="accountBalanceT0"  parameterType="java.util.Map">
+		  UPDATE MPOMNG_CUST_ACCOUNT_INF acc
+			INNER JOIN MPOMNG_CAS_INF cas ON acc.CUST_ID = cas.CUST_ID
+			SET acc.AC_T1_Y = acc.AC_T1_Y + cas.TXAMT,
+			 acc.AC_BAL = acc.AC_T1_Y + cas.TXAMT,
+			 cas.ORDSTATUS = #{ORDSTATUS}
+			WHERE
+				cas.CAS_TYPE =#{CAS_TYPE}
+			AND cas.ORDSTATUS = #{OLD_ORDSTATUS}
+	</update>
+	
+	<update id="accountBalanceT1Y"  parameterType="java.util.Map">
+		  UPDATE MPOMNG_CUST_ACCOUNT_INF
+			SET AC_T1_Y = AC_T0 + AC_T1 + AC_T1_Y,
+			 AC_BAL = AC_T1_Y,
+			 AC_T0 = 0,
+			 AC_T1 = 0
+	</update>
+	
+</mapper>

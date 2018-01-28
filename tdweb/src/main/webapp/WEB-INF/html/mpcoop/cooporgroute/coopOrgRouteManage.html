@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+					   
+						<!-- <div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">路由编号:</label>
+							<div class="search_input">
+								<input id="search_rtrid" type="text" name="rtrid"
+									placeholder="请输入路由编号">
+							</div>
+						</div> -->
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">合作机构号:</label>
+							<div class="search_input">
+								<input id="search_cooporgNo" type="text" name="cooporgNo"
+									placeholder="请输入合作机构编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">交易码:</label>
+							<div class="search_input">
+								<input id="search_txncd" type="text" name="txncd"
+									placeholder="请输入交易码">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">路由交易码:</label>
+							<div class="search_input">
+								<input id="search_rtrCod" type="text" name="rtrcod"
+									placeholder="请输入路由交易码">
+							</div>
+						</div>
+						<div class="search_elm">
+							<label class="label_search" >路由状态:</label>
+							<div class="search_input">
+							    <select 
+									 rel="obj.RTRSTATUS"
+						 			 location="local" 
+									 name="status" 
+						 			id="search_status" 
+						 			data-placeholder="请选择状态" style="width: 120px;vertical-align:middle;">
+									<option value='' >--请选择--</option>
+							 </select>
+							
+							</div>
+						</div>
+						
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >
+								搜索
+							</button>	
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+
+			<table id="grid-table"></table>
+
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+				    
+					<a auth="mpcoop/cooporgroute/coopOrgRouteManage/addView.do"  class="btn btn-small btn-add" onclick="coopOrgRouteAdd();">新增</a> 
+					<a auth="mpcoop/cooporgroute/coopOrgRouteManage/editView.do" class="btn btn-small btn-update" onclick="coopOrgRouteedit();"> 修改 </a> 
+					<a auth="mpcoop/cooporgroute/coopOrgRouteManage/delete.do" class="btn btn-small btn-delete" onclick="coopOrgRoutedelete();">  删除</a>
+					<a auth="mpcoop/cooporgroute/coopOrgRouteManage/selectinfView.do" class="btn btn-small btn-warning" onclick="coopOrgRouteSelectInf();">详情</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+
+				url : "mpcoop/cooporgroute/coopOrgRouteManage/query.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '路由编号', '合作机构号','路由类别','交易码', '路由服务名','路由交易码','路由状态','路由描述','最后编辑时间' ],
+				colModel : [ {name : 'rtrid',           index : 'rtrid',         hidden : true }, 
+				             {name : 'cooporgNo',    index : 'cooporgNo',    width : '100px' },
+				             {name : 'rtrType',      index : 'rtrType',    width : '100px',ditcKey:'RTRTYPE', formatter : gridFormatByDict},
+				             {name : 'txncd',        index : 'txncd',        width : '100px' }, 
+				             {name : 'rtrsvr',       index : 'rtrsvr',       width : '150px' },
+				             {name : 'rtrcod',       index : 'rtrcod',       width : '100px' },
+				             {name : 'status',     index : 'status',     width : '100px' ,ditcKey:'RTRSTATUS', formatter : gridFormatByDict}, 
+				             {name : 'rtrDesc',     index : 'rtrDesc',        width : '100px' }, 
+				             {name : 'editDate',        index : 'editdate',        width : '150px',formatter : gridFormatByDate},  
+				             
+				              
+				            ],
+				viewrecords : true,
+				rowNum : 12,
+				rowList : [ 12, 20, 30 ],
+				altRows : true,
+
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			
+			
+			//格式化商户状态
+			/* function routeStatusFormat(cellvalue, options, rowObject){
+				return DICT.get("RTRSTATUS")[cellvalue];
+			} */
+			
+		});
+		
+
+		//单条合作机构商户终端信息
+		function coopOrgRouteSelectInf() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			var rtrid = $('#grid-table').jqGrid('getRowData',rows[0]).rtrid ;
+				
+			
+			openDialog({
+				dialogId : 'dlg-coopOrgRouteSelectInf',
+				title : '查看路由信息',
+				pageUrl : 'mpcoop/cooporgroute/coopOrgRouteManage/selectinfView.do',
+				dataUrl : 'mpcoop/cooporgroute/coopOrgRouteManage/queryCoopOrgRouteById.do',
+				width : '600px',
+			    height:'500px',
+			    dataParam : {
+			    	rtrid : rtrid,
+			    	editUserId:UID.id,
+					editUserName:UID.userName
+				},
+				dataName : 'obj' //表单数据存储对象名称
+			});
+		}
+		
+
+		//添加合作机构商户终端信息
+		function coopOrgRouteAdd() {
+			openDialog({
+				dialogId : 'dlg-coopOrgRouteAdd',
+				title : '新增路由信息',
+				pageUrl : 'mpcoop/cooporgroute/coopOrgRouteManage/addView.do',
+				width : '600px',
+			    height:'500px',
+			    dataParam : {
+			    	editUserId:UID.id,
+					editUserName:UID.userName
+				},
+				dataName : 'obj' //表单数据存储对象名称
+			});
+		}
+		
+		
+		//编辑路由信息
+		function coopOrgRouteedit() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+            var rtrid = $('#grid-table').jqGrid('getRowData',rows[0]).rtrid;
+			
+			openDialog({
+				dialogId : 'dlg-coopOrgRouteedit',
+				title : '编辑路由信息',
+				pageUrl : 'mpcoop/cooporgroute/coopOrgRouteManage/editView.do',
+				dataUrl : 'mpcoop/cooporgroute/coopOrgRouteManage/queryCoopOrgRouteById.do',
+				width :'600px',
+				height:'400px',
+				dataParam : {
+					rtrid : rtrid,
+					editUserId:UID.id,
+					editUserName:UID.userName
+				},
+				dataName : 'obj' //表单数据存储对象名称
+
+			});
+		}
+		//用户删除
+		function coopOrgRoutedelete() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+
+			//
+			var rtrids = "";
+			
+			for (var i = 0; i < rows.length; i++) {
+				rtrids += $('#grid-table').jqGrid('getRowData',rows[i]).rtrid+ ",";
+				
+			}
+			rtrids = rtrids.substring(0, rtrids.lastIndexOf(","));
+			
+			msg.confirm({title:'确认',position:'center',msg:'您确定要删除选中的数据吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpcoop/cooporgroute/coopOrgRouteManage/delete.do?rtrid=" + rtrids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+
+				}
+			}});
+			
+			}
+		
+			
+	   
+	</script>

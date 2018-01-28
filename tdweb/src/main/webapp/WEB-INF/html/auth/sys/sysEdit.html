@@ -1,0 +1,95 @@
+
+<meta charset="utf-8" />	
+
+<form class="form-horizontal" role="form"  onsubmit="return submitForm(this);"
+ action="auth/sysEdit/edit.do" id="_form">
+	<br/>
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 模块编号： </label>
+
+		<div class="col-sm-9">
+			<input type="text" id="dialog_id"  name="id" readonly="readonly" placeholder="" 
+				class="col-xs-10 col-sm-7" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-1"> 系统名称： </label>
+
+		<div class="col-sm-9">
+			<input type="text" id="dialog_name"  name="name" placeholder="" 
+				class="col-xs-10 col-sm-7" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"
+			for="form-field-4">系统简称：</label>
+		<div class="col-sm-9">
+			<input type="text" id="dialog_adbr" name="adbr" placeholder=""
+				class="col-xs-10 col-sm-7" />
+		</div>
+		
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right tooltip-error"
+			for="form-field-1"> 系统描述： </label>
+
+		<div class="col-sm-9">
+			<!-- 
+		 		 * 属性说明:
+				 * validate="true"  是否需要验证字段
+				 * msg="错误时提示信息"        
+				 * datatype="数据类型"
+			 -->
+			<input type="text" id="dialog_desc" name="desc" placeholder=""
+				class="col-xs-10 col-sm-7" validate="true"  />
+		</div>
+	</div>
+	<input type="hidden" id="dialog_url" name="url"/>
+<!-- 	<div class="form-group"> -->
+<!-- 		<label class="col-sm-3 control-label no-padding-right" -->
+<!-- 			for="form-field-1-1"> 访问地址： </label> -->
+<!-- 		<div class="col-sm-9"> -->
+<!-- 			<input type="text" id="dialog_url" name="url" placeholder="" -->
+<!-- 				class="col-xs-10 col-sm-7"  validate="true" /> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	<div class="form-actions align-right  form-button-box" style="margin-top: 10px">
+			<button class="btn btn-info" type="submit">
+				保存
+			</button>
+			&nbsp; 
+			<button class="btn" type="button" onclick="javascript:dialog.close(this);">
+				 关闭
+			</button>
+		</div>
+	
+</form>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+});
+
+
+function submitForm(obj){
+	
+	//自定义匿名回调函数。 系统默认回调函数：dialogAjaxDone
+	return validateCallback(obj,function(result){
+		if(result.rspcod== 200){
+			msg.alert("提示", result.rspmsg, 'correct');
+			$("#grid-table").trigger("reloadGrid");
+			dialog.close(obj);
+		}else{
+			msg.alert("错误", result.rspmsg, 'error');
+		}
+	});
+}
+
+
+
+</script>

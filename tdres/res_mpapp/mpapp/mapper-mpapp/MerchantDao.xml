@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.MerchantDao">
+		
+		<resultMap type="java.util.Map" id="merchantMap">
+		    <result property="custId"               column="CUST_ID"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custType"               column="CUST_TYPE"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custName"               column="CUST_NAME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custPwd"               column="CUST_PWD"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="payPwd"                column="PAY_PWD"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="paypwdStrength"        column="PAYPWD_STRENGTH"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="userEmail"              column="USR_EMAIL"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="activCode"             column="ACTIV_CODE"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="provinceId"            column="PROVINCE_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="cityId"               column="CITY_ID"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="regionId"               column="REGION_ID"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrAddress"               column="USR_ADDRESS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrGender"               column="USR_GENDER"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrZip"               column="USR_ZIP"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrTel"               column="USR_TEL"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrMobile"               column="USR_MOBILE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrRandom"               column="USR_RANDOM"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="isLoginFlag"               column="IS_LOGIN_FLAG"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="lastOperTime"               column="LAST_OPER_TIME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custRegDatetime"               column="CUST_REG_DATETIME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custPwdNum"               column="CUST_PWD_NUM"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="merclass"               column="MERCLASS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="resField1"               column="RES_FIELD1"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="resField2"               column="RES_FIELD2"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="resField3"               column="RES_FIELD3"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custLogin"               column="CUST_LOGIN"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="usrBirthday"               column="USR_BIRTHDAY"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="custStatus"               column="CUST_STATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="authStatus"               column="AUTH_STATUS"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="certNo"                   column="CERTIFICATE_NO"  typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	
+	<resultMap type="java.util.Map"  id="merT0Map">
+			<result property="rateTCas"               column="RATE_TCAS" typeHandler="EmptyStringIfNull"/>
+		    <result property="maxTCas"               column="MAX_TCAS" typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	
+	
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="merchantMap">
+		SELECT 
+		         T1.CUST_ID, 
+		         T1.CUST_NAME, 
+		         T1.CUST_PWD, 
+		         T1.PAY_PWD,
+		         T1.PAYPWD_STRENGTH, 
+		         T1.USR_EMAIL, 
+		         T1.ACTIV_CODE, 
+		         T1.PROVINCE_ID, 
+		         T1.CITY_ID, 
+		         T1.REGION_ID, 
+		         T1.USR_ADDRESS, 
+		         T1.USR_GENDER, 
+		         T1.USR_ZIP, 
+		         T1.USR_TEL, 
+		         T1.USR_MOBILE, 
+		         T1.USR_RANDOM, 
+		         T1.IS_LOGIN_FLAG, 
+		         T1.LAST_OPER_TIME, 
+		         T1.CUST_REG_DATETIME, 
+		         T1.CUST_PWD_NUM, 
+		         T1.MERCLASS, 
+		         T1.RES_FIELD1, 
+		         T1.RES_FIELD2, 
+		         T1.RES_FIELD3, 
+		         T1.CUST_LOGIN, 
+		         T1.USR_BIRTHDAY, 
+		         T1.CUST_STATUS,
+		         T2.CUST_STATUS AS AUTH_STATUS,
+		         T2.CERTIFICATE_NO
+		FROM 
+		        MPOMNG_MOBILE_MER_INF T1
+		        LEFT JOIN MPOMNG_MERIDENTIFY_INF T2 ON T1.CUST_ID = T2.CUST_ID
+		<where>
+		        <if test="custId!= null and custId!= ''">
+						AND T1.CUST_ID =  #{custId}
+				</if>
+				<if test="custMobile!= null and custMobile!= ''">
+						AND T1.CUST_LOGIN =  #{custMobile}
+				</if>
+		        <if test="custType!= null and custType!= ''">
+						AND T1.CUST_TYPE =  #{custType}
+				</if>
+		        <if test="custPwd!= null and custPwd!= ''">
+						AND T1.CUST_PWD =  #{custPwd}
+				</if>
+		</where>
+	</select>
+
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_MOBILE_MER_INF  (
+		         CUST_ID, 
+		         CUST_NAME, 
+		         CUST_PWD, 
+		         PAYPWD_STRENGTH, 
+		         USR_EMAIL, 
+		         ACTIV_CODE, 
+		         PROVINCE_ID, 
+		         CITY_ID, 
+		         REGION_ID, 
+		         USR_ADDRESS, 
+		         USR_GENDER, 
+		         USR_ZIP, 
+		         USR_TEL, 
+		         USR_MOBILE, 
+		         USR_RANDOM, 
+		         IS_LOGIN_FLAG, 
+		         LAST_OPER_TIME, 
+		         CUST_REG_DATETIME, 
+		         CUST_PWD_NUM, 
+		         MERCLASS, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3, 
+		         CUST_LOGIN, 
+		         USR_BIRTHDAY, 
+		         CUST_STATUS,
+		         REFERRER,
+		         AUTH_STATUS
+				)
+		VALUES (
+		          #{custId,jdbcType=VARCHAR}, 
+		          #{custName,jdbcType=VARCHAR}, 
+		          #{custPwd,jdbcType=VARCHAR}, 
+		          #{paypwdStrength,jdbcType=VARCHAR}, 
+		          #{usrEmail,jdbcType=VARCHAR}, 
+		          #{activCode,jdbcType=VARCHAR}, 
+		          #{provinceId,jdbcType=VARCHAR}, 
+		          #{cityId,jdbcType=VARCHAR}, 
+		          #{regionId,jdbcType=VARCHAR}, 
+		          #{usrAddress,jdbcType=VARCHAR}, 
+		          #{usrGender,jdbcType=VARCHAR}, 
+		          #{usrZip,jdbcType=VARCHAR}, 
+		          #{usrTel,jdbcType=VARCHAR}, 
+		          #{usrMobile,jdbcType=VARCHAR}, 
+		          #{usrRandom,jdbcType=VARCHAR}, 
+		          #{isLoginFlag,jdbcType=VARCHAR}, 
+		          #{lastOperTime,jdbcType=VARCHAR}, 
+		          #{custRegDatetime,jdbcType=VARCHAR}, 
+		          #{custPwdNum,jdbcType=NUMERIC}, 
+		          #{merclass,jdbcType=VARCHAR}, 
+		          #{resField1,jdbcType=VARCHAR}, 
+		          #{resField2,jdbcType=VARCHAR}, 
+		          #{resField3,jdbcType=VARCHAR}, 
+		          #{custLogin,jdbcType=VARCHAR}, 
+		          #{usrBirthday,jdbcType=VARCHAR}, 
+		          #{custStatus,jdbcType=VARCHAR},
+		          #{referrer,jdbcType=VARCHAR},
+		          #{authStatus,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	
+	
+<!-- 	<update id="udpateTCas" parameterType="java.util.Map"> -->
+<!-- 		UPDATE MPOMNG_MOBILE_MER_INF SET  -->
+<!-- 			RATE_TCAS = (SELECT RATE_TCAS FROM MPAMNG_AGENT_INF A,MPOMNG_AGE_CUST_REF_INF B WHERE A.AGENT_ID = B.AGE_ID -->
+<!--                 AND B.CUST_ID = #{custId}) -->
+<!-- 		WHERE CUST_ID = #{custId} -->
+<!-- 	</update> -->
+	<!-- hg change 将终端表的T0信息更新到商户表中 -->
+	<update id="udpateTCas" parameterType="java.util.Map">
+		UPDATE MPOMNG_MOBILE_MER_INF SET 
+			RATE_TCAS = (SELECT RATE_TCAS FROM MPAMNG_TERMINAL_INF A,MPOMNG_AGE_CUST_REF_INF B WHERE A.TERMINAL_ID = B.TERMINAL_ID
+                AND A.TERMINAL_NO = #{terminalNo}),
+			MAX_TCAS = (SELECT MAX_TCAS FROM MPAMNG_TERMINAL_INF A,MPOMNG_AGE_CUST_REF_INF B WHERE A.TERMINAL_ID = B.TERMINAL_ID
+                AND A.TERMINAL_NO = #{terminalNo})
+		WHERE CUST_ID = #{custId}
+	</update>
+	
+	<select id="selectRateT0" parameterType="java.util.Map" resultMap="merT0Map">
+		SELECT RATE_TCAS,MAX_TCAS FROM MPOMNG_MOBILE_MER_INF WHERE CUST_ID = #{custId}
+	</select>
+	
+	<select id="selectRateT0new" parameterType="java.util.Map" resultMap="merT0Map">
+		SELECT RATE_TCAS,MAX_TCAS FROM HX_RATES_INF WHERE RATE_CODE='01' AND RATE_ID = #{custId} AND RATE_TYPE = #{rateType}
+	</select>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE MPOMNG_MOBILE_MER_INF
+		<set>
+		      <if test="custName!= null and custName!= ''">
+						CUST_NAME =  #{custName},
+			  </if>
+			  <if test="lastOperTime!= null and lastOperTime!= ''">
+						LAST_OPER_TIME =  #{lastOperTime},
+			  </if>
+		      <if test="custPwdNum!= null and custPwdNum!= ''">
+						CUST_PWD_NUM =  #{custPwdNum},
+			  </if>
+			  <if test="custPwd!= null and custPwd!= ''">
+						CUST_PWD =  #{custPwd},
+			  </if>
+			  <if test="payPwd!= null and payPwd!= ''">
+						PAY_PWD =  #{payPwd},
+			  </if>
+			  <if test="usrAddress!= null and usrAddress!= ''">
+						USR_ADDRESS =  #{usrAddress},
+			  </if>
+			  <if test="provinceId!= null and provinceId!= ''">
+						PROVINCE_ID =  #{provinceId},
+			  </if>
+			  <if test="cityId!= null and cityId!= ''">
+						CITY_ID =  #{cityId},
+			  </if>
+			   <if test="isLoginFlag!= null and  isLoginFlag!= ''">
+						IS_LOGIN_FLAG =  #{isLoginFlag}
+			  </if>
+			  <if test="custStatus!= null and  custStatus!= ''">
+						AUTH_STATUS =  #{custStatus}
+			  </if>
+		</set>
+		WHERE 1=1 
+		<if test="custId!= null and custId!= ''">
+				AND CUST_ID = #{custId}
+		 </if>
+		 <if test="custMobile!= null and custMobile!= ''">
+				AND CUST_LOGIN = #{custMobile}
+		 </if>
+		  <if test="referrer!= null and referrer!= ''">
+				AND REFERRER = #{referrer}
+		 </if>
+		 
+	</update>
+	
+	<select id="selectReference" parameterType="java.util.Map" resultType="String">
+		SELECT 
+		        CUST_STATUS
+		FROM 
+		        MPOMNG_MOBILE_MER_INF
+		WHERE
+			 CUST_LOGIN =  #{referrer}
+	</select>
+
+</mapper>

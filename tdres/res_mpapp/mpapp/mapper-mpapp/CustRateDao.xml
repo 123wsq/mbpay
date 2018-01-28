@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.CustRateDao">
+	<resultMap type="java.util.Map" 					id="ratesMap">
+		<result property="rateCode" 					column="RATE_CODE"/>
+		<result property="custId" 						column="RATE_ID"/>
+		<result property="rateType" 					column="RATE_TYPE"/>
+		<result property="rateTCas" 					column="RATE_TCAS"/>
+		<result property="rateTCasMax" 					column="RATE_TCAS_MAX"/>
+		<result property="maxTCas" 						column="MAX_TCAS"/>
+		<result property="rateLivelihood" 				column="RATE_LIVELIHOOD"/>
+		<result property="rateGeneral" 					column="RATE_GENERAL"/>
+		<result property="rateEntertain" 				column="RATE_ENTERTAIN"/>
+		<result property="rateGeneralTop" 				column="RATE_GENERAL_TOP"/>
+		<result property="rateGeneralMaximun" 			column="RATE_GENERAL_MAXIMUN"/>
+		<result property="rateEntertainTop" 			column="RATE_ENTERTAIN_TOP"/>
+		<result property="rateEntertainMaximun" 		column="RATE_ENTERTAIN_MAXIMUN"/>
+		<result property="insertTime" 					column="INS_TIM"/>
+		<result property="updateTime" 					column="IPD_TIM"/>
+		<result property="shareRate"                    column="SHARE_RATE"/>
+</resultMap>
+
+
+	<select id="getAgentRate" parameterType="java.util.Map" resultMap="ratesMap">
+	
+		SELECT 
+			* 
+		FROM
+			HX_RATES_INF
+		<where>
+			<if test="custId != null and custId !=''">
+				AND RATE_ID = #{custId}
+			</if>
+			<if test="rate_code != null and rate_code !=''">
+				AND RATE_CODE = #{rate_code}
+			</if>
+			<if test="rateType != null and rateType !=''">
+				AND RATE_TYPE = #{rateType}
+			</if>
+		</where> 
+	</select>
+	<insert id="insertCustRate" parameterType="java.util.Map">
+		INSERT
+			INTO
+		HX_RATES_INF
+		  (
+			RATE_CODE,
+			RATE_ID,
+			RATE_TYPE,
+			RATE_TCAS,
+			MAX_TCAS,
+			RATE_LIVELIHOOD,
+			RATE_GENERAL,
+			RATE_GENERAL_TOP,
+			RATE_GENERAL_MAXIMUN,
+			RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP,
+			RATE_ENTERTAIN_MAXIMUN,
+			INS_TIM
+		  )
+		VALUES
+		 (
+			#{rateCode},
+			#{custId},
+			#{rateType},
+			#{rateTCas},
+			#{maxTCas},
+			#{rateLivelihood},
+			#{rateGeneral},
+			#{rateGeneralTop},
+			#{rateGeneralMaximun},
+			#{rateEntertain},
+			#{rateEntertainTop},
+			#{rateEntertainMaximun},
+			#{insertTime}
+		)
+		
+	
+	</insert>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--中联接口 -->
+<channel name="STHDZL" log_level="DEBUG" timeout="300">
+	<!-- 注册 -->
+	<transaction code="regist">
+		<unpack>
+			<readelement name="response">
+				<readelement name="error"   expr="error" />
+				<readelement name="message" expr="message" />
+			</readelement>
+		</unpack>
+	</transaction>
+	
+</channel>

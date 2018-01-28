@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.UnionfitDao">
+
+	<resultMap type="UnionfitInf" id="UnionfitInfMap">
+		<result property="issnam"		column="ISSNAM" />
+		<result property="issno"		column="ISSNO"  />
+		<result property="crdnam"		column="CRDNAM" />
+		<result property="fitcrk"		column="FITCRK" />
+		<result property="fitoff"		column="FITOFF" />
+		<result property="fitlen"		column="FITLEN" />
+		<result property="crdoff"		column="CRDOFF" />
+		<result property="crdlen"	    column="CRDLEN" />
+		<result property="crdctt"		column="CRDCTT" />
+		<result property="crdcrk"		column="CRDCRK" />
+		<result property="binoff"		column="BINOFF" />
+		<result property="binlen"		column="BINLEN" />
+		<result property="binctt"	    column="BINCTT" />
+		<result property="bincrk"		column="BINCRK" />
+		<result property="dcflag"		column="DCFLAG" />
+	</resultMap>
+	
+	<select id="selectList" parameterType="UnionfitInf" resultMap="UnionfitInfMap" databaseId="mysql">
+		SELECT
+			ISSNAM,
+			ISSNO,
+			CRDNAM,
+			FITCRK,
+			FITOFF,
+			FITLEN,
+			CRDOFF,
+			CRDLEN,
+			CRDCTT,
+			CRDCRK,
+			BINOFF,
+			BINLEN,
+			BINCTT,
+			BINCRK,
+			DCFLAG
+		FROM
+			UNIONFIT
+		<where>
+			<if test="issnam != null and issnam != '' ">
+				AND ISSNAM LIKE CONCAT('%',#{issnam},'%')
+			</if>
+			<if test="crdnam != null and crdnam != '' ">
+				AND CRDNAM LIKE CONCAT('%',#{crdnam},'%')
+			</if>
+			<if test="binctt != null and binctt != '' ">
+				AND BINCTT LIKE CONCAT('%',#{binctt},'%')
+			</if>
+			<if test="dcflag != null and dcflag != '' ">
+				AND DCFLAG =#{dcflag}
+			</if>
+		</where>
+		ORDER BY ISSNAM ASC LIMIT #{start},#{pageSize}
+	</select>
+	
+	<select id="countEntity" parameterType="UnionfitInf" resultType="java.lang.Integer" databaseId="mysql">
+		SELECT
+			COUNT(1)
+		FROM
+			UNIONFIT
+		<where>
+			<if test="dcflag != null and dcflag != '' ">
+				AND DCFLAG = #{dcflag}
+			</if>
+			<if test="issnam != null and issnam != '' ">
+				AND ISSNAM LIKE CONCAT('%',#{issnam},'%')
+			</if>
+			<if test="crdnam != null and crdnam != '' ">
+				AND CRDNAM LIKE CONCAT('%',#{crdnam},'%')
+			</if>
+			<if test="binctt != null and binctt != '' ">
+				AND BINCTT LIKE CONCAT('%',#{binctt},'%')
+			</if>
+			
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="UnionfitInf">
+		INSERT INTO UNIONFIT (
+				ISSNAM,
+				ISSNO,
+				CRDNAM,
+				FITCRK,
+				FITOFF,
+				FITLEN,
+				CRDOFF,
+				CRDLEN,
+				CRDCTT,
+				CRDCRK,
+				BINOFF,
+				BINLEN,
+				BINCTT,
+				BINCRK,
+				DCFLAG
+		)
+		VALUES (
+				#{issnam,jdbcType=VARCHAR},
+				#{issno,jdbcType=VARCHAR},
+				#{crdnam,jdbcType=VARCHAR},
+				#{fitcrk,jdbcType=VARCHAR},
+				#{fitoff,jdbcType=VARCHAR},
+				#{fitlen,jdbcType=VARCHAR},
+				#{crdoff,jdbcType=VARCHAR},
+				#{crdlen,jdbcType=VARCHAR},
+				#{crdctt,jdbcType=VARCHAR},
+				#{crdcrk,jdbcType=VARCHAR},
+				#{binoff,jdbcType=VARCHAR},
+				#{binlen,jdbcType=VARCHAR},
+				#{binctt,jdbcType=VARCHAR},
+				#{bincrk,jdbcType=VARCHAR},
+				#{dcflag,jdbcType=VARCHAR}
+				)
+	</insert>
+
+	<update id="updateEntity" parameterType="UnionfitInf">
+		UPDATE UNIONFIT
+		<set>
+			<if test="issnam != null and issnam != ''">
+				ISSNAM = #{issnam},
+			</if>
+			<if test="issno != null and issno != ''">
+				ISSNO = #{issno},
+			</if>
+			<if test="crdnam != null and crdnam != ''">
+				CRDNAM = #{crdnam},
+			</if>
+			<if test="fitcrk != null and fitcrk != ''">
+				FITCRK = #{fitcrk},
+			</if>
+			<if test="fitoff != null and fitoff != ''">
+				FITOFF = #{fitoff},
+			</if>
+			<if test="fitlen != null and fitlen != ''">
+				FITLEN = #{fitlen},
+			</if>
+			<if test="crdoff != null and crdoff != ''">
+				CRDOFF = #{crdoff},
+			</if>
+			<if test="crdlen != null and crdlen != ''">
+				CRDLEN = #{crdlen},
+			</if>
+			<if test="crdctt != null and crdctt != ''">
+				CRDCTT = #{crdctt},
+			</if>
+			<if test="crdcrk != null and crdcrk != ''">
+				CRDCRK = #{crdcrk},
+			</if>
+			<if test="dcflag != null and dcflag != ''">
+				DCFLAG = #{dcflag}
+			</if>
+		</set>
+			WHERE	 BINOFF = #{binoff} AND BINLEN = #{binlen} AND BINCTT = #{binctt} AND BINCRK = #{bincrk}
+	</update>
+	
+	<delete id="deleteEntity" parameterType="UnionfitInf">
+		DELETE FROM UNIONFIT WHERE	 BINOFF = #{binoff} AND BINLEN = #{binlen} AND BINCTT = #{binctt} AND BINCRK = #{bincrk}
+	</delete>
+
+    <select id="selectEntity" parameterType="UnionfitInf" resultMap="UnionfitInfMap">
+		SELECT
+			ISSNAM,
+			ISSNO,
+			CRDNAM,
+			FITCRK,
+			FITOFF,
+			FITLEN,
+			CRDOFF,
+			CRDLEN,
+			CRDCTT,
+			CRDCRK,
+			BINOFF,
+			BINLEN,
+			BINCTT,
+			BINCRK,
+			DCFLAG
+		FROM
+			UNIONFIT
+			WHERE	 BINOFF = #{binoff} AND BINLEN = #{binlen} AND BINCTT = #{binctt} AND BINCRK = #{bincrk}
+	</select>
+	
+	<select id="getCardInf" parameterType="java.lang.String" resultMap="UnionfitInfMap">
+		SELECT
+			ISSNAM,
+			ISSNO,
+			CRDNAM,
+			FITCRK,
+			FITOFF,
+			FITLEN,
+			CRDOFF,
+			CRDLEN,
+			CRDCTT,
+			CRDCRK,
+			BINOFF,
+			BINLEN,
+			BINCTT,
+			BINCRK,
+			DCFLAG
+		FROM
+			UNIONFIT
+		WHERE SUBSTR(#{cardNo},1,BINLEN) = BINCTT
+		AND LENGTH(#{cardNo}) = CRDLEN
+		ORDER BY BINLEN DESC
+		LIMIT 1	
+	</select>
+	
+</mapper>

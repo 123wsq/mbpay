@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.RatesInfDao">
+	<resultMap type="java.util.Map" id="ratesMap">
+		    <result property="rateCode"                 column="RATE_CODE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateId"                   column="RATE_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateType"                 column="RATE_TYPE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateLivelihood"             column="RATE_LIVELIHOOD" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneral"                column="RATE_GENERAL" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralTop"             column="RATE_GENERAL_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralMaximun"         column="RATE_GENERAL_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertain"              column="RATE_ENTERTAIN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainTop"           column="RATE_ENTERTAIN_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainMaximun"       column="RATE_ENTERTAIN_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateTCas" column="RATE_TCAS" typeHandler="EmptyStringIfNull"/>
+		    <result property="maxTCas" column="MAX_TCAS" typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="ratesMap">
+		SELECT 
+		         T1.RATE_CODE, 
+		         T1.RATE_ID, 
+		         T1.RATE_TYPE, 
+		         T1.RATE_LIVELIHOOD, 
+		         T1.RATE_GENERAL, 
+		         T1.RATE_GENERAL_TOP, 
+		         T1.RATE_GENERAL_MAXIMUN, 
+		         T1.RATE_ENTERTAIN, 
+		         T1.RATE_ENTERTAIN_TOP, 
+		         T1.RATE_ENTERTAIN_MAXIMUN,
+		         T1.RATE_TCAS,
+		         T1.MAX_TCAS
+		FROM 
+		  		HX_RATES_INF T1
+ 		WHERE 
+ 				T1.RATE_CODE = #{rateCode} 
+ 		    AND 
+ 				T1.RATE_ID = #{rateId} 
+ 		    AND 
+ 				T1.RATE_TYPE = #{rateType}
+	</select>
+	
+	<insert id="insertDefMerRate" parameterType="java.util.Map">
+		INSERT INTO HX_RATES_INF (
+			RATE_CODE,
+			RATE_ID,
+			RATE_TYPE,
+			RATE_TCAS,
+			RATE_TCAS_MAX,
+			MAX_TCAS,
+			RATE_LIVELIHOOD,
+			RATE_GENERAL,
+			RATE_GENERAL_TOP,
+			RATE_GENERAL_MAXIMUN,
+			RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP,
+			RATE_ENTERTAIN_MAXIMUN,
+			INS_TIM,
+			IPD_TIM
+		) SELECT
+			'01',
+			#{custId},
+			RATE_TYPE,
+			RATE_TCAS,
+			RATE_TCAS_MAX,
+			MAX_TCAS,
+			RATE_LIVELIHOOD,
+			RATE_GENERAL,
+			RATE_GENERAL_TOP,
+			RATE_GENERAL_MAXIMUN,
+			RATE_ENTERTAIN,
+			RATE_ENTERTAIN_TOP,
+			RATE_ENTERTAIN_MAXIMUN,
+			#{insTim},
+			#{insTim}
+		FROM
+			HX_RATES_INF
+		WHERE
+			RATE_CODE = #{rateCode}
+		AND RATE_ID = #{rateId}
+		AND RATE_TYPE = #{rateType}
+	</insert>
+	
+</mapper>

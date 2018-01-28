@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<!-- 
+<div class="search_panel">
+<form action="auth/sysManage/query.do" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">模块编号:</label>
+							<div class="search_input">
+								<input id="id" type="text" name="id"
+									placeholder="请输入模块编号">
+							</div>
+						</div>
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">系统名称:</label>
+							<div class="search_input">
+								<input id="name" type="text" name="name" 
+									placeholder="请输入系统名称">
+							</div>
+						</div>
+
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >
+								搜索
+							</button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >
+							清空
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>-->
+	<div class="row">
+		<div class="col-xs-12">
+
+			<table id="grid-table"></table>
+
+			<div id="grid-pager"></div>
+
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+				    <!-- 
+				        auth="auth/sysManage/add.do"
+				    	属性说明: 用于按钮权限控制，auth地址与用户使用该功能的地址一致。
+				    	
+				     -->
+					<a auth="auth/sysManage/editView.do" class="btn btn-small btn-update" onclick="sysedit();"> 修改 </a> 
+					<a auth="auth/sysManage/status.do" class="btn btn-small btn-default"
+					onclick="statusUpdate0();"> 启用 
+					</a>
+				<a auth="auth/sysManage/status.do" class="btn btn-small btn-default"
+					onclick="statusUpdate1();">  禁用
+				</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+		</div>
+	</div>
+	
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on(
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+
+				url : "auth/sysManage/query.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ '模块编号', '系统名称', '系统简称', '系统状态', '系统描述','系统访问地址' ],
+				colModel : [ {name : 'id',           index : 'id',           width : '200px' }, 
+				             {name : 'name',         index : 'name',         width : '150px' },
+				             {name : 'abbr',         index : 'abbr',         width : '200px' }, 
+				             {name : 'state',        index : 'state',        width : '150px', ditcKey:'STATE', formatter : gridFormatByDict}, 
+				             {name : 'desc',         index : 'desc',         width : '250px' }, 
+				             {name : 'url',          index : 'url',          width : '250px' }
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+				shrinkToFit:false,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			//定义按钮
+			function optionEdit(cellvalue, options, rowObject) {
+				if(rowObject["id"]== UID._USER_NO){
+					return "";
+				}else{
+					if(rowObject["userStatus"] == 0){
+						return "<a auth='/auth' class=\"jtable-btn jtable-btn-free\" onclick=\"javascript:setUserStatus('"+rowObject["userName"]+"','"+rowObject["id"]+"','1');\">禁用</a>";
+					}else{
+						return "<a auth='' class=\"jtable-btn jtable-btn-free\" onclick=\"javascript:setUserStatus('"+rowObject["userName"]+"','"+rowObject["id"]+"','0');\">启用</a>";
+					}
+				}
+			}
+			//格式化系统状态
+			function userStatusFormat(cellvalue, options, rowObject){
+				return DICT.get("USERSTATUS")[cellvalue];
+			}
+		});
+
+		//修改系统
+		function sysedit() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			if(rows[0] == UID._USER_NO){
+				msg.alert("警告", "系统超级用户不能被修改！", "warn");
+				return ;
+			}
+			openDialog({
+				dialogId : 'dlg-sysedit',
+				title : '修改系统',
+				pageUrl : 'auth/sysManage/editView.do',
+				dataUrl : 'auth/sysManage/queryUserById.do',
+				width :'600px',
+				height:'400px',
+				dataParam : {
+					id : rows[0]
+				},
+				dataName : 'obj' //表单数据存储对象名称
+
+			});
+		}
+		
+		//启用或禁止
+		function statusUpdate0(){
+		    	setSysStatus(0);
+		    }
+	    function statusUpdate1(){
+		    	setSysStatus(1);
+		    }
+	    function setSysStatus(status){
+				var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+				if (rows.length == 0) {
+					msg.alert("警告", "当前没有选择的数据项,请选择数据！", "warn");
+					return;
+				}
+				
+				var ids="",name="";
+				var rowData ;
+				for(var i=0; i<rows.length; i++){
+					rowData = $('#grid-table').jqGrid('getRowData',rows[i]);
+					ids   = ids+rowData.id+",";
+				}
+				ids   = ids.substring(0, ids.lastIndexOf(","));
+				var tmsg = "启用";
+				if(status == 1){
+					tmsg = "禁用";
+				}
+				
+				msg.confirm({title:'确认',position:'center',msg:'您确定要'+tmsg+'选中的数据吗？',call:function(ok){
+					if(ok){
+						$.ajax({
+							type : "post",
+						    url : "auth/sysManage/status.do?state="+status+"&id="+ids,
+							dataType : 'json',
+							success : function(result) {
+								if (result.rspcod != 200) {
+									msg.alert("错误", result.rspmsg, 'error');
+								} else {
+									msg.alert("提示", result.rspmsg, 'correct');
+									$("#grid-table").trigger("reloadGrid");
+								}
+							},
+							error : function(XMLHttpRequest, textStatus) {
+								msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+										+ textStatus, 'error');
+							}
+						});
+
+					}
+				}});
+				
+			}
+		
+	</script>

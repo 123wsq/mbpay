@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.ReportTranCountDao">
+	<resultMap type="java.util.Map" id="tranCountMap">
+	        <result property="amt"               column="AMT" /> 
+		    <result property="paycount"               column="PAYCOUNT" /> 
+		    <result property="date"               column="TXN_DATE" /> 
+	</resultMap>
+	
+	
+	<select id="selectReportTranCount" parameterType="java.util.Map" resultMap="tranCountMap">
+		SELECT
+			SUM(JOU.TXN_AMT) AMT,
+			COUNT(JOU.PAYMENT_ID) PAYCOUNT,
+			JOU.TXN_DATE
+		FROM
+			MPOMNG_PAYMENT_JOURNAL_INF JOU
+		WHERE
+			JOU.TXN_STATUS = 'S'
+		AND JOU.TXN_DATE >=#{date}
+		GROUP BY
+			JOU.TXN_DATE
+	</select>
+	
+	<select id="selectT0ReportTranCount" parameterType="java.util.Map" resultMap="tranCountMap">
+			SELECT
+				SUM(JOU.TXAMT) AMT,
+				COUNT(JOU.CAS_ORD_NO) PAYCOUNT,
+				SUBSTRING(JOU.SUC_DATE,1,8) TXN_DATE
+			FROM
+				MPOMNG_CAS_INF JOU
+			WHERE
+				JOU.ORDSTATUS = '07'
+			AND JOU.CAS_TYPE = '00'
+			AND JOU.SUC_DATE >=#{date}
+			GROUP BY
+				JOU.SUC_DATE
+	</select>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpomng.dao.AppDao">
+	<resultMap type="AppInf" id="appMap">
+		    <result property="appId"               column="APP_ID" /> 
+		    <result property="appName"               column="APP_NAME" /> 
+		    <result property="appVersion"               column="APP_VERSION" /> 
+		    <result property="appPlatform"               column="APP_PLATFORM" /> 
+		    <result property="appAutoUpdate"               column="APP_AUTO_UPDATE" /> 
+		    <result property="appDesc"               column="APP_DESC" /> 
+		    <result property="appIssueDate"               column="APP_ISSUE_DATE" /> 
+		    <result property="appFileSzie"               column="APP_FILE_SZIE" /> 
+		    <result property="appFileId"               column="APP_FILE_ID" /> 
+		    <result property="appFileName"               column="APP_FILE_NAME" /> 
+		    <result property="appFilePath"               column="APP_FILE_PATH" /> 
+		    <result property="createUserId"               column="CREATE_USER_ID" /> 
+		    <result property="createDate"               column="CREATE_DATE" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="AppInf">
+		UPDATE 
+				MPOMNG_APP_INF
+		<set>
+		       
+		        <if test="appName!= null and appName!= ''">
+						APP_NAME =  #{appName},
+				</if>
+		        <if test="appVersion!= null and appVersion!= ''">
+						APP_VERSION = #{appVersion} ,
+				</if>
+		        <if test="appPlatform!= null and appPlatform!= ''">
+						APP_PLATFORM =  #{appPlatform},
+				</if>
+		        <if test="appAutoUpdate!= null and appAutoUpdate!= ''">
+						APP_AUTO_UPDATE =  #{appAutoUpdate},
+				</if>
+		        <if test="appDesc!= null and appDesc!= ''">
+						APP_DESC = #{appDesc}, 
+				</if>
+		        <if test="appFileName!= null and appFileName!= ''">
+						APP_FILE_NAME =  #{appFileName},
+				</if>
+		</set>
+		WHERE
+				APP_ID = #{appId}
+	
+	</update>
+
+	<select id="selectEntity" parameterType="AppInf" resultMap="appMap">
+		SELECT 
+		         APP_ID, 
+		         APP_NAME, 
+		         APP_VERSION, 
+		         APP_PLATFORM, 
+		         APP_AUTO_UPDATE, 
+		         APP_DESC, 
+		         APP_ISSUE_DATE, 
+		         APP_FILE_SZIE, 
+		         APP_FILE_ID, 
+		         APP_FILE_NAME,
+		         APP_FILE_PATH,
+		         CREATE_USER_ID, 
+		         CREATE_DATE
+		         
+		FROM 
+		        MPOMNG_APP_INF
+		WHERE
+				APP_ID = #{appId}
+	</select>
+
+	<select id="selectList" parameterType="AppInf" resultMap="appMap" databaseId="mysql">
+		SELECT 
+		         APP_ID, 
+		         APP_NAME, 
+		         APP_VERSION, 
+		         APP_PLATFORM, 
+		         APP_AUTO_UPDATE, 
+		         APP_DESC, 
+		         APP_ISSUE_DATE, 
+		         APP_FILE_SZIE, 
+		         APP_FILE_ID, 
+		         APP_FILE_NAME,
+		         APP_FILE_PATH,
+		         CREATE_USER_ID, 
+		         CREATE_DATE
+		FROM 
+		       MPOMNG_APP_INF
+		<where>
+				<if test="appPlatform!= null and appPlatform!= ''">
+						AND APP_PLATFORM =  #{appPlatform}
+				</if>
+		        <if test="appName!= null and appName!= ''">
+						AND APP_NAME LIKE CONCAT('%',#{appName},'%')
+				</if>
+		        <if test="appVersion!= null and appVersion!= ''">
+						AND APP_VERSION   LIKE CONCAT('%',#{appVersion},'%')
+				</if>
+		        <if test="appDesc!= null and appDesc!= ''">
+						AND APP_DESC LIKE CONCAT('%', #{appDesc},'%')  
+				</if>
+		</where>
+		ORDER BY APP_ID  DESC  LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="AppInf" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(APP_ID)
+		FROM 
+				MPOMNG_APP_INF
+		<where>
+		       <if test="appPlatform!= null and appPlatform!= ''">
+						AND APP_PLATFORM =  #{appPlatform}
+				</if>
+		        <if test="appName!= null and appName!= ''">
+						AND APP_NAME LIKE CONCAT('%',#{appName},'%')
+				</if>
+		        <if test="appVersion!= null and appVersion!= ''">
+						AND APP_VERSION   LIKE CONCAT('%',#{appVersion},'%')
+				</if>
+		        <if test="appDesc!= null and appDesc!= ''">
+						AND APP_DESC LIKE CONCAT('%', #{appDesc},'%')  
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="AppInf">
+		INSERT INTO MPOMNG_APP_INF  (
+		         APP_ID, 
+		         APP_NAME, 
+		         APP_VERSION, 
+		         APP_PLATFORM, 
+		         APP_AUTO_UPDATE, 
+		         APP_DESC, 
+		         APP_ISSUE_DATE, 
+		         APP_FILE_SZIE, 
+		         APP_FILE_ID, 
+		         APP_FILE_NAME,
+		         APP_FILE_PATH,
+		         CREATE_USER_ID, 
+		         CREATE_DATE
+				)
+		VALUES (
+		          #{appId}, 
+		          #{appName}, 
+		          #{appVersion}, 
+		          #{appPlatform}, 
+		          #{appAutoUpdate}, 
+		          #{appDesc}, 
+		          #{appIssueDate}, 
+		          #{appFileSzie}, 
+		          #{appFileId}, 
+		          #{appFileName}, 
+		          #{appFilePath}, 
+		          #{createUserId}, 
+		          #{createDate}
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="AppInf">
+		DELETE FROM MPOMNG_APP_INF
+		WHERE APP_ID=#{appId}
+			 
+	</delete>
+	
+	<select id="selectLastAppVersion" parameterType="AppInf" resultType="java.lang.String">
+		SELECT 
+				MAX(APP_VERSION)
+		FROM 
+				MPOMNG_APP_INF
+		<where>
+		        <if test="appName!= null and appName!= ''">
+						AND APP_NAME =  #{appName}
+				</if>
+		        <if test="appPlatform!= null and appPlatform!= ''">
+						AND APP_PLATFORM =  #{appPlatform}
+				</if>
+		</where>
+	</select>
+
+</mapper>

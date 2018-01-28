@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+
+<div class="search_panel">
+<form action="mprcs/userLimitManage/userLimitManageList.do" method="post" onsubmit="return pageSearch(this);">
+	<div style="display: block;" class="widget-body ">
+		<div class="widget-main">
+			<div class="rowt">
+				<div class="col-sm-12">
+					<div>
+					
+					<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">商户编号:</label>
+							<div class="search_input">
+								<input type="text" id="limitCustId" name="limitCustId" placeholder="请输入[商户编号]" 
+				class="col-xs-10 col-sm-7"  />
+							</div>
+	                        </div>
+						<!-- 
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">限额类型:</label>
+							<div class="search_input">
+							<select 
+								rel="obj.LIMIT_TYPE"
+												location="local" 
+								 name="limitType" 
+								 id="search_limitType" 
+								 data-placeholder="请选择限额类型 " 
+								  style="width: 120px;vertical-align:middle;">
+								   <option value='' >--请选择--</option>
+						 	</select>
+							</div>
+						</div>-->
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">业务类型:</label>
+							<div class="search_input">
+								<select 
+		rel="obj.LIMIT_BUS_TYPE"
+						location="local" 
+		 name="limitBusType" 
+		 id="search_limitBusType" 
+		 data-placeholder="请选择业务类型  " 
+		  style="width: 120px;vertical-align:middle;">
+		    <option value='' >--请选择--</option>
+						 </select>	
+						
+							</div>
+						</div>
+						
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">支付方式:</label>
+							<div class="search_input">
+								<select 
+		rel="obj.LIMIT_PAY_WAY"
+						location="local" 
+		 name="limitPayWay" 
+		 id="search_limitPayWay" 
+		 data-placeholder="请选择支付方式" 
+		  style="width: 120px;vertical-align:middle;">
+		   <option value='' >--请选择--</option>
+						 </select>
+						
+							</div>
+						</div>
+						<div class="search_button" style="width: 300px;">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" >
+								搜索
+							</button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >
+							清空
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<table id="grid-table"></table>
+			<div id="grid-pager"></div>
+			
+			<div style="margin-top: 10px">
+				<span id="auth_btn">
+					<a auth="mprcs/userLimitManage/addView.do"  class="btn btn-small btn-add" onclick="addUserLimit();">新增</a>
+					<a auth="mprcs/userLimitManage/addView.do"  class="btn btn-small btn-update" onclick="editUserLimit();">修改</a>
+					<a auth="mprcs/userLimitManage/deleteUserLimitManage.do"  class="btn btn-small btn-delete" onclick="deleteUserLimit();">删除</a>
+					<a auth="mprcs/userLimitManage/addDetailView.do"  class="btn btn-small btn-warning" onclick="selectUserLimit();">详细</a>
+				<a auth="mprcs/userLimitManage/modifyUserLimitManageStatus.do"  class="btn btn-small btn-default"
+					onclick="statusUpdate0();">启用
+				</a>
+				<a auth="mprcs/userLimitManage/modifyUserLimitManageStatus.do"  class="btn btn-small btn-default"
+					onclick="statusUpdate1();">禁用
+				</a>
+				</span> <span id="paging_bar" style="float: right"> </span>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- page specific plugin scripts -->
+	<script type="text/javascript">
+		var jqGrid;
+		jQuery(function($) {
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+
+			$(window).on(
+					'resize.jqGrid',
+					function() {
+						$(grid_selector).jqGrid('setGridWidth',
+								$(".page-content").width());
+					})
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on( 
+					'settings.ace.jqGrid',
+					function(ev, event_name, collapsed) {
+						if (event_name === 'sidebar_collapsed'
+								|| event_name === 'main_container_fixed') {
+							setTimeout(function() {
+								$(grid_selector).jqGrid('setGridWidth',
+										parent_column.width());
+							}, 0);
+						}
+					})
+			jQuery(grid_selector).jqGrid({
+				url : "mprcs/userLimitManage/userLimitManageList.do",
+				datatype : "json",
+				height : '100%',
+				width : '100%',
+				colNames : [ 
+								'编号',
+								'商户编号',
+								'商户名称',
+								'业务类型 ',
+								'子业务类型',
+								'支付方式',
+								'使用状态',
+								'单笔最小金额',
+								'单笔最大金额',
+								'每日次数',
+								'每日金额',
+								'每月交易次数',
+								'每月交易金额'
+				           ],
+				colModel : [ 
+							     {name : 'limitId',        index : 'limitId', hidden:true,       width : '100px',sortable:false }, 							    
+							     {name : 'limitCustId',        index : 'limitCustId',        width : '120px' ,sortable:false}, 
+							     {name : 'custName',        index : 'custName',        width : '100px' ,sortable:false}, 
+							     {name : 'limitBusType',        index : 'limitBusType',        width : '80px' ,sortable:false,ditcKey:'LIMIT_BUS_TYPE', formatter : gridFormatByDict}, 
+							     {name : 'limitSubBus',        index : 'limitSubBus',        width : '80px',sortable:false ,ditcKey:'LIMIT_SUB_BUS', formatter : gridFormatByDict}, 
+							     {name : 'limitPayWay',        index : 'limitPayWay',        width : '80px' ,sortable:false,ditcKey:'LIMIT_PAY_WAY', formatter : gridFormatByDict}, 
+							     {name : 'isUse',        index : 'isUse',        width : '80px' ,sortable:false,ditcKey:'IS_USE', formatter : gridFormatByDict},
+							     {name : 'limitMinAmt',        index : 'limitMinAmt',        width : '100px' ,sortable:false,formatter : centYuan}, 
+							     {name : 'limitMaxAmt',        index : 'limitMaxAmt',       width : '100px' ,sortable:false,formatter : centYuan}, 
+							     {name : 'limitDayTimes',        index : 'limitDayTimes',        width : '100px',sortable:false }, 
+							     {name : 'limitDayAmt',        index : 'limitDayAmt',        width : '100px',sortable:false,formatter : centYuan }, 
+							     {name : 'limitMonthTimes',        index : 'limitMonthTimes',        width : '100px',sortable:false }, 
+							     {name : 'limitMonthAmt',        index : 'limitMonthAmt',        width : '100px',sortable:false,formatter : centYuan }   
+				            ],
+				viewrecords : true,
+				rowNum : 10,
+				rowList : [ 10, 20, 30 ],
+				altRows : true,
+				shrinkToFit : false,
+				multiselect : true,//设置行可多选的 
+				multiboxonly : true,//
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function() {
+						//加载分页
+						initPagingBar(grid_selector);
+					}, 0);
+				},
+				beforeRequest : function() {//请求之前执行
+					jqGrid = this;
+				},
+			});
+			$(window).triggerHandler('resize.jqGrid');
+
+			$(document).one('ajaxloadstart.page', function(e) {
+				$(grid_selector).jqGrid('GridUnload');
+				$('.ui-jqdialog').remove();
+			});
+			
+			//定义表格列中金额转换 元转分
+			function centYuan(cellvalue, options, rowObject) {
+				return cent2Yuan(cellvalue);
+			}
+		});
+		
+		function selectUserLimit() {
+            var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			 var limitId=$('#grid-table').jqGrid('getRowData',rows[0]).limitId;
+			var scrWidth = document.body.scrollWidth;
+			openDialog({
+				dialogId : 'dlg-userLimitDetail',
+				title : '商户限额详情',
+				pageUrl :'mprcs/userLimitManage/addDetailView.do',
+				dataUrl : 'mprcs/userLimitManage/queryUserLimitManageById.do',
+				width : '65%',
+				height:'80%',
+				dataParam : {
+					limitId : limitId
+				},
+				dataName : 'obj,map'//表单数据存储对象名称
+
+			}); 
+			
+		}
+
+		 //新增
+		function addUserLimit() {
+			openDialog({
+				dialogId : 'dlg-editUserLimit',
+				title : '添加商户限额',
+				pageUrl : 'mprcs/userLimitManage/addView.do',
+				width : '65%',
+			    height:'80%',
+			    dataParam : {
+					type:'Add'
+				},
+			});
+		}
+		 
+		function custLevelFormat(cellvalue, options, rowObject){
+			var url="mprcs/selectoption/custLevel.do";
+			select2textData(url,"levelName");
+			return SELECT2TEXT.get(cellvalue,"levelName");
+		}
+		
+		//编辑
+		function editUserLimit() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "error");
+				return;
+			}
+			if (rows.length > 1) {
+				msg.alert("警告", "不能同时选择多项数据！", "warn");
+				return;
+			}
+			
+			var ids = $('#grid-table').jqGrid('getRowData',rows[0]).limitId;
+			openDialog({
+				dialogId : 'dlg-editUserLimit',
+				title : '修改商户限额',
+				pageUrl : 'mprcs/userLimitManage/addView.do',
+				dataUrl : 'mprcs/userLimitManage/queryUserLimitManageById.do',
+				width : '65%',
+				height:'80%',
+				dataParam : {
+					limitId : ids,
+					type:'Edit'
+				},
+				pageParam: {
+					type:'Edit'
+				},
+				dataName : 'obj,map' //表单数据存储对象名称
+
+			});
+		}
+		
+		
+		//删除
+		function deleteUserLimit() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				　ids += $('#grid-table').jqGrid('getRowData',rows[i]).limitId+ ",";
+			}
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			msg.confirm({title:'确认',position:'center',msg:'您确定要删除选中的数据吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mprcs/userLimitManage/deleteUserLimitManage.do?limitIds=" + ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg , 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+				}
+			}});
+			
+			}
+		
+	  function statusUpdate0(){
+	    	setStatus(1);
+	    }
+	    function statusUpdate1(){
+	    	setStatus(0);
+	    }
+	    //禁用/启用
+		function setStatus(status){
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择的数据项,请选择数据！", "warn");
+				return;
+			}
+			var ids="";
+			var rowData ;
+			for(var i=0; i<rows.length; i++){
+				rowData = $('#grid-table').jqGrid('getRowData',rows[i]);
+				ids   = ids+rowData.limitId+",";
+			}
+			ids   = ids.substring(0, ids.lastIndexOf(","));
+			var tmsg = "您确定要禁用吗？";
+			if(status == 1){
+				tmsg = "您确定要启用吗？";
+			}
+			msg.confirm({title:'确认',position:'center',msg:tmsg,call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+					    url : "mprcs/userLimitManage/modifyUserLimitManageStatus.do?status="+status+"&ids="+ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", "使用状态更新成功！", 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+
+				}
+			}});
+			
+		}  
+	    
+	</script>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.TerminalDao">
+	<resultMap type="java.util.Map" id="terminalMap">
+		    <result property="terminalId"                 column="TERMINAL_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalSeq"                column="TERMINAL_SEQ" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalNo"                 column="TERMINAL_NO" typeHandler="EmptyStringIfNull"/> 
+		    <result property="agentId"                    column="AGENT_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="custId"                     column="CUST_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalType"               column="TERMINAL_TYPE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalCom"                column="TERMINAL_COM" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalStatus"             column="TERMINAL_STATUS" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateLivelihood"             column="RATE_LIVELIHOOD" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneral"                column="RATE_GENERAL" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralTop"             column="RATE_GENERAL_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralMaximun"         column="RATE_GENERAL_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertain"              column="RATE_ENTERTAIN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainTop"           column="RATE_ENTERTAIN_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainMaximun"       column="RATE_ENTERTAIN_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="termComName"                column="TERMCOM_NAME" typeHandler="EmptyStringIfNull"/>
+		    <result property="termTypeName"               column="TERMTYPE_NAME" typeHandler="EmptyStringIfNull"/>
+		    <result property="rateTCas" column="RATE_TCAS" typeHandler="EmptyStringIfNull"/>
+		    <result property="maxTCas" column="MAX_TCAS" typeHandler="EmptyStringIfNull"/>
+	</resultMap>
+	
+	<resultMap type="java.util.Map" id="checkMap">
+			<result property="terminalId"               column="TERMINAL_ID" typeHandler="EmptyStringIfNull"/> 
+			 <result property="terminalCom"               column="TERMINAL_COM" typeHandler="EmptyStringIfNull"/> 
+		    <result property="termNo"               column="TERMINAL_NO" typeHandler="EmptyStringIfNull"/> 
+		    <result property="agentId"               column="AGENT_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="custId"               column="CUST_ID" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateLivelihood"               column="RATE_LIVELIHOOD" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneral"               column="RATE_GENERAL" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralTop"               column="RATE_GENERAL_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateGeneralMaximun"               column="RATE_GENERAL_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertain"               column="RATE_ENTERTAIN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainTop"               column="RATE_ENTERTAIN_TOP" typeHandler="EmptyStringIfNull"/> 
+		    <result property="rateEntertainMaximun"               column="RATE_ENTERTAIN_MAXIMUN" typeHandler="EmptyStringIfNull"/> 
+		    <result property="terminalLMK" column="TERMINAL_LMK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalLMKCV" column="TERMINAL_LMK_CV" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalZMK" column="TERMINAL_ZMK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalZMKCV" column="TERMINAL_ZMK_CV" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalTTK" column="TERMINAL_TTK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalTTKCV" column="TERMINAL_TTK_CV" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalPIK" column="TERMINAL_PIK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalPIKCV" column="TERMINAL_PIK_CV" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalTDK" column="TERMINAL_TDK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalTDKCV" column="TERMINAL_TDK_CV" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalMAK" column="TERMINAL_MAK" typeHandler="EmptyStringIfNull"/>
+		    <result property="terminalMAKCV" column="TERMINAL_MAK_CV" typeHandler="EmptyStringIfNull"/>
+	</resultMap>	
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPAMNG_TERMINAL_INF
+		<set>
+		        <if test="custId!= null and custId!= ''">
+						TERMINAL_STATUS = '2'
+				</if>
+				<if test="macAddress != null and macAddress != ''">
+						,MAC_ADDRESS = #{macAddress}
+				</if>
+		</set>
+		<where>
+			    <if test="terminalNo!= null and terminalNo!= ''">
+						TERMINAL_NO =  #{terminalNo}
+				</if>
+		</where>
+	</update>
+	
+	
+	<select id="check" parameterType="java.util.Map" resultMap="checkMap">
+		SELECT
+		    term.TERMINAL_ID,
+			term.TERMINAL_NO,
+			term.TERMINAL_COM,
+			agent.AGENT_ID,
+			mer.CUST_ID,
+			term.RATE_LIVELIHOOD,
+			term.RATE_GENERAL,
+			term.RATE_GENERAL_TOP,
+			term.RATE_GENERAL_MAXIMUN,
+			term.RATE_ENTERTAIN,
+			term.RATE_ENTERTAIN_TOP,
+			term.RATE_ENTERTAIN_MAXIMUN,
+			termkey.TERMINAL_LMK,
+			termkey.TERMINAL_LMK_CV,
+			termkey.TERMINAL_ZMK,
+			termkey.TERMINAL_ZMK_CV,
+			termkey.TERMINAL_TTK,
+			termkey.TERMINAL_TTK_CV,
+			termkey.TERMINAL_PIK,
+			termkey.TERMINAL_PIK_CV,
+			termkey.TERMINAL_TDK,
+			termkey.TERMINAL_TDK_CV,
+			termkey.TERMINAL_MAK,
+			termkey.TERMINAL_MAK_CV
+		FROM
+			MPAMNG_TERMINAL_INF term LEFT JOIN MPAMNG_TERMINAL_KEY_INF termkey on term.TERMINAL_ID=termkey.TERMINAL_ID
+			LEFT JOIN MPOMNG_AGE_CUST_REF_INF ref ON ref.TERMINAL_ID  = term.TERMINAL_ID
+			LEFT JOIN MPAMNG_AGENT_INF agent ON ref.AGE_ID = agent.AGENT_ID
+			LEFT JOIN MPOMNG_MOBILE_MER_INF mer ON mer.CUST_ID = ref.CUST_ID 
+		WHERE
+			term.TERMINAL_NO =  #{termNo}  and ref.CUST_ID=#{custId}
+	</select>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="terminalMap">
+			SELECT 
+		         T1.TERMINAL_ID, 
+		         T1.TERMINAL_SEQ, 
+		         T1.TERMINAL_NO, 
+		         T2.AGE_ID AGENT_ID, 
+		         T2.CUST_ID, 
+		         T1.TERMINAL_TYPE, 
+		         T1.TERMINAL_COM, 
+		         T1.TERMINAL_STATUS, 
+		         T1.RATE_LIVELIHOOD, 
+		         T1.RATE_GENERAL, 
+		         T1.RATE_GENERAL_TOP, 
+		         T1.RATE_GENERAL_MAXIMUN, 
+		         T1.RATE_ENTERTAIN, 
+		         T1.RATE_ENTERTAIN_TOP, 
+		         T1.RATE_ENTERTAIN_MAXIMUN,
+		         T1.RATE_TCAS,
+		         T1.MAX_TCAS
+		FROM 
+		  		MPAMNG_TERMINAL_INF T1
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF T2 ON T2.TERMINAL_ID  = T1.TERMINAL_ID
+ 		WHERE 
+ 				T1.TERMINAL_NO = #{terminalNo}
+	</select>
+	
+	<select id="selectMacAddress" parameterType="String" resultType="String">
+		SELECT  
+				MAC_ADDRESS
+		FROM 
+				MPAMNG_TERMINAL_INF TERM 
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF REF ON REF.TERMINAL_ID = TERM.TERMINAL_ID 
+				LEFT JOIN MPAMNG_AGENT_INF AGENT ON REF.AGE_ID = AGENT.AGENT_ID 
+				LEFT JOIN MPOMNG_MOBILE_MER_INF MER ON MER.CUST_ID = REF.CUST_ID 
+		WHERE 
+				MER.CUST_ID = #{custId} AND TERM.TERMINAL_NO!='999999999'
+	</select>
+    
+    <select id="selecttrlEntity" parameterType="java.util.Map" resultMap="terminalMap">
+		SELECT 
+		         T1.TERMINAL_ID, 
+		         T1.TERMINAL_SEQ, 
+		         T1.TERMINAL_NO, 
+		         T2.AGE_ID AGENT_ID, 
+		         T2.CUST_ID, 
+		         T1.TERMINAL_TYPE, 
+		         T1.TERMINAL_COM, 
+		         T1.TERMINAL_STATUS, 
+		         T1.RATE_LIVELIHOOD, 
+		         T1.RATE_GENERAL, 
+		         T1.RATE_GENERAL_TOP, 
+		         T1.RATE_GENERAL_MAXIMUN, 
+		         T1.RATE_ENTERTAIN, 
+		         T1.RATE_ENTERTAIN_TOP, 
+		         T1.RATE_ENTERTAIN_MAXIMUN,
+		         T3.TERMCOM_NAME,
+		         T4.TERMTYPE_NAME
+		FROM 
+		        MPAMNG_TERMINAL_INF T1
+				LEFT JOIN MPOMNG_AGE_CUST_REF_INF T2 ON T2.TERMINAL_ID  = T1.TERMINAL_ID
+				LEFT JOIN MPAMNG_TERMINALCOMPANY_INF T3 ON (T1.TERMINAL_COM=T3.TERMCOM_CODE)
+				LEFT JOIN MPAMNG_TERMINALCOMPANY_INF T4 ON (T1.TERMINAL_TYPE=T4.TERMTYPE) 
+ 		WHERE 
+ 				T2.CUST_ID = #{custId} AND T1.TERMINAL_NO !='999999999'
+	</select>
+
+	<update id="updateKey" parameterType="java.util.Map">
+		UPDATE MPAMNG_TERMINAL_KEY_INF 
+		<set>
+			<if test="terminalPIK != null and terminalPIK != ''">
+				TERMINAL_PIK = #{terminalPIK},
+			</if>
+			<if test="terminalPIKCV != null and terminalPIKCV != ''">
+				TERMINAL_PIK_CV = #{terminalPIKCV},
+			</if>
+			<if test="terminalMAK != null and terminalMAK != ''">
+				TERMINAL_MAK = #{terminalMAK},
+			</if>
+			<if test="terminalMAKCV != null and terminalMAKCV != ''">
+				TERMINAL_MAK_CV = #{terminalMAKCV}
+			</if>
+			<if test="terminalTDK != null and terminalTDK != ''">
+				TERMINAL_TDK = #{terminalTDK},
+			</if>
+			<if test="terminalTDKCV != null and terminalTDKCV != ''">
+				TERMINAL_TDK_CV = #{terminalTDKCV}
+			</if>
+		</set>
+		WHERE 
+				TERMINAL_ID =  #{terminalId} 
+	</update>
+	
+	<select id="selectChlRate" parameterType="String" resultType="String">
+		 SELECT
+		 		T4.RATE_TYPE
+    	 FROM 
+			MPAMNG_TERMINAL_INF T1
+			LEFT OUTER JOIN MPOMNG_AGE_CUST_REF_INF T2 ON(T1.TERMINAL_ID=T2.TERMINAL_ID)
+			LEFT OUTER JOIN MPAMNG_AGENT_INF T5 ON (T2.AGE_ID = T5.AGENT_ID)
+			LEFT OUTER JOIN MPAMNG_AGENT_ORG_INF T3 ON(T5.FIRST_AGENT_ID=T3.AGENT_ID) 
+			LEFT OUTER JOIN MPCOOP_COOPORG_MER_INF T4 ON(T3.COOPORG_NO=T4.COOPORG_NO AND T3.MER_NO=T4.MER_NO) 
+		WHERE 
+				T1.TERMINAL_NO=#{termNo}
+	    GROUP BY T4.RATE_TYPE
+	</select>
+	
+	<select id="selectTermRate" parameterType="String" resultMap="terminalMap">
+		SELECT 
+		         RATE_LIVELIHOOD, 
+		         RATE_GENERAL, 
+		         RATE_GENERAL_TOP, 
+		         RATE_ENTERTAIN, 
+		         RATE_ENTERTAIN_TOP
+		FROM 
+		  		MPAMNG_TERMINAL_INF
+		WHERE 
+ 				TERMINAL_NO = #{termNo}
+	</select>
+
+	<update id="updateOtherEntity" parameterType="java.util.Map">
+		UPDATE MPAMNG_TERMINAL_INF a
+			set 
+			a.RATE_TCAS = #{rateTCas},
+			a.MAX_TCAS = #{maxTCas},
+			a.RATE_LIVELIHOOD = #{rateLivelihood},
+			a.RATE_GENERAL = #{rateGeneral},
+			a.RATE_GENERAL_TOP = #{rateGeneralTop},
+			a.RATE_GENERAL_MAXIMUN = #{rateGeneralMaximun},
+			a.RATE_ENTERTAIN = #{rateEntertain},
+			a.RATE_ENTERTAIN_TOP = #{rateEntertainTop},
+			a.RATE_ENTERTAIN_MAXIMUN = #{rateEntertainMaximun}
+		WHERE 
+				a.TERMINAL_ID !=  #{terminalId} 
+				and a.TERMINAL_ID in (select TERMINAL_ID from MPOMNG_AGE_CUST_REF_INF where CUST_ID = #{custId})
+	</update>
+
+</mapper>

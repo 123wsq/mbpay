@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/aop   
+      http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="STHDSJL05" class="com.tangdi.production.tdcomm.engine.TcpOutChannel" init-method="start" destroy-method="stop">
+		<property name="name" value="STHDSJL05"></property><!-- 渠道名 -->
+		<property name="interceptor"><!-- 拦截器 -->
+			<bean class="com.tangdi.production.tdcomm.tdcomm.ext.TdNewTcpConnector">
+				<property name="host" value="172.20.100.200" ></property><!-- 第三方系统IP -->
+				<property name="port" value="6666"></property><!-- 第三方端口 -->
+				<property name="timeOut" value="45"></property><!-- 连接超时时间 -->
+			</bean>
+		</property>
+		<property name="outprocess"><!-- 接出流程 默认先调用这个process 然后走connector 再走 afterprocess -->
+			<bean class="com.tangdi.production.tdcomm.channel.TcpCommOutProcess">
+				<property name="pack"><!-- 组包 -->
+					<bean class="com.tangdi.production.tdcomm.itf.PackImpl">
+						<property name="ITF" value="mpaychl/conf-etc-encry/1311/STHDSJL05_ITF.XML"></property>
+					</bean>
+				</property>
+
+			</bean>
+		</property>
+		<property name="afterprocess">
+			<bean class="com.tangdi.production.tdcomm.channel.TcpCommOutAfterProcess">
+				<property name="unpack"><!-- 解包 -->
+					<bean class="com.tangdi.production.tdcomm.itf.Unpackimpl">
+						<property name="ITF" value="mpaychl/conf-etc-encry/1311/STHDSJL05_ITF.XML"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		
+	</bean>
+
+
+</beans>

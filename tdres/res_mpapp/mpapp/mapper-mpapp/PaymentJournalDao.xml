@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.PaymentJournalDao">
+	<resultMap type="java.util.Map" id="paymentJournalMap">
+		    <result property="paymentId"               column="PAYMENT_ID" /> 
+		    <result property="payordno"               column="PAYORDNO" /> 
+		    <result property="txnDate"               column="TXN_DATE" /> 
+		    <result property="txnTime"               column="TXN_TIME" /> 
+		    <result property="txnType"               column="TXN_TYPE" /> 
+		    <result property="txnSrefno"               column="TXN_SREFNO" /> 
+		    <result property="txnCrdflg"               column="TXN_CRDFLG" /> 
+		    <result property="txnActno"               column="TXN_ACTNO" /> 
+		    <result property="txnAmt"               column="TXN_AMT" /> 
+		    <result property="txnFee"               column="TXN_FEE" /> 
+		    <result property="txnStatus"               column="TXN_STATUS" /> 
+		    <result property="inmod"               column="INMOD" /> 
+		    <result property="ttxndt"               column="TTXNDT" /> 
+		    <result property="ttxntm"               column="TTXNTM" /> 
+		    <result property="tmercid"               column="TMERCID" /> 
+		    <result property="ttermid"               column="TTERMID" /> 
+		    <result property="tlogno"               column="TLOGNO" /> 
+		    <result property="tbatno"               column="TBATNO" /> 
+		    <result property="tautcod"               column="TAUTCOD" /> 
+		    <result property="toprid"               column="TOPRID" /> 
+		    <result property="tcpscod"               column="TCPSCOD" /> 
+		    <result property="tsrefno"               column="TSREFNO" /> 
+	</resultMap>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PAYMENT_JOURNAL_INF
+		<set>
+		        <if test="payordno!= null and payordno!= ''">
+						PAYORDNO =  #{payordno},
+				</if>
+		        <if test="txnDate!= null and txnDate!= ''">
+						TXN_DATE =  #{txnDate},
+				</if>
+		        <if test="txnTime!= null and txnTime!= ''">
+						TXN_TIME =  #{txnTime},
+				</if>
+		        <if test="txnType!= null and txnType!= ''">
+						TXN_TYPE =  #{txnType},
+				</if>
+		        <if test="txnSrefno!= null and txnSrefno!= ''">
+						TXN_SREFNO =  #{txnSrefno},
+				</if>
+		        <if test="txnCrdflg!= null and txnCrdflg!= ''">
+						TXN_CRDFLG =  #{txnCrdflg},
+				</if>
+		        <if test="txnActno!= null and txnActno!= ''">
+						TXN_ACTNO =  #{txnActno},
+				</if>
+		        <if test="txnAmt!= null and txnAmt!= ''">
+						TXN_AMT =  #{txnAmt},
+				</if>
+		        <if test="txnFee!= null and txnFee!= ''">
+						TXN_FEE =  #{txnFee},
+				</if>
+		        <if test="txnStatus!= null and txnStatus!= ''">
+						TXN_STATUS =  #{txnStatus},
+				</if>
+		        <if test="inmod!= null and inmod!= ''">
+						INMOD =  #{inmod},
+				</if>
+		        <if test="ttxndt!= null and ttxndt!= ''">
+						TTXNDT =  #{ttxndt},
+				</if>
+		        <if test="ttxntm!= null and ttxntm!= ''">
+						TTXNTM =  #{ttxntm},
+				</if>
+		        <if test="tmercid!= null and tmercid!= ''">
+						TMERCID =  #{tmercid},
+				</if>
+		        <if test="ttermid!= null and ttermid!= ''">
+						TTERMID =  #{ttermid},
+				</if>
+		        <if test="tlogno!= null and tlogno!= ''">
+						TLOGNO =  #{tlogno},
+				</if>
+		        <if test="tbatno!= null and tbatno!= ''">
+						TBATNO =  #{tbatno},
+				</if>
+		        <if test="tautcod!= null and tautcod!= ''">
+						TAUTCOD =  #{tautcod},
+				</if>
+		        <if test="toprid!= null and toprid!= ''">
+						TOPRID =  #{toprid},
+				</if>
+		        <if test="tcpscod!= null and tcpscod!= ''">
+						TCPSCOD =  #{tcpscod},
+				</if>
+		        <if test="tsrefno!= null and tsrefno!= ''">
+						TSREFNO =  #{tsrefno},
+				</if>
+				 <if test="cause!= null and cause!= ''">
+						ERROR_CAUSE =  #{cause}
+				</if>
+		</set>
+		<where>
+			PAYMENT_ID =  #{paymentId}
+		</where>
+	</update>
+
+    <update id="updatePayJnlStatus" parameterType="java.util.Map">
+		UPDATE 
+				MPOMNG_PAYMENT_JOURNAL_INF
+		<set>
+		        <if test="paymentId!= null and paymentId!= ''">
+						PAYMENT_ID =  #{paymentId},
+				</if>
+		        <if test="txnStatus!= null and txnStatus!= ''">
+						TXN_STATUS =  #{txnStatus}
+				</if>
+		</set>
+		<where>
+			PAYMENT_ID =  #{paymentId}
+		</where>
+	</update>
+	
+
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_PAYMENT_JOURNAL_INF  (
+		         PAYMENT_ID, 
+		         PAYORDNO, 
+		         TXN_DATE, 
+		         TXN_TIME, 
+		         TXN_TYPE, 
+		         TXN_SREFNO, 
+		         TXN_CRDFLG, 
+		         TXN_ACTNO, 
+		         TXN_AMT, 
+		         TXN_FEE, 
+		         TXN_STATUS, 
+		         INMOD, 
+		         TTXNDT, 
+		         TTXNTM, 
+		         TMERCID, 
+		         TTERMID, 
+		         TLOGNO, 
+		         TBATNO, 
+		         TAUTCOD, 
+		         TOPRID, 
+		         TCPSCOD, 
+		         TSREFNO,
+		         ERROR_CAUSE
+				)
+		VALUES (
+		          #{paymentId,jdbcType=VARCHAR}, 
+		          #{payordno,jdbcType=VARCHAR}, 
+		          #{txnDate0,jdbcType=VARCHAR}, 
+		          #{txnTime0,jdbcType=VARCHAR}, 
+		          #{txnType,jdbcType=VARCHAR}, 
+		          #{txnSrefno,jdbcType=VARCHAR}, 
+		          #{txnCrdflg,jdbcType=VARCHAR}, 
+		          #{txnActno,jdbcType=VARCHAR}, 
+		          #{txnAmt,jdbcType=VARCHAR}, 
+		          #{txnFee,jdbcType=VARCHAR}, 
+		          #{txnStatus,jdbcType=VARCHAR}, 
+		          #{inmod,jdbcType=VARCHAR}, 
+		          #{ttxndt,jdbcType=VARCHAR}, 
+		          #{ttxntm,jdbcType=VARCHAR}, 
+		          #{tmercid,jdbcType=VARCHAR}, 
+		          #{ttermid,jdbcType=VARCHAR}, 
+		          #{tlogno,jdbcType=VARCHAR}, 
+		          #{tbatno,jdbcType=VARCHAR}, 
+		          #{tautcod,jdbcType=VARCHAR}, 
+		          #{toprid,jdbcType=VARCHAR}, 
+		          #{tcpscod,jdbcType=VARCHAR}, 
+		          #{tsrefno,jdbcType=VARCHAR},
+		          #{cause,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<select id="queryOrnPaymentJournal"  parameterType="java.util.Map" resultMap="paymentJournalMap">
+		SELECT 
+		         PAYMENT_ID, 
+		         PAYORDNO, 
+		         TXN_DATE, 
+		         TXN_TIME, 
+		         TXN_TYPE, 
+		         TXN_SREFNO, 
+		         TXN_CRDFLG, 
+		         TXN_ACTNO, 
+		         TXN_AMT, 
+		         TXN_FEE, 
+		         TXN_STATUS, 
+		         INMOD, 
+		         TTXNDT, 
+		         TTXNTM, 
+		         TMERCID, 
+		         TTERMID, 
+		         TLOGNO, 
+		         TBATNO, 
+		         TAUTCOD, 
+		         TOPRID, 
+		         TCPSCOD, 
+		         TSREFNO
+		FROM 
+		        MPOMNG_PAYMENT_JOURNAL_INF
+		WHERE 
+		        PAYORDNO =  #{opayordno} 
+		        
+		        <if test="otxntype!= null and otxntype!= ''">
+					AND TXN_TYPE=#{otxntype} 
+				</if>
+		        
+		        LIMIT 1
+		        
+	</select>
+
+
+</mapper>

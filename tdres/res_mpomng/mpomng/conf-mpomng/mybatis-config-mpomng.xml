@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!-- 命名空间 -->
+    <typeAliases>
+    	<typeAlias alias="MobileMerInf"     type="com.tangdi.production.mpomng.bean.MobileMerInf" />
+    	<typeAlias alias="AppimgInf"     type="com.tangdi.production.mpomng.bean.AppimgInf" />
+    	<typeAlias alias="AppInf"     type="com.tangdi.production.mpomng.bean.AppInf" />
+    	<typeAlias alias="NoticeInf"     type="com.tangdi.production.mpomng.bean.NoticeInf" />
+		
+    	<typeAlias alias="PrdInf"     type="com.tangdi.production.mpomng.bean.PrdInf" />
+    	<typeAlias alias="PayInf"     type="com.tangdi.production.mpomng.bean.PayInf" />
+    	<typeAlias alias="MeridentifyInf"     type="com.tangdi.production.mpomng.bean.MeridentifyInf" />
+        <typeAlias alias="CustBankInf"     type="com.tangdi.production.mpomng.bean.CustBankInf" />
+		<typeAlias alias="CustAccountInf"     type="com.tangdi.production.mpomng.bean.CustAccountInf" />
+        <typeAlias alias="TdRateInf" type="com.tangdi.production.mpomng.bean.TdRateInf"/>
+         <typeAlias alias="ReportTranCountInf"          type="com.tangdi.production.mpomng.bean.ReportTranCountInf"/>
+         <typeAlias alias="MerProfitRuleInf" type="com.tangdi.production.mpomng.bean.MerProfitRuleInf"/>
+        <typeAlias alias="SettleCountInf"             type="com.tangdi.production.mpomng.bean.SettleCountInf"/>
+        <typeAlias alias="SettleCountInf_CMBC"             type="com.tangdi.production.mpomng.bean.SettleCountInf_CMBC"/>
+         <typeAlias alias="TranSerialRecordInf" type="com.tangdi.production.mprcs.bean.TranSerialRecordInf"/>
+         <typeAlias alias="HolidayRuleInf" type="com.tangdi.production.mpomng.bean.HolidayRuleInf"/>
+         <typeAlias alias="ReportMerClassInf" type="com.tangdi.production.mpomng.bean.ReportMerClassInf"/>
+         <typeAlias alias="ReportMerCountInf" type="com.tangdi.production.mpomng.bean.ReportMerCountInf"/>
+         <typeAlias alias="ReportTranCountInf" type="com.tangdi.production.mpomng.bean.ReportTranCountInf"/>
+        <!-- 业务报表 -->
+         <typeAlias alias="MobileMerTemplate"    type="com.tangdi.production.mpomng.report.MobileMerTemplate"/>
+        <typeAlias alias="PrdTemplate"          type="com.tangdi.production.mpomng.report.PrdTemplate"/>
+        <typeAlias alias="RechargePrdTemplate"  type="com.tangdi.production.mpomng.report.RechargePrdTemplate"/>
+        <typeAlias alias="CasPrdTemplate"       type="com.tangdi.production.mpomng.report.CasPrdTemplate"/>
+         <typeAlias alias="TransactionTemplate"       type="com.tangdi.production.mpomng.report.TransactionTemplate"/>
+         <typeAlias alias="TransTemplate"       type="com.tangdi.production.mpomng.report.TransTemplate"/>
+         <typeAlias alias="WithdrawTemplate"       type="com.tangdi.production.mpomng.report.WithdrawTemplate"/>
+        <!-- <typeAlias alias="ProfitInfTemplate"       type="com.tangdi.production.mpomng.report.ProfitInfTemplate"/>
+         <typeAlias alias="MpbatchSettleaccountsInfTemplate"       type="com.tangdi.production.mpomng.report.MpbatchSettleaccountsInfTemplate"/>
+         <typeAlias alias="SettlementTemplate"    type="com.tangdi.production.mpomng.report.SettlementTemplate"/>
+         <typeAlias alias="SettleAccountTemplate"    type="com.tangdi.production.mpomng.report.SettleAccountTemplate"/> -->
+        <typeAlias alias="SettlementTemplate"    type="com.tangdi.production.mpomng.report.SettlementTemplate"/>
+        <typeAlias alias="CustShareInf" type="com.tangdi.production.mpamng.bean.CustShareInf"/>
+        <typeAlias alias="RecInfoTemplate"    type="com.tangdi.production.mpomng.report.RecInfoTemplate"/>
+        <typeAlias alias="CustRatesInf"    type="com.tangdi.production.mpomng.bean.CustRatesInf"/>
+        
+        <!-- 对账信息表 -->
+        <typeAlias type="com.tangdi.production.mpomng.bean.RecInf"  alias="RecInf" />
+    </typeAliases>
+</configuration>

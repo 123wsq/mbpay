@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.PlatformParameterDao">
+	<resultMap type="java.util.Map" id="tdRateMap">
+		    <result property="paraCode"               column="PARA_CODE" /> 
+		    <result property="paraName"               column="PARA_NAME" /> 
+		    <result property="paraType"               column="PARA_TYPE" /> 
+		    <result property="paraVal"                column="PARA_VAL" /> 
+		    <result property="paraMaxMoney"           column="PARA_MAXMONEY" />
+		     <result property="paraValType"           column="PARA_VAL_TYPE" />
+	</resultMap>
+
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="tdRateMap">
+		SELECT 
+		         PARA_CODE, 
+		         PARA_NAME, 
+		         PARA_TYPE, 
+		         PARA_VAL, 
+		         PARA_MAXMONEY,
+		         PARA_VAL_TYPE
+		FROM 
+		        MPOMNG_PLATFORM_PARAMETER_INF
+		<where>
+				PARA_CODE =  #{paraCode}
+		</where>
+	</select>
+</mapper>

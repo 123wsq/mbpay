@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.MeridentifyDao">
+	<resultMap type="java.util.Map"  id="meridentifyMap">
+		    <result property="custId"               column="CUST_ID"  typeHandler="EmptyStringIfNull"/>
+		    <result property="custName"               column="CUST_NAME"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="certificateType"               column="CERTIFICATE_TYPE"  typeHandler="EmptyStringIfNull"/> 
+		    <result property="certificateNo"               column="CERTIFICATE_NO"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="idcardHandheld"               column="IDCARD_HANDHELD"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="idcardFront"               column="IDCARD_FRONT"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="idcardBack"               column="IDCARD_BACK"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="custStatus"               column="CUST_STATUS"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="identifyTime"               column="IDENTIFY_TIME"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="auditIdea"               column="AUDIT_IDEA"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="identifyUser"               column="IDENTIFY_USER"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="policeIdentifystatus"               column="POLICE_IDENTIFYSTATUS"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="policeIdentifypic"               column="POLICE_IDENTIFYPIC"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="resField1"               column="RES_FIELD1"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="resField2"               column="RES_FIELD2"  typeHandler="EmptyStringIfNull"/>  
+		    <result property="resField3"               column="RES_FIELD3"  typeHandler="EmptyStringIfNull"/>  
+	</resultMap>
+
+		<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPOMNG_MERIDENTIFY_INF  (
+		         CUST_ID, 
+		         CUST_NAME, 
+		         CERTIFICATE_TYPE, 
+		         CERTIFICATE_NO, 
+		         IDCARD_HANDHELD, 
+		         IDCARD_FRONT, 
+		         IDCARD_BACK, 
+		         CUST_STATUS, 
+		         IDENTIFY_TIME, 
+		         AUDIT_IDEA, 
+		         IDENTIFY_USER, 
+		         POLICE_IDENTIFYSTATUS, 
+		         POLICE_IDENTIFYPIC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+				)
+		VALUES (
+		          #{custId,jdbcType=CHAR}, 
+		          #{custName,jdbcType=VARCHAR}, 
+		          #{certificateType,jdbcType=VARCHAR}, 
+		          #{certificateNo,jdbcType=VARCHAR},  
+		          #{idcardHandheld,jdbcType=VARCHAR}, 
+		          #{idcardFront,jdbcType=VARCHAR}, 
+		          #{idcardBack,jdbcType=VARCHAR}, 
+		          #{custStatus,jdbcType=CHAR}, 
+		          #{identifyTime,jdbcType=VARCHAR}, 
+		          #{auditIdea,jdbcType=VARCHAR}, 
+		          #{identifyUser,jdbcType=VARCHAR}, 
+		          #{policeIdentifystatus,jdbcType=VARCHAR}, 
+		          #{policeIdentifypic,jdbcType=VARCHAR}, 
+		          #{resField1,jdbcType=VARCHAR}, 
+		          #{resField2,jdbcType=VARCHAR}, 
+		          #{resField3,jdbcType=VARCHAR}
+		      )
+	</insert>
+	
+	<update id="updateEntity">
+		UPDATE MPOMNG_MERIDENTIFY_INF  
+		<set>
+			  CUST_NAME=#{custName},
+			  CERTIFICATE_NO=#{certificateNo},
+			  <if test="certificateType!= null and certificateType!= ''">
+						CERTIFICATE_TYPE =  #{certificateType},
+			  </if>
+			  <if test="cardHandheldPath!= null and cardHandheldPath!= ''">
+						IDCARD_HANDHELD =  #{cardHandheldPath},
+			  </if>
+			  <if test="cardFrontPath!= null and cardFrontPath!= ''">
+						IDCARD_FRONT =  #{cardFrontPath},
+			  </if>
+			  <if test="cardBackPath!= null and cardBackPath!= ''">
+						IDCARD_BACK =  #{cardBackPath},
+			  </if>
+			  <if test="custStatus!=null and custStatus!= ''">
+						CUST_STATUS =  #{custStatus}
+			  </if>
+			  WHERE CUST_ID=#{custId}
+		</set>
+	</update>
+	
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="meridentifyMap">
+		SELECT 
+		         CUST_ID, 
+		         CUST_NAME, 
+		         CERTIFICATE_TYPE, 
+		         CERTIFICATE_NO, 
+		         IDCARD_HANDHELD, 
+		         IDCARD_FRONT, 
+		         IDCARD_BACK, 
+		         CUST_STATUS, 
+		         IDENTIFY_TIME, 
+		         AUDIT_IDEA, 
+		         IDENTIFY_USER, 
+		         POLICE_IDENTIFYSTATUS, 
+		         POLICE_IDENTIFYPIC, 
+		         RES_FIELD1, 
+		         RES_FIELD2, 
+		         RES_FIELD3
+		FROM 
+		        MPOMNG_MERIDENTIFY_INF
+		WHERE
+				CUST_ID =  #{custId}
+	</select>
+	
+	
+</mapper>

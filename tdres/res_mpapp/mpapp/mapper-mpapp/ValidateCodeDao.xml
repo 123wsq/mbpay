@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.ValidateCodeDao">
+		
+		<resultMap type="java.util.Map" id="validataCodeMap">
+		    <result property="custMobile"              column="CUST_MOBILE"     typeHandler="EmptyStringIfNull" /> 
+		    <result property="sendTime"            column="SEND_TIME"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="msgCode"            column="MSG_CODE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="codeType"            column="CODE_TYPE"   typeHandler="EmptyStringIfNull"/> 
+		    <result property="codeStatus"            column="CODE_STATUS"   typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="validataCodeMap">
+		SELECT 
+		CUST_MOBILE,
+		SEND_TIME,
+		MSG_CODE,
+		CODE_TYPE 
+		FROM 
+		        MPAPP_VALIDATE_CODE_INF
+		<where>
+				CODE_STATUS = '0'
+		        <if test="custMobile!= null and custMobile!= ''">
+						AND CUST_MOBILE =  #{custMobile}
+				</if>
+		        <if test="codeType!= null and codeType!= ''">
+						AND CODE_TYPE =  #{codeType}
+				</if> 
+				ORDER BY SEND_TIME DESC
+		</where>
+	</select>
+
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPAPP_VALIDATE_CODE_INF  (
+			CUST_MOBILE,
+			SEND_TIME,
+			MSG_CODE,
+			CODE_TYPE,
+			CODE_STATUS 
+				)
+		VALUES (
+			#{custMobile,jdbcType=CHAR},
+			#{sendTime,jdbcType=CHAR},
+			#{msgCode,jdbcType=CHAR},
+			#{smsType,jdbcType=CHAR},
+			#{codeStatus,jdbcType=CHAR}
+		      )
+	</insert>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE MPAPP_VALIDATE_CODE_INF
+		<set>
+			  <if test="codeStatus!= null and codeStatus!= ''">
+					CODE_STATUS =  #{codeStatus}
+			  </if>
+		</set>
+		<where>
+				 CODE_STATUS ='0'
+		        <if test="custMobile!= null and custMobile!= ''">
+						AND CUST_MOBILE =  #{custMobile}
+				</if>
+		        <if test="codeType!= null and codeType!= ''">
+						AND CODE_TYPE =  #{codeType}
+				</if>
+		</where>
+	</update>
+</mapper>

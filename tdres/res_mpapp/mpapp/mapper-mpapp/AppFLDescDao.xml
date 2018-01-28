@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpapp.dao.AppFLDescDao">
+	<resultMap type="java.util.Map" id="appFlDescMap">
+		    <result property="flType"             column="fl_typ" typeHandler="EmptyStringIfNull"/> 
+		    <result property="flOrnDesc"          column="fl_orn_desc" typeHandler="EmptyStringIfNull"/> 
+		    <result property="flAppDesc"         column="fl_app_descE" typeHandler="EmptyStringIfNull"/> 
+		    <result property="insDate"           column="INS_DATE" typeHandler="EmptyStringIfNull"/> 
+	</resultMap>
+	
+	<select id="selectAppFlDesc" parameterType="java.util.Map" resultMap="appFlDescMap">
+		SELECT 
+		         fl_typ, 
+		         fl_orn_desc, 
+		         fl_app_descE, 
+		         INS_DATE
+		FROM
+		       	APP_FL_DESC
+		<where>
+			1 = 1
+			<if test="flType != null and flType != ''">
+				AND fl_typ = #{flType}
+			</if>
+		</where>
+	</select>
+
+</mapper>

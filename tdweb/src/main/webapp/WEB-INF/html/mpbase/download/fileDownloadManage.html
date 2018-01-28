@@ -1,0 +1,250 @@
+
+<meta charset="utf-8" />
+<link rel="stylesheet" href="ace_v1.3/assets/css/ui.jqgrid.css" />
+<div class="search_panel">
+		<div style="display: block;" class="widget-body ">
+			<div class="widget-main">
+				<div class="rowt">
+					<div class="col-sm-12">
+					<!-- 搜索条件表单，action 为空则沿用jqGrid的URL，action填了值以后会将查询指定到该URL -->
+					<form action="" method="post" onsubmit="return pageSearch(this);">
+						<div class="search_elms">
+						<div>
+
+						<div class="search_elm" style="margin-left: 0px">
+							<label class="label_search">文件名:</label>
+							<div class="search_input">
+								<input id="dName" type="text" name="dName"
+									maxlength="197"  placeholder="请输入文件名称">
+							</div>
+						</div>
+
+						<div class="search_elm" style="width:180px">
+							<label class="label_search" >文件类型:</label>
+							<div class="search_input" >
+							    <select 
+									rel="obj.FILETYPE"
+						 			location="local" 
+									 name="dType" 
+						 			id="RPTType" 
+						 			data-placeholder="请选择状态" style="width: 100px;vertical-align:middle;">
+								<option value='' >--请选择--</option>
+						 		</select>
+							</div>
+						</div>
+						
+						</div>
+						<div class="search_elm">
+							<button class="btn btn-small btn_search" type="submit" title="搜索" > 搜索 </button>
+							<button class="btn btn-small" onclick="resetForm();" type="reset" title="清空" >清空</button>
+						</div>
+					</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="row">
+	<div class="col-xs-12">
+	<!-- 检索 -->
+			<!-- 检索  -->
+		<table id="grid-table"></table>
+		<div style="margin-top: 10px">
+	        <span>
+	            <!-- 
+				        
+				    	属性说明: 用于按钮权限控制，auth地址与用户使用该功能的地址一致。
+				    	
+				 -->
+				     <!--
+				<a  class="btn btn-small btn-delete" onclick="deleteFile();">
+					
+					<i class="icon-envelope"></i>删除
+				</a>
+				 -->
+				
+				<a auth="mpbase/fileDownloadManage/hasFile.do" class="btn btn-small btn-info" onclick="downloadFile();">
+					<!-- 
+					<i class="icon-envelope"></i> -->  文件下载
+				</a>
+				
+				
+	        </span>
+			<span id="paging_bar" style="float: right">
+			</span>
+		</div>
+	</div><!-- /.col -->
+</div><!-- /.row -->
+
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+
+	jQuery(function($) {
+		
+		var grid_selector = "#grid-table";
+		var pager_selector = "#grid-pager";
+
+		//resize to fit page size
+		$(window).on('resize.jqGrid', function () {
+			$(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+	    })
+		//resize on sidebar collapse/expand
+		var parent_column = $(grid_selector).closest('[class*="col-"]');
+		$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+			if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+				//setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+				setTimeout(function() {
+					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width());
+				}, 0);
+			}
+	    })
+		
+		jQuery(grid_selector).jqGrid({
+
+			url: "mpbase/fileDownloadManage/query.do",
+			datatype: "json",
+			height: "100%",
+			width:'100%',
+			colNames:[ '编号','文件名','文件大小','文件类型','开始时间', '总耗时','文件地址', '状态'],
+			colModel:[
+				{name:'dId',        index:'dId',     width:'10%'},
+				{name:'dName',      index:'dName',     width:'12%'},
+				{name:'dSize',      index:'dSize',      width:'10%', formatter : gridFormatByFileSize},
+				{name:'dType', 	    index:'dType',   width:'10%',ditcKey:'FILETYPE', formatter : gridFormatByDict},
+				{name:'dSTime',     index:'dSTime',    width:'12%', formatter : gridFormatByDate},
+				{name:'dTime',      index:'dTime',  width:'8%', formatter : gridFormatByFileTime},
+				{name:'dPath',      index:'dPath',  width:'20%'},
+				{name:'status',     index:'status', width:'8%',ditcKey:'RPSTATUS', formatter : gridFormatByDict}
+				], 
+			viewrecords : true,
+			rowNum:12,
+			rowList:[12,20],
+			altRows: true,
+			multiselect: true,
+	        multiboxonly: true,
+			postData : getSearchParams(),
+	        loadComplete : function() {
+				var table = this;
+				setTimeout(function(){
+					 //加载分页
+					 initPagingBar(grid_selector);
+				}, 0);
+			},
+			beforeRequest:function(){//请求之前执行
+				
+			}
+	
+		});
+		
+		$(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+		$(document).one('ajaxloadstart.page', function(e) {
+			$(grid_selector).jqGrid('GridUnload');
+			$('.ui-jqdialog').remove();
+		});
+		
+	
+	});
+	 
+//	function operateEdit(cellvalue, options, rowObject){// "<div class='hidden-phone visible-desktop btn-group'>"
+//		var button = "<div class=\"hidden-sm hidden-xs btn-group\">";  //定义button
+//		button += "<button class='btn btn-xs btn-info' title='点击下载文件' onclick='download(\""+rowObject["dPath"]+"\");'><i class=\"ace-icon fa  fa-cloud-download bigger-120\"></i></button>";
+//		
+//	return button;
+//	
+//	}
+
+	function gridFormatByFileSize(cellvalue){
+		return ((cellvalue/1024)+"k");
+	}
+
+	function gridFormatByFileTime(cellvalue){
+		var t1=0,t2=0,r1,r2,m = 1000;
+		try{t1=cellvalue.toString().split(".")[1].length}catch(e){}
+		try{t2=m.toString().split(".")[1].length}catch(e){}
+		with(Math){
+		r1=Number(cellvalue.toString().replace(".",""))
+		r2=Number(m.toString().replace(".",""))
+		return ((r1/r2)*pow(10,t2-t1)+"s");
+		}
+		} 
+	
+//文件删除
+	function deleteFile() {
+			var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+			if (rows.length == 0) {
+				msg.alert("警告", "当前没有选择数据项！", "warn");
+				return;
+			}
+			var ids = "";
+			for (var i = 0; i < rows.length; i++) {
+				var rowData = $('#grid-table').jqGrid('getRowData',rows[i]);
+				ids = ids +rowData.dId + ",";
+			}
+			
+			ids = ids.substring(0,ids.lastIndexOf(","));
+			msg.confirm({title:'确认',position:'center',msg:'您确定要删除选中的数据吗？',call:function(ok){
+				if(ok){
+					$.ajax({
+						type : "post",
+						url : "mpbase/fileDownloadManage/delete.do?id=" + ids,
+						dataType : 'json',
+						success : function(result) {
+							if (result.rspcod != 200) {
+								msg.alert("错误", result.rspmsg, 'error');
+							} else {
+								msg.alert("提示", result.rspmsg, 'correct');
+								$("#grid-table").trigger("reloadGrid");
+							}
+						},
+						error : function(XMLHttpRequest, textStatus) {
+							msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："
+									+ textStatus, 'error');
+						}
+					});
+
+				}
+			}});
+			
+			}
+
+	function downloadFile(){
+		var rows = $('#grid-table').jqGrid("getGridParam", "selarrrow");
+		
+		if (rows.length == 0) {
+			msg.alert("警告", "当前没有选择数据项！", "error");
+			return;
+		}
+		if (rows.length > 1) {
+			msg.alert("警告", "不能同时选择多项数据！", "warn");
+			return;
+		}
+		var rowData = $('#grid-table').jqGrid('getRowData',rows[0]);
+		var rowDataArr=rowData.dPath.split("/");
+		$.ajax({
+			type: "post",
+			url:"mpbase/fileDownloadManage/hasFile.do?filePath="+rowData.dPath,
+			dateType:'json',
+			async:false,
+			success:function(result){
+				if(result==true||result=='true'){
+					var a = $("<a href="+rowData.dPath+" download="+rowDataArr[rowDataArr.length-1]+" ></a>").get(0);
+			        var e = document.createEvent('MouseEvents');
+			        e.initEvent( 'click', true, true );
+			        a.dispatchEvent(e);
+				}else{
+					msg.alert("错误", "文件不存在，请重新生成！", "error");
+				}
+			},
+			error: function() {
+				msg.alert('提示', "网络异常！",'error');
+            }
+			
+		});
+		
+	}
+	
+	
+</script>

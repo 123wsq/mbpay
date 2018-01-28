@@ -1,0 +1,27 @@
+.roleBox{
+	width: 30%;
+	border: solid 1px yellow;
+	height: 100%;
+}
+
+.treeBox{
+	width: 68%;
+	border: solid 1px yellow;
+}
+
+.role-btn-box{
+	text-align: center;
+}
+
+.role-btn-next,.role-btn-previous{
+	background-color: #428BCA !important
+	;
+}
+.role-btn-submit{
+	background-color: #428BCA !important
+	;
+}
+.menuTreeBox{
+	height: 300px;
+	overflow: auto;
+}

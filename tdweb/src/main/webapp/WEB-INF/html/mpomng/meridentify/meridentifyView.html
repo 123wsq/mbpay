@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" href="css/page/role.css" />
+<!-- 核心功能组件 -->
+<script type="text/javascript" src="js/core/core-1.0.js" charset="utf-8"></script>
+<div class="rowt">
+<div class="col-xs-12">
+<div class="tabbable" id="agent_form_div"  create-buttom="auto" check-form="true" create-to="formBtnBoxDiv" style="height: 100%">
+	<form id="meridentifyForm" class="form-horizontal required-validate"  role="form"  onsubmit="return validateCallback(this,dialogAjaxDone)">
+		<input type="hidden" id="idcardHandheld"   name="idcardHandheld" />
+		<input type="hidden" id="idcardFront"   name="idcardFront" />
+		<input type="hidden" id="idcardBack"   name="idcardBack" />
+		<input type="hidden" id="type"   name="type" />
+		
+		<div class="tab-content">
+			<div id="tabAgentInf" class="tab-pane fade in active">
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						商户名称： </label>
+					<div class="col-sm-3">
+						<!-- 
+					 		 * 属性说明:
+							 * validate="true"  是否需要验证字段
+							 * msg="错误时提示信息"        
+							 * datatype="数据类型"
+						 -->
+						<input type="text" id="custName" name="custName" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+					
+					<label class="col-sm-2 control-label no-padding-right">
+						商户编号： </label>
+					<div class="col-sm-3">
+						<input type="text" id="custId" name="custId" placeholder="" 
+							class="col-xs-12 col-sm-12"  />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">证件类型： </label>
+					<div class="col-sm-3">	
+						<select 
+							 rel="obj.CERTTYPE"
+				 			 location="local" 
+							 name="certificateType" 
+				 			id="v_certificateType" 
+				 			data-placeholder="请选择证件类型" style="width: 130px;vertical-align:middle;" readonly="readonly">
+						</select>
+					</div>
+					<label class="col-sm-2 control-label no-padding-right">证件号码： </label>
+					<div class="col-sm-3">
+						<input type="text" id="certificateNo" name="certificateNo" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<!-- <label class="col-sm-2 control-label no-padding-right">邮箱： </label>
+					<div class="col-sm-3">	
+						<input type="text" id="usrEmall" name="usrEmall" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div> -->
+					<label class="col-sm-2 control-label no-padding-right">所在省市： </label>
+					<div class="col-sm-3">
+						<input type="text" id="address" name="address" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						手持身份证照片： </label>
+					<div class="col-sm-2">
+						<span class="">
+							<a id="hand_a" href="" class="lightbox"> <img id="hand_img" alt="" src="" width="200%" >
+							查看原图</a>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						身份证正面照片： </label>
+					<div class="col-sm-2">
+						<span class="">
+							<a id="front_a" href="" class="lightbox"><img id="front_img" alt="" src="" width="200%" >
+							查看原图</a>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label no-padding-right">
+						身份证背面照片： </label>
+					<div class="col-sm-2">
+						<span class="">
+							<a id="back_a" href="" class="lightbox"><img id="back_img" alt="" src="" width="200%" >
+							查看原图</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group"></div>
+				<div class="form-group" id="auditFailReasonDiv" >
+					<label class="col-sm-2 control-label no-padding-right">
+						审批意见： </label>
+					<div class="col-sm-8">
+						<input type="text" id="auditIdea" name="auditIdea" placeholder="" 
+							class="col-xs-12 col-sm-12" value="" validate="true" maxlength="200"/>
+					</div>
+				</div>
+				<div class="form-group"></div>
+				<div class="form-group"></div>
+				<div class="form-group"></div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="form-actions align-right  form-button-box" style="margin-top: 10px;display:none;" id="formBtnBoxDiv">
+	<button id="agreeBtn" class="btn btn-small btn_search" type="button" onclick="meridentifyAuditSubmit('custId','2');">通过</button>
+	<button id="disAgreeBtn" class="btn btn-small  btn-delete " type="button" onclick="meridentifyAuditSubmit('custId','3');">拒绝</button>
+	<button class="btn" type="button" onclick="javascript:dialog.closeById('dlg-agentEdit');">关闭</button>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	//图片预览空间加载
+	$(".lightbox").lightbox({
+        fitToScreen: true,
+        imageClickClose: false
+    });
+	
+	var h=document.documentElement.clientHeight;//可见区域高度
+	var formDiv = document.getElementById('agent_form_div');
+	formDiv.style.height=h*0.9+"px";
+	$('.date-picker').datepicker({
+		autoclose: true,
+		todayHighlight: true
+	})
+	//show datepicker when clicking on the icon
+	.next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
+	
+	$("#oemState").change(function() {
+		if($(this).val()=='on'||$(this).val()==1){
+			$("#oemDiv").hide();
+		}
+		if($(this).val()==0){
+			$("#oemDiv").show();
+		}
+	});
+
+
+	setInterval(setType, 600);
+	setInterval(setPic, 600);
+});
+
+function setPic(){
+	document.getElementById("hand_a").href ="mpbase/pic/view2.do?picid="+$("#idcardHandheld").val();
+	document.getElementById("front_a").href ="mpbase/pic/view2.do?picid="+$("#idcardFront").val();
+	document.getElementById("back_a").href ="mpbase/pic/view2.do?picid="+$("#idcardBack").val();
+	document.getElementById("hand_img").src ="mpbase/pic/view2.do?picid="+$("#idcardHandheld").val();
+	document.getElementById("front_img").src ="mpbase/pic/view2.do?picid="+$("#idcardFront").val();
+	document.getElementById("back_img").src ="mpbase/pic/view2.do?picid="+$("#idcardBack").val();
+}
+
+function setType(){
+	if($("#type").val()=='view'){
+		$("#formBtnBoxDiv").show();
+		$("#agreeBtn").remove();
+		$("#disAgreeBtn").remove();
+		$("#meridentifyForm .btn-yellow").attr("disabled","disabled");
+		$("#meridentifyForm input[type=text]").attr("readonly","readonly");
+		$("#remark").attr("readonly","readonly");
+	} else if($("#type").val()=='audit') {
+		$("#formBtnBoxDiv").show();
+		$("#meridentifyForm").attr("action","mpomng/meridentifyManage/audit.do");
+		$("#custName").attr("readonly","readonly");
+		//$("#custId").attr("disabled","disabled");
+		$("#meridentifyForm input[id=certificateNo]").attr("readonly","readonly");
+		$("#meridentifyForm input[id=custName]").attr("readonly","readonly");
+		$("#meridentifyForm input[id=custId]").attr("readonly","readonly");
+		$("#meridentifyForm input[id=usrEmall]").attr("readonly","readonly");
+		$("#meridentifyForm input[id=address]").attr("readonly","readonly");
+		
+		
+// 		$("#certificateNo").attr("readonly","readonly");
+// 		$("#custName").attr("readonly","readonly");
+// 		$("#custId").attr("readonly","readonly");
+		
+	} 
+}
+
+
+
+function dialogAjaxDone(result){
+	if(result.rspcod== 200){
+		msg.alert("提示",result.rspmsg,'correct');
+		if($("#type").val()=='edit'||$("#type").val()=='audit'){
+			$("#grid-table").trigger("reloadGrid");
+			dialog.closeById('dlg-agentEdit');
+		} else {
+			location.href=$.getBaseHerf() +"auth/mainPanel.do#mpomng/meridentifyManage/audit.do";
+		}
+	}else{
+		msg.alert("错误",result.rspmsg,'error');
+	}
+}
+
+
+/** 审核提交 **/
+function meridentifyAuditSubmit(custId1,custStatus){
+	
+	if($("#meridentifyForm input[id=auditIdea]").val()==''){
+	 	TDTips($("#meridentifyForm input[id=auditIdea]"),"不能为空");
+	 	return false;
+	}
+	
+	var custId=$("#custId",$("#dlg-agentEdit")).val();
+	var auditIdea=$("#auditIdea").val();
+	var tmsg = "审核拒绝吗？";
+	if(custStatus == '2'){
+		tmsg = "审核通过吗？";
+	}
+	msg.confirm({title:'确认',position:'center',msg:tmsg,call:function(ok){
+		if(ok){
+			$.ajax({
+				type : "post",
+				url : "mpomng/meridentifyManage/audit.do",
+				data:{"custId":custId,"auditIdea":auditIdea,"custStatus":custStatus},
+				dataType : 'json',
+				success : function(result) {
+					if(result.rspcod== 200){
+						msg.alert("提示",result.rspmsg,'correct');
+						$("#grid-table").trigger("reloadGrid");
+						dialog.closeById('dlg-agentEdit');
+					}else{
+						msg.alert("错误",result.rspmsg,'error');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus) {
+					msg.alert("错误", "错误代码：" + XMLHttpRequest.status + ",错误描述："+ textStatus, 'error');
+				}
+			});
+		}else{
+			dialog.closeById('dlg-agentEdit');
+		}
+	}});
+	
+}
+
+function idcardHandheldPicView(){
+	if($('#idcardHandheld').val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#idcardHandheld').val());
+}
+function idcardFrontPicView(){
+	if($('#idcardFront').val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+	picview($('#idcardFront').val());
+}
+function idcardBackPicView(){
+	if($('#idcardBack').val()==''){
+		alertMsg.alert("错误","图片不存在，请先上传图片!","error");
+		return false;
+	}
+
+	picview($('#idcardBack').val());
+}
+
+</script>

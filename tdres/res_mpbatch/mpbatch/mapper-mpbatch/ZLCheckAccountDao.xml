@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbatch.dao.ZLCheckAccountDao">
+	<resultMap type="java.util.Map" id="checkAccountMap">
+		    <result property="bankcode"               column="BANKCODE" /> 
+		    <result property="actdate"               column="ACTDATE" /> 
+		    <result property="banklogno"               column="BANKLOGNO" /> 
+		    <result property="chktype"               column="CHKTYPE" /> 
+		    <result property="bankdate"               column="BANKDATE" /> 
+		    <result property="ccycod"               column="CCYCOD" /> 
+		    <result property="txnamt"               column="TXNAMT" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="inamt"               column="INAMT" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="payno"               column="PAYNO" /> 
+		    <result property="checkdate"               column="CHECKDATE" /> 
+		    <result property="checktime"               column="CHECKTIME" /> 
+		    <result property="checktype"               column="CHECKTYPE" /> 
+		    <result property="checknum"               column="CHECKNUM" /> 
+	</resultMap>
+	<resultMap type="java.util.Map" id="checkaccountDoubtMap">
+		    <result property="bankcode"               column="BANKCODE" /> 
+		    <result property="actdate"               column="ACTDATE" /> 
+		    <result property="banklogno"               column="BANKLOGNO" /> 
+		    <result property="chktype"               column="CHKTYPE" /> 
+		    <result property="bankdate"               column="BANKDATE" /> 
+		    <result property="ccycod"               column="CCYCOD" /> 
+		    <result property="txnamt"               column="TXNAMT" /> 
+		    <result property="fee"               column="FEE" /> 
+		    <result property="inamt"               column="INAMT" /> 
+		    <result property="custId"               column="CUST_ID" /> 
+		    <result property="payno"               column="PAYNO" /> 
+		    <result property="checkdate"               column="CHECKDATE" /> 
+		    <result property="checktime"               column="CHECKTIME" /> 
+		    <result property="checktype"               column="CHECKTYPE" /> 
+		    <result property="checknum"               column="CHECKNUM" /> 
+	</resultMap>
+	
+	<!-- 获取对账状态 -->
+	<select id="checkStatus" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPBATCH_ZL_CHECKACCOUNT_STATUS_INF
+		<where>
+			 1 = 1 
+		        <if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						AND CHKTYPE =  #{chktype}
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+				</if>
+		        <if test="bankfilsts!= null and bankfilsts!= ''">
+						AND BANKFILSTS =  #{bankfilsts}
+				</if>
+		        <if test="bkgfilsts!= null and bkgfilsts!= ''">
+						AND BKGFILSTS =  #{bkgfilsts}
+				</if>
+		        <if test="chkprosts!= null and chkprosts!= ''">
+						AND CHKPROSTS =  #{chkprosts}
+				</if>
+		</where>
+	</select>
+	
+	<!-- 获取对账状态 -->
+	<select id="holdConnStatus" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT 
+				'X'
+		FROM 
+				DUAL
+		<where>
+			 1 = 1 
+		</where>
+	</select>
+	
+	<!-- 插入对账记录 -->
+	<insert id="insertStatus" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_CHECKACCOUNT_STATUS_INF  (
+		         BANKCODE, 
+		         CHKTYPE, 
+		         ACTDATE, 
+		         BANKFILSTS, 
+		         BKGFILSTS, 
+		         CHKPROSTS
+				)
+		VALUES (
+		          #{bankcode}, 
+		          #{chktype}, 
+		          #{actdate}, 
+		          #{bankfilsts}, 
+		          #{bkgfilsts}, 
+		          #{chkprosts} 
+		      )
+	</insert>
+	
+	<delete id="emptyThd" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_VERIFIACCOUNT_THD_INF
+	</delete>
+	
+	<!-- 清空平台对账列表 -->
+	<delete id="emptyPay" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_VERIFIACCOUNT_PAY_INF
+	</delete>
+	
+	<!-- 导入银行疑帐记录 -->
+	<insert id="insetDoubtBank" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_THD_INF  (
+				 BK_CODE,
+		         PAY_NO,
+		         MPAY_NO,
+		         OPAY_NO,
+				 MER_NO,
+		         TRAN_TIME,
+		         CARD_NO, 
+		         CARD_TYPE,
+		         PAY_AMT, 
+		         FEE, 
+		         ISS_NAME, 
+		         TRAN_TYPE,
+		         CK_DT
+				)
+		SELECT   BK_CODE,
+		         PAY_NO,
+		         MPAY_NO,
+		         OPAY_NO,
+				 MER_NO,
+		         TRAN_TIME,
+		         CARD_NO, 
+		         CARD_TYPE,
+		         PAY_AMT, 
+		         FEE, 
+		         ISS_NAME, 
+		         TRAN_TYPE,
+		         CK_DT
+		         FROM MPBATCH_ZL_VERIFIACCOUNT_DOUBT_THD_INF
+		        <where>
+		         1 = 1
+		         <if test="actdate!= null and actdate!= ''">
+						AND CK_DT =  #{actdate}
+				 </if>
+				</where>
+
+	</insert>
+	
+	<!-- 导入系统疑帐记录 -->
+	<insert id="insetDoubtPay" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_PAY_INF  (
+				 BK_CODE,
+		         MER_NO, 
+		         TER_NO, 
+		         TRAN_TIME,
+		         LOC_PAY_NO, 
+		         TRAN_SEQ, 
+		         CARD_NO, 
+		         PAY_NO, 
+		         PAY_AMT, 
+		         INC_AMT, 
+		         SETTLE_DT, 
+		         REF_NO, 
+		         TRAN_TYPE,
+		         CK_DT 
+				)
+		SELECT   BK_CODE,
+		 		 MER_NO,
+		         TER_NO, 
+		         TRAN_TIME,
+		         LOC_PAY_NO, 
+		         TRAN_SEQ, 
+		         CARD_NO, 
+		         PAY_NO, 
+		         PAY_AMT, 
+		         INC_AMT, 
+		         SETTLE_DT, 
+		         REF_NO, 
+		         TRAN_TYPE,
+		         CK_DT
+		         FROM MPBATCH_ZL_VERIFIACCOUNT_DOUBT_INF
+		        <where>
+		         1 = 1
+			     <if test="actdate!= null and actdate!= ''">
+					AND CK_DT =  #{actdate}
+			     </if>
+				</where>
+	</insert>
+	
+	<!-- 导入第三方 -->
+	<insert id="insetBank" parameterType="java.util.Map">
+    INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_THD_INF (
+    	BK_CODE,
+    	PAY_NO,
+    	MPAY_NO,
+    	OPAY_NO,
+		MER_NO,
+		TRAN_TIME,
+		CARD_NO,
+		CARD_TYPE,
+		PAY_AMT,
+		FEE,
+		ISS_NAME,
+		TRAN_TYPE,
+		CK_DT
+	)
+	VALUES(
+		#{bankcode},
+		#{payNo},
+		#{mpayNo},
+		#{opayNo},
+		#{merNo},
+		#{tranTime},
+		#{cardNo},
+		#{cardType},
+		#{payAmt},
+		#{fee},
+		#{issName},
+		#{tranType},
+		#{actdate}
+     )
+	</insert>
+
+    <!-- 收款支付流水 导入对账流水:注意时间-->
+    <insert id="insetPay" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_PAY_INF  (
+		        BK_CODE,
+				MER_NO,
+				TER_NO,
+				TRAN_TIME,
+				LOC_PAY_NO,
+				TRAN_SEQ,
+				CARD_NO,
+				PAY_NO,
+				PAY_AMT,
+				INC_AMT,
+				SETTLE_DT,
+				REF_NO,
+				TRAN_TYPE,
+				CK_DT
+				)
+		SELECT  #{bankcode}, 
+		        TMERCID,
+		        TTERMID,
+		        concat(TXN_DATE,TXN_TIME),
+		        PAYORDNO,
+		        TLOGNO,
+		        TXN_ACTNO,
+		        '',
+		        TXN_AMT,
+		        TXN_AMT-TXN_FEE,
+		        '',
+		        TSREFNO,
+		        '1',
+		        #{actdate}
+		        FROM MPOMNG_PAYMENT_JOURNAL_INF jnl
+		        <where>
+		        TXN_STATUS = 'S'
+		        <if test="actdate!= null and actdate!= ''">
+						AND TXN_DATE =  #{actdate}
+				</if>
+				AND EXISTS(select PAYORDNO from MPOMNG_PAY_INF pay where pay.PAYORDNO=jnl.PAYORDNO and pay.PAY_CHANNEL='STHDZL')
+				</where>
+	</insert>
+	
+	 <!--代付支付流水 导入对账流水:注意时间-->
+    <insert id="insetAnotherPay" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_PAY_INF  (
+		        BK_CODE,
+				MER_NO,
+				TER_NO,
+				TRAN_TIME,
+				LOC_PAY_NO,
+				TRAN_SEQ,
+				CARD_NO,
+				PAY_NO,
+				PAY_AMT,
+				INC_AMT,
+				SETTLE_DT,
+				REF_NO,
+				TRAN_TYPE,
+				CK_DT
+				)
+		SELECT  #{bankcode}, 
+		        TMERCID,
+		        TTERMID,
+		        concat(TXN_DATE,TXN_TIME),
+		        PAYORDNO,
+		        TLOGNO,
+		        TXN_ACTNO,
+		        '',
+		        TXN_AMT,
+		        TXN_AMT-TXN_FEE,
+		        '',
+		        TSREFNO,
+		        '2',
+		        #{actdate}
+		        FROM MPOMNG_ANOTHERPAY_JOURNAL_INF
+		        <where>
+		        TXN_STATUS = '01'
+		        <if test="actdate!= null and actdate!= ''">
+						AND TXN_DATE =  #{actdate}
+				</if>
+				</where>
+	</insert>
+	
+	<!-- 更新对账状态 -->
+    <update id="updateStatus" parameterType="java.util.Map">
+		UPDATE 
+				MPBATCH_ZL_CHECKACCOUNT_STATUS_INF
+		<set>
+		        <if test="bankcode!= null and bankcode!= ''">
+						BANKCODE =  #{bankcode},
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						CHKTYPE =  #{chktype},
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						ACTDATE =  #{actdate},
+				</if>
+		        <if test="bankfilsts!= null and bankfilsts!= ''">
+						BANKFILSTS =  #{bankfilsts},
+				</if>
+		        <if test="bkgfilsts!= null and bkgfilsts!= ''">
+						BKGFILSTS =  #{bkgfilsts},
+				</if>
+		        <if test="chkprosts!= null and chkprosts!= ''">
+						CHKPROSTS =  #{chkprosts},
+				</if>
+				<if test="banktxnnum!= null and banktxnnum!= ''">
+						BANKTXNNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_BANK_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="banktxnamt!= null and banktxnamt!= ''">
+						BANKTXNAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_BANK_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="bankdoubtnum!= null and bankdoubtnum!= ''">
+						BANKDOUBTNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="bankdoubtamt!= null and bankdoubtamt!= ''">
+						BANKDOUBTAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="paytxnnum!= null and paytxnnum!= ''">
+						PAYTXNNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_PAY_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="paytxnamt!= null and paytxnamt!= ''">
+						PAYTXNAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_PAY_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="paydoubtnum!= null and paydoubtnum!= ''">
+						PAYDOUBTNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="paydoubtamt!= null and paydoubtamt!= ''">
+						PAYDOUBTAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="successnum!= null and successnum!= ''">
+						SUCCESSNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="successamt!= null and successamt!= ''">
+						SUCCESSAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_INF WHERE BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="doubtbanknum!= null and doubtbanknum!= ''">
+						DOUBTBANKNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="doubtbankamt!= null and doubtbankamt!= ''">
+						DOUBTBANKAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="doubtpaynum!= null and doubtpaynum!= ''">
+						DOUBTPAYNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="doubtpayamt!= null and doubtpayamt!= ''">
+						DOUBTPAYAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="errorbanknum!= null and errorbanknum!= ''">
+						ERRORBANKNUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_ERROR_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="errorbankamt!= null and errorbankamt!= ''">
+						ERRORBANKAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_ERROR_INF WHERE CHECKDOUBTTYPE = '01' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="errorpayanum!= null and errorpayanum!= ''">
+						ERRORPAYANUM =  (SELECT count(*) FROM MPBATCH_ZL_CHECKACCOUNT_ERROR_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate}),
+				</if>
+		        <if test="errorpayamt!= null and errorpayamt!= ''">
+						ERRORPAYAMT =  (SELECT sum(TXNAMT) FROM MPBATCH_ZL_CHECKACCOUNT_ERROR_INF WHERE CHECKDOUBTTYPE = '02' AND BANKCODE =  #{bankcode} AND ACTDATE =  #{actdate})
+				</if>
+		</set>
+		<where>
+			<if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+		    </if>
+		</where>
+	</update>
+	
+	<!-- 对账成功记录插入对账成功表 -->
+	<insert id="checkAccount" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_INF(
+		        BK_CODE,
+				MER_NO,
+				TER_NO,
+				TRAN_TIME,
+				TRAN_SEQ,
+				CARD_NO,
+				PAY_NO,
+				PAY_AMT,
+				INC_AMT,
+				SETTLE_DT,
+				REF_NO,
+				TRAN_TYPE,
+				CK_DT
+				)
+		SELECT   MP.BK_CODE, 
+		         MP.MER_NO, 
+		         MP.TER_NO, 
+		         MP.TRAN_TIME, 
+		         MP.TRAN_SEQ, 
+		         MP.CARD_NO,
+		         MP.LOC_PAY_NO, 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	
+		         MP.PAY_AMT, 
+		         MP.INC_AMT,
+		         MP.SETTLE_DT, 
+		         MP.REF_NO, 
+		         MP.TRAN_TYPE, 
+		         MP.CK_DT
+		FROM MPBATCH_ZL_VERIFIACCOUNT_PAY_INF MP,
+		MPBATCH_ZL_VERIFIACCOUNT_THD_INF BK
+		WHERE trim(MP.LOC_PAY_NO)=trim(BK.MPAY_NO) 
+		      AND trim(MP.PAY_AMT)=trim(BK.PAY_AMT)
+	</insert>
+	
+	<!-- 删除疑帐 -->
+	<delete id="deleteError" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+		<where>
+			<if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+		    </if>
+		</where>	 
+	</delete>
+	
+	<!-- 删除平台对账成功/失败流水 -->
+	<delete id="deletePayJnl" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_CHECKACCOUNT_PAY_INF
+		 WHERE EXISTS 
+        ( 
+          SELECT 1 FROM MPBATCH_ZL_CHECKACCOUNT_INF BK
+          <where>
+           trim(MPBATCH_ZL_CHECKACCOUNT_PAY_INF.BANKLOGNO)=trim(BK.BANKLOGNO) 
+			<if test="checkStatus!= null and checkStatus == '01'">
+					AND trim(MPBATCH_ZL_CHECKACCOUNT_PAY_INF.TXNAMT)=trim(BK.TXNAMT)
+			</if>
+		    <if test="checkStatus!= null and checkStatus == '02'">
+					AND trim(MPBATCH_ZL_CHECKACCOUNT_PAY_INF.TXNAMT) !=trim(BK.TXNAMT)
+		    </if>
+		</where> 
+        )
+	</delete>
+	
+	<!-- 删除银行对账成功/失败流水 -->
+	<delete id="deleteBankJnl" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_CHECKACCOUNT_BANK_INF
+		 WHERE EXISTS 
+        ( 
+          SELECT 1 FROM MPBATCH_ZL_CHECKACCOUNT_INF MP
+          <where>
+           trim(MP.BANKLOGNO)=trim(MPBATCH_ZL_CHECKACCOUNT_BANK_INF.BANKLOGNO) 
+			<if test="checkStatus!= null and checkStatus == '01'">
+					AND trim(MP.TXNAMT)=trim(MPBATCH_ZL_CHECKACCOUNT_BANK_INF.TXNAMT)
+			</if>
+		    <if test="checkStatus!= null and checkStatus == '02'">
+					AND trim(MP.TXNAMT) !=trim(MPBATCH_ZL_CHECKACCOUNT_BANK_INF.TXNAMT)
+		    </if>
+		</where> 
+        )	 
+	</delete>
+	
+	<!-- 插入错账表 -->
+	<insert id="insetError" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_ERROR_INF  (
+		        BK_CODE,
+				MER_NO,
+				TER_NO,
+				TRAN_TIME,
+				TRAN_SEQ,
+				CARD_NO,
+				PAY_NO,
+				PAY_AMT,
+				INC_AMT,
+				SETTLE_DT,
+				REF_NO,
+				TRAN_TYPE,
+				CK_DT
+				)
+		SELECT  MP.BK_CODE,
+				MP.MER_NO,
+				MP.TER_NO,
+				MP.TRAN_TIME,
+				MP.TRAN_SEQ,
+				MP.CARD_NO,
+				MP.LOC_PAY_NO,
+				MP.PAY_AMT,
+				MP.INC_AMT,
+				MP.SETTLE_DT,
+				MP.REF_NO,
+				MP.TRAN_TYPE,
+				MP.CK_DT
+		FROM MPBATCH_ZL_VERIFIACCOUNT_PAY_INF MP,
+		MPBATCH_ZL_VERIFIACCOUNT_THD_INF BK
+		WHERE trim(MP.LOC_PAY_NO)=trim(BK.MPAY_NO) 
+		      AND trim(MP.PAY_AMT) !=trim(BK.PAY_AMT)
+	</insert>
+	
+	<!-- 插入流水疑帐账表 -->
+	<insert id="insetPayDoubt" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_DOUBT_INF  (
+		        BK_CODE,
+				MER_NO,
+				TER_NO,
+				TRAN_TIME,
+				TRAN_SEQ,
+				CARD_NO,
+				PAY_NO,
+				PAY_AMT,
+				INC_AMT,
+				SETTLE_DT,
+				REF_NO,
+				TRAN_TYPE,
+				CK_DOUBTTYPE,
+				CK_NUM,
+				CK_DT
+				)
+		SELECT  MP.BK_CODE,
+				MP.MER_NO,
+				MP.TER_NO,
+				MP.TRAN_TIME,
+				MP.TRAN_SEQ,
+				MP.CARD_NO,
+				MP.LOC_PAY_NO,
+				MP.PAY_AMT,
+				MP.INC_AMT,
+				MP.SETTLE_DT,
+				MP.REF_NO,
+				MP.TRAN_TYPE,
+				'02',
+				'1',
+				MP.CK_DT
+		FROM MPBATCH_ZL_VERIFIACCOUNT_PAY_INF MP
+		<where>
+			NOT EXISTS (SELECT BK.MPAY_NO FROM MPBATCH_ZL_VERIFIACCOUNT_THD_INF BK WHERE MP.LOC_PAY_NO=BK.MPAY_NO)
+			<if test="bankcode!= null and bankcode!= ''">
+						AND MP.BK_CODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND MP.CK_DT =  #{actdate}
+		    </if>
+		</where>	
+	</insert>
+	
+	<!-- 插入银行疑帐账表 -->
+	<insert id="insetBankDoubt" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_VERIFIACCOUNT_DOUBT_THD_INF  (
+		         BK_CODE,
+		         PAY_NO,
+		         MPAY_NO,
+		         OPAY_NO,
+				 MER_NO,
+		         TRAN_TIME,
+		         CARD_NO, 
+		         CARD_TYPE,
+		         PAY_AMT, 
+		         FEE, 
+		         ISS_NAME, 
+		         TRAN_TYPE,
+		         CK_NUM,
+		         CK_DT
+				)
+		SELECT   BK.BK_CODE,
+		         BK.PAY_NO,
+		         BK.MPAY_NO,
+		         BK.OPAY_NO,
+				 BK.MER_NO,
+		         BK.TRAN_TIME,
+		         BK.CARD_NO, 
+		         BK.CARD_TYPE,
+		         BK.PAY_AMT, 
+		         BK.FEE, 
+		         BK.ISS_NAME, 
+		         BK.TRAN_TYPE,
+		         '1',
+		         BK.CK_DT
+		FROM MPBATCH_ZL_VERIFIACCOUNT_THD_INF BK
+		<where>
+			NOT EXISTS (SELECT MP.LOC_PAY_NO FROM MPBATCH_ZL_VERIFIACCOUNT_PAY_INF MP WHERE MP.LOC_PAY_NO=BK.MPAY_NO)
+			<if test="bankcode!= null and bankcode!= ''">
+						AND BK.BK_CODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND BK.CK_DT =  #{actdate}
+		    </if>
+		</where>	
+	</insert>
+	
+	<!-- 更新对账次数 -->
+	<update id="updateDoubtNum" parameterType="java.util.Map">
+		UPDATE 
+				MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+				SET CHECKNUM = (CASE WHEN CHECKNUM IS NULL THEN '1' ELSE '2' END)
+		<where>
+			<if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+		    </if>
+		</where>
+	</update>
+	
+	
+	<!-- 插入对账两次没有成功的疑帐到错账表 -->
+	<insert id="insetDoubtError" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_CHECKACCOUNT_ERROR_INF  (
+		         BANKCODE, 
+		         ACTDATE, 
+		         BANKLOGNO, 
+		         CHKTYPE, 
+		         BANKDATE, 
+		         CCYCOD, 
+		         TXNAMT, 
+		         FEE, 
+		         INAMT, 
+		         CUST_ID, 
+		         PAYNO, 
+		         CHECKDATE, 
+		         CHECKTIME,
+		         CHECKDOUBTTYPE,
+		         CHECKNUM
+				)
+		SELECT MP.BANKCODE, 
+		         MP.ACTDATE, 
+		         MP.BANKLOGNO, 
+		         MP.CHKTYPE, 
+		         MP.BANKDATE, 
+		         MP.CCYCOD, 
+		         MP.TXNAMT, 
+		         MP.FEE, 
+		         MP.INAMT, 
+		         MP.CUST_ID, 
+		         MP.PAYNO, 
+		         MP.CHECKDATE, 
+		         MP.CHECKTIME,
+		         MP.CHECKDOUBTTYPE,
+		         MP.CHECKNUM
+		FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF MP
+		<where>
+		    MP.CHECKNUM = '2'
+			<if test="bankcode!= null and bankcode!= ''">
+						AND  MP.BANKCODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND  MP.ACTDATE =  #{actdate}
+		    </if>
+		</where>
+	</insert>
+	
+	<!-- 删除对账两次的疑帐流水 -->
+	<delete id="deleteDoubtError" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+          <where>
+            CHECKNUM = '2'
+			<if test="bankcode!= null and bankcode!= ''">
+						AND  BANKCODE =  #{bankcode}
+			</if>
+		    <if test="actdate!= null and actdate!= ''">
+						AND  ACTDATE =  #{actdate}
+		    </if>
+		</where> 
+	</delete>
+	
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE 
+				MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+		<set>
+		        <if test="bankcode!= null and bankcode!= ''">
+						BANKCODE =  #{bankcode},
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						ACTDATE =  #{actdate},
+				</if>
+		        <if test="banklogno!= null and banklogno!= ''">
+						BANKLOGNO =  #{banklogno},
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						CHKTYPE =  #{chktype},
+				</if>
+		        <if test="bankdate!= null and bankdate!= ''">
+						BANKDATE =  #{bankdate},
+				</if>
+		        <if test="ccycod!= null and ccycod!= ''">
+						CCYCOD =  #{ccycod},
+				</if>
+		        <if test="txnamt!= null and txnamt!= ''">
+						TXNAMT =  #{txnamt},
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						FEE =  #{fee},
+				</if>
+		        <if test="inamt!= null and inamt!= ''">
+						INAMT =  #{inamt},
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						CUST_ID =  #{custId},
+				</if>
+		        <if test="payno!= null and payno!= ''">
+						PAYNO =  #{payno},
+				</if>
+		        <if test="checkdate!= null and checkdate!= ''">
+						CHECKDATE =  #{checkdate},
+				</if>
+		        <if test="checktime!= null and checktime!= ''">
+						CHECKTIME =  #{checktime},
+				</if>
+		        <if test="checktype!= null and checktype!= ''">
+						CHECKTYPE =  #{checktype},
+				</if>
+		        <if test="checknum!= null and checknum!= ''">
+						CHECKNUM =  #{checknum},
+				</if>
+		</set>
+		<where>
+			
+		</where>
+	</update>
+
+	<select id="selectEntity" parameterType="java.util.Map" resultMap="checkaccountDoubtMap">
+		SELECT 
+		         BANKCODE, 
+		         ACTDATE, 
+		         BANKLOGNO, 
+		         CHKTYPE, 
+		         BANKDATE, 
+		         CCYCOD, 
+		         TXNAMT, 
+		         FEE, 
+		         INAMT, 
+		         CUST_ID, 
+		         PAYNO, 
+		         CHECKDATE, 
+		         CHECKTIME, 
+		         CHECKTYPE, 
+		         CHECKNUM, 
+		FROM 
+		        MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+		<where>
+		         1 = 1 
+		        <if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+				</if>
+		        <if test="banklogno!= null and banklogno!= ''">
+						AND BANKLOGNO =  #{banklogno}
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						AND CHKTYPE =  #{chktype}
+				</if>
+		        <if test="bankdate!= null and bankdate!= ''">
+						AND BANKDATE =  #{bankdate}
+				</if>
+		        <if test="ccycod!= null and ccycod!= ''">
+						AND CCYCOD =  #{ccycod}
+				</if>
+		        <if test="txnamt!= null and txnamt!= ''">
+						AND TXNAMT =  #{txnamt}
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						AND FEE =  #{fee}
+				</if>
+		        <if test="inamt!= null and inamt!= ''">
+						AND INAMT =  #{inamt}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="payno!= null and payno!= ''">
+						AND PAYNO =  #{payno}
+				</if>
+		        <if test="checkdate!= null and checkdate!= ''">
+						AND CHECKDATE =  #{checkdate}
+				</if>
+		        <if test="checktime!= null and checktime!= ''">
+						AND CHECKTIME =  #{checktime}
+				</if>
+		        <if test="checktype!= null and checktype!= ''">
+						AND CHECKTYPE =  #{checktype}
+				</if>
+		        <if test="checknum!= null and checknum!= ''">
+						AND CHECKNUM =  #{checknum}
+				</if>
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="java.util.Map" resultMap="checkaccountDoubtMap" databaseId="mysql">
+		SELECT 
+		         BANKCODE, 
+		         ACTDATE, 
+		         BANKLOGNO, 
+		         CHKTYPE, 
+		         BANKDATE, 
+		         CCYCOD, 
+		         TXNAMT, 
+		         FEE, 
+		         INAMT, 
+		         CUST_ID, 
+		         PAYNO, 
+		         CHECKDATE, 
+		         CHECKTIME, 
+		         CHECKTYPE, 
+		         CHECKNUM, 
+		FROM 
+		       MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+		<where>
+		    1 = 1 
+		        <if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+				</if>
+		        <if test="banklogno!= null and banklogno!= ''">
+						AND BANKLOGNO =  #{banklogno}
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						AND CHKTYPE =  #{chktype}
+				</if>
+		        <if test="bankdate!= null and bankdate!= ''">
+						AND BANKDATE =  #{bankdate}
+				</if>
+		        <if test="ccycod!= null and ccycod!= ''">
+						AND CCYCOD =  #{ccycod}
+				</if>
+		        <if test="txnamt!= null and txnamt!= ''">
+						AND TXNAMT =  #{txnamt}
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						AND FEE =  #{fee}
+				</if>
+		        <if test="inamt!= null and inamt!= ''">
+						AND INAMT =  #{inamt}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="payno!= null and payno!= ''">
+						AND PAYNO =  #{payno}
+				</if>
+		        <if test="checkdate!= null and checkdate!= ''">
+						AND CHECKDATE =  #{checkdate}
+				</if>
+		        <if test="checktime!= null and checktime!= ''">
+						AND CHECKTIME =  #{checktime}
+				</if>
+		        <if test="checktype!= null and checktype!= ''">
+						AND CHECKTYPE =  #{checktype}
+				</if>
+		        <if test="checknum!= null and checknum!= ''">
+						AND CHECKNUM =  #{checknum}
+				</if>
+		</where>
+		ORDER BY  DESC LIMIT #{start},#{pageSize}
+	</select>
+
+	<select id="countEntity" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+				COUNT(*)
+		FROM 
+				MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+		<where>
+			 1 = 1 
+		        <if test="bankcode!= null and bankcode!= ''">
+						AND BANKCODE =  #{bankcode}
+				</if>
+		        <if test="actdate!= null and actdate!= ''">
+						AND ACTDATE =  #{actdate}
+				</if>
+		        <if test="banklogno!= null and banklogno!= ''">
+						AND BANKLOGNO =  #{banklogno}
+				</if>
+		        <if test="chktype!= null and chktype!= ''">
+						AND CHKTYPE =  #{chktype}
+				</if>
+		        <if test="bankdate!= null and bankdate!= ''">
+						AND BANKDATE =  #{bankdate}
+				</if>
+		        <if test="ccycod!= null and ccycod!= ''">
+						AND CCYCOD =  #{ccycod}
+				</if>
+		        <if test="txnamt!= null and txnamt!= ''">
+						AND TXNAMT =  #{txnamt}
+				</if>
+		        <if test="fee!= null and fee!= ''">
+						AND FEE =  #{fee}
+				</if>
+		        <if test="inamt!= null and inamt!= ''">
+						AND INAMT =  #{inamt}
+				</if>
+		        <if test="custId!= null and custId!= ''">
+						AND CUST_ID =  #{custId}
+				</if>
+		        <if test="payno!= null and payno!= ''">
+						AND PAYNO =  #{payno}
+				</if>
+		        <if test="checkdate!= null and checkdate!= ''">
+						AND CHECKDATE =  #{checkdate}
+				</if>
+		        <if test="checktime!= null and checktime!= ''">
+						AND CHECKTIME =  #{checktime}
+				</if>
+		        <if test="checktype!= null and checktype!= ''">
+						AND CHECKTYPE =  #{checktype}
+				</if>
+		        <if test="checknum!= null and checknum!= ''">
+						AND CHECKNUM =  #{checknum}
+				</if>
+		</where>
+	</select>
+	
+	<insert id="insertEntity" parameterType="java.util.Map">
+		INSERT INTO MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF  (
+		         BANKCODE, 
+		         ACTDATE, 
+		         BANKLOGNO, 
+		         CHKTYPE, 
+		         BANKDATE, 
+		         CCYCOD, 
+		         TXNAMT, 
+		         FEE, 
+		         INAMT, 
+		         CUST_ID, 
+		         PAYNO, 
+		         CHECKDATE, 
+		         CHECKTIME, 
+		         CHECKTYPE, 
+		         CHECKNUM, 
+				)
+		VALUES (
+		          #{bankcode}, 
+		          #{actdate}, 
+		          #{banklogno}, 
+		          #{chktype}, 
+		          #{bankdate}, 
+		          #{ccycod}, 
+		          #{txnamt}, 
+		          #{fee}, 
+		          #{inamt}, 
+		          #{custId}, 
+		          #{payno}, 
+		          #{checkdate}, 
+		          #{checktime}, 
+		          #{checktype}, 
+		          #{checknum}, 
+		      )
+	</insert>
+
+	<delete id="deleteEntity" parameterType="java.util.Map">
+		DELETE FROM MPBATCH_ZL_CHECKACCOUNT_DOUBT_INF
+			 
+	</delete>
+   
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.production.mpbase.dao.HolidayValidateDao">
+	<resultMap type="HolidayRuleInf" id="HolidayRuleMap">
+		    <result property="hoDate"          column="HO_DATE"   /> 
+		    <result property="t0Status"        column="T0_STATUS" /> 
+		    <result property="t1Status"        column="T1_STATUS" /> 
+	</resultMap>
+	<select id="select"  resultType="java.lang.Integer">
+		SELECT 
+				COUNT(1)
+		FROM 
+				MPOMNG_HOLIDAY_RULE_INF
+		<where>
+			<if test="cday != null and cday != '' ">
+				 HO_DATE =#{cday}
+			</if>
+			
+		</where>
+	</select>
+	
+	<select id="selectEntity" parameterType="HolidayRuleInf" resultMap="HolidayRuleMap">
+		SELECT 
+		         HO_DATE, 
+		         T0_STATUS, 
+		         T1_STATUS
+		FROM 
+		        MPOMNG_HOLIDAY_RULE_INF
+		<where>
+		        <if test="t0Status != null and t0Status != ''">
+						T0_STATUS =#{t0Status}
+				</if>
+		       	<if test="t1Status != null and t1Status != ''">
+						T1_STATUS =#{t1Status}
+				</if>
+		        <if test="hoDate != null and hoDate != ''">
+						HO_DATE = #{hoDate}
+				</if>
+		</where>
+	</select>
+</mapper>
